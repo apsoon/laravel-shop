@@ -46,7 +46,7 @@ class UserDao
             ->first();
         return $result;
     }
-    
+
     /**
      * 根据 openId查找用户
      *

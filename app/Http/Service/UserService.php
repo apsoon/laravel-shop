@@ -70,9 +70,14 @@ class UserService
         return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
+    /**
+     * @param $info
+     * @return mixed
+     */
     public function setUserInfo($info)
     {
-        $this->userDao->updateUserInfo($info["user_id"], $info["userInfo"]);
+        $result = $this->userDao->updateUserInfo($info["user_id"], $info["userInfo"]);
+        return $result;
     }
 
     public function __construct(UserDao $userDao)

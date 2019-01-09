@@ -39,7 +39,7 @@ class UserApi extends Controller
     public function setUserInfo(Request $request)
     {
         $info = $request->all();
-        if (empty($info) || empty($info["userInfo"])) return;
+        if (empty($info) || empty($info["userInfo"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $this->userService->setUserInfo($info);
     }
 
