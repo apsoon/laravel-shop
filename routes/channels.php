@@ -11,6 +11,8 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+use Illuminate\Support\Facades\Broadcast;
+
+Broadcast::channel('App.Http.Model.Admin.{id}', function ($admin, $id) {
+    return (int) $admin->id === (int) $id;
 });
