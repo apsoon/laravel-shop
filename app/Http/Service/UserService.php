@@ -27,6 +27,12 @@ class UserService
      */
     private $userDao;
 
+    /**
+     * 登录方法
+     *
+     * @param $info
+     * @return JsonResult
+     */
     public function login($info)
     {
         $code = $info['code'];
@@ -37,7 +43,7 @@ class UserService
             $openid = $json->openid;
         } catch (\Exception $e) {
             Log::error(" [ UserService.php ] =================== login >>>>> request wx function error, e = " . json_encode($e));
-            return new JsonResult(StatusCode::SERVER_ERROR, StatusMessage::SERVER_ERROR);
+            return new JsonResult(StatusCode::SERVER_ERROR);
         }
         $user = $this->userDao->getByOpenId($openid);
         if ($user) {
@@ -45,7 +51,7 @@ class UserService
             $result->userId = $user->user_id;
             $result->token = $user->token;
             $result->isAuth = $user->is_auth;
-            return new JsonResult(StatusCode::LOGIN_SUCCESS, StatusMessage::LOGIN_SUCCESS, $result);
+            return new JsonResult(StatusCode::LOGIN_SUCCESS, $result);
         } else {
             $user = new User();
             $user->open_id = $openid;
@@ -58,10 +64,10 @@ class UserService
                 $result->userId = $user->user_id;
                 $result->token = $user->token;
                 $result->isAuth = $user->is_auth;
-                return new JsonResult(StatusCode::REGISTER_SUCCESS, StatusMessage::REGISTER_SUCCESS, $result);
+                return new JsonResult(StatusCode::REGISTER_SUCCESS, $result);
             }
         }
-        return new JsonResult(StatusCode::SERVER_ERROR, StatusMessage::SERVER_ERROR);
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     public function setUserInfo($info)

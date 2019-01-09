@@ -29,19 +29,19 @@ class JsonResult
     {
         $param = func_get_args();
         switch (sizeof($param)) {
-            case 2:
-                $this->code = $param[0];
-                $this->message = $param[1];
+            case 1:
+                $this->code = $param[0]["code"];
+                $this->message = $param[0]["message"];
                 break;
-            case 3:
-                $this->code = $param[0];
-                $this->message = $param[1];
-                $this->data = $param[2];
+            case 2:
+                $this->code = $param[0]["code"];
+                $this->message = $param[0]["message"];
+                $this->data = $param[1];
                 break;
             case 0:
             default:
-                $this->code = StatusCode::SUCCESS;
-                $this->message = StatusMessage::SUCCESS;
+                $this->code = StatusCode::SUCCESS["code"];
+                $this->message = StatusCode::SUCCESS["message"];
                 break;
         }
     }

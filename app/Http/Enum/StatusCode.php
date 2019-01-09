@@ -17,20 +17,41 @@ namespace App\Http\Enum;
 class StatusCode
 {
     // 20XX 请求成功
-    const SUCCESS = 2000;
+    const SUCCESS = [
+        "code" => "2000",
+        "message" => "请求成功"
+    ];
 
     // 40XX 客户端错误
-    const PARAM_LACKED = 4001;
+    const PARAM_LACKED = [
+        "code" => "4001",
+        "message" => "缺少必要参数"
+    ];
 
     // 50XX 服务端错误
-    const SERVER_ERROR = 5001;
+    const SERVER_ERROR = [
+        "code" => "5001",
+        "message" => "内部错误"
+    ];
 
     // 80XX 用户相关
-    const REGISTER_SUCCESS = 8001;
+    const REGISTER_SUCCESS = [
+        "code" => "8001",
+        "message" => "注册成功"
+    ];
 
-    const LOGIN_SUCCESS = 8002;
+    const LOGIN_SUCCESS = [
+        "code" => "8002",
+        "message" => "登录成功"
+    ];
 
-    const WX_CODE_LACKED = 8003;
+    const USER_NOT_EXIST = [
+        "code" => "8003",
+        "message" => "用户不存在"
+    ];
 
-    const USER_NOT_EXIST = 8004;
+    const WX_CODE_LACKED = [
+        "code" => "8004",
+        "message" => "缺少微信code"
+    ];
 }

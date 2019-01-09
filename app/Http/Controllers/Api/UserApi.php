@@ -21,12 +21,17 @@ class UserApi extends Controller
      */
     private $userService;
 
-    //
+    /**
+     * 登录方法
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function login(Request $request)
     {
         $info = $request->all();
-        if (empty($info)) return new JsonResult(StatusCode::PARAM_LACKED, StatusMessage::PARAM_LACKED);
-        elseif (empty($info["code"])) return new JsonResult(StatusCode::WX_CODE_LACKED, StatusMessage::WX_CODE_LACKED);
+        if (empty($info)) return new JsonResult(StatusCode::PARAM_LACKED);
+        elseif (empty($info["code"])) return new JsonResult(StatusCode::WX_CODE_LACKED);
         $result = $this->userService->login($info);
         return $result;
     }
