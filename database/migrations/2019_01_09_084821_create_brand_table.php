@@ -16,7 +16,7 @@ class CreateBrandTable extends Migration
         Schema::create('brand', function (Blueprint $table) {
             $table->increments('id');
             $table->string("name")->default("")->comment("名称");
-            $table->text("describe")->default("")->comment("描述");
+            $table->text("describe")->nullable()->comment("描述");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
