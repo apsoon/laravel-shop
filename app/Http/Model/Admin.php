@@ -6,6 +6,11 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class Admin
+ *
+ * @package App\Http\Model
+ */
 class Admin extends Authenticatable
 {
     use Notifiable;
