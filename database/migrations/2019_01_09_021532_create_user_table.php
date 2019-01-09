@@ -15,8 +15,8 @@ class CreateUserTable extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("user_id")->comment("用户id");
-            $table->string("open_id")->comment("openId");
+            $table->string("user_id")->comment("用户id")->index();
+            $table->string("open_id")->comment("openId")->index();
             $table->string("token")->comment("token");
             $table->string("nickname")->default("")->comment("昵称");
             $table->string("avatar_url")->default("")->comment("头像地址");
