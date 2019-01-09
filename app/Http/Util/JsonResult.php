@@ -9,33 +9,42 @@
 namespace App\Http\Util;
 
 
+use App\Http\Enum\StatusCode;
+use App\Http\Enum\StatusMessage;
+
 class JsonResult
 {
     private $code = "";
     private $message = "";
     private $data = "";
 
-    public function __construct($code, $message, $data)
+    /**
+     * JsonResult constructor.
+     *
+     * StatusCode + StatusMessage
+     * StatusCode + StatusMessage + Data
+     * 构造函数
+     */
+    public function __construct()
     {
-        $this->code = $code;
-        $this->message = $message;
-        $this->data = $data;
+        $param = func_get_args();
+        switch (sizeof($param)) {
+            case 2:
+                $this->code = $param[0];
+                $this->message = $param[1];
+                break;
+            case 3:
+                $this->code = $param[0];
+                $this->message = $param[1];
+                $this->data = $param[2];
+                break;
+            case 0:
+            default:
+                $this->code = StatusCode::SUCCESS;
+                $this->message = StatusMessage::SUCCESS;
+                break;
+        }
     }
-
-    public function __construct2($code, $message)
-    {
-        $this->__construct($code, $message, "");
-    }
-
-//    public function __construct1($code, $data)
-//    {
-//$this->code = $code;
-//    }
-
-//    public function __construct3($code)
-//    {
-//
-//    }
 
     /**
      * toString

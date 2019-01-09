@@ -25,7 +25,7 @@ class UserService
 
     public function setUserInfo($info)
     {
-
+        $this->userDao->updateUserInfo($info["user_id"], $info["userInfo"]);
     }
 
     public function __construct(UserDao $userDao)

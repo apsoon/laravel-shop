@@ -15,7 +15,7 @@ class StatusMessage extends \SplEnum
     const SUCCESS = "请求成功";
 
     // 40XX 客户端错误
-    const PARAM_LACKED = "请求错误";
+    const PARAM_LACKED = "缺少必要参数";
 
     // 50XX 服务器错误
     const SERVER_ERROR = "内部错误";
