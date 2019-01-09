@@ -14,7 +14,7 @@ namespace App\Http\Enum;
  *
  * @package App\Http\Enum
  */
-class StatusCode extends \SplEnum
+class StatusCode
 {
     // 20XX 请求成功
     const SUCCESS = 2000;

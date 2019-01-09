@@ -33,9 +33,10 @@ class UserService
         try {
             $url = "https://api.weixin.qq.com/sns/jscode2session?appid=" . env('WX_APP_ID') . "&secret=" . env('WX_APP_SECRET') . "&js_code=$code&grant_type=authorization_code";
             $json = json_decode(file_get_contents($url));
+            Log::error(" [ UserService.php ] =================== login >>>>> request wx function error, json = " . json_encode($json));
             $openid = $json->openid;
         } catch (\Exception $e) {
-            Log::error(" [ UserService.php ] =================== login >>>>> request wx function error, e = ", json_encode($e));
+            Log::error(" [ UserService.php ] =================== login >>>>> request wx function error, e = " . json_encode($e));
             return new JsonResult(StatusCode::SERVER_ERROR, StatusMessage::SERVER_ERROR);
         }
         $user = $this->userDao->getByOpenId($openid);
@@ -52,7 +53,13 @@ class UserService
             $user->token = md5(time() . $openid . 'xiaozhengtech');
             $user->is_auth = 0;
             $save = $this->userDao->insert($user);
-            if ($save) return new JsonResult(StatusCode::REGISTER_SUCCESS, StatusMessage::REGISTER_SUCCESS, $user);
+            if ($save) {
+                $result = new \stdClass();
+                $result->userId = $user->user_id;
+                $result->token = $user->token;
+                $result->isAuth = $user->is_auth;
+                return new JsonResult(StatusCode::REGISTER_SUCCESS, StatusMessage::REGISTER_SUCCESS, $result);
+            }
         }
         return new JsonResult(StatusCode::SERVER_ERROR, StatusMessage::SERVER_ERROR);
     }

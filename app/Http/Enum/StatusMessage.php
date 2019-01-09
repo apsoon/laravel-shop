@@ -8,8 +8,7 @@
 
 namespace App\Http\Enum;
 
-
-class StatusMessage extends \SplEnum
+class StatusMessage
 {
     // 20XX 请求成功
     const SUCCESS = "请求成功";

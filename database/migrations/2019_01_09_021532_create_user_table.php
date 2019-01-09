@@ -18,12 +18,12 @@ class CreateUserTable extends Migration
             $table->string("user_id")->comment("用户id");
             $table->string("open_id")->comment("openId");
             $table->string("token")->comment("token");
-            $table->string("nickname")->comment("昵称");
-            $table->string("avatar_url")->comment("头像地址");
-            $table->string("phone")->comment("电话");
+            $table->string("nickname")->default("")->comment("昵称");
+            $table->string("avatar_url")->default("")->comment("头像地址");
+            $table->string("phone")->default("")->comment("电话");
             $table->tinyInteger("is_auth")->comment("用户是否授权");
-            $table->timestamp("create_time")->useCurrent();
-            $table->timestamp('update_time')->useCurrent();
+            $table->timestamp("created_at")->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

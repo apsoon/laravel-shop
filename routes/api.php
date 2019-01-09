@@ -21,6 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(["namespace" => "Api"], function () {
 
     // 用户相关
-    Route::POST("user/login", "login@UserApi");
-    Route::POST("user/info/set", "setUserInfo@UserApi");
+    Route::POST("user/login", "UserApi@login");
+    Route::POST("user/info/set", "UserApi@setUserInfo");
 });
