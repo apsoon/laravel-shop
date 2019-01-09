@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(["namespace" => "Api"], function () {
+
+    // 用户相关
+    Route::POST("user/login", "login@UserApi");
+    Route::POST("user/info/set", "setUserInfo@UserApi");
+});

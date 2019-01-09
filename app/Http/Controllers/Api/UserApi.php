@@ -26,6 +26,9 @@ class UserApi extends Controller
     {
         $info = $request->all();
         if (empty($info)) return new JsonResult(StatusCode::PARAM_LACKED, StatusMessage::PARAM_LACKED);
+        elseif (empty($info["code"])) return new JsonResult(StatusCode::WX_CODE_LACKED, StatusMessage::WX_CODE_LACKED);
+        $result = $this->userService->login($info);
+        return $result;
     }
 
     public function setUserInfo(Request $request)
@@ -33,9 +36,13 @@ class UserApi extends Controller
         $info = $request->all();
         if (empty($info) || empty($info["userInfo"])) return;
         $this->userService->setUserInfo($info);
-
     }
 
+
+    /**
+     * UserApi constructor.
+     * @param UserService $userService
+     */
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;

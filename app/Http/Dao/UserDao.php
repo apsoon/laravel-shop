@@ -42,8 +42,20 @@ class UserDao
      */
     public function getByUserId($userId)
     {
-        $result = $this->user::where(["open_id" => $userId])
-            ->select("user_id", "token", "open_id")
+        $result = $this->user::where(["user_id" => $userId])
+            ->first();
+        return $result;
+    }
+    
+    /**
+     * 根据 openId查找用户
+     *
+     * @param $openId
+     * @return mixed
+     */
+    public function getByOpenId($openId)
+    {
+        $result = $this->user::where(["open_id" => $openId])
             ->first();
         return $result;
     }
