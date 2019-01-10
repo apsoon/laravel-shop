@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(["namespace" => "Api"], function () {
+Route::group(["namespace" => "Fapi"], function () {
 
     // 用户相关
     Route::POST("user/login", "UserApi@login");

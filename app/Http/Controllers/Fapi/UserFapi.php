@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Fapi;
 
 use App\Http\Controllers\Controller;
 use App\Http\Enum\StatusCode;
-use App\Http\Enum\StatusMessage;
 use App\Http\Service\UserService;
 use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
@@ -14,7 +13,7 @@ use Illuminate\Http\Request;
  *
  * @package App\Http\Controllers\Api
  */
-class UserApi extends Controller
+class UserFapi extends Controller
 {
     /**
      * @var UserService
