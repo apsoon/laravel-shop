@@ -21,6 +21,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(["namespace" => "Fapi"], function () {
 
     // 用户相关
-    Route::POST("user/login", "UserApi@login");
-    Route::POST("user/info/set", "UserApi@setUserInfo");
+    Route::POST("user/login", "UserFapi@login");
+    Route::POST("user/info/set", "UserFapi@setUserInfo");
 });
