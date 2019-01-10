@@ -30,7 +30,16 @@
     <!-- AdminLTE App -->
     <script src="{{asset('lib/admin-lte/js/adminlte.js')}}"></script>
 </head>
-<body>
-
+<body class="hold-transition skin-blue sidebar-mini">
+<div>
+    <!-- Header -->
+    <header class="main-header">
+        @include('admin.layouts.header')
+    </header>
+    <!-- Sidebar -->
+    <aside class="main-sidebar">
+        @include('admin.layouts.sidebar')
+    </aside>
+</div>
 </body>
 </html>
