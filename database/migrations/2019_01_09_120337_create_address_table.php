@@ -15,6 +15,15 @@ class CreateAddressTable extends Migration
     {
         Schema::create('address', function (Blueprint $table) {
             $table->increments('id');
+            $table->string("consignee")->default("")->comment("收件人姓名");
+            $table->string("phone")->default("");
+            $table->string("post_code")->default("");
+            $table->string("country")->default("");
+            $table->string("province")->default("");
+            $table->string("city")->default("");
+            $table->string("county")->default("");
+            $table->string("address_detail")->default("");
+            $table->tinyInteger("is_default")->default(0);
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
