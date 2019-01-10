@@ -6,7 +6,7 @@
         <li class="treeview">
             <a href="#"><span>商品管理</span> <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
-                <li><a href="#">添加商品</a></li>
+                <li><a href="#">商品列表</a></li>
                 <li><a href="#">品牌管理</a></li>
                 <li><a href="#">商品分类</a></li>
                 <li><a href="#">品牌管理</a></li>
