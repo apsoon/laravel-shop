@@ -16,7 +16,6 @@ class GoodsMapi extends Controller
     //
     public function list()
     {
-        Log::info(" [ GoodsMapi.php ] =================== list >>>>>> tag ");
         return view('admin.pages.goods.goods_list');
     }
 }

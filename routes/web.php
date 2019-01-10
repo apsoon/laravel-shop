@@ -25,8 +25,18 @@ Route::get('/index', function () {
 });
 
 
-Route::group(['middleware' => 'web', 'namespace'=>'Mapi'], function () {
+Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
+
+    // 商品
     Route::GET("goods/list", "GoodsMapi@list");
+
+    Route::GET("category/list", "CategoryMapi@list");
+
+    Route::GET("brand/list", "BrandMapi@list");
+
+    Route::GET("attribute/list", "AttributeMapi@list");
+
+    Route::GET("specification/list", "SpecificationMapi@list");
 });
 
 Auth::routes();
