@@ -1,7 +1,7 @@
 <!-- inner sidebar -->
 <section class="sidebar">
     <!-- sidebar menu -->
-    <ul class="sidebar-menu">
+    <ul class="sidebar-menu" data-widget="tree">
         <li class="active"><a href="#"><span>系统首页</span></a></li>
         <li class="treeview">
             <a href="#"><span>商品管理</span> <i class="fa fa-angle-left pull-right"></i></a>
