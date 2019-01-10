@@ -40,6 +40,24 @@
     <aside class="main-sidebar">
         @include('admin.layouts.sidebar')
     </aside>
+    <!-- Content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                @yield('title')
+                <small>@yield('subtitle')</small>
+            </h1>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            @yield('content')
+        </section>
+    </div>
+    <!-- Footer -->
+    <footer class="main-footer">
+        @include('admin.layouts.footer')
+    </footer>
 </div>
 </body>
 </html>

@@ -1,6 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', '主页')
-@section('subtitle', '主页')
+@section('title', '商品管理')
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
@@ -12,9 +11,9 @@
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
-                                asdfasdf
                             </div>
                         @endif
+
                         You are logged in!
                     </div>
                 </div>
