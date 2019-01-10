@@ -10,14 +10,20 @@
                 <div class="dataTables_wrapper form-inline dt-bootstrap">
                     <div class="row">
                         <div class="col-sm-12">
-                            <table id="brand-table" class="table table-bordered table-hover dataTable">
+                            <table id="brand-table" class="table table-bordered table-hover dataTable" role="grid"
+                                   aria-describedby="brand-info">
                                 <thead>
-
+                                <tr role="row" tabindex="0">
+                                    <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">名称</th>
+                                    <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">地区</th>
+                                    <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">描述</th>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($brands as $brand)
                                     <tr role="row">
                                         <td class="sorting_1">{{ $brand->name }}</td>
+                                        <td>{{ $brand->reign }}</td>
                                         <td>{{ $brand->describe }}</td>
                                     </tr>
                                 @endforeach
