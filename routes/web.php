@@ -25,8 +25,8 @@ Route::get('/index', function () {
 });
 
 
-Route::group(['middleware' => 'web'], function () {
-    Route::GET("goods/list", "GoodsFapi@list");
+Route::group(['middleware' => 'web', 'namespace'=>'Mapi'], function () {
+    Route::GET("goods/list", "GoodsMapi@list");
 });
 
 Auth::routes();
