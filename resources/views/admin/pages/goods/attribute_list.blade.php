@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', '商品管理')
+@section('title', '属性列表')
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
