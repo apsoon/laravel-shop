@@ -24,4 +24,9 @@ Route::get('/index', function () {
     return view('admin.pages.index');
 });
 
+
+Route::group(['middleware' => 'web'], function () {
+    Route::GET("goods/list", "GoodsFapi@list");
+});
+
 Auth::routes();

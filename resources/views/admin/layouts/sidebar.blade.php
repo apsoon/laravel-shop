@@ -6,16 +6,16 @@
         <li class="treeview">
             <a href="#"><span>商品管理</span> <i class="fa fa-angle-left pull-right"></i></a>
             <ul class="treeview-menu">
-                <li><a href="#">商品列表</a></li>
-                <li><a href="#">商品分类</a></li>
-                <li><a href="#">品牌管理</a></li>
-                <li><a href="#">商品规格</a></li>
-                <li><a href="#">商品属性</a></li>
+                <li><a href="{{ url("goods/list") }}">商品列表</a></li>
+                <li><a href="{{ url("category/list") }}">商品分类</a></li>
+                <li><a href="{{ url("brand/list") }}">品牌管理</a></li>
+                <li><a href="{{ url("specification/list") }}">商品规格</a></li>
+                <li><a href="{{ url("attribute/list") }}">商品属性</a></li>
             </ul>
         </li>
         <li class="treeview">
             <a href="#"><span>交易管理</span> <i class="fa fa-angle-left pull-right"></i></a>
-            <ul class="treeview-menu">
+            <ul class="nav treeview-menu menu-open">
                 <li><a href="#">订单管理</a></li>
                 {{--<li><a href="#">退款管理</a></li>--}}
                 {{--<li><a href="#">物流管理</a></li>--}}
@@ -23,7 +23,7 @@
         </li>
         <li class="treeview">
             <a href="#"><span>优惠券管理</span> <i class="fa fa-angle-left pull-right"></i></a>
-            <ul class="treeview-menu">
+            <ul class="nav treeview-menu menu-open">
                 <li><a href="#">优惠券列表</a></li>
             </ul>
         </li>
