@@ -15,7 +15,21 @@ class CreateOrderTable extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->string("user_id");
+            $table->string("order_sn");
+            $table->string("consignee")->default("")->comment("收件人姓名");
+            $table->string("phone")->default("");
+            $table->string("post_code")->default("");
+            $table->string("country")->default("");
+            $table->string("province")->default("");
+            $table->string("city")->default("");
+            $table->string("county")->default("");
+            $table->string("address_detail")->default("");
+            $table->integer("coupon_id")->nullable();
+            $table->integer("address_id")->nullable();
+            $table->tinyInteger("status")->comment("订单状态");
+            $table->timestamp("created_at")->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

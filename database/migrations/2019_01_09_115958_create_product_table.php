@@ -15,7 +15,16 @@ class CreateProductTable extends Migration
     {
         Schema::create('product', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->integer("goods_id");
+            $table->string("specification_ids")->nullable();
+            $table->string("specification_values")->nullable();
+            $table->decimal("origin_price")->default(0);
+            $table->decimal("price")->default(0);
+            $table->integer("number")->default(0);
+            $table->string("image_url")->default("");
+            $table->tinyInteger("state")->default(0);
+            $table->timestamp("created_at")->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
