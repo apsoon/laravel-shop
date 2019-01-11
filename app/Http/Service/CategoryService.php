@@ -55,15 +55,17 @@ class CategoryService
 
     private function unitMultiCategory($categories)
     {
-        $result = [];
+        $temp = [];
         foreach ($categories as $category) {
             if ($category->level == 1) {
-                array_push($result, $category);
+                $res = $this->copyCategoryBean($category);
+                array_push($temp, $res);
             } else {
                 foreach ($categories as $item) {
                     if ($item->id == $category->parent_id) {
                         $sublist = empty($item->sublist) == 1 ? [] : $item->sublist;
-                        array_push($sublist, $category);
+                        $res_ = $this->copyCategoryBean($category);
+                        array_push($sublist, $res_);
                         $sorted = array_values(array_sort($sublist, function ($cat) {
                             return $cat->sort_order;
                         }));
@@ -72,6 +74,27 @@ class CategoryService
                 }
             }
         }
+        $result = array_values(array_sort($temp, function ($item) {
+            return $item->sort_order;
+        }));
+        return $result;
+    }
+
+    /**
+     *
+     * @param $origin
+     * @return \stdClass
+     */
+    private function copyCategoryBean($origin)
+    {
+        $result = new \stdClass();
+        $result->id = $origin->id;
+        $result->parent_id = $origin->parent_id;
+        $result->name = $origin->name;
+        $result->level = $origin->level;
+        $result->image_url = $origin->image_url;
+        $result->sort_order = $origin->sort_order;
+        $result->sublist = empty($origin->sublist) ? [] : $origin->sublist;
         return $result;
     }
 
