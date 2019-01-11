@@ -10,6 +10,9 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\CategoryDao;
+use App\Http\Model\Collection;
+use Illuminate\Support\Facades\Log;
+use PhpParser\Node\Expr\Array_;
 
 /**
  * Class CategoryService
@@ -33,7 +36,7 @@ class CategoryService
     {
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = empty($req["size"]) ? 20 : $req["size"];
-        $result = $this->categoryDao->getAll($pageNo, $size);
+        $result = $this->categoryDao->getLimitedAll($pageNo, $size);
         return $result;
     }
 
@@ -44,7 +47,37 @@ class CategoryService
      */
     public function getUnitCategory()
     {
-        $result = $this->categoryDao->getUnitAll();
+        $categories = $this->categoryDao->getAll();
+        $sorted = array_values(array_sort($categories, function ($category) {
+            return $category->level;
+        }));
+        $sorted = array_reverse($sorted);
+        $result = $this->unitMultiCategory($sorted);
+        return $result;
+    }
+
+    private function unitMultiCategory($categories)
+    {
+        Log::info("========== origin ========== " . json_encode($categories));
+        $result = [];
+        foreach ($categories as $category) {
+            if ($category->level == 1) {
+                array_push($result, $category);
+            } else {
+                foreach ($categories as $item) {
+                    if ($item->id == $category->parent_id) {
+                        $sublist = empty($item->sublist) == 1 ? [] : $item->sublist;
+                        array_push($sublist, $category);
+//                        $sorted = collect($sublist)->sortBy(function ($cat) {
+//                            return $cat->sort_order;
+//                        });
+                        $item->sublist = $sublist;
+                        Log::info(" +++++++++++++++++++++++++++++++++ " . json_encode($sublist));
+                    }
+                }
+            }
+        }
+        Log::info("----------------------------------------------------" . json_encode($result));
         return $result;
     }
 

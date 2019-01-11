@@ -74,13 +74,13 @@ class CategoryDao
     }
 
     /**
-     * 获取所有的分类
+     * 分页获取所有的分类
      *
      * @param $pageNo
      * @param $size
      * @return mixed
      */
-    public function getAll(int $pageNo, int $size)
+    public function getLimitedAll(int $pageNo, int $size)
     {
         $offset = ($pageNo - 1) * $size;
         $result = $this->category::offset($offset)
@@ -89,19 +89,13 @@ class CategoryDao
         return $result;
     }
 
-
     /**
-     * 获取合并父类的分类
+     * 获取所有的分类
      *
-     * @return Category[]|\Illuminate\Database\Eloquent\Collection
+     * @return mixed
      */
-    public function getUnitAll()
+    public function getAll()
     {
-        DB::table("category as c1")
-            ->select("c1.id", "c1.type_name", "c2.id")
-            ->join("category as c2", "c1.id" ,"=" ,"c2.parent_id")
-            ->get();
-
         $result = $this->category::all();
         return $result;
     }
