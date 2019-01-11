@@ -10,13 +10,13 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- css -->
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="{{ asset('lib/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('lib/bootstrap/css/bootstrap.min.css')}}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('lib/admin-lte/css/AdminLTE.min.css')}}">
+    <link rel="stylesheet" href="{{asset('lib/admin-lte/css/AdminLTE.min.css')}}">
     <link rel="stylesheet" href="{{asset('lib/admin-lte/css/skins/skin-blue.min.css')}}">
     <!-- js -->
     <!--[if lt IE 9]>
