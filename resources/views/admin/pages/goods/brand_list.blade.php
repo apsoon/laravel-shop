@@ -14,9 +14,11 @@
                                    aria-describedby="brand-info">
                                 <thead>
                                 <tr role="row" tabindex="0">
-                                    <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">名称</th>
+                                    <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">Logo</th>
+                                    <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">品牌名称</th>
                                     <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">地区</th>
                                     <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">描述</th>
+                                    <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
