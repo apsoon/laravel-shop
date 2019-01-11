@@ -10,9 +10,6 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\CategoryDao;
-use App\Http\Model\Collection;
-use Illuminate\Support\Facades\Log;
-use PhpParser\Node\Expr\Array_;
 
 /**
  * Class CategoryService
@@ -58,7 +55,6 @@ class CategoryService
 
     private function unitMultiCategory($categories)
     {
-        Log::info("========== origin ========== " . json_encode($categories));
         $result = [];
         foreach ($categories as $category) {
             if ($category->level == 1) {
@@ -68,16 +64,14 @@ class CategoryService
                     if ($item->id == $category->parent_id) {
                         $sublist = empty($item->sublist) == 1 ? [] : $item->sublist;
                         array_push($sublist, $category);
-//                        $sorted = collect($sublist)->sortBy(function ($cat) {
-//                            return $cat->sort_order;
-//                        });
-                        $item->sublist = $sublist;
-                        Log::info(" +++++++++++++++++++++++++++++++++ " . json_encode($sublist));
+                        $sorted = array_values(array_sort($sublist, function ($cat) {
+                            return $cat->sort_order;
+                        }));
+                        $item->sublist = $sorted;
                     }
                 }
             }
         }
-        Log::info("----------------------------------------------------" . json_encode($result));
         return $result;
     }
 
