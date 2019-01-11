@@ -29,9 +29,10 @@
     <script src="{{asset('lib/bootstrap/js/bootstrap.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('lib/admin-lte/js/adminlte.js')}}"></script>
+    {{--<script src="{{asset('lib/admin-lte/js/demo.js')}}"></script>--}}
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
-<div>
+<div class="wrapper">
     <!-- Header -->
     <header class="main-header">
         @include('admin.layouts.header')
@@ -58,6 +59,11 @@
     <footer class="main-footer">
         @include('admin.layouts.footer')
     </footer>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        {{--@include('admin.layouts.sidebar_control');--}}
+    </aside>
+    <!-- /.control-sidebar -->
 </div>
 </body>
 </html>

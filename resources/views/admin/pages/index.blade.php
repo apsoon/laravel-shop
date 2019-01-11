@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
-@section('title', '主页')
-@section('subtitle', '主页')
+@section('title', '首页')
+@section('subtitle', '首页')
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
