@@ -23,4 +23,7 @@ Route::group(["namespace" => "Fapi"], function () {
     // 用户相关
     Route::POST("user/login", "UserFapi@login");
     Route::POST("user/info/set", "UserFapi@setUserInfo");
+
+    // 分类
+    Route::GET("category/list","CategoryFapi@unitList");
 });
