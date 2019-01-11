@@ -9,6 +9,7 @@
 namespace App\Http\Dao;
 
 use App\Http\Model\Category;
+use Illuminate\Support\Facades\DB;
 use phpDocumentor\Reflection\Types\Integer;
 
 /**
@@ -96,6 +97,11 @@ class CategoryDao
      */
     public function getUnitAll()
     {
+        DB::table("category as c1")
+            ->select("c1.id", "c1.type_name", "c2.id")
+            ->join("category as c2", "c1.id" ,"=" ,"c2.parent_id")
+            ->get();
+
         $result = $this->category::all();
         return $result;
     }
@@ -107,6 +113,6 @@ class CategoryDao
      */
     public function __construct(Category $category)
     {
-        $this->$category = $category;
+        $this->category = $category;
     }
 }
