@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Fapi;
 
 use App\Http\Controllers\Controller;
+use App\Http\Enum\StatusCode;
 use App\Http\Service\CategoryService;
+use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 
 class CategoryFapi extends Controller
@@ -16,12 +18,12 @@ class CategoryFapi extends Controller
     /**
      * unitList
      *
-     * @return \App\Http\Model\Category[]|\Illuminate\Database\Eloquent\Collection
+     * @return JsonResult
      */
     public function unitList()
     {
         $result = $this->categoryService->getUnitCategory();
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**

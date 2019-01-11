@@ -89,9 +89,7 @@ class CategoryService
     {
         $result = new \stdClass();
         $result->id = $origin->id;
-        $result->parent_id = $origin->parent_id;
         $result->name = $origin->name;
-        $result->level = $origin->level;
         $result->image_url = $origin->image_url;
         $result->sort_order = $origin->sort_order;
         $result->sublist = empty($origin->sublist) ? [] : $origin->sublist;
