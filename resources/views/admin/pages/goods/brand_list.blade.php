@@ -43,4 +43,16 @@
             </div>
         </div>
     </div>
+    <script>
+        $(function () {
+            $('#brand-table').DataTable({
+                'paging': true,
+                'lengthChange': false,
+                'searching': false,
+                'ordering': true,
+                'info': true,
+                'autoWidth': false
+            })
+        })
+    </script>
 @endsection

@@ -18,6 +18,8 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('lib/admin-lte/css/AdminLTE.min.css')}}">
     <link rel="stylesheet" href="{{asset('lib/admin-lte/css/skins/skin-blue.min.css')}}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{asset('lib/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
     <!-- js -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -29,7 +31,9 @@
     <script src="{{asset('lib/bootstrap/js/bootstrap.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('lib/admin-lte/js/adminlte.js')}}"></script>
-    {{--<script src="{{asset('lib/admin-lte/js/demo.js')}}"></script>--}}
+    <!-- DataTables -->
+    <script src="{{asset('/lib/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('/lib/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
