@@ -33,7 +33,7 @@ class BrandMapi extends Controller
     {
         $req = $request->all();
         $result = $this->brandService->createBrand($req);
-        Log::info(" [ BrandMapi.php ] ================== createBrand >>>>> req = " . json_encode($req));
+        if ($result) return $this->list();
     }
 
     /**
