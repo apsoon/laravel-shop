@@ -26,6 +26,20 @@
                         <input type="file" id="brand-logo">
                         <p class="help-block">图片大小120px*60px 小于5M</p>
                     </div>
+                    <!-- radio -->
+                    <div class="form-group">
+                        <label>
+                            <div class="radio">
+                                <input type="radio" name="state-on" id="state-on" value="1" checked>
+                                开启
+                            </div>
+                        </label><label>
+                            <div class="radio">
+                                <input type="radio" name="state-off" id="state-off" value="0">
+                                关闭
+                            </div>
+                        </label>
+                    </div>
                 </form>
             </div>
         </div>
