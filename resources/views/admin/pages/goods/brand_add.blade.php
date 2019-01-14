@@ -18,12 +18,13 @@
                         <input class="form-control" id="brand-reign" placeholder="请输入品牌所属地区">
                     </div>
                     <div class="form-group">
-                        <label>品牌商标</label>
-                        <input class="form-control" id="brand-logo" placeholder="请输入品牌LOGO">
-                    </div>
-                    <div class="form-group">
                         <label>品牌描述</label>
                         <textarea class="form-control" id="brand-desc" rows="3" placeholder="请输入商品描述"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="brand-logo">品牌商标</label>
+                        <input type="file" id="brand-logo">
+                        <p class="help-block">图片大小120px*60px 小于5M</p>
                     </div>
                 </form>
             </div>
