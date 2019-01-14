@@ -39,6 +39,7 @@
                                 <td>{{ $brand->region }}</td>
                                 <td>{{ $brand->state }}</td>
                                 <td>
+                                    <button type="button" class="btn btn-success btn-flat">详情</button>
                                     <button type="button" class="btn btn-info btn-flat">修改</button>
                                     <button type="button" class="btn btn-warning  btn-flat">下架</button>
                                     <button type="button" class="btn btn-danger  btn-flat">删除</button>
