@@ -38,7 +38,7 @@
                                 <td>{{ $brand->name }}</td>
                                 <td>{{ $brand->region }}</td>
                                 <td>{{ $brand->state }}</td>
-                                <td class="pull-right">
+                                <td>
                                     <button type="button" class="btn btn-success btn-flat">详情</button>
                                     <button type="button" class="btn btn-info btn-flat">修改</button>
                                     <button type="button" class="btn btn-warning  btn-flat">下架</button>
