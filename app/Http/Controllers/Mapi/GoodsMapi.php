@@ -24,7 +24,9 @@ class GoodsMapi extends Controller
     //
     public function list()
     {
-        return view('admin.pages.goods.goods_list');
+        $req = [];
+        $result = $this->goodsService->getGoodsList($req);
+        return view('admin.pages.goods.goods_list',["goodsList"=>$result]);
     }
 
     /**
