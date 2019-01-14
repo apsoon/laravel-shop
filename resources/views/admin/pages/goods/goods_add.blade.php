@@ -41,15 +41,17 @@
                         <input class="form-control" id="brand-region" name="region" placeholder="请输入品牌所属地区">
                     </div>
                     <div class="form-group">
+                        <label>添加图片</label>
+                        <input class="form-control" id="brand-region" name="region" placeholder="请输入品牌所属地区">
+                    </div>
+                    <div class="form-group">
                         <label>商品状态</label>
                         <input class="form-control" id="brand-region" name="region" placeholder="请输入品牌所属地区">
                     </div>
                     <div class="form-group">
                         <label>商品描述</label>
                         <div id="editor">
-                            <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
                         </div>
-
                     </div>
                     <div class="form-group">
                         <label for="brand-logo">品牌商标</label>
