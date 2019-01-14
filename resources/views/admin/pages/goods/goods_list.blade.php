@@ -5,8 +5,8 @@
         <div class="col-xs-12">
             <div class="box table-striped">
                 <div class="box-header">
-                    <a href="{{ url("brand/add") }}">
-                        <button type="button" class="btn btn-sm btn-success btn-flat">添加品牌</button>
+                    <a href="{{ url("goods/add") }}">
+                        <button type="button" class="btn btn-sm btn-success btn-flat">添加商品</button>
                     </a>
                     <button type="button" class="btn btn-sm btn-danger  btn-flat">批量删除</button>
                 </div>
