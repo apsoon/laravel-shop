@@ -46,8 +46,10 @@
                     </div>
                     <div class="form-group">
                         <label>商品描述</label>
-                        <textarea class="form-control" id="brand-desc" name="desc" rows="3"
-                                  placeholder="请输入商品描述"></textarea>
+                        <div id="editor">
+                            <p>欢迎使用 <b>wangEditor</b> 富文本编辑器</p>
+                        </div>
+
                     </div>
                     <div class="form-group">
                         <label for="brand-logo">品牌商标</label>
@@ -75,4 +77,12 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript"
+            src="{{ asset("lib/wangEditor/wangEditor.min.js") }}"></script>
+    <script type="text/javascript">
+        var E = window.wangEditor
+        var editor = new E('#editor')
+        // 或者 var editor = new E( document.getElementById('editor') )
+        editor.create()
+    </script>
 @endsection
