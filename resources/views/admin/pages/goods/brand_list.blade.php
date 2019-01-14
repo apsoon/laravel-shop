@@ -2,57 +2,60 @@
 @section('title', '品牌列表')
 @section('content')
     <div class="container">
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">品牌列表</h3>
-            </div>
-            <div id="brand-table-wrap" class="box-body">
-                <div class="dataTables_wrapper form-inline dt-bootstrap">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <table id="brand-table" class="table table-bordered table-hover dataTable" role="grid"
-                                   aria-describedby="brand-info">
-                                <thead>
-                                <tr role="row" tabindex="0">
-                                    <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">Logo</th>
-                                    <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">品牌名称</th>
-                                    <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">地区</th>
-                                    <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">描述</th>
-                                    <th class="sorting" aria-controls="brand-table" rowspan="1" colspan="1">操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($brands as $brand)
-                                    <tr role="row">
-                                        <td class="sorting_1">{{ $brand->name }}</td>
-                                        <td>{{ $brand->reign }}</td>
-                                        <td>{{ $brand->describe }}</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                                <tfoot>
-
-                                </tfoot>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="row">
-
-                    </div>
+        <div class="col-xs-12">
+            <div class="box table-striped">
+                <div class="box-header">
+                    {{--<h3 class="box-title">品牌列表</h3>--}}
+                    <button type="button" class="btn btn-sm btn-success btn-flat">添加品牌</button>
+                    <button type="button" class="btn btn-sm btn-danger  btn-flat">批量删除</button>
                 </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>
+                                <label>
+                                    <input type="checkbox">
+                                </label>
+                            </th>
+                            <th>编号</th>
+                            <th>品牌LOGO</th>
+                            <th>名称</th>
+                            <th>地区</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                        @foreach($brands as $brand)
+                            <tr role="row">
+                                <td>
+                                    <label>
+                                        <input type="checkbox">
+                                    </label>
+                                </td>
+                                <td>{{ $brand->brand_id }}</td>
+                                <td>{{ $brand->logo }}</td>
+                                <td>{{ $brand->name }}</td>
+                                <td>{{ $brand->region }}</td>
+                                <td>{{ $brand->state }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-flat">修改</button>
+                                    <button type="button" class="btn btn-warning  btn-flat">下架</button>
+                                    <button type="button" class="btn btn-danger  btn-flat">删除</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
+                <!-- page -->
+                {{--<div class="box-footer clearfix">--}}
+                {{--<ul class="pagination pagination-sm no-margin pull-right">--}}
+                {{--<li><a href="#">&laquo;</a></li>--}}
+                {{--<li><a href="#">1</a></li>--}}
+                {{--<li><a href="#">2</a></li>--}}
+                {{--<li><a href="#">3</a></li>--}}
+                {{--<li><a href="#">&raquo;</a></li>--}}
+                {{--</ul>--}}
+                {{--</div>--}}
             </div>
         </div>
     </div>
-    <script>
-        $(function () {
-            $('#brand-table').DataTable({
-                'paging': true,
-                'lengthChange': false,
-                'searching': false,
-                'ordering': true,
-                'info': true,
-                'autoWidth': false
-            })
-        })
-    </script>
 @endsection
