@@ -23,6 +23,11 @@ class BrandMapi extends Controller
         return view('admin.pages.goods.brand_list', ["brands" => $result]);
     }
 
+    public function add()
+    {
+        return view('admin.pages.goods.brand_add');
+    }
+
     /**
      * BrandMapi constructor.
      *
