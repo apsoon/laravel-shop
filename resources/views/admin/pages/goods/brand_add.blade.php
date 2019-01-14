@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
-@section('title', '添加品牌')
+@section('title', '品牌管理')
+@section('subtitle','添加品牌')
 @section('content')
     <div class="container">
         <div class="box box-primary">
