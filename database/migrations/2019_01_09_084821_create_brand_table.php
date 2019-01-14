@@ -20,6 +20,7 @@ class CreateBrandTable extends Migration
             $table->string("region")->default("")->comment("地区");
             $table->string("logo")->default("")->comment("LOGO");
             $table->text("describe")->nullable()->comment("描述");
+            $table->tinyInteger("state")->default(0)->comment("状态");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
