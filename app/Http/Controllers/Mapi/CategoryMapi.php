@@ -16,13 +16,11 @@ class CategoryMapi extends Controller
     /**
      * list
      *
-     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function list(Request $request)
+    public function list()
     {
-        $req = $request->all();
-        $result = $this->categoryService->getAllCategory($req);
+        $result = $this->categoryService->getUnitCategory();
         return view('admin.pages.goods.category_list', ["categories" => $result]);
     }
 
