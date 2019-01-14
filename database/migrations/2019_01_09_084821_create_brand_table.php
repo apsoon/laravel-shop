@@ -17,8 +17,8 @@ class CreateBrandTable extends Migration
             $table->increments('id');
             $table->string("name")->default("")->comment("名称");
             $table->string("brand_id")->default("")->comment("品牌编号");
-            $table->string("region")->default("")->comment("地区");
-            $table->string("logo")->default("")->comment("LOGO");
+            $table->string("region")->nullable()->default("")->comment("地区");
+            $table->string("logo")->nullable()->default("")->comment("LOGO");
             $table->text("describe")->nullable()->comment("描述");
             $table->tinyInteger("state")->default(0)->comment("状态");
             $table->timestamp("created_at")->useCurrent();

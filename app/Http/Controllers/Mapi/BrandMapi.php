@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Mapi;
 use App\Http\Controllers\Controller;
 use App\Http\Service\BrandService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class BrandMapi extends Controller
 {
@@ -26,6 +27,13 @@ class BrandMapi extends Controller
     public function add()
     {
         return view('admin.pages.goods.brand_add');
+    }
+
+    public function createBrand(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->brandService->createBrand($req);
+        Log::info(" [ BrandMapi.php ] ================== createBrand >>>>> req = " . json_encode($req));
     }
 
     /**

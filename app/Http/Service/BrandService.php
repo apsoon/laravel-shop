@@ -9,6 +9,7 @@
 namespace App\Http\Service;
 
 use App\Http\Dao\BrandDao;
+use App\Http\Model\Brand;
 
 /**
  * Class UserService
@@ -26,6 +27,25 @@ class BrandService
     public function getAllBrand()
     {
         $result = $this->brandDao->getAll();
+        return $result;
+    }
+
+    /**
+     * 创建商标
+     *
+     * @param $req
+     * @return bool
+     */
+    public function createBrand($req)
+    {
+        $brand = new Brand();
+        $brand->name = $req["name"];
+        $brand->brand_id = $req["id"];
+        $brand->region = $req["region"];
+        $brand->logo = $req["logo"];
+        $brand->describe = $req["desc"];
+        $brand->state = $req["state"];
+        $result = $this->brandDao->insert($brand);
         return $result;
     }
 
