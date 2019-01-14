@@ -10,12 +10,23 @@
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tr>
+                            <th style="width: 40px;">
+                                <label>
+                                    <input type="checkbox">
+                                </label>
+                            </th>
                             <th>名称</th>
                             <th>状态</th>
-                            <th>操作</th>
+                            <th style="width: 270px">操作</th>
                         </tr>
                         @foreach($attributes as $attribute)
                             <tr role="row">
+                                <td>
+                                    <label>
+                                        <input type="checkbox">
+                                    </label>
+                                </td>
+                                <td class="sorting_1">{{ $attribute->name }}</td>
                                 <td class="sorting_1">{{ $attribute->name }}</td>
                                 <td>
                                     {{--<div class="btn-group">--}}
