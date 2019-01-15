@@ -10,6 +10,8 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\CategoryDao;
+use App\Http\Model\Category;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class CategoryService
@@ -22,6 +24,25 @@ class CategoryService
      * @var  CategoryDao
      */
     private $categoryDao;
+
+    public function createCategory(array $req)
+    {
+        Log::info($req);
+        $category = new Category();
+        $category->name = $req["name"];
+        $category->sort_order = empty($req["sort_order"]) ? 1 : $req["sort_order"];
+        if (empty($req["parent_id"])) {
+            $category->level = 1;
+            $category->parent_id = 0;
+        } else {
+            $cat = $this->categoryDao->findById($req["parent_id"]);
+            $category->parent_id = $req["parent_id"];
+            $category->level = $cat->level + 1;
+        }
+        $category->image_url = $req["image_url"];
+        $result = $this->categoryDao->insert($category);
+        return $result;
+    }
 
     /**
      * 获取所有分类

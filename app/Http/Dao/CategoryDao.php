@@ -42,7 +42,7 @@ class CategoryDao
      * @param Integer $id
      * @return mixed
      */
-    public function getById(Integer $id)
+    public function findById(int $id)
     {
         $result = $this->category::where(["id" => $id])
             ->first();

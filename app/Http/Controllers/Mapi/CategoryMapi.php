@@ -27,6 +27,31 @@ class CategoryMapi extends Controller
     }
 
     /**
+     * 添加分类
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function add(Request $request)
+    {
+        $result = $this->categoryService->getUnitCategory();
+        return view('admin.pages.goods.category_add', ["categoryList" => $result]);
+    }
+
+    /**
+     * 添加分类
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function create(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->categoryService->createCategory($req);
+        return redirect('category/list');
+    }
+
+    /**
      * CategoryMapi constructor.
      *
      * @param CategoryService $categoryService

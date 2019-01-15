@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="{{asset('lib/admin-lte/css/skins/skin-blue.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{asset('lib/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{asset('lib/select2/dist/css/select2.min.css')}}">
     <!-- js -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
