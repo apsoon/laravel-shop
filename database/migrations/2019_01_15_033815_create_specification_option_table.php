@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSpecificationTable extends Migration
+class CreateSpecificationOptionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateSpecificationTable extends Migration
      */
     public function up()
     {
-        Schema::create('specification', function (Blueprint $table) {
+        Schema::create('specification_option', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("category_id")->comment("分类id");
-            $table->string("name")->default("规格名称");
+            $table->integer("specification_id")->comment("规格ID");
+            $table->string("name")->comment("规格名称");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -29,6 +29,6 @@ class CreateSpecificationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('specification');
+        Schema::dropIfExists('specification_option');
     }
 }

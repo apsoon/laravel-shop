@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGoodsSpecificationTable extends Migration
+class CreateProductSpecificationOptionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateGoodsSpecificationTable extends Migration
      */
     public function up()
     {
-        Schema::create('goods_specification', function (Blueprint $table) {
+        Schema::create('product_specification_option', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("goods_id")->index();
-            $table->integer("specification_id");
-            $table->string("name")->default("");
-            $table->string("value")->default("");
-            $table->string("image_url")->default("");
+            $table->integer("product_id")->index()->comment("产品id");
+            $table->integer("specification_id")->comment("规格id");
+            $table->integer("specification_option_id")->comment("规格选项id");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
