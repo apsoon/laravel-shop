@@ -15,7 +15,8 @@ class CreateAttributeTable extends Migration
     {
         Schema::create('attribute', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("name");
+            $table->integer("attribute_group_id")->comment("属性组id");
+            $table->string("name")->comment("属性名称");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

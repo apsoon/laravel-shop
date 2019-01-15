@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGoodsAttributeTable extends Migration
+class CreateAttributeOptionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateGoodsAttributeTable extends Migration
      */
     public function up()
     {
-        Schema::create('goods_attribute', function (Blueprint $table) {
+        Schema::create('attribute_option', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("goods_id")->index();
-            $table->integer("attribute_id");
-            $table->string("name")->default("");
-            $table->string("value")->default("");
+            $table->integer("attribute_id")->comment("属性名称");
+            $table->integer("attribute_group_id")->comment("属性组名称");
+            $table->string("value")->comment("属性值");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -31,6 +30,6 @@ class CreateGoodsAttributeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('goods_attribute');
+        Schema::dropIfExists('attribute_option');
     }
 }
