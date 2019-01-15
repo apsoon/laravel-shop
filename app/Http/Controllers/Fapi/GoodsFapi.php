@@ -13,11 +13,16 @@ class GoodsFapi extends Controller
      */
     private $goodsService;
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function detail(Request $request)
     {
-
+        $req = $request->all();
+        $result = $this->goodsService->getGoodsDetail($req);
+        return $result;
     }
-
 
     /**
      * 分类获取

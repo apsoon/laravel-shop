@@ -31,6 +31,20 @@ class GoodsDao
     }
 
     /**
+     * 根据商品id获取商品
+     *
+     * @param $goodsId
+     * @return mixed
+     */
+    public function findByGoodsId($goodsId)
+    {
+        if (empty($goodsId)) return null;
+        $result = $this->goods::where(["goods_id" => $goodsId])
+            ->first;
+        return $result;
+    }
+
+    /**
      * 分页按照分类获取
      *
      * @param int $categoryId
