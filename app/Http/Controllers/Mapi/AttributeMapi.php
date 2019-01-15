@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Mapi;
 use App\Http\Controllers\Controller;
 use App\Http\Service\AttributeService;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class AttributeMapi extends Controller
 {
@@ -24,6 +25,16 @@ class AttributeMapi extends Controller
         $req = $request->all();
         $result = $this->attributeService->getAttributeList($req);
         return view('admin.pages.goods.attribute_list', ["attributes" => $result]);
+    }
+
+    public function add()
+    {
+        return view("admin.pages.goods.attribute_add");
+    }
+
+    public function create(Request $request)
+    {
+
     }
 
     /**

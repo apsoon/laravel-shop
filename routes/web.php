@@ -34,8 +34,8 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
 
     // 分类
     Route::GET("category/list", "CategoryMapi@list");
-    Route::GET("category/add","CategoryMapi@add");
-    Route::POST("category/create","CategoryMapi@create");
+    Route::GET("category/add", "CategoryMapi@add");
+    Route::POST("category/create", "CategoryMapi@create");
 
     // 品牌
     Route::GET("brand/list", "BrandMapi@list");
@@ -43,6 +43,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::POST("brand/create", "BrandMapi@createBrand");
 
     Route::GET("attribute/list", "AttributeMapi@list");
+    Route::GET("attribute/add", "AttributeMapi@add");
 
     // 规格
     Route::GET("specification/list", "SpecificationMapi@list");

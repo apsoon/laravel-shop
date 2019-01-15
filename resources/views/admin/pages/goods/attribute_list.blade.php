@@ -5,7 +5,12 @@
         <div class="col-xs-12">
             <div class="box table-striped">
                 <div class="box-header">
-                    <h3 class="box-title">属性列表</h3>
+                    <a href="{{ url("attribute/add") }}">
+                        <button type="button" class="btn btn-sm btn-success btn-flat">添加属性</button>
+                    </a>
+                    <a href="{{ url("attribute_group/add") }}">
+                        <button type="button" class="btn btn-sm btn-success btn-flat">添加属性组</button>
+                    </a>
                 </div>
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
