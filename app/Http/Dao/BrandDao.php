@@ -43,7 +43,7 @@ class BrandDao
      * @param Integer $id
      * @return mixed
      */
-    public function getById(Integer $id)
+    public function findById(Integer $id)
     {
         $result = $this->brand::where(["id" => $id])
             ->first();
@@ -79,7 +79,7 @@ class BrandDao
      *
      * @return Brand[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getAll()
+    public function findAll()
     {
         $result = $this->brand::all();
         return $result;

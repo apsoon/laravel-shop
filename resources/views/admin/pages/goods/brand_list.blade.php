@@ -33,7 +33,7 @@
                                         <input type="checkbox">
                                     </label>
                                 </td>
-                                <td>{{ $brand->brand_id }}</td>
+                                <td>{{ $brand->id}}</td>
                                 <td>{{ $brand->logo }}</td>
                                 <td>{{ $brand->name }}</td>
                                 <td>{{ $brand->region }}</td>

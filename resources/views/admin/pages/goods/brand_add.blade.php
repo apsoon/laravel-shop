@@ -11,10 +11,10 @@
                         <label>品牌名称</label>
                         <input class="form-control" id="brand-name" name="name" placeholder="请输入品牌名称">
                     </div>
-                    <div class="form-group">
-                        <label>品牌编号</label>
-                        <input class="form-control" id="brand-id" name="id" placeholder="请输入品牌编号">
-                    </div>
+                    {{--<div class="form-group">--}}
+                        {{--<label>品牌编号</label>--}}
+                        {{--<input class="form-control" id="brand-id" name="id" placeholder="请输入品牌编号">--}}
+                    {{--</div>--}}
                     <div class="form-group">
                         <label>所属地区</label>
                         <input class="form-control" id="brand-region" name="region" placeholder="请输入品牌所属地区">

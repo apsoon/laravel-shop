@@ -29,11 +29,17 @@ class BrandMapi extends Controller
         return view('admin.pages.goods.brand_add');
     }
 
+    /**
+     * 创建品牌
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function createBrand(Request $request)
     {
         $req = $request->all();
         $result = $this->brandService->createBrand($req);
-        if ($result) return $this->list();
+        if ($result) return redirect("brand/list");
     }
 
     /**

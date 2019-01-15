@@ -24,9 +24,12 @@ class BrandService
     private $brandDao;
 
 
+    /**
+     * @return Brand[]|\Illuminate\Database\Eloquent\Collection
+     */
     public function getAllBrand()
     {
-        $result = $this->brandDao->getAll();
+        $result = $this->brandDao->findAll();
         return $result;
     }
 
@@ -40,7 +43,6 @@ class BrandService
     {
         $brand = new Brand();
         $brand->name = $req["name"];
-        $brand->brand_id = $req["id"];
         $brand->region = $req["region"];
         $brand->logo = $req["logo"];
         $brand->describe = $req["desc"];
