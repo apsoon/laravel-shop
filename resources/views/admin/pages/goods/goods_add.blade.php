@@ -13,24 +13,26 @@
                     </div>
                     <div class="form-group">
                         <label>简要描述</label>
-                        <input class="form-control" id="goods-id" name="id" placeholder="请输入简要描述">
+                        <input class="form-control" id="goods-brief" name="brief" placeholder="请输入简要描述">
                     </div>
                     <div class="row">
                         <div class="form-group col-md-3">
                             <label>商品原价</label>
-                            <input class="form-control" type="number" id="goods-id" name="id" placeholder="请输入商品编号">
+                            <input class="form-control" type="number" id="goods-origin-price" name="originPrice"
+                                   placeholder="请输入商品编号">
                         </div>
                         <div class="form-group col-md-3">
                             <label>商品现价<b class="text-red">*</b></label>
-                            <input class="form-control" type="number" id="goods-id" name="id" placeholder="请输入商品现价">
+                            <input class="form-control" type="number" id="goods-price" name="price"
+                                   placeholder="请输入商品现价">
                         </div>
                         <div class="form-group  col-md-3">
                             <label>商品数量<b class="text-red">*</b></label>
-                            <input class="form-control" type="number" id="goods-id" name="id" placeholder="请输入商品数量">
+                            <input class="form-control" type="number" id="goods-id" name="number" placeholder="请输入商品数量">
                         </div>
                         <div class="form-group  col-md-3">
                             <label>数量单位<b class="text-red">*</b></label>
-                            <input class="form-control" id="gooods-id" name="id" placeholder="请输入数量单位">
+                            <input class="form-control" id="goods-unit" name="unit" placeholder="请输入数量单位">
                         </div>
                     </div>
                     <div class="form-group">
@@ -54,14 +56,14 @@
                     <div class="form-group">
                         <label>商品状态</label>
                         <label class="col-md-1">
-                            <input type="radio" name="state" id="state-on" value="1" checked>开启
+                            <input type="radio" name="state" id="goods-state-on" value="1" checked>开启
                         </label>
                         <label class="col-md-1">
-                            <input type="radio" name="state" id="state-off" value="0">关闭
+                            <input type="radio" name="state" id="goods-state-off" value="0">关闭
                         </label>
                     </div>
                     <div class="box-footer">
-                        <button type="submit" id="brand-submit" class="btn btn-primary">提交</button>
+                        <button type="submit" id="goods-submit" class="btn btn-primary">提交</button>
                     </div>
                 </form>
             </div>
