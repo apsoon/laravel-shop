@@ -20,6 +20,18 @@ class SpecificationDao
     private $specification;
 
     /**
+     * 添加
+     *
+     * @param Specification $specification
+     * @return bool
+     */
+    public function insert(Specification $specification)
+    {
+        $result = $specification->save();
+        return $result;
+    }
+
+    /**
      * 按页获取
      *
      * @param int $pageNo

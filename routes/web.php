@@ -44,7 +44,11 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
 
     Route::GET("attribute/list", "AttributeMapi@list");
 
+    // 规格
     Route::GET("specification/list", "SpecificationMapi@list");
+    Route::GET("specification/add", "SpecificationMapi@add");
+    Route::POST("specification/create", "SpecificationMapi@create");
+
     // 帮助
     Route::GET("help", function () {
         return view("admin.pages.help");

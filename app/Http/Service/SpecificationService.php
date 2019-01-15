@@ -10,6 +10,7 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\SpecificationDao;
+use App\Http\Model\Specification;
 
 /**
  * Class SpecificationService
@@ -22,6 +23,20 @@ class SpecificationService
      * @var SpecificationDao
      */
     private $specificationDao;
+
+    /**
+     * 创建
+     *
+     * @param array $req
+     * @return bool
+     */
+    public function createSpecification(array $req)
+    {
+        $specification = new Specification();
+        $specification->name = $req["name"];
+        $result = $this->specificationDao->insert($specification);
+        return $result;
+    }
 
     /**
      * 获取规格列表
