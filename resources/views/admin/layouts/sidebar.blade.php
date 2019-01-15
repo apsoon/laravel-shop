@@ -79,6 +79,7 @@
                 {{--<li><a href="#">系统日志</a></li>--}}
             </ul>
         </li>
+        <li><a href="{{ url("/help") }}"><span>帮助文档</span></a></li>
     </ul>
     <!-- /.sidebar-menu -->
 </section>

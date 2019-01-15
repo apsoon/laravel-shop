@@ -41,6 +41,10 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::GET("attribute/list", "AttributeMapi@list");
 
     Route::GET("specification/list", "SpecificationMapi@list");
+    // 帮助
+    Route::GET("help", function () {
+        return view("admin.pages.help");
+    });
 });
 
 Auth::routes();
