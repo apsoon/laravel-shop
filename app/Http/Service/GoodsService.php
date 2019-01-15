@@ -27,6 +27,16 @@ class GoodsService
     }
 
     /**
+     * @param $req
+     * @return mixed
+     */
+    public function getGoodsByCategory($req)
+    {
+        $result = $this->goodsDao->findByCategoryPaged($req["categoryId"], $req["pageNo"], $req["size"]);
+        return $result;
+    }
+
+    /**
      * 获取商品列表
      *
      * @param $req

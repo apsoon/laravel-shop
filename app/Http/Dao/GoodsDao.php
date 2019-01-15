@@ -31,6 +31,24 @@ class GoodsDao
     }
 
     /**
+     * 分页按照分类获取
+     *
+     * @param int $categoryId
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findByCategoryPaged(int $categoryId, int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->goods::where(["category_id" => $categoryId])
+            ->offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * 分页获取
      *
      * @param int $pageNo
