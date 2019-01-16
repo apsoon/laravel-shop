@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('title', '商品列表')
 @section('content')
-    <div class="container">
+    <div class="content">
         <div class="col-xs-12">
             <div class="box table-striped">
                 <div class="box-header">

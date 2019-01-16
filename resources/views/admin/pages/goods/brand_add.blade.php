@@ -2,7 +2,7 @@
 @section('title', '品牌管理')
 @section('subtitle','添加品牌')
 @section('content')
-    <div class="container">
+    <div class="content">
         <div class="box box-primary">
             <div class="box-body">
                 <form role="form" action="{{url("brand/create")}}" method="post">

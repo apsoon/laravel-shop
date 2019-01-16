@@ -2,7 +2,7 @@
 @section('title', '分类管理')
 @section('subtitle', '添加分类')
 @section('content')
-    <div class="container">
+    <div class="content">
         <div class="box box-primary">
             <div class="box-body">
                 <form role="form" action="{{url("category/create")}}" method="post">

@@ -1,7 +1,7 @@
 @extends('admin.layouts.app')
 @section('title', '添加属性')
 @section('content')
-    <div class="container">
+    <div class="content">
         <div class="box box-primary">
             <div class="box-body">
                 <form role="form" action="{{url("attribute/create")}}" method="post">

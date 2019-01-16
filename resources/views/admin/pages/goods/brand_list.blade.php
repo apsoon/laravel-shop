@@ -2,7 +2,7 @@
 @section('title', '品牌管理')
 @section('subtitle','品牌列表')
 @section('content')
-    <div class="container">
+    <div class="content">
         <div class="col-xs-12">
             <div class="box table-striped">
                 <div class="box-header">

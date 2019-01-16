@@ -2,7 +2,7 @@
 @section('title', '帮助文档')
 @section('subtitle', '首页')
 @section('content')
-    <div class="container">
+    <div class="content">
         <div>
             <label>如何添加一个规格</label>
             <ul>

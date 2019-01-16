@@ -2,7 +2,7 @@
 @section('title', '规格管理')
 @section('subtitle', '规格列表')
 @section('content')
-    <div class="container">
+    <div class="content">
         <div class="col-xs-12">
             <div class="box table-striped">
                 <div class="box-header">

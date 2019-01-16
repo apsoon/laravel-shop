@@ -2,7 +2,7 @@
 @section('title', '商品管理')
 @section('subtitle','添加商品')
 @section('content')
-    <div class="container">
+    <div class="content">
         <div class="box box-primary">
             <div class="box-body">
                 <form role="form" action="{{url("goods/create")}}" method="post">

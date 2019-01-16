@@ -2,7 +2,7 @@
 @section('title', '首页')
 @section('subtitle', '首页')
 @section('content')
-    <div class="container">
+    <div class="content">
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">最新订单</h3>

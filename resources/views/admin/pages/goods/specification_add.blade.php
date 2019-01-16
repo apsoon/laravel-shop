@@ -2,7 +2,7 @@
 @section('title', '规格管理')
 @section('subtitle','添加规格')
 @section('content')
-    <div class="container">
+    <div class="content">
         <div class="box box-primary">
             <div class="box-body">
                 <form role="form" action="{{url("specification/create")}}" method="post">
