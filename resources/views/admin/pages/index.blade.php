@@ -3,21 +3,29 @@
 @section('subtitle', '首页')
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Dashboard</div>
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">最新订单</h3>
+            </div>
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table class="table no-margin">
+                        <thead>
+                        <tr>
+                            订单编号
+                        </tr>
+                        <tr>
+                            状态
+                        </tr>
+                        </thead>
+                        <tbody>
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                                asdfasdf
-                            </div>
-                        @endif
-                        You are logged in!
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+            <div class="box-footer clearfix">
+                <a href="javascript:void(0)" class="btn btn-sm btn-default btn-flat pull-right">所有订单</a>
             </div>
         </div>
     </div>
