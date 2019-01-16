@@ -21,7 +21,7 @@
                                 </label>
                             </th>
                             <th>名称</th>
-                            <th>状态</th>
+                            <th>属性组</th>
                             <th style="width: 270px">操作</th>
                         </tr>
                         @foreach($attributes as $attribute)
@@ -32,7 +32,7 @@
                                     </label>
                                 </td>
                                 <td class="sorting_1">{{ $attribute->name }}</td>
-                                <td class="sorting_1">{{ $attribute->name }}</td>
+                                <td class="sorting_1">{{ $attribute->attribute_group_id}}</td>
                                 <td>
                                     {{--<div class="btn-group">--}}
                                     <button type="button" class="btn btn-info btn-flat">修改</button>
