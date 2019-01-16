@@ -20,6 +20,10 @@ class GoodsMapi extends Controller
      * @var CategoryService
      */
     private $categoryService;
+
+    /**
+     * @var BrandService
+     */
     private $brandService;
 
     //
@@ -42,9 +46,15 @@ class GoodsMapi extends Controller
         return view('admin.pages.goods.goods_add', ["categoryList" => $categoryList, "brandList" => $brandList]);
     }
 
-    public function createGoods()
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function createGoods(Request $request)
     {
-
+        $req = $request->all();
+        $result = $this->goodsService->createGoods($req);
+        if ($result) return redirect("goods/list");
     }
 
     /**

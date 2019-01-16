@@ -15,19 +15,15 @@
                 <div class="box-body table-responsive">
                     <table class="table table-hover">
                         <tr>
-                            <th>
+                            <th style="width: 40px;">
                                 <label>
                                     <input type="checkbox">
                                 </label>
                             </th>
-                            <th>编号</th>
-                            <th>分类</th>
+                            <th style="width: 150px;">分类</th>
                             <th>名称</th>
-                            <th>原价格</th>
-                            <th>现价</th>
-                            <th>地区</th>
-                            <th>状态</th>
-                            <th>操作</th>
+                            <th style="width: 150px;">状态</th>
+                            <th style="width: 270px">操作</th>
                         </tr>
                         @foreach($goodsList as $goods)
                             <tr role="row">
@@ -36,11 +32,8 @@
                                         <input type="checkbox">
                                     </label>
                                 </td>
-                                <td>{{ $goods->goods_id }}</td>
                                 <td>{{ $goods->category }}</td>
                                 <td>{{ $goods->name }}</td>
-                                <td>{{ $goods->origin_price }}</td>
-                                <td>{{ $goods->price }}</td>
                                 <td>{{ $goods->state }}</td>
                                 <td>
                                     <button type="button" class="btn btn-success btn-flat">详情</button>

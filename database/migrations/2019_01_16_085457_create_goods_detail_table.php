@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGoodsTable extends Migration
+class CreateGoodsDetailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateGoodsTable extends Migration
      */
     public function up()
     {
-        Schema::create('goods', function (Blueprint $table) {
+        Schema::create('goods_detail', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("category_id")->nullable()->comment("分类id");
-            $table->integer("brand_id")->nullable()->comment("品牌id");
-            $table->string("name")->comment("商品名称");
-            $table->string("brief")->comment("简述");
-            $table->string("cover")->comment("商品封面图片");
+            $table->text("detail");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -32,6 +28,6 @@ class CreateGoodsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('goods');
+        Schema::dropIfExists('goods_detail');
     }
 }

@@ -11,6 +11,7 @@ namespace App\Http\Service;
 
 use App\Http\Dao\GoodsDao;
 use App\Http\Model\Goods;
+use App\Http\Model\GoodsDetail;
 
 /**
  * Class GoodsService
@@ -32,16 +33,16 @@ class GoodsService
     public function createGoods($req)
     {
         $goods = new Goods();
-        $goods->category_id = $req["categoryId"];
-        $goods->brand_id = $req["brandId"];
+        $goods->category_id = $req["category_id"];
+        $goods->brand_id = $req["brand_id"];
         $goods->name = $req["name"];
         $goods->brief = $req["brief"];
-        $goods->number = $req["number"];
-        $goods->origin_price = $req["originPrice"];
-        $goods->price = $req["price"];
-        $goods->cover = $req["cover"];
-        $goods->state = $req["state"];
+        $goods->cover = "";
+//        $goods->cover = $req["cover"];
+//        $goods->state = $req["state"];
         $result = $this->goodsDao->insert($goods);
+//        $goodsDetail = new GoodsDetail();
+//        $goodsDetail->desc = $req["desc"];
         return $result;
     }
 
