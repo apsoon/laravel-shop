@@ -42,8 +42,12 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::GET("brand/add", "BrandMapi@add");
     Route::POST("brand/create", "BrandMapi@createBrand");
 
+    // 属性
     Route::GET("attribute/list", "AttributeMapi@list");
     Route::GET("attribute/add", "AttributeMapi@add");
+    Route::POST("attribute/create", "AttributeMapi@create");
+    Route::GET("attributeGroup/add", "AttributeMapi@addGroup");
+    Route::POST("attributeGroup/create", "AttributeMapi@createGroup");
 
     // 规格
     Route::GET("specification/list", "SpecificationMapi@list");

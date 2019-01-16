@@ -24,6 +24,16 @@ class AttributeDao
     private $attribute;
 
     /**
+     * @param Attribute $attribute
+     * @return bool
+     */
+    public function insert(Attribute $attribute)
+    {
+        $result = $attribute->save();
+        return $result;
+    }
+
+    /**
      * 分页获取
      *
      * @param int $pageNo
