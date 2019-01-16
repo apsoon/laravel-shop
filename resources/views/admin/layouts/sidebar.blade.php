@@ -3,8 +3,8 @@
     <!-- sidebar menu -->
     <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li><a href="{{ url("/index") }}"><span>系统首页</span></a></li>
-        <li class="treeview active menu-open">
+        <li class="active"><a href="{{ url("/index") }}"><span>系统首页</span></a></li>
+        <li class="treeview menu-open">
             <a href="#">
                 <span>商品管理</span>
                 <span class="pull-right-container">
@@ -12,7 +12,7 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li class="active"><a href="{{ url("goods/list") }}"><i class="fa fa-circle-o"></i>商品列表</a></li>
+                <li><a href="{{ url("goods/list") }}"><i class="fa fa-circle-o"></i>商品列表</a></li>
                 <li><a href="{{ url("category/list") }}"><i class="fa fa-circle-o"></i>商品分类</a></li>
                 <li><a href="{{ url("brand/list") }}"><i class="fa fa-circle-o"></i>品牌管理</a></li>
                 <li><a href="{{ url("specification/list") }}"><i class="fa fa-circle-o"></i>商品规格</a></li>

@@ -16,8 +16,8 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('lib/admin-lte/css/AdminLTE.min.css')}}">
-    <link rel="stylesheet" href="{{asset('lib/admin-lte/css/skins/skin-blue.min.css')}}">
+    <link rel="stylesheet" href="{{asset('lib/adminlte/css/AdminLTE.min.css')}}">
+    <link rel="stylesheet" href="{{asset('lib/adminlte/css/skins/skin-blue.min.css')}}">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{asset('lib/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
     <!-- Select2 -->
@@ -32,7 +32,7 @@
     <!-- Bootstrap 3.3.6 -->
     <script src="{{asset('lib/bootstrap/js/bootstrap.min.js')}}"></script>
     <!-- AdminLTE App -->
-    <script src="{{asset('lib/admin-lte/js/adminlte.js')}}"></script>
+    <script src="{{asset('lib/adminlte/js/adminlte.js')}}"></script>
     <!-- DataTables -->
     <script src="{{asset('/lib/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('/lib/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
