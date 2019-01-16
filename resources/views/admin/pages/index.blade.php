@@ -16,14 +16,23 @@
                             <table class="table no-margin">
                                 <thead>
                                 <tr>
-                                    订单编号
-                                </tr>
-                                <tr>
-                                    状态
+                                    <th>
+                                        订单编号
+                                    </th>
+                                    <th>
+                                        商品
+                                    </th>
+                                    <th>
+                                        状态
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                <tr>
+                                    <td><a href="">OR9842</a></td>
+                                    <td>Call of Duty IV</td>
+                                    <td><span class="label label-success">Shipped</span></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
