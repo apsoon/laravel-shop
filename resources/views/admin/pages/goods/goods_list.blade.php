@@ -22,7 +22,7 @@
                             </th>
                             <th style="width: 150px;">分类</th>
                             <th>名称</th>
-                            <th style="width: 150px;">状态</th>
+                            <th style="width: 150px;">品牌</th>
                             <th style="width: 270px">操作</th>
                         </tr>
                         @foreach($goodsList as $goods)
@@ -32,13 +32,12 @@
                                         <input type="checkbox">
                                     </label>
                                 </td>
-                                <td>{{ $goods->category }}</td>
+                                <td>{{ $goods->category_id }}</td>
                                 <td>{{ $goods->name }}</td>
-                                <td>{{ $goods->state }}</td>
+                                <td>{{ $goods->brand_id }}</td>
                                 <td>
                                     <button type="button" class="btn btn-success btn-flat">详情</button>
                                     <button type="button" class="btn btn-info btn-flat">修改</button>
-                                    <button type="button" class="btn btn-warning  btn-flat">下架</button>
                                     <button type="button" class="btn btn-danger  btn-flat">删除</button>
                                 </td>
                             </tr>
