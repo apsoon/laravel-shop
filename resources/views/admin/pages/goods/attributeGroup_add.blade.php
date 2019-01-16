@@ -3,18 +3,11 @@
 @section('subtitle', '添加属性组')
 @section('content')
     <div class="content">
-        <div class="box box-primary">
+        <div class="box box-solid box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">属性组表单</h3>
+            </div>
             <form role="form" action="{{url("attributeGroup/create")}}" method="post">
-                <div class="box-header with-border">
-                    <h3 class="box-title">属性组表单</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                    class="fa fa-minus"></i>
-                        </button>
-                        {{--<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i>--}}
-                        {{--</button>--}}
-                    </div>
-                </div>
                 <div class="box-body">
                     {!! csrf_field() !!}
                     <div class="form-group">
