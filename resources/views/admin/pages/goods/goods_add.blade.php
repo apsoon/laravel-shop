@@ -26,26 +26,41 @@
                             <input class="form-control" type="number" id="goods-price" name="price"
                                    placeholder="请输入商品现价">
                         </div>
-                        <div class="form-group  col-md-3">
+                        <div class="form-group col-md-3">
                             <label>商品数量<b class="text-red">*</b></label>
                             <input class="form-control" type="number" id="goods-id" name="number" placeholder="请输入商品数量">
                         </div>
-                        <div class="form-group  col-md-3">
+                        <div class="form-group col-md-3">
                             <label>数量单位<b class="text-red">*</b></label>
                             <input class="form-control" id="goods-unit" name="unit" placeholder="请输入数量单位">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>选择分类<b class="text-red">*</b></label>
-                        <select></select>
+                        <label>
+                            <select class="form-control select2-container" name="category_id">
+                                <option value="0">未选择</option>
+                                @foreach($categoryList as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                @endforeach
+                            </select>
+                        </label>
                     </div>
                     <div class="form-group">
                         <label>选择品牌<b class="text-red">*</b></label>
-                        <select></select>
+                        <label>
+                            <select class="form-control select2-container" name="brand_id">
+                                <option value="0">未选择</option>
+                                @foreach($brandList as $brand)
+                                    <option value="{{$brand->id}}">{{$brand->name}}</option>
+                                @endforeach
+                            </select>
+                        </label>
                     </div>
                     <div class="form-group">
                         <label>添加图片<b class="text-red">*</b></label>
-                        <input type="file" id="logo" accept="image/gif, image/png, image/jpeg, image/jpg" name="cover">
+                        <input class="file" type="file" id="logo" accept="image/gif, image/png, image/jpeg, image/jpg"
+                               name="cover">
                         <p class="help-block">图片大小120px*60px 小于5M</p>
                     </div>
                     <div class="form-group">

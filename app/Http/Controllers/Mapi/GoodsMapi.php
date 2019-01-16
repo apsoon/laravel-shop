@@ -20,22 +20,26 @@ class GoodsMapi extends Controller
      * @var CategoryService
      */
     private $categoryService;
+    private $brandService;
 
     //
     public function list()
     {
         $req = [];
         $result = $this->goodsService->getGoodsList($req);
-        return view('admin.pages.goods.goods_list',["goodsList"=>$result]);
+        return view('admin.pages.goods.goods_list', ["goodsList" => $result]);
     }
 
     /**
+     * 添加商品页
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function add()
     {
-        $categories = $this->categoryService->getUnitCategory();
-        return view('admin.pages.goods.goods_add', ["categories" => $categories]);
+        $categoryList = $this->categoryService->getUnitCategory();
+        $brandList = $this->brandService->getAllBrand();
+        return view('admin.pages.goods.goods_add', ["categoryList" => $categoryList, "brandList" => $brandList]);
     }
 
     public function createGoods()
@@ -48,11 +52,13 @@ class GoodsMapi extends Controller
      *
      * @param GoodsService $goodsService
      * @param CategoryService $categoryService
+     * @param BrandService $brandService
      */
-    public function __construct(GoodsService $goodsService, CategoryService $categoryService)
+    public function __construct(GoodsService $goodsService, CategoryService $categoryService, BrandService $brandService)
     {
         $this->middleware('auth');
         $this->goodsService = $goodsService;
         $this->categoryService = $categoryService;
+        $this->brandService = $brandService;
     }
 }
