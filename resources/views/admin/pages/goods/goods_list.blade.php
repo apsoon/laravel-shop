@@ -6,8 +6,10 @@
             <div class="box table-primary">
                 <div class="box-header">
                     <a href="{{ url("goods/add") }}">
-                        <button type="button" class="btn btn-sm btn-success btn-flat">添加商品</button>
+                        <button type="button" class="btn btn-sm btn-info btn-flat">添加商品</button>
                     </a>
+                    <button type="button" class="btn btn-sm btn-success btn-flat">批量上架</button>
+                    <button type="button" class="btn btn-sm btn-warning btn-flat">批量下架</button>
                     <button type="button" class="btn btn-sm btn-danger  btn-flat">批量删除</button>
                 </div>
                 <div class="box-body table-responsive">
