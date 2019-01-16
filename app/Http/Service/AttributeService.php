@@ -39,7 +39,7 @@ class AttributeService
     {
         $attribute = new Attribute();
         $attribute->name = $req["name"];
-        $attribute->attribute_group = $req["attribute_group"];
+        $attribute->attribute_group_id = $req["attribute_group_id"];
         $result = $this->attributeDao->insert($attribute);
         return $result;
     }
@@ -54,6 +54,7 @@ class AttributeService
     {
         $attributeGroup = new AttributeGroup();
         $attributeGroup->name = $req["name"];
+        $attributeGroup->category_id = $req["category_id"];
         $result = $this->attributeGroupDao->insert($attributeGroup);
         return $result;
     }

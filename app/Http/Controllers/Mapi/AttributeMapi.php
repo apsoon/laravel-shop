@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Mapi;
 
 use App\Http\Controllers\Controller;
 use App\Http\Service\AttributeService;
+use App\Http\Service\CategoryService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -13,6 +14,11 @@ class AttributeMapi extends Controller
      * @var AttributeService
      */
     private $attributeService;
+
+    /**
+     * @var CategoryService
+     */
+    private $categoryService;
 
     /**
      * 获取属性列表
@@ -45,7 +51,8 @@ class AttributeMapi extends Controller
      */
     public function addGroup()
     {
-        return view("admin.pages.goods.attributeGroup_add");
+        $categoryList = $this->categoryService->getUnitCategory();
+        return view("admin.pages.goods.attributeGroup_add", ["categoryList" => $categoryList]);
     }
 
     /**
@@ -76,12 +83,13 @@ class AttributeMapi extends Controller
 
     /**
      * AttributeMapi constructor.
-     *
      * @param AttributeService $attributeService
+     * @param CategoryService $categoryService
      */
-    public function __construct(AttributeService $attributeService)
+    public function __construct(AttributeService $attributeService, CategoryService $categoryService)
     {
         $this->middleware('auth');
         $this->attributeService = $attributeService;
+        $this->categoryService = $categoryService;
     }
 }
