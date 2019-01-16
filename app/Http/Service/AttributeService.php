@@ -13,6 +13,7 @@ use App\Http\Dao\AttributeDao;
 use App\Http\Dao\AttributeGroupDao;
 use App\Http\Model\Attribute;
 use App\Http\Model\AttributeGroup;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AttributeService
@@ -37,6 +38,7 @@ class AttributeService
      */
     public function createAttribute(array $req)
     {
+        Log::info($req);
         $attribute = new Attribute();
         $attribute->name = $req["name"];
         $attribute->attribute_group_id = $req["attribute_group_id"];

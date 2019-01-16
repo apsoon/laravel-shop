@@ -1,9 +1,10 @@
 @extends('admin.layouts.app')
-@section('title', '属性列表')
+@section('title', '商品属性')
+@section('subtitle', '属性列表')
 @section('content')
     <div class="content">
         <div class="col-xs-12">
-            <div class="box table-striped">
+            <div class="box box-primary">
                 <div class="box-header">
                     <a href="{{ url("attributeGroup/add") }}">
                         <button type="button" class="btn btn-sm btn-success btn-flat">添加属性组</button>
@@ -20,8 +21,9 @@
                                     <input type="checkbox">
                                 </label>
                             </th>
-                            <th>名称</th>
-                            <th>属性组</th>
+                            <th style="width: 150px;">名称</th>
+                            <th style="width: 150px;">属性组</th>
+                            <th>可选选项</th>
                             <th style="width: 270px">操作</th>
                         </tr>
                         @foreach($attributes as $attribute)
@@ -31,8 +33,12 @@
                                         <input type="checkbox">
                                     </label>
                                 </td>
-                                <td class="sorting_1">{{ $attribute->name }}</td>
-                                <td class="sorting_1">{{ $attribute->attribute_group_id}}</td>
+                                <td>{{ $attribute->name }}</td>
+                                <td>{{ $attribute->attribute_group_id }}</td>
+                                <td>
+                                    <span class="label label-info">111</span>
+                                    <span class="label label-info">111</span>
+                                </td>
                                 <td>
                                     {{--<div class="btn-group">--}}
                                     <button type="button" class="btn btn-info btn-flat">修改</button>

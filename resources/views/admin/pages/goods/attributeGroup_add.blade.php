@@ -23,7 +23,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-3">
-                            <label>选择上级分类</label>
+                            <label>选择分类</label>
                             <label>
                                 <select class="form-control select2" name="category_id">
                                     <option value="0">未选择</option>
