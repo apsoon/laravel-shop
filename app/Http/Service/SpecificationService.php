@@ -10,7 +10,9 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\SpecificationDao;
+use App\Http\Dao\SpecificationOptionDao;
 use App\Http\Model\Specification;
+use App\Http\Model\SpecificationOption;
 
 /**
  * Class SpecificationService
@@ -25,6 +27,11 @@ class SpecificationService
     private $specificationDao;
 
     /**
+     * @var SpecificationOptionDao
+     */
+    private $specificationOptionDao;
+
+    /**
      * 创建
      *
      * @param array $req
@@ -37,6 +44,11 @@ class SpecificationService
         $specification->category_id = $req["category_id"];
         $result = $this->specificationDao->insert($specification);
         return $result;
+    }
+
+    public function createSpecificationOption(array $req)
+    {
+
     }
 
     /**
@@ -57,9 +69,11 @@ class SpecificationService
      * SpecificationService constructor.
      *
      * @param SpecificationDao $specificationDao
+     * @param SpecificationOptionDao $specificationOptionDao
      */
-    public function __construct(SpecificationDao $specificationDao)
+    public function __construct(SpecificationDao $specificationDao, SpecificationOptionDao $specificationOptionDao)
     {
         $this->specificationDao = $specificationDao;
+        $this->specificationOptionDao = $specificationOptionDao;
     }
 }

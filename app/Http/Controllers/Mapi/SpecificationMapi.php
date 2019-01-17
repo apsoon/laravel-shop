@@ -49,6 +49,11 @@ class SpecificationMapi extends Controller
         return view('admin.pages.goods.specification_add', ["categoryList" => $categoryList]);
     }
 
+    public function addOption(Request $request)
+    {
+        return view('admin.pages.goods.specificationOption_add');
+    }
+
     /**
      * 创建
      *

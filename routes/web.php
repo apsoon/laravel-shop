@@ -53,6 +53,8 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::GET("specification/list", "SpecificationMapi@list");
     Route::GET("specification/add", "SpecificationMapi@add");
     Route::POST("specification/create", "SpecificationMapi@create");
+    Route::GET("specificationOption/add", "SpecificationMapi@addOption");
+    Route::POST("specificationOption/create", "SpecificationMapi@createOption");
 
     // 帮助
     Route::GET("help", function () {
