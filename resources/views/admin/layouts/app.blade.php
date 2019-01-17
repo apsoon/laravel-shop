@@ -37,7 +37,7 @@
     <script src="{{asset('/lib/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('/lib/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini fixed">
 <div class="wrapper">
     <!-- Header -->
     <header class="main-header">
