@@ -34,6 +34,7 @@ class SpecificationService
     {
         $specification = new Specification();
         $specification->name = $req["name"];
+        $specification->category_id = $req["category_id"];
         $result = $this->specificationDao->insert($specification);
         return $result;
     }

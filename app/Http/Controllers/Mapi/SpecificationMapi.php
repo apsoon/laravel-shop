@@ -20,6 +20,11 @@ class SpecificationMapi extends Controller
     private $specificationService;
 
     /**
+     * @var CategoryService
+     */
+    private $categoryService;
+
+    /**
      * 获取规格列表
      *
      * @param Request $request
@@ -40,7 +45,8 @@ class SpecificationMapi extends Controller
      */
     public function add()
     {
-        return view('admin.pages.goods.specification_add');
+        $categoryList = $this->categoryService->getUnitCategory();
+        return view('admin.pages.goods.specification_add', ["categoryList" => $categoryList]);
     }
 
     /**
@@ -60,10 +66,12 @@ class SpecificationMapi extends Controller
      * SpecificationMapi constructor.
      *
      * @param SpecificationService $specificationService
+     * @param CategoryService $categoryService
      */
-    public function __construct(SpecificationService $specificationService)
+    public function __construct(SpecificationService $specificationService, CategoryService $categoryService)
     {
         $this->middleware('auth');
         $this->specificationService = $specificationService;
+        $this->categoryService = $categoryService;
     }
 }

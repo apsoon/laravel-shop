@@ -22,10 +22,9 @@
                     <tbody>
                     @foreach($specifications as $specification)
                         <tr>
-                            <td class="sorting_1">{{ $specification->name }}</td>
-                            <td></td>
+                            <td>{{ $specification->name }}</td>
+                            <td>{{ $specification->category_id }}</td>
                             <td>
-
                             </td>
                             <td>
                                 <button type="button" class="btn btn-success btn-flat">添加选项</button>

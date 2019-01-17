@@ -15,6 +15,7 @@ class CreateSpecificationTable extends Migration
     {
         Schema::create('specification', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('category_id')->index()->comment("分类id");
             $table->string("name")->default("规格名称");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
