@@ -20,17 +20,16 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/index', function () {
-    return view('admin.pages.index');
-});
-
-
 Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
+
+    // 首页
+    Route::get('/index', 'IndexMapi@index');
 
     // 商品
     Route::GET("goods/list", "GoodsMapi@list");
     Route::GET("goods/add", "GoodsMapi@add");
     Route::POST("goods/create", "GoodsMapi@createGoods");
+    Route::GET("product/add", "GoodsMapi@addProduct");
 
     // 分类
     Route::GET("category/list", "CategoryMapi@list");

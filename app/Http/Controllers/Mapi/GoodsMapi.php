@@ -47,6 +47,24 @@ class GoodsMapi extends Controller
     }
 
     /**
+     * 商品详情
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function detail(Request $request)
+    {
+        $req = $request->all();
+        $detail = $this->goodsService->getGoodsDetail($req);
+        return view('admin.pages.goods.goods_detail', ["detail" => $detail]);
+    }
+
+    public function addProduct()
+    {
+
+    }
+
+    /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
