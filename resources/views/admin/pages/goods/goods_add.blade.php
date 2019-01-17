@@ -108,6 +108,8 @@
         });
 
         $("#goods-form").submit(function (e) {
+            let desc = editor.txt.html();
+
             // let data = $(this).serialize();    //序列化表单
             // console.log(data);                 //打印表单数据
             // console.log(e);                 //打印表单数据
