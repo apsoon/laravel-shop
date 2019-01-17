@@ -1,8 +1,9 @@
 @extends('admin.layouts.app')
-@section('title', '商品列表')
+@section('title', '商品管理')
+@section('subtitle', '商品列表')
 @section('content')
     <div class="content">
-        <div class="box table-primary">
+        <div class="box box-primary">
             <div class="box-header with-border">
                 <a href="{{ url("goods/add") }}">
                     <button type="button" class="btn btn-sm btn-info btn-flat">添加商品</button>

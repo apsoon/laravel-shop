@@ -3,8 +3,7 @@
 @section('subtitle', '规格列表')
 @section('content')
     <div class="content">
-        {{--<div class="col-xs-12">--}}
-        <div class="box table-primary">
+        <div class="box box-primary">
             <div class="box-header with-border">
                 <a href="{{ url("specification/add") }}">
                     <button type="button" class="btn btn-sm btn-success btn-flat">添加规格</button>
@@ -15,7 +14,8 @@
                     <thead>
                     <tr>
                         <td style="width: 150px">规格名称</td>
-                        <td>可选值</td>
+                        <td style="width: 150px">分类</td>
+                        <td>可选项</td>
                         <th style="width: 270px">操作</th>
                     </tr>
                     </thead>
@@ -23,13 +23,13 @@
                     @foreach($specifications as $specification)
                         <tr>
                             <td class="sorting_1">{{ $specification->name }}</td>
+                            <td></td>
                             <td>
 
                             </td>
                             <td>
-                                <button type="button" class="btn btn-success btn-flat">详情</button>
+                                <button type="button" class="btn btn-success btn-flat">添加选项</button>
                                 <button type="button" class="btn btn-info btn-flat">修改</button>
-                                <button type="button" class="btn btn-warning  btn-flat">下架</button>
                                 <button type="button" class="btn btn-danger  btn-flat">删除</button>
                             </td>
                         </tr>
@@ -42,5 +42,4 @@
             </div>
         </div>
     </div>
-    {{--</div>--}}
 @endsection
