@@ -14,7 +14,7 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
-                        <td>规格名称</td>
+                        <td style="width: 150px">规格名称</td>
                         <td>可选值</td>
                         <th style="width: 270px">操作</th>
                     </tr>
