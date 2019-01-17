@@ -13,53 +13,60 @@
                 <b>品牌</b> {{$detail->brand_id}} <br>
                 <b>分类</b> {{$detail->category_id}}<br>
                 <!-- 产品列表 -->
-                <div class="row">
-                    <div class="col-sm-12 table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>产品名称</th>
-                                <th>规格参数</th>
-                                <th>原价</th>
-                                <th>现价</th>
-                                <th>状态</th>
-                                <th style="width: 270px">操作</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($productList as $product)
+                {{--<div class="row">--}}
+                <br>
+                <div class="box table-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">产品列表</h3>
+                        <button class="btn btn-info btn-flat pull-right">添加产品</button>
+                    </div>
+                    <div class="box-body">
+                        <div class="col-sm-12 table-responsive">
+                            <table class="table table-striped">
+                                <thead>
                                 <tr>
-                                    <td>
-                                        {{$product->name}}
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-                                        {{$product->origin_price}}
-                                    </td>
-                                    <td>
-                                        {{$product->price}}
-                                    </td>
-                                    <td>
-                                        {{$product->state}}
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-success btn-flat">详情</button>
-                                        <button type="button" class="btn btn-info btn-flat">修改</button>
-                                        <button type="button" class="btn btn-warning  btn-flat">下架</button>
-                                        <button type="button" class="btn btn-danger  btn-flat">删除</button>
-                                    </td>
+                                    <th>产品名称</th>
+                                    <th>规格参数</th>
+                                    <th>原价</th>
+                                    <th>现价</th>
+                                    <th>状态</th>
+                                    <th style="width: 270px">操作</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                @foreach($productList as $product)
+                                    <tr>
+                                        <td>
+                                            {{$product->name}}
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                            {{$product->origin_price}}
+                                        </td>
+                                        <td>
+                                            {{$product->price}}
+                                        </td>
+                                        <td>
+                                            {{$product->state}}
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-flat">详情</button>
+                                            <button type="button" class="btn btn-info btn-flat">修改</button>
+                                            <button type="button" class="btn btn-warning  btn-flat">下架</button>
+                                            <button type="button" class="btn btn-danger  btn-flat">删除</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box-footer">
                     </div>
                 </div>
-                <!-- 商品描述 -->
-                <div class="row">
 
-                </div>
             </div>
             <div class="box-footer">
 
