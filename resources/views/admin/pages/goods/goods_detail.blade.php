@@ -72,9 +72,9 @@
                 <!-- 轮播图 -->
                 <div class="box table-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">产品列表</h3>
+                        <h3 class="box-title">轮播图</h3>
                         <a href=" {{url("product/add?goods_id=")}}{{$detail->id}}&category_id={{$detail->category_id}}">
-                            <button class="btn btn-info btn-flat pull-right">添加产品</button>
+                            <button class="btn btn-info btn-flat pull-right">添加图片</button>
                         </a>
                     </div>
                     <div class="box-body">
@@ -82,11 +82,9 @@
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
-                                    <th>产品名称</th>
-                                    <th>规格参数</th>
-                                    <th>原价</th>
-                                    <th>现价</th>
-                                    <th>状态</th>
+                                    <th style="width: 250px;">图片名称</th>
+                                    <th>图片地址</th>
+                                    <th style="width: 250px;">排序</th>
                                     <th style="width: 270px">操作</th>
                                 </tr>
                                 </thead>
