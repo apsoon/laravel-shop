@@ -46,10 +46,13 @@ class GoodsService
         return $result;
     }
 
-
+    /**
+     * @param array $req
+     * @return mixed
+     */
     public function getGoodsDetail(array $req)
     {
-        $result = $this->goodsDao->findById($req->id);
+        $result = $this->goodsDao->findById($req["goods_id"]);
         return $result;
     }
 

@@ -31,16 +31,14 @@ class GoodsDao
     }
 
     /**
-     * 根据商品id获取商品
      *
-     * @param $goodsId
+     * @param $id
      * @return mixed
      */
-    public function findByGoodsId($goodsId)
+    public function findById($id)
     {
-        if (empty($goodsId)) return null;
-        $result = $this->goods::where(["goods_id" => $goodsId])
-            ->first;
+        $result = $this->goods::where(["id" => $id])
+            ->first();
         return $result;
     }
 

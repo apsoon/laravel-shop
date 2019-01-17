@@ -35,7 +35,11 @@
                             <td>{{ $goods->name }}</td>
                             <td>{{ $goods->brand_id }}</td>
                             <td>
-                                <button type="button" class="btn btn-success btn-flat">详情</button>
+                                <a href="{{ url("goods/detail?goods_id=")}}{{$goods->id}}">
+                                    <button type="button"
+                                            class="btn btn-success btn-flat">详情
+                                    </button>
+                                </a>
                                 <button type="button" class="btn btn-info btn-flat">修改</button>
                                 <button type="button" class="btn btn-danger  btn-flat">删除</button>
                             </td>
@@ -54,4 +58,9 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        function navigateToDetail(goodsId, url) {
+            console.info(goodsId, url);
+        }
+    </script>
 @endsection
