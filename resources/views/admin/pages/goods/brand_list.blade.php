@@ -4,7 +4,7 @@
 @section('content')
     <div class="content">
         <div class="col-xs-12">
-            <div class="box table-striped">
+            <div class="box table-primary">
                 <div class="box-header">
                     <a href="{{ url("brand/add") }}">
                         <button type="button" class="btn btn-sm btn-success btn-flat">添加品牌</button>

@@ -4,7 +4,7 @@
 @section('content')
     <div class="content">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <a href="{{ url("attributeGroup/add") }}">
                     <button type="button" class="btn btn-sm btn-success btn-flat">添加属性组</button>
                 </a>
