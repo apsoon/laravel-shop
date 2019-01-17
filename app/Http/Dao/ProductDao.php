@@ -12,6 +12,18 @@ class ProductDao
     private $product;
 
     /**
+     * 添加产品
+     *
+     * @param Product $product
+     * @return bool
+     */
+    public function insert(Product $product)
+    {
+        $result = $product->save();
+        return $result;
+    }
+
+    /**
      * @param int $goodsId
      * @return mixed
      */

@@ -18,7 +18,9 @@
                 <div class="box table-primary">
                     <div class="box-header with-border">
                         <h3 class="box-title">产品列表</h3>
-                        <button class="btn btn-info btn-flat pull-right">添加产品</button>
+                        <a href=" {{url("product/add?goods_id=")}}{{$detail->id}}&category_id={{$detail->category_id}}">
+                            <button class="btn btn-info btn-flat pull-right">添加产品</button>
+                        </a>
                     </div>
                     <div class="box-body">
                         <div class="col-sm-12 table-responsive">

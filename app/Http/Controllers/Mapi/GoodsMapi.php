@@ -60,9 +60,16 @@ class GoodsMapi extends Controller
         return view('admin.pages.goods.goods_detail', ["detail" => $detail, "productList" => $productList]);
     }
 
-    public function addProduct()
+    /**
+     * 添加产品
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function addProduct(Request $request)
     {
-
+        $req = $request->all();
+        return view('admin.pages.goods.product_add', ["goods_id" => $req["goods_id"]]);
     }
 
     /**
@@ -74,6 +81,13 @@ class GoodsMapi extends Controller
         $req = $request->all();
         $result = $this->goodsService->createGoods($req);
         if ($result) return redirect("goods/list");
+    }
+
+    public function createProduct(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->goodsService->createProduct($req);
+        if ($result) return redirect("goods/detail?goods_id=" . $req["goods_id"]);
     }
 
     /**
