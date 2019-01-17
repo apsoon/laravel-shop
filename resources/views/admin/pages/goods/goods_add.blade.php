@@ -4,7 +4,7 @@
 @section('content')
     <div class="content">
         <div class="box box-primary">
-            <form role="form" action="{{url("goods/create")}}" method="post">
+            <form id="goods-form" role="form" action="{{url("goods/create")}}" method="post">
                 <div class="box-body">
                     {!! csrf_field() !!}
                     <div class="form-group">
@@ -16,24 +16,24 @@
                         <input class="form-control" id="goods-brief" name="brief" placeholder="请输入简要描述">
                     </div>
                     {{--<div class="row">--}}
-                        {{--<div class="form-group col-md-3">--}}
-                            {{--<label>商品原价</label>--}}
-                            {{--<input class="form-control" type="number" id="goods-origin-price" name="originPrice"--}}
-                                   {{--placeholder="请输入商品编号">--}}
-                        {{--</div>--}}
-                        {{--<div class="form-group col-md-3">--}}
-                            {{--<label>商品现价<b class="text-red">*</b></label>--}}
-                            {{--<input class="form-control" type="number" id="goods-price" name="price"--}}
-                                   {{--placeholder="请输入商品现价">--}}
-                        {{--</div>--}}
-                        {{--<div class="form-group col-md-3">--}}
-                            {{--<label>商品数量<b class="text-red">*</b></label>--}}
-                            {{--<input class="form-control" type="number" id="goods-id" name="number" placeholder="请输入商品数量">--}}
-                        {{--</div>--}}
-                        {{--<div class="form-group col-md-3">--}}
-                            {{--<label>数量单位<b class="text-red">*</b></label>--}}
-                            {{--<input class="form-control" id="goods-unit" name="unit" placeholder="请输入数量单位">--}}
-                        {{--</div>--}}
+                    {{--<div class="form-group col-md-3">--}}
+                    {{--<label>商品原价</label>--}}
+                    {{--<input class="form-control" type="number" id="goods-origin-price" name="originPrice"--}}
+                    {{--placeholder="请输入商品编号">--}}
+                    {{--</div>--}}
+                    {{--<div class="form-group col-md-3">--}}
+                    {{--<label>商品现价<b class="text-red">*</b></label>--}}
+                    {{--<input class="form-control" type="number" id="goods-price" name="price"--}}
+                    {{--placeholder="请输入商品现价">--}}
+                    {{--</div>--}}
+                    {{--<div class="form-group col-md-3">--}}
+                    {{--<label>商品数量<b class="text-red">*</b></label>--}}
+                    {{--<input class="form-control" type="number" id="goods-id" name="number" placeholder="请输入商品数量">--}}
+                    {{--</div>--}}
+                    {{--<div class="form-group col-md-3">--}}
+                    {{--<label>数量单位<b class="text-red">*</b></label>--}}
+                    {{--<input class="form-control" id="goods-unit" name="unit" placeholder="请输入数量单位">--}}
+                    {{--</div>--}}
                     {{--</div>--}}
                     <div class="form-group">
                         <label>选择分类<b class="text-red">*</b></label>
@@ -69,14 +69,14 @@
                         </div>
                     </div>
                     {{--<div class="form-group">--}}
-                        {{--<label>是否上架</label>--}}
-                        {{--<label class="col-md-1">--}}
-                            {{--<input type="radio" name="state" id="goods-state-on" value="0"--}}
-                                   {{--checked><label style="margin-left: 10px;">暂不上架</label></label>--}}
-                        {{--<label class="col-md-1">--}}
-                            {{--<input style="margin-left: 10px;" type="radio" name="state" id="goods-state-off"--}}
-                                   {{--value="1"><label style="margin-left: 10px;">立即上架</label>--}}
-                        {{--</label>--}}
+                    {{--<label>是否上架</label>--}}
+                    {{--<label class="col-md-1">--}}
+                    {{--<input type="radio" name="state" id="goods-state-on" value="0"--}}
+                    {{--checked><label style="margin-left: 10px;">暂不上架</label></label>--}}
+                    {{--<label class="col-md-1">--}}
+                    {{--<input style="margin-left: 10px;" type="radio" name="state" id="goods-state-off"--}}
+                    {{--value="1"><label style="margin-left: 10px;">立即上架</label>--}}
+                    {{--</label>--}}
                     {{--</div>--}}
                 </div>
                 <div class="box-footer">
@@ -92,5 +92,27 @@
         var editor = new E('#editor')
         // 或者 var editor = new E( document.getElementById('editor') )
         editor.create()
+
+        /**
+         *  商品名称判空
+         */
+        $("#goods-name").blur(function (e) {
+            let data = $("#goods-name").val();
+            console.info(data);
+            if (data == null || data === undefined || data === "") {
+                $("#goods-name").attr('placeholder', "商品内容不能为空");
+                $("#goods-name").addClass("border-danger")
+            }else{
+                $("#goods-name").removeClass("border-danger")
+            }
+        });
+
+        $("#goods-form").submit(function (e) {
+            // let data = $(this).serialize();    //序列化表单
+            // console.log(data);                 //打印表单数据
+            // console.log(e);                 //打印表单数据
+            // e = e || window.event;
+            // e.preventDefault();                //阻止表单提交
+        });
     </script>
 @endsection
