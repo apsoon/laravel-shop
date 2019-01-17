@@ -10,6 +10,7 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\GoodsDao;
+use App\Http\Dao\ProductDao;
 use App\Http\Model\Goods;
 use App\Http\Model\GoodsDetail;
 
@@ -25,6 +26,11 @@ class GoodsService
      * @var GoodsDao
      */
     private $goodsDao;
+
+    /**
+     * @var ProductDao
+     */
+    private $productDao;
 
     /**
      * @param $req
@@ -81,11 +87,24 @@ class GoodsService
     }
 
     /**
-     * GoodsService constructor.
-     * @param GoodsDao $goodsDao
+     * @param int $goodsId
+     * @return mixed
      */
-    public function __construct(GoodsDao $goodsDao)
+    public function getProductByGoodsId(int $goodsId)
+    {
+        $result = $this->productDao->findByGoodsId($goodsId);
+        return $result;
+    }
+
+    /**
+     * GoodsService constructor.
+     *
+     * @param GoodsDao $goodsDao
+     * @param ProductDao $productDao
+     */
+    public function __construct(GoodsDao $goodsDao, ProductDao $productDao)
     {
         $this->goodsDao = $goodsDao;
+        $this->productDao = $productDao;
     }
 }

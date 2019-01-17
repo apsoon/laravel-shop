@@ -56,7 +56,8 @@ class GoodsMapi extends Controller
     {
         $req = $request->all();
         $detail = $this->goodsService->getGoodsDetail($req);
-        return view('admin.pages.goods.goods_detail', ["detail" => $detail]);
+        $productList = $this->goodsService->getProductByGoodsId($req["goods_id"]);
+        return view('admin.pages.goods.goods_detail', ["detail" => $detail, "productList" => $productList]);
     }
 
     public function addProduct()
