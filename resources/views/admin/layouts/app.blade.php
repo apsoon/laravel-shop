@@ -32,7 +32,7 @@
     <!-- Bootstrap 3.3.6 -->
     <script src="{{asset('lib/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- AdminLTE App -->
-    <script src="{{asset('lib/adminlte/js/adminlte.js')}}"></script>
+    <script src="{{asset('lib/adminlte/js/adminlte.min.js')}}"></script>
     <!-- DataTables -->
     <script src="{{asset('lib/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('lib/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
