@@ -10,8 +10,15 @@
             <button type="button" class="btn btn-sm btn-success btn-flat">批量上架</button>
             <button type="button" class="btn btn-sm btn-warning btn-flat">批量下架</button>
             <button type="button" class="btn btn-sm btn-danger  btn-flat">批量删除</button>
+            <ul class="pagination pagination-sm no-margin pull-right">
+                <li><a href="#">&laquo;</a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">&raquo;</a></li>
+            </ul>
         </div>
-        <div class="box-body table-responsive">
+        <div class="box-body no-padding table-responsive">
             <table class="table table-hover">
                 <tr>
                     <th style="width: 40px;">
@@ -47,15 +54,7 @@
                 @endforeach
             </table>
         </div>
-        <div class="box-footer clearfix">
-            <ul class="pagination pagination-lg no-margin pull-right">
-                <li><a href="#">&laquo;</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">&raquo;</a></li>
-            </ul>
-        </div>
+
     </div>
     <script type="text/javascript">
         function navigateToDetail(goodsId, url) {

@@ -62,7 +62,7 @@
                     </ul>
                 </div>
                 <div class="box-footer text-center">
-                    <a href="#" class="uppercase">查看所有商品</a>
+                    <a href="{{url("goods/list")}}" class="uppercase">查看所有商品</a>
                 </div>
             </div>
         </div>
