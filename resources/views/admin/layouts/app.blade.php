@@ -10,7 +10,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- css -->
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="{{asset('lib/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('lib/bootstrap/dist/css/bootstrap.min.css')}}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <!-- Ionicons -->
@@ -30,12 +30,14 @@
     <!-- jQuery 2.2.3 -->
     <script src="{{asset('lib/jquery/jquery-3.3.1.min.js')}}"></script>
     <!-- Bootstrap 3.3.6 -->
-    <script src="{{asset('lib/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('lib/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{asset('lib/adminlte/js/adminlte.js')}}"></script>
     <!-- DataTables -->
     <script src="{{asset('lib/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('lib/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <!-- FastClick -->
+    <script src="{{asset('lib/fastclick/lib/fastclick.js')}}"></script>
     <!-- adminlte custom -->
     <script src="{{asset('js/adminlte.js')}}"></script>
 </head>

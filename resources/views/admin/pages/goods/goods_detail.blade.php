@@ -3,7 +3,7 @@
 @section('subtitle','商品详情')
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-xs-12">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#info-pane" data-toggle="tab">商品信息</a></li>
