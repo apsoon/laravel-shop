@@ -13,6 +13,7 @@ use App\Http\Dao\SpecificationDao;
 use App\Http\Dao\SpecificationOptionDao;
 use App\Http\Model\Specification;
 use App\Http\Model\SpecificationOption;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class SpecificationService
@@ -48,7 +49,14 @@ class SpecificationService
 
     public function createSpecificationOption(array $req)
     {
-
+        $specification_id = $req["specification_id"];
+//        $options =
+        foreach ($req as $key => $item) {
+            if (strstr($key, 'option')) {
+                $specification_id = $item;
+            }
+        }
+        return 1;
     }
 
     /**

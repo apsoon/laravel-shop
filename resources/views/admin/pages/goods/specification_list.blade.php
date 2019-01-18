@@ -26,7 +26,7 @@
                         <td>
                         </td>
                         <td>
-                            <a href="{{ url("specificationOption/add?specification_id=") }}.{{$specification->id}}">
+                            <a href="{{ url("specificationOption/add?specification_id=") }}{{$specification->id}}">
                                 <button type="button" class="btn btn-success btn-flat">添加选项</button>
                             </a>
                             <button type="button" class="btn btn-info btn-flat">修改</button>

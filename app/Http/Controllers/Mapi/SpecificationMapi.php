@@ -51,7 +51,9 @@ class SpecificationMapi extends Controller
 
     public function addOption(Request $request)
     {
-        return view('admin.pages.goods.specificationOption_add');
+        $req = $request->all();
+        $specification_id = $req["specification_id"];
+        return view('admin.pages.goods.specificationOption_add', ["specification_id" => $specification_id]);
     }
 
     /**
@@ -64,6 +66,17 @@ class SpecificationMapi extends Controller
     {
         $req = $request->all();
         $result = $this->specificationService->createSpecification($req);
+        if ($result) return redirect("specification/list");
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function createOption(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->specificationService->createSpecificationOption($req);
         if ($result) return redirect("specification/list");
     }
 

@@ -3,17 +3,19 @@
 @section('subtitle','添加规格选项')
 @section('content')
     <div class="box box-primary">
-        <form role="form" action="{{url("specificationGroup/create")}}" method="post">
-            <div class="box-footer">
+        <form id="option-form" role="form" action="{{url("specificationOption/create")}}" method="post">
+            <div class="box-header with-border">
                 <button type="button" id="add-option" class="btn btn-info btn-flat">添加选项</button>
             </div>
             <div class="box-body">
+                {!! csrf_field() !!}
                 <label>规格值<b class="text-red">*</b></label>
                 <div class="row col-md-12" id="option-list">
                     <div class="form-group col-md-2">
-                        <input class="form-control" id="option-name" name="name" placeholder="请输入规格值">
+                        <input class="form-control" id="option-name" name="option1" placeholder="请输入规格值">
                     </div>
                 </div>
+                <input type="hidden" name="specification_id" value="{{$specification_id}}">
             </div>
             <div class="box-footer">
                 <button type="submit" id="option-submit" class="btn btn-primary btn-flat">提交</button>
@@ -21,11 +23,19 @@
         </form>
     </div>
     <script type="text/javascript">
-
+        let count = 1;
         $('#add-option').click(function () {
+            count += 1;
             $('#option-list').append("<div class=\"form-group col-md-2\">\n" +
-                "                        <input class=\"form-control\" id=\"option-name\" name=\"name\" placeholder=\"请输入名称\">\n" +
+                "                        <input class=\"form-control\" id=\"option-name\" name=\"option" + count + "\" placeholder=\"请输入名称\">\n" +
                 "                    </div>");
         });
+        {{--$('#option-submit').click(function () {--}}
+        {{--let form = $('#option-form');--}}
+        {{--let input = $("<input>")--}}
+        {{--.attr("type","hidden")--}}
+        {{--.attr("name","category_id")--}}
+        {{--.val({{$specification_id}})--}}
+        {{--});--}}
     </script>
 @endsection
