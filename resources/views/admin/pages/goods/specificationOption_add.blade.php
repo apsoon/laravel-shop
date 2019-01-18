@@ -53,16 +53,9 @@
                 data: data,
                 // dataType: "json",
                 success: function (respMsg) {
+                    window.location = respMsg;
                 }
             });
-            // $.each(x, function(i, field){
-            //     $("#results").append(field.name + ":" + field.value + " ");
-            // });
-            {{--let form = $('#option-form');--}}
-            {{--let input = $("<input>")--}}
-            {{--.attr("type", "hidden")--}}
-            {{--.attr("name", "category_id")--}}
-            {{--.val({{$specification_id}})--}}
         });
     </script>
 @endsection

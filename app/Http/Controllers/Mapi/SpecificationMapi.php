@@ -79,7 +79,7 @@ class SpecificationMapi extends Controller
         $req = $request->all();
         Log::info($req);
         $result = $this->specificationService->createSpecificationOption($req);
-        if ($result) return redirect("specification/list");
+        if ($result) return url("specification/list");
     }
 
     /**
