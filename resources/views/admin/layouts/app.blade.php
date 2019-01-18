@@ -34,8 +34,10 @@
     <!-- AdminLTE App -->
     <script src="{{asset('lib/adminlte/js/adminlte.js')}}"></script>
     <!-- DataTables -->
-    <script src="{{asset('/lib/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-    <script src="{{asset('/lib/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <script src="{{asset('lib/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('lib/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+    <!-- adminlte custom -->
+    <script src="{{asset('js/adminlte.js')}}"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini fixed">
 <div class="wrapper">
