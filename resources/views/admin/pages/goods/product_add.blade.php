@@ -30,15 +30,17 @@
                                placeholder="请输入产品数量">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>是否上架</label>
-                    <label class="col-md-2">
-                        <input type="radio" name="state" id="product-state-on" value="0"
-                               checked><label style="margin-left: 10px;">暂不上架</label></label>
-                    <label class="col-md-2">
-                        <input style="margin-left: 10px;" type="radio" name="state" id="product-state-off"
-                               value="1"><label style="margin-left: 10px;">立即上架</label>
-                    </label>
+                <div class="row">
+                    <div class="form-group">
+                        <label class="col-xs-1">是否上架</label>
+                        <label class="col-md-1">
+                            <input type="radio" name="state" id="product-state-on" value="0"
+                                   checked><label style="margin-left: 10px;">暂不上架</label></label>
+                        <label class="col-md-1">
+                            <input style="margin-left: 10px;" type="radio" name="state" id="product-state-off"
+                                   value="1"><label style="margin-left: 10px;">立即上架</label>
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="box-footer">
