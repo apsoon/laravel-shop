@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Service\CategoryService;
 use App\Http\Service\SpecificationService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class SpecificationMapi
@@ -76,6 +77,7 @@ class SpecificationMapi extends Controller
     public function createOption(Request $request)
     {
         $req = $request->all();
+        Log::info($req);
         $result = $this->specificationService->createSpecificationOption($req);
         if ($result) return redirect("specification/list");
     }
