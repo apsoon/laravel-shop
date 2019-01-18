@@ -3,9 +3,15 @@
     <!-- sidebar menu -->
     <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="active"><a href="{{ url("/index") }}"><span>系统首页</span></a></li>
+        <li class="active">
+            <a href="{{ url("/index") }}">
+                <i class="fa fa-dashboard"></i>
+                <span>系统首页</span>
+            </a>
+        </li>
         <li class="treeview menu-open">
             <a href="#">
+                <i class="fa fa-inbox"></i>
                 <span>商品管理</span>
                 <span class="pull-right-container">
                    <i class="fa fa-angle-left pull-right"></i>
@@ -21,6 +27,7 @@
         </li>
         <li class="treeview">
             <a href="#">
+                <i class="fa fa-database"></i>
                 <span>交易管理</span>
                 <span class="pull-right-container">
                    <i class="fa fa-angle-left pull-right"></i>
