@@ -46,6 +46,19 @@ class SpecificationOptionDao
     }
 
     /**
+     * id 查找
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function findById(int $id)
+    {
+        $result = $this->specificationOption::where(["id" => $id])
+            ->first();
+        return $result;
+    }
+
+    /**
      * 根据规格id查找
      *
      * @param int $specificationId

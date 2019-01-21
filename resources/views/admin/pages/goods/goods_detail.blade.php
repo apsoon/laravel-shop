@@ -47,7 +47,9 @@
                                         {{$product->name}}
                                     </td>
                                     <td>
-
+                                        @foreach($product->specifications as $specification)
+                                            <span class="label label-info">{{$specification->option}}</span>
+                                        @endforeach
                                     </td>
                                     <td>
                                         {{$product->origin_price}}

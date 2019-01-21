@@ -38,6 +38,19 @@ class ProductSpecificationOptionDao
     }
 
     /**
+     * 根据产品id查找
+     *
+     * @param int $productId
+     * @return mixed
+     */
+    public function findByProductId(int $productId)
+    {
+        $result = $this->productSpecificationOption::where(["product_id" => $productId])
+            ->get();
+        return $result;
+    }
+
+    /**
      * ProductSpecificationOptionDao constructor.
      *
      * @param ProductSpecificationOption $productSpecificationOption

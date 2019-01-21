@@ -48,16 +48,6 @@ class SpecificationDao
     }
 
     /**
-     * SpecificationDao constructor.
-     *
-     * @param Specification $specification
-     */
-    public function __construct(Specification $specification)
-    {
-        $this->specification = $specification;
-    }
-
-    /**
      * 分类获取
      *
      * @param int $categoryId
@@ -68,5 +58,28 @@ class SpecificationDao
         $result = $this->specification::where(["category_id" => $categoryId])
             ->get();
         return $result;
+    }
+
+    /**
+     * id查找
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function findById(int $id)
+    {
+        $result = $this->specification::where(["id" => $id])
+            ->first();
+        return $result;
+    }
+
+    /**
+     * SpecificationDao constructor.
+     *
+     * @param Specification $specification
+     */
+    public function __construct(Specification $specification)
+    {
+        $this->specification = $specification;
     }
 }
