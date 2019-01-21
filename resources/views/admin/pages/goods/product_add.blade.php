@@ -64,18 +64,18 @@
     </div>
     <script type="text/javascript">
         $("#product-submit").click(function () {
-            let data = {},
-                formValue = $("form").serializeArray();
-            data._token = formValue._token;
-            data.name = $("#product-name").val();
-            data.originPrice = $("#origin-price").val();
-            data.price = $("#product-price").val();
-            data.number = $("#product-number").val();
-            data.goodsId = "{{$goods_id}}";
-            data.options = [];
-            console.info("form =====", formValue);
+            let formValue = $("form").serializeArray();
+            let data = {
+                _token: formValue._token,
+                name: $("#product-name").val(),
+                originPrice: $("#origin-price").val(),
+                price: $("#product-price").val(),
+                number: $("#product-number").val(),
+                goodsId: "{{$goods_id}}",
+                options: [],
+            }
             for (let item of formValue) {
-                if (item.name.indexOf("option")>=0) {
+                if (item.name.indexOf("option") >= 0) {
                     let ops = item.value.split("-");
                     data.options.push({
                         specification_id: ops[0],
@@ -85,13 +85,12 @@
                     data._token = item.value;
                 }
             }
-            console.info(data);
             $.ajax({
                 type: "POST",
                 url: "{{url("product/create")}}",
                 data: data,
                 success: res => {
-
+                    window.location = res;
                 }
             });
         });
