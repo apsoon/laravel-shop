@@ -76,6 +76,10 @@ class SpecificationService
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = empty($req["size"]) ? 20 : $req["size"];
         $result = $this->specificationDao->getByPage($pageNo, $size);
+        foreach ($result as $specification) {
+            $options = $this->specificationOptionDao->findBySpecificationId($specification->id);
+            $specification->options = $options;
+        }
         return $result;
     }
 

@@ -24,6 +24,9 @@
                         <td>{{ $specification->name }}</td>
                         <td>{{ $specification->category_id }}</td>
                         <td>
+                            @foreach($specification->options as $option)
+                                <span class="label label-info">{{$option->name}}</span>
+                            @endforeach
                         </td>
                         <td>
                             <a href="{{ url("specificationOption/add?specification_id=") }}{{$specification->id}}">
