@@ -34,8 +34,7 @@
         // 提交表单
         $('#option-submit').click(function () {
             // let data = {},
-            let forms = $("form").serializeArray(),
-                url = "{{url("specificationOption/create")}}";
+            let forms = $("form").serializeArray();
             let data = {
                 options: [],
                 specification_id: "{{$specification_id}}",
@@ -49,7 +48,7 @@
             }
             $.ajax({
                 type: "POST",
-                url: url,
+                url: "{{url("specificationOption/create")}}",
                 data: data,
                 success: res => {
                     window.location = res;
