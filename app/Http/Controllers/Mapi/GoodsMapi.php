@@ -101,7 +101,7 @@ class GoodsMapi extends Controller
      * 创建产品
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+//     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function createProduct(Request $request)
     {
