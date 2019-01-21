@@ -52,6 +52,12 @@ class GoodsService
         return $result;
     }
 
+    /**
+     * id获取商品
+     *
+     * @param int $goodsId
+     * @return mixed
+     */
     public function getGoodsById(int $goodsId)
     {
         $result = $this->goodsDao->findById($goodsId);
@@ -96,15 +102,17 @@ class GoodsService
 
     public function createProduct(array $req)
     {
-        Log::info($req);
-////        $product = new Product();
-////        $product->name = $req["name"];
-////        $product->goods_id = $req["goods_id"];
-////        $product->origin_price = $req["origin_price"];
-////        $product->price = $req["price"];
-////        $result = $this->productDao->insert($product);
-//        return $result;
-        return 1;
+        $product = new Product();
+        $product->name = $req["name"];
+        $product->goods_id = $req["goodsId"];
+        $product->origin_price = $req["originPrice"];
+        $product->price = $req["price"];
+        $result = $product->save();
+        if ($result) {
+
+        }
+        $result = $this->productDao->insert($product);
+        return $result;
     }
 
     /**

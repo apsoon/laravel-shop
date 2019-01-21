@@ -106,9 +106,8 @@ class GoodsMapi extends Controller
     public function createProduct(Request $request)
     {
         $req = $request->all();
-        Log::info($req);
-//        $result = $this->goodsService->createProduct($req);
-//        if ($result) return redirect("goods/detail?goods_id=" . $req["goods_id"]);
+        $result = $this->goodsService->createProduct($req);
+//        if ($result) return url("goods/detail?goods_id=" . $req["goodsId"]);
     }
 
     // ===========================================================================  construct ===========================================================================

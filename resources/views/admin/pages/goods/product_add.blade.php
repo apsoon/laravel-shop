@@ -78,8 +78,8 @@
                 if (item.name.indexOf("option") >= 0) {
                     let ops = item.value.split("-");
                     data.options.push({
-                        specification_id: ops[0],
-                        option_id: ops[1]
+                        specificationId: ops[0],
+                        optionId: ops[1]
                     });
                 } else if (item.name.indexOf("_token") >= 0) {
                     data._token = item.value;
