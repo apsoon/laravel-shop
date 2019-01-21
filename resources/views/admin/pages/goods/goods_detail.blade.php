@@ -7,16 +7,20 @@
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#info-pane" data-toggle="tab">商品信息</a></li>
+                    <li><a href="#detail-pane" data-toggle=tab>图文详情</a></li>
                     <li><a href="#product-pane" data-toggle="tab">产品列表</a></li>
                     <li><a href="#banner-pane" data-toggle="tab">轮播图</a></li>
                 </ul>
                 <div class="tab-content">
+                    <!-- 产品信息 -->
                     <div class="tab-pane active" id="info-pane">
                         <b>商品名称</b> {{$detail->name}}<br>
                         <b>商品简述</b> {{$detail->brief}}<br>
                         <b>品牌</b> {{$detail->brand_id}} <br>
                         <b>分类</b> {{$detail->category_id}}<br>
                     </div>
+                    <!-- 图文详情 -->
+                    <div class="tab-pane" id="detail-pane"></div>
                     <!-- 产品列表 -->
                     <div class="tab-pane" id="product-pane">
                         <div class="box box-primary">
