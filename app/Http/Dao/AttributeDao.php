@@ -33,6 +33,13 @@ class AttributeDao
         return $result;
     }
 
+    public function findById(int $id)
+    {
+        $result = $this->attribute::where(["id" => $id])
+            ->first();
+        return $result;
+    }
+
     /**
      * 分页获取
      *

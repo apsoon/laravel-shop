@@ -34,6 +34,19 @@ class AttributeGroupDao
     }
 
     /**
+     * id 查找
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function findById(int $id)
+    {
+        $result = $this->attributeGroup::where(["id" => $id])
+            ->first();
+        return $result;
+    }
+
+    /**
      * 获取所有属性组
      *
      * @return AttributeGroup[]|\Illuminate\Database\Eloquent\Collection

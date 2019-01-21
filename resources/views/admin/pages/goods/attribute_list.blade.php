@@ -21,6 +21,7 @@
                     </th>
                     <th style="width: 150px;">名称</th>
                     <th style="width: 150px;">属性组</th>
+                    <th style="width: 150px;">分类</th>
                     <th>可选选项</th>
                     <th style="width: 270px">操作</th>
                 </tr>
@@ -32,7 +33,8 @@
                             </label>
                         </td>
                         <td>{{ $attribute->name }}</td>
-                        <td>{{ $attribute->attribute_group_id }}</td>
+                        <td>{{ $attribute->group_name}}</td>
+                        <td></td>
                         <td>
                             <span class="label label-info">111</span>
                             <span class="label label-info">111</span>

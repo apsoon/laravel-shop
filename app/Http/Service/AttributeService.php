@@ -72,6 +72,10 @@ class AttributeService
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = empty($req["size"]) ? 20 : $req["size"];
         $result = $this->attributeDao->getByPage($pageNo, $size);
+        foreach ($result as $attribute) {
+            $group = $this->attributeGroupDao->findById($attribute->attribute_group_id);
+            $attribute->group_name = $group->name;
+        }
         return $result;
     }
 
