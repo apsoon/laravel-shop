@@ -15,7 +15,6 @@
                         <input class="form-control" id="option-name" name="option1" placeholder="请输入规格值">
                     </div>
                 </div>
-                <input id="specification-id" type="hidden" name="specification_id" value="{{$specification_id}}">
                 <input id="url" type="hidden" name="url" value="{{url("specificationOption/create")}}">
             </div>
             <div class="box-footer">
@@ -31,27 +30,29 @@
                 "                        <input class=\"form-control\" id=\"option-name\" name=\"option" + count + "\" placeholder=\"请输入名称\">\n" +
                 "                    </div>");
         });
+
+        // 提交表单
         $('#option-submit').click(function () {
-            let data = {},
-                options = [],
-                forms = $("form").serializeArray();
+            // let data = {},
+            let forms = $("form").serializeArray(),
+                url = "{{url("specificationOption/create")}}";
+            let data = {
+                options: [],
+                specification_id: "{{$specification_id}}",
+            }
             for (let item of forms) {
                 if (item.name.indexOf("option") >= 0 && item.value) {
-                    options.push(item.value);
+                    data.options.push(item.value);
                 } else if (item.name === "_token") {
                     data._token = item.value;
                 }
             }
-            data.options = options;
-            data.specification_id = $("#specification-id").val();
-            let url = $("#url").val();
             $.ajax({
                 type: "POST",
                 url: url,
                 data: data,
-                // dataType: "json",
-                success: function (respMsg) {
-                    window.location = respMsg;
+                success: res => {
+                    window.location = res;
                 }
             });
         });
