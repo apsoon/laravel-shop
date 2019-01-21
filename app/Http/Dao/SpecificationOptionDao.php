@@ -10,6 +10,8 @@ namespace App\Http\Dao;
 
 
 use App\Http\Model\SpecificationOption;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SpecificationOptionDao
 {
@@ -28,6 +30,19 @@ class SpecificationOptionDao
     public function insert(SpecificationOption $specificationOption)
     {
         $result = $specificationOption->save();
+        return $result;
+    }
+
+    /**
+     * 批量插入
+     *
+     * @param array $data
+     * @return bool
+     */
+    public function insertList(Array $data)
+    {
+        Log::info($data);
+        $result = DB::table($this->specificationOption->getTable())->insert($data);
         return $result;
     }
 

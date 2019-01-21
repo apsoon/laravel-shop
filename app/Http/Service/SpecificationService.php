@@ -47,16 +47,22 @@ class SpecificationService
         return $result;
     }
 
+    /**
+     * 创建规格选项
+     *
+     * @param array $req
+     * @return bool
+     */
     public function createSpecificationOption(array $req)
     {
         $specification_id = $req["specification_id"];
-//        $options =
-        foreach ($req as $key => $item) {
-            if (strstr($key, 'option')) {
-                $specification_id = $item;
-            }
+        $options = $req["options"];
+        $arr = [];
+        foreach ($options as $option) {
+            array_push($arr, ["specification_id" => $specification_id, "name" => $option]);
         }
-        return 1;
+        $result = $this->specificationOptionDao->insertList($arr);
+        return $result;
     }
 
     /**
