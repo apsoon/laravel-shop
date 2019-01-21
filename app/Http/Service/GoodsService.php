@@ -10,6 +10,7 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\GoodsDao;
+use App\Http\Dao\GoodsDetailDao;
 use App\Http\Dao\ProductDao;
 use App\Http\Dao\ProductSpecificationOptionDao;
 use App\Http\Dao\SpecificationDao;
@@ -32,6 +33,11 @@ class GoodsService
      * @var GoodsDao
      */
     private $goodsDao;
+
+    /**
+     * @var GoodsDetailDao
+     */
+    private $goodsDetailDao;
 
     /**
      * @var ProductDao
@@ -61,13 +67,21 @@ class GoodsService
      */
     public function createGoods($req)
     {
+        Log::info($req);
         $goods = new Goods();
-        $goods->category_id = $req["category_id"];
-        $goods->brand_id = $req["brand_id"];
+        $goods->category_id = $req["categoryId"];
+        $goods->brand_id = $req["brandId"];
         $goods->name = $req["name"];
         $goods->brief = $req["brief"];
-        $goods->cover = "";
-        $result = $this->goodsDao->insert($goods);
+        $goods->cover = $req["cover"];
+        $result = $goods->save();
+        if ($result) {
+            $goodsDetail = new GoodsDetail();
+            $goodsDetail->goods_id = $goods->id;
+            $goodsDetail->html = $req["detailHtml"];
+            $goodsDetail->text = $req["detailText"];
+            $result = $goodsDetail->save();
+        }
         return $result;
     }
 
@@ -161,14 +175,16 @@ class GoodsService
      * GoodsService constructor.
      *
      * @param GoodsDao $goodsDao
+     * @param GoodsDetailDao $goodsDetailDao
      * @param ProductDao $productDao
      * @param SpecificationDao $specificationDao
      * @param SpecificationOptionDao $specificationOptionDao
      * @param ProductSpecificationOptionDao $productSpecificationOptionDao
      */
-    public function __construct(GoodsDao $goodsDao, ProductDao $productDao, SpecificationDao $specificationDao, SpecificationOptionDao $specificationOptionDao, ProductSpecificationOptionDao $productSpecificationOptionDao)
+    public function __construct(GoodsDao $goodsDao, GoodsDetailDao $goodsDetailDao, ProductDao $productDao, SpecificationDao $specificationDao, SpecificationOptionDao $specificationOptionDao, ProductSpecificationOptionDao $productSpecificationOptionDao)
     {
         $this->goodsDao = $goodsDao;
+        $this->goodsDetailDao = $goodsDetailDao;
         $this->productDao = $productDao;
         $this->specificationDao = $specificationDao;
         $this->specificationOptionDao = $specificationOptionDao;

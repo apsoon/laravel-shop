@@ -15,7 +15,9 @@ class CreateGoodsDetailTable extends Migration
     {
         Schema::create('goods_detail', function (Blueprint $table) {
             $table->increments('id');
-            $table->text("detail");
+            $table->integer("goods_id")->index();
+            $table->text("html");
+            $table->text("text");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

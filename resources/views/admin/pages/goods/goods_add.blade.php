@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <label>选择分类<b class="text-red">*</b></label>
                     <label>
-                        <select class="form-control select2-container" name="category_id">
+                        <select class="form-control select2-container" id="category-id" name="category_id">
                             <option value="0">未选择</option>
                             @foreach($categoryList as $category)
                                 <option value="{{$category->id}}">{{$category->name}}</option>
@@ -28,7 +28,7 @@
                 <div class="form-group">
                     <label>选择品牌<b class="text-red">*</b></label>
                     <label>
-                        <select class="form-control select2-container" name="brand_id">
+                        <select class="form-control select2-container" id="brand-id" name="brand_id">
                             <option value="0">未选择</option>
                             @foreach($brandList as $brand)
                                 <option value="{{$brand->id}}">{{$brand->name}}</option>
@@ -49,8 +49,9 @@
                 </div>
             </div>
             <div class="box-footer">
-                <button type="submit" id="goods-submit" class="btn btn-primary">提交</button>
+                <button type="button" id="goods-submit" class="btn btn-primary">提交</button>
             </div>
+            <input id="_token" type="hidden" value="{{csrf_token()}}">
         </form>
     </div>
     <script type="text/javascript"
@@ -61,9 +62,6 @@
         // 或者 var editor = new E( document.getElementById('editor') )
         editor.create()
 
-        /**
-         *  商品名称判空
-         */
         $("#goods-name").blur(function (e) {
             let data = $("#goods-name").val();
             console.info(data);
@@ -75,14 +73,25 @@
             }
         });
 
-        $("#goods-form").submit(function (e) {
-            let desc = editor.txt.html();
-
-            // let data = $(this).serialize();    //序列化表单
-            // console.log(data);                 //打印表单数据
-            // console.log(e);                 //打印表单数据
-            // e = e || window.event;
-            // e.preventDefault();                //阻止表单提交
+        $("#goods-submit").click(function () {
+            let data = {
+                name: $("#goods-name").val(),
+                brief: $("#goods-brief").val(),
+                categoryId: $("#category-id").val(),
+                brandId: $("#brand-id").val(),
+                cover: "测试",
+                detailHtml: editor.txt.html(),
+                detailText: editor.txt.text(),
+                _token: $("#_token").val(),
+            }
+            $.ajax({
+                type: "POST",
+                url: "{{url("goods/create")}}",
+                data: data,
+                success: res => {
+                    window.location = res;
+                }
+            });
         });
     </script>
 @endsection
