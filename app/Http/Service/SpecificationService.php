@@ -71,11 +71,27 @@ class SpecificationService
      * @param $req
      * @return mixed
      */
-    public function getSpecificationList($req)
+    public function getSpecificationList(array $req)
     {
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = empty($req["size"]) ? 20 : $req["size"];
         $result = $this->specificationDao->getByPage($pageNo, $size);
+        foreach ($result as $specification) {
+            $options = $this->specificationOptionDao->findBySpecificationId($specification->id);
+            $specification->options = $options;
+        }
+        return $result;
+    }
+
+    /**
+     * 分类获取
+     *
+     * @param int $categoryId
+     * @return mixed
+     */
+    public function getSpecificationListByCategory(int $categoryId)
+    {
+        $result = $this->specificationDao->findByCategoryId($categoryId);
         foreach ($result as $specification) {
             $options = $this->specificationOptionDao->findBySpecificationId($specification->id);
             $specification->options = $options;

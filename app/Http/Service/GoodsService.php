@@ -33,6 +33,8 @@ class GoodsService
      */
     private $productDao;
 
+    // ===========================================================================  goods ===========================================================================
+
     /**
      * @param $req
      * @return bool
@@ -45,22 +47,14 @@ class GoodsService
         $goods->name = $req["name"];
         $goods->brief = $req["brief"];
         $goods->cover = "";
-//        $goods->cover = $req["cover"];
-//        $goods->state = $req["state"];
         $result = $this->goodsDao->insert($goods);
-//        $goodsDetail = new GoodsDetail();
-//        $goodsDetail->desc = $req["desc"];
         return $result;
     }
 
-    public function createProduct(array $req)
+    public function getGoodsById(int $goodsId)
     {
-        $product = new Product();
-        $product->name = $req["name"];
-        $product->goods_id = $req["goods_id"];
-        $product->origin_price = $req["origin_price"];
-        $product->price = $req["price"];
-        $result = $this->productDao->insert($product);
+        $result = $this->goodsDao->findById($goodsId);
+        return $result;
     }
 
     /**
@@ -97,6 +91,19 @@ class GoodsService
         return $result;
     }
 
+    // ===========================================================================  product ===========================================================================
+
+    public function createProduct(array $req)
+    {
+        $product = new Product();
+        $product->name = $req["name"];
+        $product->goods_id = $req["goods_id"];
+        $product->origin_price = $req["origin_price"];
+        $product->price = $req["price"];
+        $result = $this->productDao->insert($product);
+        return $result;
+    }
+
     /**
      * @param int $goodsId
      * @return mixed
@@ -106,6 +113,8 @@ class GoodsService
         $result = $this->productDao->findByGoodsId($goodsId);
         return $result;
     }
+
+    // ===========================================================================  construct ===========================================================================
 
     /**
      * GoodsService constructor.

@@ -30,8 +30,10 @@
                                placeholder="请输入产品数量">
                     </div>
                 </div>
-                <div>
+                <div class="row">
+                    <div class="form-group col-md-3">
 
+                    </div>
                 </div>
                 <div class="row">
                     <div class="form-group">

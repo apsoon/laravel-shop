@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Service\BrandService;
 use App\Http\Service\CategoryService;
 use App\Http\Service\GoodsService;
+use App\Http\Service\SpecificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -25,6 +26,8 @@ class GoodsMapi extends Controller
      * @var BrandService
      */
     private $brandService;
+
+    private $specificationService;
 
     //
     public function list()
@@ -69,7 +72,10 @@ class GoodsMapi extends Controller
     public function addProduct(Request $request)
     {
         $req = $request->all();
-        return view('admin.pages.goods.product_add', ["goods_id" => $req["goods_id"]]);
+        $goods = $this->goodsService->getGoodsById($req["goods_id"]);
+        $specificationList = $this->specificationService->getSpecificationListByCategory($goods->id);
+        Log::info($specificationList);
+        return view('admin.pages.goods.product_add', ["goods_id" => $req["goods_id"], "specificationList" => $specificationList]);
     }
 
     /**
@@ -96,12 +102,14 @@ class GoodsMapi extends Controller
      * @param GoodsService $goodsService
      * @param CategoryService $categoryService
      * @param BrandService $brandService
+     * @param SpecificationService $specificationService
      */
-    public function __construct(GoodsService $goodsService, CategoryService $categoryService, BrandService $brandService)
+    public function __construct(GoodsService $goodsService, CategoryService $categoryService, BrandService $brandService, SpecificationService $specificationService)
     {
         $this->middleware('auth');
         $this->goodsService = $goodsService;
         $this->categoryService = $categoryService;
         $this->brandService = $brandService;
+        $this->specificationService = $specificationService;
     }
 }
