@@ -101,13 +101,13 @@ class GoodsMapi extends Controller
      * 创建产品
      *
      * @param Request $request
-//     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function createProduct(Request $request)
     {
         $req = $request->all();
         $result = $this->goodsService->createProduct($req);
-//        if ($result) return url("goods/detail?goods_id=" . $req["goodsId"]);
+        if ($result) return url("goods/detail?goods_id=" . $req["goodsId"]);
     }
 
     // ===========================================================================  construct ===========================================================================

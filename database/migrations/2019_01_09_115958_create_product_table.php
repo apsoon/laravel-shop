@@ -16,6 +16,7 @@ class CreateProductTable extends Migration
         Schema::create('product', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("goods_id")->comment("商品id");
+            $table->string("name")->comment("名称");
             $table->decimal("origin_price")->default(0);
             $table->decimal("price")->default(0);
             $table->integer("number")->default(0);

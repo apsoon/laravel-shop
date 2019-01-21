@@ -11,9 +11,11 @@ namespace App\Http\Service;
 
 use App\Http\Dao\GoodsDao;
 use App\Http\Dao\ProductDao;
+use App\Http\Dao\ProductSpecificationOptionDao;
 use App\Http\Model\Goods;
 use App\Http\Model\GoodsDetail;
 use App\Http\Model\Product;
+use App\Http\Model\ProductSpecificationOption;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -33,6 +35,11 @@ class GoodsService
      * @var ProductDao
      */
     private $productDao;
+
+    /**
+     * @var ProductSpecificationOptionDao
+     */
+    private $productSpecificationOptionDao;
 
     // ===========================================================================  goods ===========================================================================
 
@@ -108,10 +115,13 @@ class GoodsService
         $product->origin_price = $req["originPrice"];
         $product->price = $req["price"];
         $result = $product->save();
+        $options = [];
         if ($result) {
-
+            foreach ($req["options"] as $option) {
+                array_push($options, ["product_id" => $product->id, "specification_id" => $option["specificationId"], "specification_option_id" => $option["optionId"]]);
+            }
         }
-        $result = $this->productDao->insert($product);
+        $result = $this->productSpecificationOptionDao->insertList($options);
         return $result;
     }
 
@@ -132,10 +142,12 @@ class GoodsService
      *
      * @param GoodsDao $goodsDao
      * @param ProductDao $productDao
+     * @param ProductSpecificationOptionDao $productSpecificationOptionDao
      */
-    public function __construct(GoodsDao $goodsDao, ProductDao $productDao)
+    public function __construct(GoodsDao $goodsDao, ProductDao $productDao, ProductSpecificationOptionDao $productSpecificationOptionDao)
     {
         $this->goodsDao = $goodsDao;
         $this->productDao = $productDao;
+        $this->productSpecificationOptionDao = $productSpecificationOptionDao;
     }
 }
