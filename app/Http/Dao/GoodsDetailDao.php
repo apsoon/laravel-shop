@@ -10,6 +10,7 @@ namespace App\Http\Dao;
 
 
 use App\Http\Model\GoodsDetail;
+use Illuminate\Support\Facades\Log;
 
 class GoodsDetailDao
 {
@@ -33,12 +34,14 @@ class GoodsDetailDao
     /**
      * 商品id查找
      *
-     * @param $id
+     * @param $goodsId
      * @return mixed
      */
-    public function findByGoodsId($id)
+    public function findByGoodsId(int $goodsId)
     {
-        $result = $this->goods::where(["id" => $id])
+        Log::info("88888888888888888888888 --- ".$goodsId);
+
+        $result = $this->goodsDetail::where(["goods_id" => $goodsId])
             ->first();
         return $result;
     }

@@ -14,18 +14,22 @@
                 <div class="tab-content">
                     <!-- 产品信息 -->
                     <div class="tab-pane active" id="info-pane">
-                        <b>商品名称</b> {{$detail->name}}<br>
-                        <b>商品简述</b> {{$detail->brief}}<br>
-                        <b>品牌</b> {{$detail->brand_id}} <br>
-                        <b>分类</b> {{$detail->category_id}}<br>
+                        <b>商品名称</b> {{$goods->name}}<br>
+                        <b>商品简述</b> {{$goods->brief}}<br>
+                        <b>品牌</b> {{$goods->brand_id}} <br>
+                        <b>分类</b> {{$goods->category_id}}<br>
                     </div>
                     <!-- 图文详情 -->
-                    <div class="tab-pane" id="detail-pane"></div>
+                    <div class="tab-pane" id="detail-pane">
+                        @if($detail)
+                            {!! $detail->html !!}
+                        @endif
+                    </div>
                     <!-- 产品列表 -->
                     <div class="tab-pane" id="product-pane">
                         <div class="box-header with-border">
                             <h3 class="box-title">产品列表</h3>
-                            <a href=" {{url("product/add?goods_id=")}}{{$detail->id}}&category_id={{$detail->category_id}}">
+                            <a href=" {{url("product/add?goods_id=")}}{{$goods->id}}&category_id={{$goods->category_id}}">
                                 <button class="btn btn-info btn-flat pull-right">添加产品</button>
                             </a>
                         </div>
@@ -78,7 +82,7 @@
                     <div class="tab-pane" id="banner-pane">
                         <div class="box-header with-border">
                             <h3 class="box-title">轮播图</h3>
-                            <a href=" {{url("product/add?goods_id=")}}{{$detail->id}}&category_id={{$detail->category_id}}">
+                            <a href=" {{url("product/add?goods_id=")}}{{$goods->id}}&category_id={{$goods->category_id}}">
                                 <button class="btn btn-info btn-flat pull-right">添加图片</button>
                             </a>
                         </div>

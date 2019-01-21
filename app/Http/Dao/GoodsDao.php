@@ -31,11 +31,12 @@ class GoodsDao
     }
 
     /**
+     *id 查找
      *
      * @param $id
      * @return mixed
      */
-    public function findById($id)
+    public function findById(int $id)
     {
         $result = $this->goods::where(["id" => $id])
             ->first();

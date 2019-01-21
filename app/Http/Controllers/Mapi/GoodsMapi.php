@@ -76,9 +76,13 @@ class GoodsMapi extends Controller
     public function detail(Request $request)
     {
         $req = $request->all();
-        $detail = $this->goodsService->getGoodsDetail($req);
+        $goodsDetail = $this->goodsService->getGoodsWithDetail($req);
+        Log::info(json_encode($goodsDetail));
+        Log::info("------------------");
+        $goods = $goodsDetail->goods;
+        $detail = $goodsDetail->detail;
         $productList = $this->goodsService->getProductByGoodsId($req["goods_id"]);
-        return view('admin.pages.goods.goods_detail', ["detail" => $detail, "productList" => $productList]);
+        return view('admin.pages.goods.goods_detail', ["goods" => $goods, "detail" => $detail, "productList" => $productList]);
     }
 
     // ===========================================================================  product ===========================================================================
