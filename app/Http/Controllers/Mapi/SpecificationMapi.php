@@ -77,7 +77,6 @@ class SpecificationMapi extends Controller
     public function createOption(Request $request)
     {
         $req = $request->all();
-        Log::info($req);
         $result = $this->specificationService->createSpecificationOption($req);
         if ($result) return url("specification/list");
     }

@@ -45,8 +45,6 @@
             data.options = options;
             data.specification_id = $("#specification-id").val();
             let url = $("#url").val();
-            console.info(url);
-            console.info(data)
             $.ajax({
                 type: "POST",
                 url: url,

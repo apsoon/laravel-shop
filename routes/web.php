@@ -31,6 +31,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::GET("goods/detail", "GoodsMapi@detail");
     Route::POST("goods/create", "GoodsMapi@createGoods");
     Route::GET("product/add", "GoodsMapi@addProduct");
+    Route::POST("product/create", "GoodsMapi@createProduct");
 
     // 分类
     Route::GET("category/list", "CategoryMapi@list");

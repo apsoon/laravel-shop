@@ -41,7 +41,6 @@ class SpecificationOptionDao
      */
     public function insertList(Array $data)
     {
-        Log::info($data);
         $result = DB::table($this->specificationOption->getTable())->insert($data);
         return $result;
     }

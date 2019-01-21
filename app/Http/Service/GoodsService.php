@@ -14,6 +14,7 @@ use App\Http\Dao\ProductDao;
 use App\Http\Model\Goods;
 use App\Http\Model\GoodsDetail;
 use App\Http\Model\Product;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class GoodsService
@@ -95,13 +96,15 @@ class GoodsService
 
     public function createProduct(array $req)
     {
-        $product = new Product();
-        $product->name = $req["name"];
-        $product->goods_id = $req["goods_id"];
-        $product->origin_price = $req["origin_price"];
-        $product->price = $req["price"];
-        $result = $this->productDao->insert($product);
-        return $result;
+        Log::info($req);
+////        $product = new Product();
+////        $product->name = $req["name"];
+////        $product->goods_id = $req["goods_id"];
+////        $product->origin_price = $req["origin_price"];
+////        $product->price = $req["price"];
+////        $result = $this->productDao->insert($product);
+//        return $result;
+        return 1;
     }
 
     /**

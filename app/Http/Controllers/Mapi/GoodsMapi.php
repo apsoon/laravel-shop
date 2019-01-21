@@ -29,7 +29,13 @@ class GoodsMapi extends Controller
 
     private $specificationService;
 
-    //
+    // ===========================================================================  goods ===========================================================================
+
+    /**
+     * 产品列表
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function list()
     {
         $req = [];
@@ -50,6 +56,17 @@ class GoodsMapi extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function createGoods(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->goodsService->createGoods($req);
+        if ($result) return redirect("goods/list");
+    }
+
+    /**
      * 商品详情
      *
      * @param Request $request
@@ -63,6 +80,8 @@ class GoodsMapi extends Controller
         return view('admin.pages.goods.goods_detail', ["detail" => $detail, "productList" => $productList]);
     }
 
+    // ===========================================================================  product ===========================================================================
+
     /**
      * 添加产品
      *
@@ -74,27 +93,25 @@ class GoodsMapi extends Controller
         $req = $request->all();
         $goods = $this->goodsService->getGoodsById($req["goods_id"]);
         $specificationList = $this->specificationService->getSpecificationListByCategory($goods->id);
-        Log::info($specificationList);
         return view('admin.pages.goods.product_add', ["goods_id" => $req["goods_id"], "specificationList" => $specificationList]);
     }
 
+
     /**
+     * 创建产品
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function createGoods(Request $request)
-    {
-        $req = $request->all();
-        $result = $this->goodsService->createGoods($req);
-        if ($result) return redirect("goods/list");
-    }
-
     public function createProduct(Request $request)
     {
         $req = $request->all();
-        $result = $this->goodsService->createProduct($req);
-        if ($result) return redirect("goods/detail?goods_id=" . $req["goods_id"]);
+        Log::info($req);
+//        $result = $this->goodsService->createProduct($req);
+//        if ($result) return redirect("goods/detail?goods_id=" . $req["goods_id"]);
     }
+
+    // ===========================================================================  construct ===========================================================================
 
     /**
      * GoodsMapi constructor.
