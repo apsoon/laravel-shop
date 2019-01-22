@@ -13,6 +13,11 @@
                 <table class="table table-hover">
                     <thead>
                     <tr>
+                        <th style="width: 40px;">
+                            <label>
+                                <input type="checkbox">
+                            </label>
+                        </th>
                         <th style="width: 150px;">名称</th>
                         <th>描述</th>
                         <th style="width: 150px;">状态</th>
@@ -22,6 +27,11 @@
                     <tbody>
                     @foreach($adList as $ad)
                         <tr>
+                            <td>
+                                <label>
+                                    <input type="checkbox">
+                                </label>
+                            </td>
                             <td>{{$ad->name}}</td>
                             <td>{{$ad->content}}</td>
                             <td>{{$ad->state}}</td>
