@@ -102,7 +102,7 @@ class GoodsMapi extends Controller
     {
         $req = $request->all();
         $goods = $this->goodsService->getGoodsById($req["goods_id"]);
-        $specificationList = $this->specificationService->getSpecificationListByCategory($goods->id);
+        $specificationList = $this->specificationService->getSpecificationListByCategory($goods->category_id);
         return view('admin.pages.goods.product_add', ["goods_id" => $req["goods_id"], "specificationList" => $specificationList]);
     }
 
