@@ -78,6 +78,21 @@ class GoodsDao
     }
 
     /**
+     * 最近添加
+     *
+     * @param int $size
+     * @return mixed
+     */
+    public function findByCreateDesc(int $size)
+    {
+        $result = $this->where(["state" => 1])
+            ->limit($size)
+            ->orderBy("create_at", "desc")
+            ->get();
+        return $result;
+    }
+
+    /**
      * GoodsDao constructor.
      *
      * @param Goods $goods

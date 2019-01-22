@@ -135,6 +135,18 @@ class GoodsService
         return $result;
     }
 
+    /**
+     * 获取最新
+     *
+     * @param int $size
+     * @return mixed
+     */
+    public function getLastGoods(int $size)
+    {
+        $result = $this->goodsDao->findByCreateDesc($size);
+        return $result;
+    }
+
     // ===========================================================================  product ===========================================================================
 
     public function createProduct(array $req)

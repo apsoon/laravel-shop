@@ -62,9 +62,14 @@ class GoodsMapi extends Controller
     public function createGoods(Request $request)
     {
         $req = $request->all();
-        Log::info($req);
         $result = $this->goodsService->createGoods($req);
         if ($result) return url("goods/list");
+    }
+
+    public function lasted()
+    {
+        $result = $this->goodsService->getLastGoods(5);
+        return $result;
     }
 
     /**
