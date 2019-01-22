@@ -25,7 +25,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($adList as $ad)
+                    @foreach($adList as $index => $ad)
                         <tr>
                             <td>
                                 <label>
@@ -34,14 +34,24 @@
                             </td>
                             <td>{{$ad->name}}</td>
                             <td>{{$ad->content}}</td>
-                            <td>{{$ad->state}}</td>
+                            <td>
+                                @if($ad->state)
+                                    已启用
+                                @else
+                                    已禁用
+                                @endif
+                            </td>
                             <td>
                                 <button type="button" class="btn btn-info btn-flat">修改</button>
-                                @if($ad->state==0)
-                                    <button type="button" class="btn btn-success btn-flat">启用</button>
-                                @else
-                                    <button type="button" class="btn btn-warning  btn-flat">禁用</button>
-                                @endif
+                                <button type="button"
+                                        class="btn {{$ad->state==0? 'btn-success':'btn-warning'}} btn-flat"
+                                        onclick="changeState({{$index}})">
+                                    @if($ad->state)
+                                        禁用
+                                    @else
+                                        启用
+                                    @endif
+                                </button>
                                 <button type="button" class="btn btn-danger  btn-flat">删除</button>
                             </td>
                         </tr>
@@ -53,4 +63,17 @@
         <div class="box-footer"></div>
 
     </div>
+    <script type="text/javascript">
+        function changeState(index) {
+            let adList = "{{$adList}}";
+            let ad = adList[index];
+            let data={
+                adId : ad.id,
+                // type: ad.state?
+            }
+            $.ajax({
+                url:"{{url("")}}"
+            })
+        }
+    </script>
 @endsection
