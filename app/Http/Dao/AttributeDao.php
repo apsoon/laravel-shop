@@ -56,6 +56,11 @@ class AttributeDao
         return $result;
     }
 
+
+    public function findByGroupId($id)
+    {
+    }
+
     /**
      * AttributeDao constructor.
      *

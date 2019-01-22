@@ -57,6 +57,10 @@ class AttributeGroupDao
         return $result;
     }
 
+    public function findByCategoryId(int $categoryId)
+    {
+    }
+
     /**
      * AttributeGroupDao constructor.
      *

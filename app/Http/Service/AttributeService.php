@@ -85,6 +85,25 @@ class AttributeService
         return $result;
     }
 
+    /**
+     * 
+     * @param int $categoryId
+     * @return mixed
+     */
+    public function getAttributeGroupOptionByCategory(int $categoryId)
+    {
+        $result = $this->attributeGroupDao->findByCategoryId($categoryId);
+        foreach ($result as $group) {
+            $attributes = $this->attributeDao->findByGroupId($group->id);
+            foreach ($attributes as $attribute) {
+                $options = $this->attributeOptionDao->findByAttributeId($attribute->id);
+                $attribute->options = $options;
+            }
+            $group->attributes = $attributes;
+        }
+        return $result;
+    }
+
     // ===========================================================================  attribute group  ===========================================================================
 
     /**
