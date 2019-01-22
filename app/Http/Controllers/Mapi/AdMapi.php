@@ -59,6 +59,10 @@ class AdMapi extends Controller
         return view("admin.pages.ad.adPosition_list", $positionList);
     }
 
+    /**
+     * AdMapi constructor.
+     * @param AdService $adService
+     */
     public function __construct(AdService $adService)
     {
         $this->middleware("auth");
