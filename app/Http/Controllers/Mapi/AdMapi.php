@@ -56,7 +56,7 @@ class AdMapi extends Controller
     public function listPosition()
     {
         $positionList = $this->adService->getAdPositionList();
-        return view("admin.pages.ad.adPosition_list", $positionList);
+        return view("admin.pages.ad.adPosition_list", ["positionList" => $positionList]);
     }
 
     /**
