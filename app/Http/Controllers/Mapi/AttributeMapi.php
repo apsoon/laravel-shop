@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Service\AttributeService;
 use App\Http\Service\CategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class AttributeMapi extends Controller
@@ -30,6 +31,7 @@ class AttributeMapi extends Controller
     {
         $req = $request->all();
         $result = $this->attributeService->getAttributeList($req);
+        Log::info($result);
         return view('admin.pages.goods.attribute_list', ["attributes" => $result]);
     }
 

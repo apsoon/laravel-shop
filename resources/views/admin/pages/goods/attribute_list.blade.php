@@ -34,7 +34,9 @@
                         </td>
                         <td>{{ $attribute->name }}</td>
                         <td>{{ $attribute->group_name}}</td>
-                        <td></td>
+                        <td>
+                            {{$attribute->category_name}}
+                        </td>
                         <td>
                             <span class="label label-info">111</span>
                             <span class="label label-info">111</span>

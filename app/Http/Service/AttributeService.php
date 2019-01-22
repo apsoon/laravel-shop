@@ -11,6 +11,7 @@ namespace App\Http\Service;
 
 use App\Http\Dao\AttributeDao;
 use App\Http\Dao\AttributeGroupDao;
+use App\Http\Dao\CategoryDao;
 use App\Http\Model\Attribute;
 use App\Http\Model\AttributeGroup;
 use Illuminate\Support\Facades\Log;
@@ -33,12 +34,16 @@ class AttributeService
     private $attributeGroupDao;
 
     /**
+     * @var CategoryDao
+     */
+    private $categoryDao;
+
+    /**
      * @param array $req
      * @return mixed
      */
     public function createAttribute(array $req)
     {
-        Log::info($req);
         $attribute = new Attribute();
         $attribute->name = $req["name"];
         $attribute->attribute_group_id = $req["attribute_group_id"];
@@ -75,6 +80,9 @@ class AttributeService
         foreach ($result as $attribute) {
             $group = $this->attributeGroupDao->findById($attribute->attribute_group_id);
             $attribute->group_name = $group->name;
+            $category = $this->categoryDao->findById($group->category_id);
+//            $attribute->category_id = $category->id;
+            $attribute->category_name = $category->name;
         }
         return $result;
     }
@@ -95,10 +103,12 @@ class AttributeService
      *
      * @param AttributeDao $attributeDao
      * @param AttributeGroupDao $attributeGroupDao
+     * @param CategoryDao $categoryDao
      */
-    public function __construct(AttributeDao $attributeDao, AttributeGroupDao $attributeGroupDao)
+    public function __construct(AttributeDao $attributeDao, AttributeGroupDao $attributeGroupDao, CategoryDao $categoryDao)
     {
         $this->attributeDao = $attributeDao;
         $this->attributeGroupDao = $attributeGroupDao;
+        $this->categoryDao = $categoryDao;
     }
 }
