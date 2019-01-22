@@ -13,7 +13,7 @@ class CreateAdPositionTable extends Migration
      */
     public function up()
     {
-        Schema::create('ad_positon', function (Blueprint $table) {
+        Schema::create('ad_position', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("key")->default(0);
             $table->string("name")->default("");
@@ -30,6 +30,6 @@ class CreateAdPositionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ad_positon');
+        Schema::dropIfExists('ad_position');
     }
 }

@@ -45,7 +45,7 @@ class AdMapi extends Controller
     {
         $req = $request->all();
         $result = $this->adService->createAd($req);
-        if ($result) return redirect(url("ad/list"));
+        if ($result) return url("ad/list");
     }
 
     /**

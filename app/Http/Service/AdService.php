@@ -12,6 +12,7 @@ namespace App\Http\Service;
 use App\Http\Dao\AdDao;
 use App\Http\Dao\AdPositionDao;
 use App\Http\Model\Ad;
+use Illuminate\Support\Facades\Log;
 
 class AdService
 {
@@ -34,6 +35,11 @@ class AdService
     public function createAd(array $req)
     {
         $ad = new Ad();
+        $ad->position_id = $req["positionId"];
+        $ad->name = $req["name"];
+        $ad->content = $req["content"];
+        $ad->sort_order = $req["sortOrder"];
+        $ad->state = $req["state"];
         $result = $this->adDao->insert($ad);
         return $result;
     }
