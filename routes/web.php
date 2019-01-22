@@ -57,6 +57,12 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::GET("specificationOption/add", "SpecificationMapi@addOption");
     Route::POST("specificationOption/create", "SpecificationMapi@createOption");
 
+    // 广告
+    Route::GET("ad/list", "AdMapi@list");
+    Route::GET("ad/add", "AdMapi@add");
+    Route::POST("ad/create", "AdMapi@create");
+    Route::GET("adPosition/list","AdMapi@listPosition");
+
     // 帮助
     Route::GET("help", function () {
         return view("admin.pages.help");

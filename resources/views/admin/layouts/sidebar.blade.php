@@ -9,7 +9,7 @@
                 <span>系统首页</span>
             </a>
         </li>
-        <li class="treeview menu-open active">
+        <li class="treeview menu-open">
             <a href="#">
                 <i class="fa fa-inbox"></i>
                 <span>商品管理</span>
@@ -18,7 +18,7 @@
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li class="active"><a href="{{ url("goods/list") }}"><i class="fa fa-circle-o"></i>商品列表</a></li>
+                <li><a href="{{ url("goods/list") }}"><i class="fa fa-circle-o"></i>商品列表</a></li>
                 <li><a href="{{ url("category/list") }}"><i class="fa fa-circle-o"></i>商品分类</a></li>
                 <li><a href="{{ url("brand/list") }}"><i class="fa fa-circle-o"></i>品牌管理</a></li>
                 <li><a href="{{ url("specification/list") }}"><i class="fa fa-circle-o"></i>商品规格</a></li>
@@ -50,16 +50,16 @@
                 <li><a href="#"><i class="fa fa-circle-o"></i>优惠券列表</a></li>
             </ul>
         </li>
-        <li class="treeview">
-            <a href="#">
+        <li class="treeview active">
+            <a>
                 <span>广告管理</span>
                 <span class="pull-right-container">
                    <i class="fa fa-angle-left pull-right"></i>
                 </span>
             </a>
             <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i>广告列表</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i>广告分类</a></li>
+                <li class="active"><a href="{{url("ad/list")}}"><i class="fa fa-circle-o"></i>广告列表</a></li>
+                <li><a href="{{url("adPosition/list")}}"><i class="fa fa-circle-o"></i>广告位置</a></li>
             </ul>
         </li>
         <li class="treeview">
