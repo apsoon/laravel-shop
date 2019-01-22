@@ -17,7 +17,7 @@ class CreateAttributeOptionTable extends Migration
             $table->increments('id');
             $table->integer("attribute_id")->comment("属性名称");
             $table->integer("attribute_group_id")->comment("属性组名称");
-            $table->string("value")->comment("属性值");
+            $table->string("name")->comment("属性值");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

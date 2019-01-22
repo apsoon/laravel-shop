@@ -42,6 +42,9 @@
                             <span class="label label-info">111</span>
                         </td>
                         <td>
+                            <a href="{{ url("attributeOption/add?attributeId=") }}{{$attribute->id}}">
+                                <button type="button" class="btn btn-success btn-flat">添加选项</button>
+                            </a>
                             {{--<div class="btn-group">--}}
                             <button type="button" class="btn btn-info btn-flat">修改</button>
                             {{--<button type="button" class="btn btn-warning  btn-flat">下架</button>--}}

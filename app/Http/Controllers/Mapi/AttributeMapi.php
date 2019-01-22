@@ -21,6 +21,8 @@ class AttributeMapi extends Controller
      */
     private $categoryService;
 
+    // ===========================================================================  attribute ===========================================================================
+
     /**
      * 获取属性列表
      *
@@ -47,17 +49,6 @@ class AttributeMapi extends Controller
     }
 
     /**
-     * 添加分组
-     *
-     * @return \Illuminate\Contracts\View\Factory|View
-     */
-    public function addGroup()
-    {
-        $categoryList = $this->categoryService->getUnitCategory();
-        return view("admin.pages.goods.attributeGroup_add", ["categoryList" => $categoryList]);
-    }
-
-    /**
      * 创建属性
      *
      * @param Request $request
@@ -68,6 +59,19 @@ class AttributeMapi extends Controller
         $req = $request->all();
         $result = $this->attributeService->createAttribute($req);
         if ($result) return redirect("attribute/list");
+    }
+
+    // ===========================================================================  attribute group  ===========================================================================
+
+    /**
+     * 添加分组
+     *
+     * @return \Illuminate\Contracts\View\Factory|View
+     */
+    public function addGroup()
+    {
+        $categoryList = $this->categoryService->getUnitCategory();
+        return view("admin.pages.goods.attributeGroup_add", ["categoryList" => $categoryList]);
     }
 
     /**
@@ -82,6 +86,29 @@ class AttributeMapi extends Controller
         $result = $this->attributeService->createAttributeGroup($req);
         if ($result) return redirect("attribute/list");
     }
+
+    // ===========================================================================  attribute option  ===========================================================================
+
+    /**
+     * 添加属性选项
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|View
+     */
+    public function addOption(Request $request)
+    {
+        $attributeId = $request->all()["attributeId"];
+        return view("admin.pages.goods.attributeOption_add", ["attributeId" => $attributeId]);
+    }
+
+    public function createOption(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->attributeService->createAttributeOption($req);
+        if ($result) return url("attribute/list");
+    }
+
+    // ===========================================================================  constructor  ===========================================================================
 
     /**
      * AttributeMapi constructor.
