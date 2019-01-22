@@ -79,6 +79,8 @@ class AttributeService
             $category = $this->categoryDao->findById($group->category_id);
 //            $attribute->category_id = $category->id;
             $attribute->category_name = $category->name;
+            $options = $this->attributeOptionDao->findByAttributeId($attribute->id);
+            $attribute->options = $options;
         }
         return $result;
     }
@@ -129,6 +131,18 @@ class AttributeService
             array_push($arr, ["attribute_id" => $attributeId, "attribute_group_id" => $groupId, "name" => $option]);
         }
         $result = $this->attributeOptionDao->insertList($arr);
+        return $result;
+    }
+
+    /**
+     * 属性id获取选项
+     *
+     * @param int $attributeId
+     * @return mixed
+     */
+    public function getOptionByAttributeId(int $attributeId)
+    {
+        $result = $this->attributeOptionDao->findByAttributeId($attributeId);
         return $result;
     }
 

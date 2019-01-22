@@ -38,8 +38,11 @@
                             {{$attribute->category_name}}
                         </td>
                         <td>
-                            <span class="label label-info">111</span>
-                            <span class="label label-info">111</span>
+                            @if($attribute->options)
+                                @foreach($attribute->options as $option)
+                                    <span class="label label-info">{{$option->name}}</span>
+                                @endforeach
+                            @endif
                         </td>
                         <td>
                             <a href="{{ url("attributeOption/add?attributeId=") }}{{$attribute->id}}">

@@ -33,7 +33,6 @@ class AttributeMapi extends Controller
     {
         $req = $request->all();
         $result = $this->attributeService->getAttributeList($req);
-        Log::info($result);
         return view('admin.pages.goods.attribute_list', ["attributes" => $result]);
     }
 
@@ -112,6 +111,7 @@ class AttributeMapi extends Controller
 
     /**
      * AttributeMapi constructor.
+     *
      * @param AttributeService $attributeService
      * @param CategoryService $categoryService
      */
