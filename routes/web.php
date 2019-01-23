@@ -65,6 +65,11 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::POST("ad/create", "AdMapi@create");
     Route::GET("adPosition/list", "AdMapi@listPosition");
 
+    // 优惠券
+    Route::GET("coupon/list", "CouponMapi@list");
+    Route::GET("coupon/add", "CouponMapi@add");
+    Route::POST("coupon/create", "CouponMapi@create");
+
     // 帮助
     Route::GET("help", function () {
         return view("admin.pages.help");
