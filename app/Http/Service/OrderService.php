@@ -30,6 +30,35 @@ class OrderService
     private $orderProductDao;
 
     /**
+     * 分页获取订单
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function getOrderPagedList(array $req)
+    {
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $result = $this->orderDao->findPagedList($pageNo, 20);
+        return $result;
+    }
+
+    /**
+     * 获取订单详情
+     *
+     * @param int $orderId
+     * @return \stdClass
+     */
+    public function getOrderDetailByOrderId(int $orderId)
+    {
+        $order = $this->orderDao->findById($orderId);
+        $productList = $this->orderProductDao->findByOrderId($orderId);
+        $result = new \stdClass();
+        $result->order = $order;
+        $result->productList = $productList;
+        return $result;
+    }
+
+    /**
      * OrderService constructor.
      *
      * @param OrderDao $orderDao
