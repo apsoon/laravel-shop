@@ -17,6 +17,8 @@ class CreateOrderTable extends Migration
             $table->increments('id');
             $table->string("user_id");
             $table->string("order_sn");
+            $table->decimal("price")->comment("总价格");
+            $table->decimal("discount")->comment("折扣");
             $table->string("consignee")->default("")->comment("收件人姓名");
             $table->string("phone")->default("");
             $table->string("post_code")->default("");
