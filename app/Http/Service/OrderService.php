@@ -11,6 +11,7 @@ namespace App\Http\Service;
 
 use App\Http\Dao\OrderDao;
 use App\Http\Dao\OrderProductDao;
+use App\Http\Enum\OrderStatus;
 
 /**
  * Class OrderService
@@ -28,6 +29,38 @@ class OrderService
      * @var OrderProductDao
      */
     private $orderProductDao;
+
+    public function createOrder(array $req)
+    {
+
+    }
+
+    /**
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function getOrderPagedListByStatus(array $req)
+    {
+        $pageNo = $req["pageNo"];
+        $size = 20;
+        $result = $this->orderDao->find(Sreq["userId"], $req["status"], $pageNo, $size);
+        return $result;
+    }
+
+    /**
+     * 统计用户每种状态订单的数量
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function getOrderNumber(array $req)
+    {
+        $userId = $req["userId"];
+        $statusList = [OrderStatus::PAY_REQUIRED, OrderStatus::DELIVERY_REQUIRED, OrderStatus::RECEIVE_REQUIRED, OrderStatus::COMMENT_REQUIRED];
+        $result = $this->orderDao->countStatusByUserId($userId, $statusList);
+        return $result;
+    }
 
     /**
      * 分页获取订单

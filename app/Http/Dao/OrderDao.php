@@ -42,6 +42,23 @@ class OrderDao
     }
 
     /**
+     * 计算每种每种状态的数量
+     *
+     * @param string $userId
+     * @param array $statusList
+     * @return mixed
+     */
+    public function countStatusByUserId(string $userId, array $statusList)
+    {
+        $result = $this->order::select("status", "count(order_id)")
+            ->where(["user_id" => $userId])
+            ->whereIn("status", $statusList)
+            ->groupBy("status")
+            ->get();
+        return $result;
+    }
+
+    /**
      * OrderDao constructor.
      *
      * @param Order $order

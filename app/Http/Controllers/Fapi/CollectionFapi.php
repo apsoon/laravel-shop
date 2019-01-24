@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Fapi;
 
 
+use App\Http\Controllers\Controller;
 use App\Http\Enum\StatusCode;
 use App\Http\Service\CollectionService;
 use App\Http\Util\JsonResult;
@@ -19,7 +20,7 @@ use Illuminate\Http\Request;
  *
  * @package App\Http\Controllers\Fapi
  */
-class CollectionFapi
+class CollectionFapi extends Controller
 {
     /**
      * @var CollectionService
