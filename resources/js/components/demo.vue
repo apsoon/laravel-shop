@@ -8,6 +8,8 @@
                     <div class="panel-body">
                         I'm an example component!
                     </div>
+
+                    asdfasdfasdfasdf
                     <el-select v-model="value" placeholder="请选择">
                         <el-option
                                 v-for="item in options"
