@@ -57,6 +57,22 @@ class CouponDao
     }
 
     /**
+     * 分页获取
+     *
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findByPage(int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->coupon::offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * CouponDao constructor.
      *
      * @param Coupon $coupon
