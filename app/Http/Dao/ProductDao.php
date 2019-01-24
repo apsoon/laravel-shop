@@ -23,6 +23,20 @@ class ProductDao
         return $result;
     }
 
+
+    /**
+     * 根据ID查找
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function findById(int $id)
+    {
+        $result = $this->product::where(["id" => $id])
+            ->first();
+        return $result;
+    }
+
     /**
      * @param int $goodsId
      * @return mixed

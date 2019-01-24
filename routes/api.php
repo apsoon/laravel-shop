@@ -25,5 +25,10 @@ Route::group(["namespace" => "Fapi"], function () {
     Route::POST("user/info/set", "UserFapi@setUserInfo");
 
     // 分类
-    Route::GET("category/list","CategoryFapi@unitList");
+    Route::GET("category/list", "CategoryFapi@unitList");
+
+    // 收藏
+    Route::POST("collection/create", "CollectionFapi@create");
+    Route::GET("collection/list", "CollectionFapi@list");
+    Route::DELETE("collection/delete", "CollectionFapi@remove");
 });
