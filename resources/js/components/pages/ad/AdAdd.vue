@@ -4,25 +4,20 @@
             <el-form-item label="广告名称" prop="name">
                 <el-input v-model="adForm.name"></el-input>
             </el-form-item>
-            <el-form-item label="广告描述">
-                <el-input v-model="adForm.desc"></el-input>
+            <el-form-item label="广告描述" prop="content">
+                <el-input v-model="adForm.content"></el-input>
             </el-form-item>
-            <el-form-item label="广告位置">
-                <el-dropdown>
-                    <el-button type="primary" size="small">
-                        请选择<i class="el-icon-arrow-down el-icon--right"></i>
-                    </el-button>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item v-model="adForm.position">黄金糕</el-dropdown-item>
-                        <el-dropdown-item>狮子头</el-dropdown-item>
-                        <el-dropdown-item>螺蛳粉</el-dropdown-item>
-                        <el-dropdown-item>双皮奶</el-dropdown-item>
-                        <el-dropdown-item>蚵仔煎</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
+            <el-form-item label="广告位置" prop="positionId">
+                <el-select v-model="adForm.positionId" placeholder="请选广告位置">
+                    <el-option v-for="item in positionList"
+                               :key="item.id"
+                               :label="item.name"
+                               :value="item.id">
+                    </el-option>
+                </el-select>
             </el-form-item>
-            <el-form-item label="排序">
-                <el-input v-model="adForm.sort_order"></el-input>
+            <el-form-item label="排序" prop="sortOrder">
+                <el-input v-model="adForm.sortOrder"></el-input>
             </el-form-item>
             <el-form-item label="添加图片">
                 <el-upload
@@ -37,7 +32,7 @@
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
             </el-form-item>
-            <el-form-item label="是否启用">
+            <el-form-item label="是否启用" prop="state">
                 <el-radio v-model="adForm.state" label="0">禁用</el-radio>
                 <el-radio v-model="adForm.state" label="1">启用</el-radio>
             </el-form-item>
@@ -48,6 +43,7 @@
 
 <script>
     import axios from "axios";
+    import router from "../../../router";
 
     export default {
         name: "AdAdd",
@@ -55,33 +51,42 @@
             return {
                 adForm: {
                     name: '',
-                    desc: '',
-                    sort_order: 1,
+                    content: '',
+                    sortOrder: 1,
                     state: "0",
-                    position:"",
+                    positionId: "",
                 },
                 rules: {
                     name: [
                         {required: true, message: '请输入广告名称', trigger: 'blur'},
                         {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
                     ],
-                }
+                    positionId: [
+                        {required: true, message: '请选择广告位置', trigger: 'change'}
+                    ]
+                },
+                positionList: []
             }
         },
         mounted: function () {
+            let that = this;
             axios.get("adPosition/list").then(res => {
-
+                that.positionList = res.data.data;
+                console.info(that.positionList);
             });
         },
         methods: {
             onSubmit() {
-                this.$refs["adForm"].validate((valid) => {
+                let that = this;
+                that.$refs["adForm"].validate((valid) => {
                     if (valid) {
-                        console.info(this.adForm);
-                        axios.post("ad/create")
+                        axios.post("ad/create", that.adForm)
                             .then(res => {
-                                console.info(res);
+                                if (res.data.code === 2000){
+                                   router.push("ad-list");
+                                }
                             });
+
                     } else {
                         console.log('error submit!!');
                         return false;

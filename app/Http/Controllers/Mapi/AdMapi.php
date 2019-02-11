@@ -56,12 +56,12 @@ class AdMapi extends Controller
     /**
      * 位置列表
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return JsonResult
      */
     public function listPosition()
     {
         $positionList = $this->adService->getAdPositionList();
-        return view("admin.pages.ad.adPosition_list", ["positionList" => $positionList]);
+        return new JsonResult(StatusCode::SUCCESS, $positionList);
     }
 
     /**

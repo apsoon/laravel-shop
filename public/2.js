@@ -11,11 +11,7 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../router */ "./resources/js/router.js");
 //
 //
 //
@@ -60,16 +56,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdAdd",
   data: function data() {
     return {
       adForm: {
         name: '',
-        desc: '',
-        sort_order: 1,
+        content: '',
+        sortOrder: 1,
         state: "0",
-        position: ""
+        positionId: ""
       },
       rules: {
         name: [{
@@ -81,22 +78,32 @@ __webpack_require__.r(__webpack_exports__);
           max: 5,
           message: '长度在 3 到 5 个字符',
           trigger: 'blur'
+        }],
+        positionId: [{
+          required: true,
+          message: '请选择广告位置',
+          trigger: 'change'
         }]
-      }
+      },
+      positionList: []
     };
   },
   mounted: function mounted() {
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("adPosition/list").then(function (res) {});
+    var that = this;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("adPosition/list").then(function (res) {
+      that.positionList = res.data.data;
+      console.info(that.positionList);
+    });
   },
   methods: {
     onSubmit: function onSubmit() {
-      var _this = this;
-
-      this.$refs["adForm"].validate(function (valid) {
+      var that = this;
+      that.$refs["adForm"].validate(function (valid) {
         if (valid) {
-          console.info(_this.adForm);
-          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/create").then(function (res) {
-            console.info(res);
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/create", that.adForm).then(function (res) {
+            if (res.data.code === 2000) {
+              _router__WEBPACK_IMPORTED_MODULE_1__["default"].push("ad-list");
+            }
           });
         } else {
           console.log('error submit!!');
@@ -153,15 +160,15 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "广告描述" } },
+            { attrs: { label: "广告描述", prop: "content" } },
             [
               _c("el-input", {
                 model: {
-                  value: _vm.adForm.desc,
+                  value: _vm.adForm.content,
                   callback: function($$v) {
-                    _vm.$set(_vm.adForm, "desc", $$v)
+                    _vm.$set(_vm.adForm, "content", $$v)
                   },
-                  expression: "adForm.desc"
+                  expression: "adForm.content"
                 }
               })
             ],
@@ -170,51 +177,26 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "广告位置" } },
+            { attrs: { label: "广告位置", prop: "positionId" } },
             [
               _c(
-                "el-dropdown",
-                [
-                  _c(
-                    "el-button",
-                    { attrs: { type: "primary", size: "small" } },
-                    [
-                      _vm._v("\n                    请选择"),
-                      _c("i", {
-                        staticClass: "el-icon-arrow-down el-icon--right"
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-dropdown-menu",
-                    { attrs: { slot: "dropdown" }, slot: "dropdown" },
-                    [
-                      _c(
-                        "el-dropdown-item",
-                        {
-                          model: {
-                            value: _vm.adForm.position,
-                            callback: function($$v) {
-                              _vm.$set(_vm.adForm, "position", $$v)
-                            },
-                            expression: "adForm.position"
-                          }
-                        },
-                        [_vm._v("黄金糕")]
-                      ),
-                      _vm._v(" "),
-                      _c("el-dropdown-item", [_vm._v("狮子头")]),
-                      _vm._v(" "),
-                      _c("el-dropdown-item", [_vm._v("螺蛳粉")]),
-                      _vm._v(" "),
-                      _c("el-dropdown-item", [_vm._v("双皮奶")]),
-                      _vm._v(" "),
-                      _c("el-dropdown-item", [_vm._v("蚵仔煎")])
-                    ],
-                    1
-                  )
-                ],
+                "el-select",
+                {
+                  attrs: { placeholder: "请选广告位置" },
+                  model: {
+                    value: _vm.adForm.positionId,
+                    callback: function($$v) {
+                      _vm.$set(_vm.adForm, "positionId", $$v)
+                    },
+                    expression: "adForm.positionId"
+                  }
+                },
+                _vm._l(_vm.positionList, function(item) {
+                  return _c("el-option", {
+                    key: item.id,
+                    attrs: { label: item.name, value: item.id }
+                  })
+                }),
                 1
               )
             ],
@@ -223,15 +205,15 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "排序" } },
+            { attrs: { label: "排序", prop: "sortOrder" } },
             [
               _c("el-input", {
                 model: {
-                  value: _vm.adForm.sort_order,
+                  value: _vm.adForm.sortOrder,
                   callback: function($$v) {
-                    _vm.$set(_vm.adForm, "sort_order", $$v)
+                    _vm.$set(_vm.adForm, "sortOrder", $$v)
                   },
-                  expression: "adForm.sort_order"
+                  expression: "adForm.sortOrder"
                 }
               })
             ],
@@ -280,7 +262,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "是否启用" } },
+            { attrs: { label: "是否启用", prop: "state" } },
             [
               _c(
                 "el-radio",

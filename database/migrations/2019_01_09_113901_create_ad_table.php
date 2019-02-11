@@ -18,7 +18,7 @@ class CreateAdTable extends Migration
             $table->integer("position_id");
             $table->tinyInteger("key")->default(0);
             $table->string("name")->default("");
-            $table->string("content")->default("");
+            $table->string("content")->nullable()->default("");
             $table->string("image_url")->default("");
             $table->tinyInteger("link_type")->default(0);
             $table->string("link")->nullable();
