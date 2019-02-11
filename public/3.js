@@ -177,9 +177,7 @@ __webpack_require__.r(__webpack_exports__);
                 type: 'success',
                 message: '删除成功!'
               });
-              that.$router.replace({
-                path: "ad-list"
-              });
+              that.$router.reload();
             }
           });
         }).catch(function () {
