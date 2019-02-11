@@ -47,10 +47,22 @@ class AdMapi extends Controller
      */
     public function create(Request $request)
     {
-        Log::info($request);
         $req = $request->all();
         $result = $this->adService->createAd($req);
         if ($result) return new JsonResult(StatusCode::SUCCESS);
+    }
+
+    /**
+     * 修改状态
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function modifyState(Request $request)
+    {
+      $req = $request->all();
+      $result = $this->adService->modifyState($req);
+      if ($result) return new JsonResult(StatusCode::SUCCESS);
     }
 
     /**

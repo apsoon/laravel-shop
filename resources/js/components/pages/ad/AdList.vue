@@ -44,12 +44,12 @@
                     <el-button v-if="scope.row.state"
                                size="mini"
                                type="warning"
-                               @click="">禁用
+                               @click="modifyState('disable', scope.$index, scope.row.id)">禁用
                     </el-button>
                     <el-button v-else
                                size="mini"
                                type="success"
-                               @click="">启用
+                               @click="modifyState('enable', scope.$index, scope.row.id)">启用
                     </el-button>
                     <el-button
                             size="mini"
@@ -78,7 +78,20 @@
                 that.adList = res.data.data;
             });
         },
-        methods: {}
+        methods: {
+            modifyState: function (type, index, id) {
+                let state = 1;
+                if (type === "disable") state = 0;
+                let that = this;
+                console.info("index = ", index, ", id = ", id);
+                axios.post("ad/modState", {
+                    state: state,
+                    id: id
+                }).then(res => {
+                    if (res.data.code === 2000) that.adList[index].state = state;
+                });
+            }
+        }
     }
 </script>
 

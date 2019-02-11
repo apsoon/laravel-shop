@@ -69,6 +69,18 @@ class AdService
     }
 
     /**
+     * 修改状态
+     *
+     * @param array $req
+     * @return bool
+     */
+    public function modifyState(array $req)
+    {
+        $result = $this->adDao->updateStateById($req["id"], $req["state"]);
+        return $result;
+    }
+
+    /**
      * 获取所有广告位置
      *
      * @return \App\Http\Model\AdPosition[]|\Illuminate\Database\Eloquent\Collection

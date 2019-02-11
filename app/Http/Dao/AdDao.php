@@ -54,6 +54,21 @@ class AdDao
     }
 
     /**
+     * 修改状态
+     *
+     * @param $id
+     * @param $state
+     * @return bool
+     */
+    public function updateStateById($id, $state)
+    {
+        $ad = $this->ad::where(["id" => $id])->first();
+        if (!$ad) return false;
+        $ad->state = $state;
+        return $ad->save();
+    }
+
+    /**
      * 获取所有
      *
      * @return Ad[]|\Illuminate\Database\Eloquent\Collection

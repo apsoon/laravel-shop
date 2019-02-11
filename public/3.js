@@ -89,7 +89,20 @@ __webpack_require__.r(__webpack_exports__);
       that.adList = res.data.data;
     });
   },
-  methods: {}
+  methods: {
+    modifyState: function modifyState(type, index, id) {
+      var state = 1;
+      if (type === "disable") state = 0;
+      var that = this;
+      console.info("index = ", index, ", id = ", id);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/modState", {
+        state: state,
+        id: id
+      }).then(function (res) {
+        if (res.data.code === 2000) that.adList[index].state = state;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -166,7 +179,15 @@ var render = function() {
                           "el-button",
                           {
                             attrs: { size: "mini", type: "warning" },
-                            on: { click: function($event) {} }
+                            on: {
+                              click: function($event) {
+                                _vm.modifyState(
+                                  "disable",
+                                  scope.$index,
+                                  scope.row.id
+                                )
+                              }
+                            }
                           },
                           [_vm._v("禁用\n                ")]
                         )
@@ -174,7 +195,15 @@ var render = function() {
                           "el-button",
                           {
                             attrs: { size: "mini", type: "success" },
-                            on: { click: function($event) {} }
+                            on: {
+                              click: function($event) {
+                                _vm.modifyState(
+                                  "enable",
+                                  scope.$index,
+                                  scope.row.id
+                                )
+                              }
+                            }
                           },
                           [_vm._v("启用\n                ")]
                         ),
