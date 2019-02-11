@@ -3566,6 +3566,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
@@ -85541,199 +85542,201 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "el-container",
     [
+      _c("el-header", [_vm._v("Header")]),
+      _vm._v(" "),
       _c(
-        "div",
-        { staticClass: "sidebar" },
+        "el-container",
         [
           _c(
-            "el-menu",
-            {
-              staticClass: "sidebar-el-menu",
-              attrs: {
-                "unique-opened": "true",
-                "background-color": "#242C31",
-                "text-color": "#8598A2",
-                "active-text-color": "#D1D3D4",
-                router: "true",
-                "default-active": "1"
-              }
-            },
+            "el-aside",
+            { attrs: { width: "200px" } },
             [
-              _c("el-menu-item", { attrs: { index: "1" } }, [
-                _c("i", { staticClass: "el-icon-menu" }),
-                _vm._v(" "),
-                _c("span", { attrs: { slot: "title" }, slot: "title" }, [
-                  _vm._v("首页")
-                ])
-              ]),
-              _vm._v(" "),
               _c(
-                "el-submenu",
-                { attrs: { index: "2" } },
+                "el-menu",
+                {
+                  attrs: {
+                    "unique-opened": "true",
+                    router: "true",
+                    "default-active": "1"
+                  }
+                },
                 [
-                  _c("template", { slot: "title" }, [
-                    _c("i", { staticClass: "el-icon-message" }),
-                    _vm._v("导航一")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "el-menu-item-group",
-                    [
-                      _c("template", { slot: "title" }, [_vm._v("分组一")]),
-                      _vm._v(" "),
-                      _c("el-menu-item", { attrs: { index: "1-1" } }, [
-                        _vm._v("选项1")
-                      ]),
-                      _vm._v(" "),
-                      _c("el-menu-item", { attrs: { index: "1-2" } }, [
-                        _vm._v("选项2")
-                      ])
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-menu-item-group",
-                    { attrs: { title: "分组2" } },
-                    [
-                      _c("el-menu-item", { attrs: { index: "1-3" } }, [
-                        _vm._v("选项3")
-                      ])
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-submenu",
-                    { attrs: { index: "1-4" } },
-                    [
-                      _c("template", { slot: "title" }, [_vm._v("选项4")]),
-                      _vm._v(" "),
-                      _c("el-menu-item", { attrs: { index: "1-4-1" } }, [
-                        _vm._v("选项4-1")
-                      ])
-                    ],
-                    2
-                  )
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "el-submenu",
-                { attrs: { index: "3" } },
-                [
-                  _c("template", { slot: "title" }, [
+                  _c("el-menu-item", { attrs: { index: "1" } }, [
                     _c("i", { staticClass: "el-icon-menu" }),
-                    _vm._v("导航二")
+                    _vm._v(" "),
+                    _c("span", { attrs: { slot: "title" }, slot: "title" }, [
+                      _vm._v("首页")
+                    ])
                   ]),
                   _vm._v(" "),
                   _c(
-                    "el-menu-item-group",
+                    "el-submenu",
+                    { attrs: { index: "2" } },
                     [
-                      _c("template", { slot: "title" }, [_vm._v("分组一")]),
-                      _vm._v(" "),
-                      _c("el-menu-item", { attrs: { index: "2-1" } }, [
-                        _vm._v("选项1")
+                      _c("template", { slot: "title" }, [
+                        _c("i", { staticClass: "el-icon-message" }),
+                        _vm._v("导航一")
                       ]),
                       _vm._v(" "),
-                      _c("el-menu-item", { attrs: { index: "2-2" } }, [
-                        _vm._v("选项2")
-                      ])
+                      _c(
+                        "el-menu-item-group",
+                        [
+                          _c("template", { slot: "title" }, [_vm._v("分组一")]),
+                          _vm._v(" "),
+                          _c("el-menu-item", { attrs: { index: "1-1" } }, [
+                            _vm._v("选项1")
+                          ]),
+                          _vm._v(" "),
+                          _c("el-menu-item", { attrs: { index: "1-2" } }, [
+                            _vm._v("选项2")
+                          ])
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-menu-item-group",
+                        { attrs: { title: "分组2" } },
+                        [
+                          _c("el-menu-item", { attrs: { index: "1-3" } }, [
+                            _vm._v("选项3")
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-submenu",
+                        { attrs: { index: "1-4" } },
+                        [
+                          _c("template", { slot: "title" }, [_vm._v("选项4")]),
+                          _vm._v(" "),
+                          _c("el-menu-item", { attrs: { index: "1-4-1" } }, [
+                            _vm._v("选项4-1")
+                          ])
+                        ],
+                        2
+                      )
                     ],
                     2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-menu-item-group",
-                    { attrs: { title: "分组2" } },
-                    [
-                      _c("el-menu-item", { attrs: { index: "2-3" } }, [
-                        _vm._v("选项3")
-                      ])
-                    ],
-                    1
                   ),
                   _vm._v(" "),
                   _c(
                     "el-submenu",
-                    { attrs: { index: "2-4" } },
+                    { attrs: { index: "3" } },
                     [
-                      _c("template", { slot: "title" }, [_vm._v("选项4")]),
-                      _vm._v(" "),
-                      _c("el-menu-item", { attrs: { index: "2-4-1" } }, [
-                        _vm._v("选项4-1")
-                      ])
-                    ],
-                    2
-                  )
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "el-submenu",
-                { attrs: { index: "4" } },
-                [
-                  _c("template", { slot: "title" }, [
-                    _c("i", { staticClass: "el-icon-setting" }),
-                    _vm._v("导航三")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "el-menu-item-group",
-                    [
-                      _c("template", { slot: "title" }, [_vm._v("分组一")]),
-                      _vm._v(" "),
-                      _c("el-menu-item", { attrs: { index: "3-1" } }, [
-                        _vm._v("选项1")
+                      _c("template", { slot: "title" }, [
+                        _c("i", { staticClass: "el-icon-menu" }),
+                        _vm._v("导航二")
                       ]),
                       _vm._v(" "),
-                      _c("el-menu-item", { attrs: { index: "3-2" } }, [
-                        _vm._v("选项2")
-                      ])
+                      _c(
+                        "el-menu-item-group",
+                        [
+                          _c("template", { slot: "title" }, [_vm._v("分组一")]),
+                          _vm._v(" "),
+                          _c("el-menu-item", { attrs: { index: "2-1" } }, [
+                            _vm._v("选项1")
+                          ]),
+                          _vm._v(" "),
+                          _c("el-menu-item", { attrs: { index: "2-2" } }, [
+                            _vm._v("选项2")
+                          ])
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-menu-item-group",
+                        { attrs: { title: "分组2" } },
+                        [
+                          _c("el-menu-item", { attrs: { index: "2-3" } }, [
+                            _vm._v("选项3")
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-submenu",
+                        { attrs: { index: "2-4" } },
+                        [
+                          _c("template", { slot: "title" }, [_vm._v("选项4")]),
+                          _vm._v(" "),
+                          _c("el-menu-item", { attrs: { index: "2-4-1" } }, [
+                            _vm._v("选项4-1")
+                          ])
+                        ],
+                        2
+                      )
                     ],
                     2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "el-menu-item-group",
-                    { attrs: { title: "分组2" } },
-                    [
-                      _c("el-menu-item", { attrs: { index: "3-3" } }, [
-                        _vm._v("选项3")
-                      ])
-                    ],
-                    1
                   ),
                   _vm._v(" "),
                   _c(
                     "el-submenu",
-                    { attrs: { index: "3-4" } },
+                    { attrs: { index: "4" } },
                     [
-                      _c("template", { slot: "title" }, [_vm._v("选项4")]),
+                      _c("template", { slot: "title" }, [
+                        _c("i", { staticClass: "el-icon-setting" }),
+                        _vm._v("导航三")
+                      ]),
                       _vm._v(" "),
-                      _c("el-menu-item", { attrs: { index: "3-4-1" } }, [
-                        _vm._v("选项4-1")
-                      ])
+                      _c(
+                        "el-menu-item-group",
+                        [
+                          _c("template", { slot: "title" }, [_vm._v("分组一")]),
+                          _vm._v(" "),
+                          _c("el-menu-item", { attrs: { index: "3-1" } }, [
+                            _vm._v("选项1")
+                          ]),
+                          _vm._v(" "),
+                          _c("el-menu-item", { attrs: { index: "3-2" } }, [
+                            _vm._v("选项2")
+                          ])
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-menu-item-group",
+                        { attrs: { title: "分组2" } },
+                        [
+                          _c("el-menu-item", { attrs: { index: "3-3" } }, [
+                            _vm._v("选项3")
+                          ])
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-submenu",
+                        { attrs: { index: "3-4" } },
+                        [
+                          _c("template", { slot: "title" }, [_vm._v("选项4")]),
+                          _vm._v(" "),
+                          _c("el-menu-item", { attrs: { index: "3-4-1" } }, [
+                            _vm._v("选项4-1")
+                          ])
+                        ],
+                        2
+                      )
                     ],
                     2
                   )
                 ],
-                2
+                1
               )
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c("el-main", [_c("router-view")], 1)
         ],
         1
-      ),
-      _vm._v(" "),
-      _c("el-main", [_c("router-view")], 1),
-      _vm._v(" "),
-      _c("el-footer", [_vm._v("Footer")])
+      )
     ],
     1
   )
