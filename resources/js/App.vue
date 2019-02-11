@@ -5,24 +5,17 @@
             <el-aside width="200px">
                 <el-menu unique-opened="true"
                          router="true" default-active="1">
-                    <el-menu-item index="1">
+                    <el-menu-item index="index">
                         <i class="el-icon-menu"></i>
                         <span slot="title">首页</span>
                     </el-menu-item>
                     <el-submenu index="2">
-                        <template slot="title"><i class="el-icon-message"></i>导航一</template>
-                        <el-menu-item-group>
-                            <template slot="title">分组一</template>
-                            <el-menu-item index="1-1">选项1</el-menu-item>
-                            <el-menu-item index="1-2">选项2</el-menu-item>
-                        </el-menu-item-group>
-                        <el-menu-item-group title="分组2">
-                            <el-menu-item index="1-3">选项3</el-menu-item>
-                        </el-menu-item-group>
-                        <el-submenu index="1-4">
-                            <template slot="title">选项4</template>
-                            <el-menu-item index="1-4-1">选项4-1</el-menu-item>
-                        </el-submenu>
+                        <template slot="title"><i class="el-icon-message"></i>商品管理</template>
+                        <el-menu-item index="goods">商品列表</el-menu-item>
+                        <el-menu-item index="category">商品分类</el-menu-item>
+                        <el-menu-item index="brand">品牌管理</el-menu-item>
+                        <el-menu-item index="specification">规格管理</el-menu-item>
+                        <el-menu-item index="attribute">属性管理</el-menu-item>
                     </el-submenu>
                     <el-submenu index="3">
                         <template slot="title"><i class="el-icon-menu"></i>导航二</template>

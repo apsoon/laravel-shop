@@ -3560,13 +3560,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
@@ -85563,7 +85556,7 @@ var render = function() {
                   }
                 },
                 [
-                  _c("el-menu-item", { attrs: { index: "1" } }, [
+                  _c("el-menu-item", { attrs: { index: "index" } }, [
                     _c("i", { staticClass: "el-icon-menu" }),
                     _vm._v(" "),
                     _c("span", { attrs: { slot: "title" }, slot: "title" }, [
@@ -85577,48 +85570,30 @@ var render = function() {
                     [
                       _c("template", { slot: "title" }, [
                         _c("i", { staticClass: "el-icon-message" }),
-                        _vm._v("导航一")
+                        _vm._v("商品管理")
+                      ]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "goods" } }, [
+                        _vm._v("商品列表")
+                      ]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "category" } }, [
+                        _vm._v("商品分类")
+                      ]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "brand" } }, [
+                        _vm._v("品牌管理")
                       ]),
                       _vm._v(" "),
                       _c(
-                        "el-menu-item-group",
-                        [
-                          _c("template", { slot: "title" }, [_vm._v("分组一")]),
-                          _vm._v(" "),
-                          _c("el-menu-item", { attrs: { index: "1-1" } }, [
-                            _vm._v("选项1")
-                          ]),
-                          _vm._v(" "),
-                          _c("el-menu-item", { attrs: { index: "1-2" } }, [
-                            _vm._v("选项2")
-                          ])
-                        ],
-                        2
+                        "el-menu-item",
+                        { attrs: { index: "specification" } },
+                        [_vm._v("规格管理")]
                       ),
                       _vm._v(" "),
-                      _c(
-                        "el-menu-item-group",
-                        { attrs: { title: "分组2" } },
-                        [
-                          _c("el-menu-item", { attrs: { index: "1-3" } }, [
-                            _vm._v("选项3")
-                          ])
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-submenu",
-                        { attrs: { index: "1-4" } },
-                        [
-                          _c("template", { slot: "title" }, [_vm._v("选项4")]),
-                          _vm._v(" "),
-                          _c("el-menu-item", { attrs: { index: "1-4-1" } }, [
-                            _vm._v("选项4-1")
-                          ])
-                        ],
-                        2
-                      )
+                      _c("el-menu-item", { attrs: { index: "attribute" } }, [
+                        _vm._v("属性管理")
+                      ])
                     ],
                     2
                   ),
