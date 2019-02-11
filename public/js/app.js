@@ -3560,6 +3560,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
@@ -85566,14 +85570,14 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "el-submenu",
-                    { attrs: { index: "2" } },
+                    { attrs: { index: "goods" } },
                     [
                       _c("template", { slot: "title" }, [
                         _c("i", { staticClass: "el-icon-message" }),
                         _vm._v("商品管理")
                       ]),
                       _vm._v(" "),
-                      _c("el-menu-item", { attrs: { index: "goods" } }, [
+                      _c("el-menu-item", { attrs: { index: "list" } }, [
                         _vm._v("商品列表")
                       ]),
                       _vm._v(" "),
@@ -85600,7 +85604,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "el-submenu",
-                    { attrs: { index: "3" } },
+                    { attrs: { index: "order" } },
                     [
                       _c("template", { slot: "title" }, [
                         _c("i", { staticClass: "el-icon-menu" }),
@@ -85652,7 +85656,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "el-submenu",
-                    { attrs: { index: "4" } },
+                    { attrs: { index: "coupon" } },
                     [
                       _c("template", { slot: "title" }, [
                         _c("i", { staticClass: "el-icon-setting" }),
@@ -85698,6 +85702,22 @@ var render = function() {
                         ],
                         2
                       )
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-submenu",
+                    { attrs: { index: "ad" } },
+                    [
+                      _c("template", { slot: "title" }, [
+                        _c("i", { staticClass: "el-icon-setting" }),
+                        _vm._v("广告管理")
+                      ]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "ad-list" } }, [
+                        _vm._v("广告列表")
+                      ])
                     ],
                     2
                   )
@@ -99837,6 +99857,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     path: '/demo',
     component: function component(resolve) {
       return void __webpack_require__.e(/*! AMD require */ 1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/demo.vue */ "./resources/js/components/demo.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
+    name: "AdList",
+    path: '/ad-list',
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 2).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/ad/AdList.vue */ "./resources/js/components/pages/ad/AdList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }]
 }));

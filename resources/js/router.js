@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 export default new VueRouter({
@@ -15,5 +15,10 @@ export default new VueRouter({
             path:'/demo',
             component: resolve =>void(require(['./components/demo.vue'], resolve))
         },
+        {
+            name:"AdList",
+            path:'/ad-list',
+            component: resolve =>void(require(['./components/pages/ad/AdList.vue'], resolve))
+        }
     ]
 })
