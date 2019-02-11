@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Mapi;
 
 use App\Http\Controllers\Controller;
+use App\Http\Enum\StatusCode;
 use App\Http\Service\AdService;
+use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
+use Psy\Util\Json;
 
 class AdMapi extends Controller
 {
@@ -16,12 +19,12 @@ class AdMapi extends Controller
     /**
      * 广告位置
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return JsonResult
      */
     public function list()
     {
         $adList = $this->adService->getAdList();
-        return view("admin.pages.ad.ad_list", ["adList" => $adList]);
+        return new JsonResult(StatusCode::SUCCESS, $adList);
     }
 
     /**

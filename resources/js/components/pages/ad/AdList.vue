@@ -36,22 +36,22 @@
                     <el-button
                             size="mini"
                             type="primary"
-                            @click="handleDelete(scope.$index, scope.row)">修改
+                            @click="">修改
                     </el-button>
-                    <el-button
-                            size="mini"
-                            type="success"
-                            @click="handleDelete(scope.$index, scope.row)">启用
-                    </el-button>
-                    <el-button
+                    <el-button v-if="scope.row.state"
                             size="mini"
                             type="warning"
-                            @click="handleDelete(scope.$index, scope.row)">禁用
+                            @click="">禁用
+                    </el-button>
+                    <el-button v-else
+                            size="mini"
+                            type="success"
+                            @click="">启用
                     </el-button>
                     <el-button
                             size="mini"
                             type="danger"
-                            @click="handleDelete(scope.$index, scope.row)">删除
+                            @click="">删除
                     </el-button>
                 </template>
             </el-table-column>
@@ -60,21 +60,20 @@
 </template>
 
 <script>
+    import axios from "axios";
+
     export default {
         name: "AdList",
         data() {
             return {
-                adList: [
-                    {
-                        name: "123",
-                        position: "123"
-                    },
-                    {}
-                ]
+                adList: []
             }
         },
-        mounted:{
-
+        mounted: function () {
+            let that = this;
+            axios.get('ad/list').then(res => {
+                that.adList = res.data.data;
+            });
         }
     }
 </script>

@@ -9,6 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -70,17 +72,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdList",
   data: function data() {
     return {
-      adList: [{
-        name: "123",
-        position: "123"
-      }, {}]
+      adList: []
     };
   },
-  mounted: {}
+  mounted: function mounted() {
+    var that = this;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('ad/list').then(function (res) {
+      that.adList = res.data.data;
+    });
+  }
 });
 
 /***/ }),
@@ -140,50 +145,34 @@ var render = function() {
                       "el-button",
                       {
                         attrs: { size: "mini", type: "primary" },
-                        on: {
-                          click: function($event) {
-                            _vm.handleDelete(scope.$index, scope.row)
-                          }
-                        }
+                        on: { click: function($event) {} }
                       },
                       [_vm._v("修改\n                ")]
                     ),
                     _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { size: "mini", type: "success" },
-                        on: {
-                          click: function($event) {
-                            _vm.handleDelete(scope.$index, scope.row)
-                          }
-                        }
-                      },
-                      [_vm._v("启用\n                ")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { size: "mini", type: "warning" },
-                        on: {
-                          click: function($event) {
-                            _vm.handleDelete(scope.$index, scope.row)
-                          }
-                        }
-                      },
-                      [_vm._v("禁用\n                ")]
-                    ),
+                    scope.row.state
+                      ? _c(
+                          "el-button",
+                          {
+                            attrs: { size: "mini", type: "warning" },
+                            on: { click: function($event) {} }
+                          },
+                          [_vm._v("禁用\n                ")]
+                        )
+                      : _c(
+                          "el-button",
+                          {
+                            attrs: { size: "mini", type: "success" },
+                            on: { click: function($event) {} }
+                          },
+                          [_vm._v("启用\n                ")]
+                        ),
                     _vm._v(" "),
                     _c(
                       "el-button",
                       {
                         attrs: { size: "mini", type: "danger" },
-                        on: {
-                          click: function($event) {
-                            _vm.handleDelete(scope.$index, scope.row)
-                          }
-                        }
+                        on: { click: function($event) {} }
                       },
                       [_vm._v("删除\n                ")]
                     )
