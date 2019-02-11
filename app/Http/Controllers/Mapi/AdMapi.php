@@ -49,7 +49,7 @@ class AdMapi extends Controller
     {
         $req = $request->all();
         $result = $this->adService->createAd($req);
-        if ($result) return new JsonResult(StatusCode::SUCCESS);
+        if ($result) return new JsonResult();
     }
 
     /**
@@ -60,9 +60,20 @@ class AdMapi extends Controller
      */
     public function modifyState(Request $request)
     {
-      $req = $request->all();
-      $result = $this->adService->modifyState($req);
-      if ($result) return new JsonResult(StatusCode::SUCCESS);
+        $req = $request->all();
+        $result = $this->adService->modifyState($req);
+        if ($result) return new JsonResult();
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function delete(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->adService->deleteAd($req);
+        if ($result) return new JsonResult();
     }
 
     /**

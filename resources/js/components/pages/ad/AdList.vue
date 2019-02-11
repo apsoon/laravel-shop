@@ -54,7 +54,7 @@
                     <el-button
                             size="mini"
                             type="danger"
-                            @click="">删除
+                            @click="deleteAd(scope.$index, scope.row.id)">删除
                     </el-button>
                 </template>
             </el-table-column>
@@ -90,9 +90,38 @@
                 }).then(res => {
                     if (res.data.code === 2000) that.adList[index].state = state;
                 });
+            },
+            deleteAd: function (index, id) {
+                let that = this;
+                this.$confirm(' 确认删除当前广告?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let ids = [];
+                    ids.push(id);
+                    axios.post("ad/delete", {
+                        ids: ids
+                    })
+                        .then(res => {
+                            if (res.data.code === 2000) {
+                                that.adList.splice(index, 1);
+                                that.$message({
+                                    type: 'success',
+                                    message: '删除成功!'
+                                });
+                            }
+                        });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
             }
         }
     }
+
 </script>
 
 <style scoped>

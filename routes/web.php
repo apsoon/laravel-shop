@@ -64,6 +64,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::GET("ad/add", "AdMapi@add");
     Route::POST("ad/create", "AdMapi@create");
     Route::POST("ad/modState", "AdMapi@ModifyState");
+    Route::POST("ad/delete", "AdMapi@delete");
     Route::GET("adPosition/list", "AdMapi@listPosition");
 
     // 优惠券

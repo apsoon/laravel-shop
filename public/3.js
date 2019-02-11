@@ -101,6 +101,35 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         if (res.data.code === 2000) that.adList[index].state = state;
       });
+    },
+    deleteAd: function deleteAd(index, id) {
+      var _this = this;
+
+      var that = this;
+      this.$confirm(' 确认删除当前广告?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        var ids = [];
+        ids.push(id);
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/delete", {
+          ids: ids
+        }).then(function (res) {
+          if (res.data.code === 2000) {
+            that.adList.splice(index, 1);
+            that.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          }
+        });
+      }).catch(function () {
+        _this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     }
   }
 });
@@ -212,7 +241,11 @@ var render = function() {
                       "el-button",
                       {
                         attrs: { size: "mini", type: "danger" },
-                        on: { click: function($event) {} }
+                        on: {
+                          click: function($event) {
+                            _vm.deleteAd(scope.$index, scope.row.id)
+                          }
+                        }
                       },
                       [_vm._v("删除\n                ")]
                     )

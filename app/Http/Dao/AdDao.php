@@ -41,6 +41,19 @@ class AdDao
     }
 
     /**
+     * 批量删除
+     *
+     * @param array $ids
+     * @return mixed
+     */
+    public function deleteByIds(array $ids)
+    {
+        $result = $this->whereIn("id", $ids)
+            ->delete();
+        return $result;
+    }
+
+    /**
      * 根据key获取
      *
      * @param string $key

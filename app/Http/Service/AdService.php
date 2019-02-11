@@ -92,6 +92,23 @@ class AdService
     }
 
     /**
+     * 删除广告
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function deleteAd(array $req)
+    {
+        $ids = $req["ids"];
+        if (sizeof($ids) == 1) {
+            $result = $this->adDao->deleteById($ids[0]);
+        } else {
+            $result = $this->adDao->deleteByIds($ids);
+        }
+        return $result;
+    }
+
+    /**
      * AdService constructor.
      *
      * @param AdDao $adDao
