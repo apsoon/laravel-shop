@@ -6,18 +6,9 @@
                     <div class="panel-heading">Example Component</div>
 
                     <div class="panel-body">
-                        I'm an example component!
+                        测试
                     </div>
 
-                    asdfasdfasdfasdf
-                    <el-select v-model="value" placeholder="请选择">
-                        <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
-                    </el-select>
                 </div>
             </div>
         </div>
