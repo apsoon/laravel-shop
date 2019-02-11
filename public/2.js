@@ -9,6 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -57,9 +59,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "AdAdd"
+  name: "AdAdd",
+  data: function data() {
+    return {
+      adForm: {
+        name: '',
+        desc: '',
+        sort_order: 1,
+        state: "0",
+        position: ""
+      },
+      rules: {
+        name: [{
+          required: true,
+          message: '请输入广告名称',
+          trigger: 'blur'
+        }, {
+          min: 3,
+          max: 5,
+          message: '长度在 3 到 5 个字符',
+          trigger: 'blur'
+        }]
+      }
+    };
+  },
+  mounted: function mounted() {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("adPosition/list").then(function (res) {});
+  },
+  methods: {
+    onSubmit: function onSubmit() {
+      var _this = this;
+
+      this.$refs["adForm"].validate(function (valid) {
+        if (valid) {
+          console.info(_this.adForm);
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/create").then(function (res) {
+            console.info(res);
+          });
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -84,19 +129,22 @@ var render = function() {
     [
       _c(
         "el-form",
-        { ref: "form", attrs: { model: _vm.form, "label-width": "80px" } },
+        {
+          ref: "adForm",
+          attrs: { rules: _vm.rules, model: _vm.adForm, "label-width": "100px" }
+        },
         [
           _c(
             "el-form-item",
-            { attrs: { label: "活动名称" } },
+            { attrs: { label: "广告名称", prop: "name" } },
             [
               _c("el-input", {
                 model: {
-                  value: _vm.form.name,
+                  value: _vm.adForm.name,
                   callback: function($$v) {
-                    _vm.$set(_vm.form, "name", $$v)
+                    _vm.$set(_vm.adForm, "name", $$v)
                   },
-                  expression: "form.name"
+                  expression: "adForm.name"
                 }
               })
             ],
@@ -105,177 +153,15 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "活动区域" } },
-            [
-              _c(
-                "el-select",
-                {
-                  attrs: { placeholder: "请选择活动区域" },
-                  model: {
-                    value: _vm.form.region,
-                    callback: function($$v) {
-                      _vm.$set(_vm.form, "region", $$v)
-                    },
-                    expression: "form.region"
-                  }
-                },
-                [
-                  _c("el-option", {
-                    attrs: { label: "区域一", value: "shanghai" }
-                  }),
-                  _vm._v(" "),
-                  _c("el-option", {
-                    attrs: { label: "区域二", value: "beijing" }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "活动时间" } },
-            [
-              _c(
-                "el-col",
-                { attrs: { span: 11 } },
-                [
-                  _c("el-date-picker", {
-                    staticStyle: { width: "100%" },
-                    attrs: { type: "date", placeholder: "选择日期" },
-                    model: {
-                      value: _vm.form.date1,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "date1", $$v)
-                      },
-                      expression: "form.date1"
-                    }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("el-col", { staticClass: "line", attrs: { span: 2 } }, [
-                _vm._v("-")
-              ]),
-              _vm._v(" "),
-              _c(
-                "el-col",
-                { attrs: { span: 11 } },
-                [
-                  _c("el-time-picker", {
-                    staticStyle: { width: "100%" },
-                    attrs: { type: "fixed-time", placeholder: "选择时间" },
-                    model: {
-                      value: _vm.form.date2,
-                      callback: function($$v) {
-                        _vm.$set(_vm.form, "date2", $$v)
-                      },
-                      expression: "form.date2"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "即时配送" } },
-            [
-              _c("el-switch", {
-                model: {
-                  value: _vm.form.delivery,
-                  callback: function($$v) {
-                    _vm.$set(_vm.form, "delivery", $$v)
-                  },
-                  expression: "form.delivery"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "活动性质" } },
-            [
-              _c(
-                "el-checkbox-group",
-                {
-                  model: {
-                    value: _vm.form.type,
-                    callback: function($$v) {
-                      _vm.$set(_vm.form, "type", $$v)
-                    },
-                    expression: "form.type"
-                  }
-                },
-                [
-                  _c("el-checkbox", {
-                    attrs: { label: "美食/餐厅线上活动", name: "type" }
-                  }),
-                  _vm._v(" "),
-                  _c("el-checkbox", {
-                    attrs: { label: "地推活动", name: "type" }
-                  }),
-                  _vm._v(" "),
-                  _c("el-checkbox", {
-                    attrs: { label: "线下主题活动", name: "type" }
-                  }),
-                  _vm._v(" "),
-                  _c("el-checkbox", {
-                    attrs: { label: "单纯品牌曝光", name: "type" }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "特殊资源" } },
-            [
-              _c(
-                "el-radio-group",
-                {
-                  model: {
-                    value: _vm.form.resource,
-                    callback: function($$v) {
-                      _vm.$set(_vm.form, "resource", $$v)
-                    },
-                    expression: "form.resource"
-                  }
-                },
-                [
-                  _c("el-radio", { attrs: { label: "线上品牌商赞助" } }),
-                  _vm._v(" "),
-                  _c("el-radio", { attrs: { label: "线下场地免费" } })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "活动形式" } },
+            { attrs: { label: "广告描述" } },
             [
               _c("el-input", {
-                attrs: { type: "textarea" },
                 model: {
-                  value: _vm.form.desc,
+                  value: _vm.adForm.desc,
                   callback: function($$v) {
-                    _vm.$set(_vm.form, "desc", $$v)
+                    _vm.$set(_vm.adForm, "desc", $$v)
                   },
-                  expression: "form.desc"
+                  expression: "adForm.desc"
                 }
               })
             ],
@@ -284,16 +170,155 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
+            { attrs: { label: "广告位置" } },
             [
               _c(
-                "el-button",
-                { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
-                [_vm._v("立即创建")]
-              ),
-              _vm._v(" "),
-              _c("el-button", [_vm._v("取消")])
+                "el-dropdown",
+                [
+                  _c(
+                    "el-button",
+                    { attrs: { type: "primary", size: "small" } },
+                    [
+                      _vm._v("\n                    请选择"),
+                      _c("i", {
+                        staticClass: "el-icon-arrow-down el-icon--right"
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-dropdown-menu",
+                    { attrs: { slot: "dropdown" }, slot: "dropdown" },
+                    [
+                      _c(
+                        "el-dropdown-item",
+                        {
+                          model: {
+                            value: _vm.adForm.position,
+                            callback: function($$v) {
+                              _vm.$set(_vm.adForm, "position", $$v)
+                            },
+                            expression: "adForm.position"
+                          }
+                        },
+                        [_vm._v("黄金糕")]
+                      ),
+                      _vm._v(" "),
+                      _c("el-dropdown-item", [_vm._v("狮子头")]),
+                      _vm._v(" "),
+                      _c("el-dropdown-item", [_vm._v("螺蛳粉")]),
+                      _vm._v(" "),
+                      _c("el-dropdown-item", [_vm._v("双皮奶")]),
+                      _vm._v(" "),
+                      _c("el-dropdown-item", [_vm._v("蚵仔煎")])
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
             ],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "排序" } },
+            [
+              _c("el-input", {
+                model: {
+                  value: _vm.adForm.sort_order,
+                  callback: function($$v) {
+                    _vm.$set(_vm.adForm, "sort_order", $$v)
+                  },
+                  expression: "adForm.sort_order"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "添加图片" } },
+            [
+              _c(
+                "el-upload",
+                {
+                  staticClass: "upload-demo",
+                  attrs: {
+                    action: "",
+                    "on-preview": _vm.handlePreview,
+                    "on-remove": _vm.handleRemove,
+                    "before-remove": _vm.beforeRemove,
+                    limit: 1,
+                    "file-list": _vm.fileList
+                  }
+                },
+                [
+                  _c(
+                    "el-button",
+                    { attrs: { size: "small", type: "primary" } },
+                    [_vm._v("点击上传")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "el-upload__tip",
+                      attrs: { slot: "tip" },
+                      slot: "tip"
+                    },
+                    [_vm._v("只能上传jpg/png文件，且不超过500kb")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "是否启用" } },
+            [
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "0" },
+                  model: {
+                    value: _vm.adForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.adForm, "state", $$v)
+                    },
+                    expression: "adForm.state"
+                  }
+                },
+                [_vm._v("禁用")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "1" },
+                  model: {
+                    value: _vm.adForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.adForm, "state", $$v)
+                    },
+                    expression: "adForm.state"
+                  }
+                },
+                [_vm._v("启用")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
+            [_vm._v("立即创建")]
           )
         ],
         1

@@ -7,6 +7,7 @@ use App\Http\Enum\StatusCode;
 use App\Http\Service\AdService;
 use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Psy\Util\Json;
 
 class AdMapi extends Controller
@@ -42,13 +43,14 @@ class AdMapi extends Controller
      * 创建广告
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return JsonResult
      */
     public function create(Request $request)
     {
+        Log::info($request);
         $req = $request->all();
         $result = $this->adService->createAd($req);
-        if ($result) return url("ad/list");
+        if ($result) return new JsonResult(StatusCode::SUCCESS);
     }
 
     /**
