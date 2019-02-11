@@ -1,3 +1,5 @@
+/* jshint esversion: 6 */
+
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
@@ -19,6 +21,11 @@ export default new VueRouter({
             name:"AdList",
             path:'/ad-list',
             component: resolve =>void(require(['./components/pages/ad/AdList.vue'], resolve))
+        },
+        {
+            name:"AdAdd",
+            path:'/ad-add',
+            component: resolve =>void(require(['./components/pages/ad/AdAdd.vue'], resolve))
         }
     ]
 })

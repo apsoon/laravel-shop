@@ -1,5 +1,8 @@
 <template>
     <div>
+        <router-link to="/ad-add">
+            <el-button>添加广告</el-button>
+        </router-link>
         <el-table
                 ref="multipleTable"
                 :data="adList"
@@ -39,14 +42,14 @@
                             @click="">修改
                     </el-button>
                     <el-button v-if="scope.row.state"
-                            size="mini"
-                            type="warning"
-                            @click="">禁用
+                               size="mini"
+                               type="warning"
+                               @click="">禁用
                     </el-button>
                     <el-button v-else
-                            size="mini"
-                            type="success"
-                            @click="">启用
+                               size="mini"
+                               type="success"
+                               @click="">启用
                     </el-button>
                     <el-button
                             size="mini"
@@ -74,7 +77,8 @@
             axios.get('ad/list').then(res => {
                 that.adList = res.data.data;
             });
-        }
+        },
+        methods: {}
     }
 </script>
 
