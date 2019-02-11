@@ -9,36 +9,36 @@
 namespace App\Http\Dao;
 
 
-use App\Http\Model\Goods;
+use App\Http\Model\Spu;
 
-class GoodsDao
+class SpuDao
 {
     /**
-     * @var Goods
+     * @var Spu
      */
-    private $goods;
+    private $spu;
 
     /**
-     * 添加商品
+     * 添加Spu
      *
-     * @param Goods $goods
+     * @param Spu $spu
      * @return bool
      */
-    public function insert(Goods $goods)
+    public function insert(Spu $spu)
     {
-        $result = $goods->save();
+        $result = $spu->save();
         return $result;
     }
 
     /**
-     *id 查找
+     * id查找
      *
      * @param $id
      * @return mixed
      */
     public function findById(int $id)
     {
-        $result = $this->goods::where(["id" => $id])
+        $result = $this->spu::where(["id" => $id])
             ->first();
         return $result;
     }
@@ -54,7 +54,7 @@ class GoodsDao
     public function findByCategoryPaged(int $categoryId, int $pageNo, int $size)
     {
         $offset = ($pageNo - 1) * $size;
-        $result = $this->goods::where(["category_id" => $categoryId])
+        $result = $this->spu::where(["category_id" => $categoryId])
             ->offset($offset)
             ->limit($size)
             ->get();
@@ -71,7 +71,7 @@ class GoodsDao
     public function getByPage(int $pageNo, int $size)
     {
         $offset = ($pageNo - 1) * $size;
-        $result = $this->goods::offset($offset)
+        $result = $this->spu::offset($offset)
             ->limit($size)
             ->get();
         return $result;
@@ -93,12 +93,12 @@ class GoodsDao
     }
 
     /**
-     * GoodsDao constructor.
+     * SpuDao constructor.
      *
-     * @param Goods $goods
+     * @param Spu $spu
      */
-    public function __construct(Goods $goods)
+    public function __construct(Spu $spu)
     {
-        $this->goods = $goods;
+        $this->spu = $spu;
     }
 }

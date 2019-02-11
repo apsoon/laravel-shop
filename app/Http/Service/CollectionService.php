@@ -10,7 +10,7 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\CollectionDao;
-use App\Http\Dao\ProductDao;
+use App\Http\Dao\SkuDao;
 use App\Http\Model\Collection;
 
 /**
@@ -27,7 +27,7 @@ class CollectionService
     private $collectionDao;
 
     /**
-     * @var ProductDao
+     * @var SkuDao
      */
     private $productDao;
 
@@ -78,9 +78,9 @@ class CollectionService
      * CollectionService constructor.
      *
      * @param CollectionDao $collectionDao
-     * @param ProductDao $productDao
+     * @param SkuDao $productDao
      */
-    function __construct(CollectionDao $collectionDao, ProductDao $productDao)
+    function __construct(CollectionDao $collectionDao, SkuDao $productDao)
     {
         $this->collectionDao = $collectionDao;
         $this->productDao = $productDao;

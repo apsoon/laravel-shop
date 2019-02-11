@@ -9,13 +9,13 @@
 namespace App\Http\Controllers\Fapi;
 
 
-use App\Http\Dao\ProductDao;
+use App\Http\Dao\SkuDao;
 
 class ProductService
 {
     private $productDao;
 
-    public function __construct(ProductDao $productDao)
+    public function __construct(SkuDao $productDao)
     {
         $this->productDao = $productDao;
     }

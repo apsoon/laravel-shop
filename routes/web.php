@@ -25,13 +25,13 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     // 首页
     Route::get('/index', 'IndexMapi@index');
 
-    // 商品
-    Route::GET("goods/list", "GoodsMapi@list");
-    Route::GET("goods/add", "GoodsMapi@add");
-    Route::GET("goods/detail", "GoodsMapi@detail");
-    Route::POST("goods/create", "GoodsMapi@createGoods");
-    Route::GET("product/add", "GoodsMapi@addProduct");
-    Route::POST("product/create", "GoodsMapi@createProduct");
+    // SPU
+    Route::GET("spu/list", "SpuMapi@list");
+    Route::POST("spu/create", "SpuMapi@create");
+    Route::GET("spu/detail", "SpuMapi@detail");
+
+    // SKU
+    Route::POST("sku/create", "SkuMapi@create");
 
     // 分类
     Route::GET("category/list", "CategoryMapi@list");
