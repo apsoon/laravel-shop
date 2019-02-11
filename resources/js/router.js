@@ -19,6 +19,16 @@ export default new VueRouter({
             component: resolve => void(require(['./components/demo.vue'], resolve))
         },
         {
+            name: "BrandList",
+            path: "/brand-list",
+            component: resolve => void (require(['./components/pages/goods/BrandList.vue'], resolve))
+        },
+        {
+            name: "BrandAdd",
+            path: "/brand-add",
+            component: resolve => void (require(['./components/pages/goods/BrandAdd.vue'], resolve))
+        },
+        {
             name: "AdList",
             path: '/ad-list',
             component: resolve => void(require(['./components/pages/ad/AdList.vue'], resolve))

@@ -40,7 +40,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
 
     // 品牌
     Route::GET("brand/list", "BrandMapi@list");
-    Route::GET("brand/add", "BrandMapi@add");
+    Route::GET("brand/pagedList", "BrandMapi@listByPage");
     Route::POST("brand/create", "BrandMapi@createBrand");
 
     // 属性

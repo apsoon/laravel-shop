@@ -27,9 +27,24 @@ class BrandService
     /**
      * @return Brand[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getAllBrand()
+    public function getBrandList()
     {
-        $result = $this->brandDao->findAll();
+        $result = $this->brandDao->list();
+        return $result;
+    }
+
+    /**
+     * 分页获取商品列表
+     *
+     * @param array $info
+     * @return array|mixed
+     */
+    public function getPagedBrandList(array $info)
+    {
+        if (empty($info)) return [];
+        $pageNo = empty($info["pageNo"]) ? 1 : $info["pageNo"];
+        $size = empty($info["size"]) ? 20 : $info["size"];
+        $result = $this->brandDao->findByPage($pageNo, $size);
         return $result;
     }
 

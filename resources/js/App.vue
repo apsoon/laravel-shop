@@ -3,8 +3,8 @@
         <el-header>Header</el-header>
         <el-container>
             <el-aside width="200px">
-                <el-menu unique-opened="true"
-                         router="true" default-active="1">
+                <el-menu :unique-opened="true"
+                         :router="true" default-active="1">
                     <el-menu-item index="index">
                         <i class="el-icon-menu"></i>
                         <span slot="title">首页</span>
@@ -13,7 +13,7 @@
                         <template slot="title"><i class="el-icon-message"></i>商品管理</template>
                         <el-menu-item index="list">商品列表</el-menu-item>
                         <el-menu-item index="category">商品分类</el-menu-item>
-                        <el-menu-item index="brand">品牌管理</el-menu-item>
+                        <el-menu-item index="brand-list">品牌管理</el-menu-item>
                         <el-menu-item index="specification">规格管理</el-menu-item>
                         <el-menu-item index="attribute">属性管理</el-menu-item>
                     </el-submenu>
