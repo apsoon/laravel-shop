@@ -3566,15 +3566,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {};
@@ -9684,7 +9675,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.sidebar-el-menu[data-v-f348271a]:not(.el-menu--collapse) {\n    width: 250px;\n}\n.sidebar[data-v-f348271a] {\n    display: block;\n    position: absolute;\n    left: 0;\n    top: 70px;\n    bottom: 0;\n    overflow-y: scroll;\n    background: #242C31;\n}\n", ""]);
+exports.push([module.i, "\n.header[data-v-f348271a] {\n    position: relative;\n    box-sizing: border-box;\n    width: 100%;\n    height: 70px;\n    font-size: 22px;\n    background-color: #518CB8;\n    color: #fff;\n}\n.header-left[data-v-f348271a] {\n    width: 250px;\n    height: 70px;\n    background-color: #497EA5;\n}\n.sidebar-el-menu[data-v-f348271a]:not(.el-menu--collapse) {\n    width: 250px;\n}\n.sidebar[data-v-f348271a] {\n    display: block;\n    position: absolute;\n    left: 0;\n    top: 70px;\n    bottom: 0;\n    overflow-y: scroll;\n    background: #242C31;\n}\n", ""]);
 
 // exports
 
@@ -85553,238 +85544,196 @@ var render = function() {
     "div",
     [
       _c(
-        "el-container",
+        "div",
+        { staticClass: "sidebar" },
         [
-          _c("el-header", { staticStyle: { "background-color": "#518CB8" } }, [
-            _vm._v("Header")
-          ]),
-          _vm._v(" "),
           _c(
-            "el-container",
+            "el-menu",
+            {
+              staticClass: "sidebar-el-menu",
+              attrs: {
+                "unique-opened": "true",
+                "background-color": "#242C31",
+                "text-color": "#8598A2",
+                "active-text-color": "#D1D3D4",
+                router: "true",
+                "default-active": "1"
+              }
+            },
             [
+              _c("el-menu-item", { attrs: { index: "1" } }, [
+                _c("i", { staticClass: "el-icon-menu" }),
+                _vm._v(" "),
+                _c("span", { attrs: { slot: "title" }, slot: "title" }, [
+                  _vm._v("首页")
+                ])
+              ]),
+              _vm._v(" "),
               _c(
-                "div",
-                { staticClass: "sidebar" },
+                "el-submenu",
+                { attrs: { index: "2" } },
                 [
+                  _c("template", { slot: "title" }, [
+                    _c("i", { staticClass: "el-icon-message" }),
+                    _vm._v("导航一")
+                  ]),
+                  _vm._v(" "),
                   _c(
-                    "el-menu",
-                    {
-                      staticClass: "sidebar-el-menu",
-                      attrs: {
-                        "unique-opened": "true",
-                        "background-color": "#242C31",
-                        "text-color": "#8598A2",
-                        "active-text-color": "#D1D3D4",
-                        router: "true",
-                        "default-active": "1"
-                      }
-                    },
+                    "el-menu-item-group",
                     [
-                      _c("el-menu-item", { attrs: { index: "1" } }, [
-                        _c("i", { staticClass: "el-icon-menu" }),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          { attrs: { slot: "title" }, slot: "title" },
-                          [_vm._v("首页")]
-                        )
+                      _c("template", { slot: "title" }, [_vm._v("分组一")]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "1-1" } }, [
+                        _vm._v("选项1")
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "el-submenu",
-                        { attrs: { index: "2" } },
-                        [
-                          _c("template", { slot: "title" }, [
-                            _c("i", { staticClass: "el-icon-message" }),
-                            _vm._v("导航一")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "el-menu-item-group",
-                            [
-                              _c("template", { slot: "title" }, [
-                                _vm._v("分组一")
-                              ]),
-                              _vm._v(" "),
-                              _c("el-menu-item", { attrs: { index: "1-1" } }, [
-                                _vm._v("选项1")
-                              ]),
-                              _vm._v(" "),
-                              _c("el-menu-item", { attrs: { index: "1-2" } }, [
-                                _vm._v("选项2")
-                              ])
-                            ],
-                            2
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-menu-item-group",
-                            { attrs: { title: "分组2" } },
-                            [
-                              _c("el-menu-item", { attrs: { index: "1-3" } }, [
-                                _vm._v("选项3")
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-submenu",
-                            { attrs: { index: "1-4" } },
-                            [
-                              _c("template", { slot: "title" }, [
-                                _vm._v("选项4")
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "el-menu-item",
-                                { attrs: { index: "1-4-1" } },
-                                [_vm._v("选项4-1")]
-                              )
-                            ],
-                            2
-                          )
-                        ],
-                        2
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-submenu",
-                        { attrs: { index: "3" } },
-                        [
-                          _c("template", { slot: "title" }, [
-                            _c("i", { staticClass: "el-icon-menu" }),
-                            _vm._v("导航二")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "el-menu-item-group",
-                            [
-                              _c("template", { slot: "title" }, [
-                                _vm._v("分组一")
-                              ]),
-                              _vm._v(" "),
-                              _c("el-menu-item", { attrs: { index: "2-1" } }, [
-                                _vm._v("选项1")
-                              ]),
-                              _vm._v(" "),
-                              _c("el-menu-item", { attrs: { index: "2-2" } }, [
-                                _vm._v("选项2")
-                              ])
-                            ],
-                            2
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-menu-item-group",
-                            { attrs: { title: "分组2" } },
-                            [
-                              _c("el-menu-item", { attrs: { index: "2-3" } }, [
-                                _vm._v("选项3")
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-submenu",
-                            { attrs: { index: "2-4" } },
-                            [
-                              _c("template", { slot: "title" }, [
-                                _vm._v("选项4")
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "el-menu-item",
-                                { attrs: { index: "2-4-1" } },
-                                [_vm._v("选项4-1")]
-                              )
-                            ],
-                            2
-                          )
-                        ],
-                        2
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "el-submenu",
-                        { attrs: { index: "4" } },
-                        [
-                          _c("template", { slot: "title" }, [
-                            _c("i", { staticClass: "el-icon-setting" }),
-                            _vm._v("导航三")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "el-menu-item-group",
-                            [
-                              _c("template", { slot: "title" }, [
-                                _vm._v("分组一")
-                              ]),
-                              _vm._v(" "),
-                              _c("el-menu-item", { attrs: { index: "3-1" } }, [
-                                _vm._v("选项1")
-                              ]),
-                              _vm._v(" "),
-                              _c("el-menu-item", { attrs: { index: "3-2" } }, [
-                                _vm._v("选项2")
-                              ])
-                            ],
-                            2
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-menu-item-group",
-                            { attrs: { title: "分组2" } },
-                            [
-                              _c("el-menu-item", { attrs: { index: "3-3" } }, [
-                                _vm._v("选项3")
-                              ])
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "el-submenu",
-                            { attrs: { index: "3-4" } },
-                            [
-                              _c("template", { slot: "title" }, [
-                                _vm._v("选项4")
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "el-menu-item",
-                                { attrs: { index: "3-4-1" } },
-                                [_vm._v("选项4-1")]
-                              )
-                            ],
-                            2
-                          )
-                        ],
-                        2
-                      )
+                      _c("el-menu-item", { attrs: { index: "1-2" } }, [
+                        _vm._v("选项2")
+                      ])
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-menu-item-group",
+                    { attrs: { title: "分组2" } },
+                    [
+                      _c("el-menu-item", { attrs: { index: "1-3" } }, [
+                        _vm._v("选项3")
+                      ])
                     ],
                     1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-submenu",
+                    { attrs: { index: "1-4" } },
+                    [
+                      _c("template", { slot: "title" }, [_vm._v("选项4")]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "1-4-1" } }, [
+                        _vm._v("选项4-1")
+                      ])
+                    ],
+                    2
                   )
                 ],
-                1
+                2
               ),
               _vm._v(" "),
               _c(
-                "el-container",
+                "el-submenu",
+                { attrs: { index: "3" } },
                 [
-                  _c("el-main", [_c("router-view")], 1),
+                  _c("template", { slot: "title" }, [
+                    _c("i", { staticClass: "el-icon-menu" }),
+                    _vm._v("导航二")
+                  ]),
                   _vm._v(" "),
-                  _c("el-footer", [_vm._v("Footer")])
+                  _c(
+                    "el-menu-item-group",
+                    [
+                      _c("template", { slot: "title" }, [_vm._v("分组一")]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "2-1" } }, [
+                        _vm._v("选项1")
+                      ]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "2-2" } }, [
+                        _vm._v("选项2")
+                      ])
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-menu-item-group",
+                    { attrs: { title: "分组2" } },
+                    [
+                      _c("el-menu-item", { attrs: { index: "2-3" } }, [
+                        _vm._v("选项3")
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-submenu",
+                    { attrs: { index: "2-4" } },
+                    [
+                      _c("template", { slot: "title" }, [_vm._v("选项4")]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "2-4-1" } }, [
+                        _vm._v("选项4-1")
+                      ])
+                    ],
+                    2
+                  )
                 ],
-                1
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "el-submenu",
+                { attrs: { index: "4" } },
+                [
+                  _c("template", { slot: "title" }, [
+                    _c("i", { staticClass: "el-icon-setting" }),
+                    _vm._v("导航三")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "el-menu-item-group",
+                    [
+                      _c("template", { slot: "title" }, [_vm._v("分组一")]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "3-1" } }, [
+                        _vm._v("选项1")
+                      ]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "3-2" } }, [
+                        _vm._v("选项2")
+                      ])
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-menu-item-group",
+                    { attrs: { title: "分组2" } },
+                    [
+                      _c("el-menu-item", { attrs: { index: "3-3" } }, [
+                        _vm._v("选项3")
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-submenu",
+                    { attrs: { index: "3-4" } },
+                    [
+                      _c("template", { slot: "title" }, [_vm._v("选项4")]),
+                      _vm._v(" "),
+                      _c("el-menu-item", { attrs: { index: "3-4-1" } }, [
+                        _vm._v("选项4-1")
+                      ])
+                    ],
+                    2
+                  )
+                ],
+                2
               )
             ],
             1
           )
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("el-main", [_c("router-view")], 1),
+      _vm._v(" "),
+      _c("el-footer", [_vm._v("Footer")])
     ],
     1
   )
