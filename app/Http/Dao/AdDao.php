@@ -48,7 +48,7 @@ class AdDao
      */
     public function deleteByIds(array $ids)
     {
-        $result = $this->whereIn("id", $ids)
+        $result = $this->ad::whereIn("id", $ids)
             ->delete();
         return $result;
     }

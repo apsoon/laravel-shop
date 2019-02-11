@@ -1,8 +1,9 @@
 <template>
     <div>
         <router-link to="/ad-add">
-            <el-button>添加广告</el-button>
+            <el-button type="primary">添加广告</el-button>
         </router-link>
+        <el-button type="danger" @click="deleteAds">批量删除</el-button>
         <el-table
                 ref="multipleTable"
                 :data="adList"
@@ -38,7 +39,7 @@
                 <template slot-scope="scope">
                     <el-button
                             size="mini"
-                            type="primary"
+                            type="info"
                             @click="">修改
                     </el-button>
                     <el-button v-if="scope.row.state"
@@ -118,6 +119,39 @@
                         message: '已取消删除'
                     });
                 });
+            },
+            deleteAds: function () {
+                let that = this;
+                let selections = that.$refs.multipleTable.selection;
+                if (selections.length) {
+                    that.$confirm("确认删除选中的广告?", '提示', {
+                        confirmButtonText: "确认",
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        let ids = [];
+                        for (let section of selections) {
+                            ids.push(section.id);
+                        }
+                        axios.post("ad/delete", {
+                            ids: ids
+                        })
+                            .then(res => {
+                                if (res.data.code === 2000) {
+                                    that.$message({
+                                        type: 'success',
+                                        message: '删除成功!'
+                                    });
+                                    that.$router.replace({path: "ad-list"});
+                                }
+                            });
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        });
+                    });
+                }
             }
         }
     }
