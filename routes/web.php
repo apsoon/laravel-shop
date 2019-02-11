@@ -44,20 +44,19 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::POST("brand/create", "BrandMapi@createBrand");
 
     // 属性
-    Route::GET("attribute/list", "AttributeMapi@list");
-    Route::GET("attribute/add", "AttributeMapi@add");
-    Route::POST("attribute/create", "AttributeMapi@create");
-    Route::GET("attributeGroup/add", "AttributeMapi@addGroup");
-    Route::POST("attributeGroup/create", "AttributeMapi@createGroup");
-    Route::GET("attributeOption/add", "AttributeMapi@addOption");
-    Route::POST("attributeOption/create", "AttributeMapi@createOption");
+    Route::GET("attr/list", "AttributeMapi@list");
+    Route::POST("attr/create", "AttributeMapi@create");
+    Route::GET("attrGroup/add", "AttributeMapi@addGroup");
+    Route::POST("attrGroup/create", "AttributeMapi@createGroup");
+    Route::GET("attrOption/add", "AttributeMapi@addOption");
+    Route::POST("attrOption/create", "AttributeMapi@createOption");
 
     // 规格
-    Route::GET("specification/list", "SpecificationMapi@list");
-    Route::GET("specification/add", "SpecificationMapi@add");
-    Route::POST("specification/create", "SpecificationMapi@create");
-    Route::GET("specificationOption/add", "SpecificationMapi@addOption");
-    Route::POST("specificationOption/create", "SpecificationMapi@createOption");
+    Route::GET("spec/list", "SpecificationMapi@list");
+    Route::GET("spec/add", "SpecificationMapi@add");
+    Route::POST("spec/create", "SpecificationMapi@create");
+    Route::GET("specOption/add", "SpecificationMapi@addOption");
+    Route::POST("specOption/create", "SpecificationMapi@createOption");
 
     // 广告
     Route::GET("ad/list", "AdMapi@list");

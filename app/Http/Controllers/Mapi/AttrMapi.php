@@ -9,7 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
-class AttributeMapi extends Controller
+/**
+ * Class AttrMapi
+ *
+ * @package App\Http\Controllers\Mapi
+ */
+class AttrMapi extends Controller
 {
     /**
      * @var AttributeService

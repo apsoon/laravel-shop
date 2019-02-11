@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Log;
  *
  * @package App\Http\Controllers\Mapi
  */
-class SpecificationMapi extends Controller
+class SpecMapi extends Controller
 {
     /**
      * @var SpecificationService
