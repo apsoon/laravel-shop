@@ -43,6 +43,19 @@ class CategoryService
     }
 
     /**
+     * 删除分类
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function deleteCategoryById(array $req)
+    {
+        if (empty($req) || empty($req["id"])) return false;
+        $result = $this->categoryDao->deleteById($req["id"]);
+        return $result;
+    }
+
+    /**
      * 获取所有分类
      *
      * @return mixed

@@ -63,10 +63,10 @@ class CategoryDao
     /**
      * 根据id删除
      *
-     * @param Integer $id
+     * @param int $id
      * @return mixed
      */
-    public function deleteById(Integer $id)
+    public function deleteById(int $id)
     {
         $result = $this->category::where("id", "=", $id)
             ->delete();

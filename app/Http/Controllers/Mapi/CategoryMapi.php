@@ -56,6 +56,19 @@ class CategoryMapi extends Controller
     }
 
     /**
+     * 删除分类
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function delete(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->categoryService->deleteCategoryById($req);
+        if ($result) return new JsonResult();
+    }
+
+    /**
      * CategoryMapi constructor.
      *
      * @param CategoryService $categoryService

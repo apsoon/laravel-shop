@@ -57,6 +57,41 @@ __webpack_require__.r(__webpack_exports__);
         that.categoryList = res.data.data;
       }
     }).catch(function (err) {});
+  },
+  methods: {
+    removeCategory: function removeCategory(node, data) {
+      var _this = this;
+
+      var that = this;
+      that.$confirm("删除分类可能会导致严重的问题，是否确认删除！", '警告', {
+        confirmButtonText: "确认",
+        cancelButtonText: '取消',
+        type: 'danger'
+      }).then(function () {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("category/delete", {
+          id: data.id
+        }).then(function (res) {
+          if (res.data.code === 2000) {
+            that.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+            var parent = node.parent;
+            var children = parent.data.children || parent.data;
+            var index = children.findIndex(function (d) {
+              return d.id === data.id;
+            });
+            children.splice(index, 1);
+            that.$router.reload();
+          }
+        });
+      }).catch(function () {
+        _this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    }
   }
 });
 
@@ -193,8 +228,8 @@ var render = function() {
                       {
                         attrs: { type: "text", size: "mini" },
                         on: {
-                          click: function() {
-                            return _vm.remove(node, data)
+                          click: function($event) {
+                            _vm.removeCategory(node, data)
                           }
                         }
                       },
