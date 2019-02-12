@@ -82,8 +82,8 @@
                     if (valid) {
                         axios.post("ad/create", that.adForm)
                             .then(res => {
-                                if (res.data.code === 2000){
-                                   router.push("ad-list");
+                                if (res.data.code === 2000) {
+                                    router.push("ad-list");
                                 }
                             });
 

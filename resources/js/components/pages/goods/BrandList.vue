@@ -3,7 +3,7 @@
         <router-link to="/brand-add">
             <el-button type="primary">添加品牌</el-button>
         </router-link>
-        <el-button type="danger" @click="deleteAds">批量删除</el-button>
+        <el-button type="danger" @click="deleteBrands()">批量删除</el-button>
         <el-table
                 ref="multipleTable"
                 :data="brandList"
@@ -55,7 +55,7 @@
                     <el-button
                             size="mini"
                             type="danger"
-                            @click="deleteAd(scope.$index, scope.row.id)">删除
+                            @click="deleteBrand(scope.$index, scope.row.id)">删除
                     </el-button>
                 </template>
             </el-table-column>
@@ -87,6 +87,80 @@
                         // }
                     }
                 });
+        },
+        methods: {
+            modifyState: function (type, index, id) {
+                let state = 1;
+                if (type === "disable") state = 0;
+                let that = this;
+                axios.post("brand/modState", {
+                    state: state,
+                    id: id
+                }).then(res => {
+                    if (res.data.code === 2000) that.brandList[index].state = state;
+                });
+            },
+            deleteBrand: function (index, id) {
+                let that = this;
+                this.$confirm("删除品牌可能会导致严重的问题，是否确认删除！", '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let ids = [];
+                    ids.push(id);
+                    axios.post("brand/delete", {
+                        ids: ids
+                    })
+                        .then(res => {
+                            if (res.data.code === 2000) {
+                                that.brandList.splice(index, 1);
+                                that.$message({
+                                    type: 'success',
+                                    message: '删除成功!'
+                                });
+                            }
+                        });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
+            deleteBrands: function () {
+                let that = this;
+                let selections = that.$refs.multipleTable.selection;
+                if (selections.length) {
+                    that.$confirm("删除品牌可能会导致严重的问题，是否确认删除！", '提示', {
+                        confirmButtonText: "确认",
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then(() => {
+                        let ids = [];
+                        for (let section of selections) {
+                            ids.push(section.id);
+                        }
+                        axios.post("brand/delete", {
+                            ids: ids
+                        })
+                            .then(res => {
+                                if (res.data.code === 2000) {
+                                    that.$message({
+                                        type: 'success',
+                                        message: '删除成功!'
+                                    });
+                                    that.$router.reload();
+                                }
+                            });
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        });
+                    });
+                }
+            }
         }
     }
 </script>

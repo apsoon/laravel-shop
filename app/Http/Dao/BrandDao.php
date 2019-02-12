@@ -9,8 +9,6 @@
 namespace App\Http\Dao;
 
 use App\Http\Model\Brand;
-use App\Http\Model\User;
-use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * Class UserDao
@@ -42,7 +40,7 @@ class BrandDao
      * @param Integer $id
      * @return mixed
      */
-    public function findById(Integer $id)
+    public function findById(int $id)
     {
         $result = $this->brand::where(["id" => $id])
             ->first();
@@ -52,12 +50,25 @@ class BrandDao
     /**
      * 根据id删除
      *
-     * @param Integer $id
+     * @param int $id
      * @return mixed
      */
-    public function deleteById(Integer $id)
+    public function deleteById(int $id)
     {
         $result = $this->brand::where("id", "=", $id)
+            ->delete();
+        return $result;
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param array $ids
+     * @return mixed
+     */
+    public function deleteByIds(array $ids)
+    {
+        $result = $this->brand::whereIn("id", $ids)
             ->delete();
         return $result;
     }
@@ -98,6 +109,21 @@ class BrandDao
             ->limit($size)
             ->get();
         return $result;
+    }
+
+    /**
+     * 修改状态
+     *
+     * @param $id
+     * @param $state
+     * @return bool
+     */
+    public function updateStateById($id, $state)
+    {
+        $brand = $this->brand::where(["id" => $id])->first();
+        if (!$brand) return false;
+        $brand->state = $state;
+        return $brand->save();
     }
 
     /**

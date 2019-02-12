@@ -60,9 +60,38 @@ class BrandService
         $brand->name = $req["name"];
         $brand->region = $req["region"];
         $brand->logo = $req["logo"];
-        $brand->describe = $req["desc"];
+        $brand->describe = $req["describe"];
         $brand->state = $req["state"];
         $result = $this->brandDao->insert($brand);
+        return $result;
+    }
+
+    /**
+     * 修改状态
+     *
+     * @param array $req
+     * @return bool
+     */
+    public function modifyState(array $req)
+    {
+        $result = $this->brandDao->updateStateById($req["id"], $req["state"]);
+        return $result;
+    }
+
+    /**
+     * 删除广告
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function deleteBrand(array $req)
+    {
+        $ids = $req["ids"];
+        if (sizeof($ids) == 1) {
+            $result = $this->brandDao->deleteById($ids[0]);
+        } else {
+            $result = $this->brandDao->deleteByIds($ids);
+        }
         return $result;
     }
 

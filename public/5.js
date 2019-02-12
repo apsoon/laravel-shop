@@ -9,6 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -43,20 +45,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BrandAdd",
   data: function data() {
     return {
       brandForm: {
-        name: ""
+        name: "",
+        describe: "",
+        region: "",
+        logo: "",
+        state: "0"
+      },
+      rules: {
+        name: [{
+          required: true,
+          message: '请输入广告名称',
+          trigger: 'blur'
+        }]
       }
     };
+  },
+  methods: {
+    onSubmit: function onSubmit() {
+      var that = this;
+      that.$refs.brandForm.validate(function (valid) {
+        if (valid) {
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/create", that.brandForm).then(function (res) {
+            if (res.data.code === 2000) {
+              that.$message({
+                type: 'success',
+                message: '添加成功!'
+              });
+              setTimeout(function () {
+                that.$router.push("brand-list");
+              }, 1000);
+            }
+          });
+        } else {
+          return false;
+        }
+      });
+    }
   }
 });
 
@@ -110,15 +140,15 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "品牌描述", prop: "content" } },
+            { attrs: { label: "品牌描述", prop: "describe" } },
             [
               _c("el-input", {
                 model: {
-                  value: _vm.brandForm.brief,
+                  value: _vm.brandForm.describe,
                   callback: function($$v) {
-                    _vm.$set(_vm.brandForm, "brief", $$v)
+                    _vm.$set(_vm.brandForm, "describe", $$v)
                   },
-                  expression: "brandForm.brief"
+                  expression: "brandForm.describe"
                 }
               })
             ],
@@ -127,35 +157,24 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "广告位置", prop: "positionId" } },
+            { attrs: { label: "所属地区", prop: "region" } },
             [
-              _c(
-                "el-select",
-                {
-                  attrs: { placeholder: "请选广告位置" },
-                  model: {
-                    value: _vm.brandForm.positionId,
-                    callback: function($$v) {
-                      _vm.$set(_vm.brandForm, "positionId", $$v)
-                    },
-                    expression: "brandForm.positionId"
-                  }
-                },
-                _vm._l(_vm.positionList, function(item) {
-                  return _c("el-option", {
-                    key: item.id,
-                    attrs: { label: item.name, value: item.id }
-                  })
-                }),
-                1
-              )
+              _c("el-input", {
+                model: {
+                  value: _vm.brandForm.region,
+                  callback: function($$v) {
+                    _vm.$set(_vm.brandForm, "region", $$v)
+                  },
+                  expression: "brandForm.region"
+                }
+              })
             ],
             1
           ),
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "添加图片" } },
+            { attrs: { label: "品牌LOGO" } },
             [
               _c(
                 "el-upload",

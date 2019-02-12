@@ -96,6 +96,104 @@ __webpack_require__.r(__webpack_exports__);
         console.info(res.data.data); // }
       }
     });
+  },
+  methods: {
+    modifyState: function modifyState(type, index, id) {
+      var state = 1;
+      if (type === "disable") state = 0;
+      var that = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/modState", {
+        state: state,
+        id: id
+      }).then(function (res) {
+        if (res.data.code === 2000) that.brandList[index].state = state;
+      });
+    },
+    deleteBrand: function deleteBrand(index, id) {
+      var _this = this;
+
+      var that = this;
+      this.$confirm("删除品牌可能会导致严重的问题，是否确认删除！", '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        var ids = [];
+        ids.push(id);
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", {
+          ids: ids
+        }).then(function (res) {
+          if (res.data.code === 2000) {
+            that.brandList.splice(index, 1);
+            that.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          }
+        });
+      }).catch(function () {
+        _this.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    },
+    deleteBrands: function deleteBrands() {
+      var _this2 = this;
+
+      var that = this;
+      var selections = that.$refs.multipleTable.selection;
+
+      if (selections.length) {
+        that.$confirm("删除品牌可能会导致严重的问题，是否确认删除！", '提示', {
+          confirmButtonText: "确认",
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(function () {
+          var ids = [];
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (var _iterator = selections[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var section = _step.value;
+              ids.push(section.id);
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator.return != null) {
+                _iterator.return();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", {
+            ids: ids
+          }).then(function (res) {
+            if (res.data.code === 2000) {
+              that.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+              that.$router.reload();
+            }
+          });
+        }).catch(function () {
+          _this2.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      }
+    }
   }
 });
 
@@ -128,7 +226,14 @@ var render = function() {
       _vm._v(" "),
       _c(
         "el-button",
-        { attrs: { type: "danger" }, on: { click: _vm.deleteAds } },
+        {
+          attrs: { type: "danger" },
+          on: {
+            click: function($event) {
+              _vm.deleteBrands()
+            }
+          }
+        },
         [_vm._v("批量删除")]
       ),
       _vm._v(" "),
@@ -214,7 +319,7 @@ var render = function() {
                         attrs: { size: "mini", type: "danger" },
                         on: {
                           click: function($event) {
-                            _vm.deleteAd(scope.$index, scope.row.id)
+                            _vm.deleteBrand(scope.$index, scope.row.id)
                           }
                         }
                       },

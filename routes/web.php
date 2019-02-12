@@ -42,7 +42,9 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     // 品牌
     Route::GET("brand/list", "BrandMapi@list");
     Route::GET("brand/pagedList", "BrandMapi@listByPage");
-    Route::POST("brand/create", "BrandMapi@createBrand");
+    Route::POST("brand/create", "BrandMapi@create");
+    Route::POST("brand/delete", "BrandMapi@delete");
+    Route::POST("brand/modState", "BrandMapi@modifyState");
 
     // 属性
     Route::GET("attr/list", "AttributeMapi@list");
@@ -63,7 +65,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::GET("ad/list", "AdMapi@list");
     Route::GET("ad/add", "AdMapi@add");
     Route::POST("ad/create", "AdMapi@create");
-    Route::POST("ad/modState", "AdMapi@ModifyState");
+    Route::POST("ad/modState", "AdMapi@modifyState");
     Route::POST("ad/delete", "AdMapi@delete");
     Route::GET("adPosition/list", "AdMapi@listPosition");
 

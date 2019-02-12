@@ -44,13 +44,37 @@ class BrandMapi extends Controller
      * 创建品牌
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return JsonResult
      */
-    public function createBrand(Request $request)
+    public function create(Request $request)
     {
         $req = $request->all();
         $result = $this->brandService->createBrand($req);
-        if ($result) return redirect("brand/list");
+        if ($result) return new JsonResult();
+    }
+
+    /**
+     * 修改状态
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function modifyState(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->brandService->modifyState($req);
+        if ($result) return new JsonResult();
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function delete(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->brandService->deleteBrand($req);
+        if ($result) return new JsonResult();
     }
 
     /**
@@ -60,7 +84,7 @@ class BrandMapi extends Controller
      */
     public function __construct(BrandService $brandService)
     {
-        $this->middleware('auth');
+//        $this->middleware('auth');
         $this->brandService = $brandService;
     }
 }

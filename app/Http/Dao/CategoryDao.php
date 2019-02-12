@@ -9,8 +9,6 @@
 namespace App\Http\Dao;
 
 use App\Http\Model\Category;
-use Illuminate\Support\Facades\DB;
-use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * Class CategoryDao
