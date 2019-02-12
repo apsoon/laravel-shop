@@ -41,6 +41,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CategoryAdd",
@@ -48,10 +57,17 @@ __webpack_require__.r(__webpack_exports__);
     return {
       categoryForm: {
         name: "",
-        pid: 0,
-        sort_order: 0
+        parent_id: 0,
+        sort_order: 0,
+        image_url: ""
       },
-      rules: {},
+      rules: {
+        name: [{
+          required: true,
+          message: '请输入商品名称',
+          trigger: 'blur'
+        }]
+      },
       categoryList: []
     };
   },
@@ -63,6 +79,31 @@ __webpack_require__.r(__webpack_exports__);
         console.info(that.categoryList);
       }
     }).catch(function (err) {});
+  },
+  methods: {
+    onSubmit: function onSubmit() {
+      var that = this;
+      that.$refs.categoryForm.validate(function (valid) {
+        if (valid) {
+          var key = that.$refs.treeCategory.getCheckedKeys();
+          if (key.length) that.categoryForm.parent_id = key[0];
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("category/create", that.categoryForm).then(function (res) {
+            if (res.data.code === 2000) {
+              router.push("/category-list");
+            }
+          }).catch(function (err) {});
+        }
+      });
+    },
+    handleTreeClick: function handleTreeClick(data, checked, node) {
+      var that = this;
+      console.info("data = ", data, ", checked = ", checked, ", node = ", node);
+
+      if (checked) {
+        this.$refs.treeCategory.setCheckedNodes([]);
+        this.$refs.treeCategory.setCheckedNodes([data]);
+      }
+    }
   }
 });
 
@@ -114,7 +155,26 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("el-form-item", { attrs: { label: "上级分类", prop: "pid" } }),
+          _c(
+            "el-form-item",
+            { attrs: { label: "上级分类" } },
+            [
+              _c("el-tree", {
+                ref: "treeCategory",
+                staticStyle: { "margin-left": "100px" },
+                attrs: {
+                  data: _vm.categoryList,
+                  label: "234",
+                  "empty-text": "没有其他分类",
+                  "check-strictly": "",
+                  "node-key": "id",
+                  "show-checkbox": ""
+                },
+                on: { "check-change": _vm.handleTreeClick }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "el-form-item",
@@ -122,11 +182,11 @@ var render = function() {
             [
               _c("el-input", {
                 model: {
-                  value: _vm.categoryForm.name,
+                  value: _vm.categoryForm.sort_order,
                   callback: function($$v) {
-                    _vm.$set(_vm.categoryForm, "name", $$v)
+                    _vm.$set(_vm.categoryForm, "sort_order", $$v)
                   },
-                  expression: "categoryForm.name"
+                  expression: "categoryForm.sort_order"
                 }
               })
             ],
@@ -142,12 +202,12 @@ var render = function() {
                 {
                   staticClass: "upload-demo",
                   attrs: {
+                    limit: 1,
+                    "file-list": _vm.fileList,
                     action: "",
                     "on-preview": _vm.handlePreview,
                     "on-remove": _vm.handleRemove,
-                    "before-remove": _vm.beforeRemove,
-                    limit: 1,
-                    "file-list": _vm.fileList
+                    "before-remove": _vm.beforeRemove
                   }
                 },
                 [

@@ -19,7 +19,7 @@ export default new VueRouter({
             component: resolve => void(require(['./components/demo.vue'], resolve))
         },
         {
-            name: "CategoryAdd",
+            name: "CategoryList",
             path: "/category-list",
             component: resolve => void (require(['./components/pages/goods/CategoryList.vue'], resolve))
         },
