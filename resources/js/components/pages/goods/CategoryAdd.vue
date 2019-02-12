@@ -5,16 +5,7 @@
                 <el-input v-model="categoryForm.name"></el-input>
             </el-form-item>
             <el-form-item label="上级分类">
-                <el-tree :data="categoryList"
-                         label="234"
-                         empty-text="没有其他分类"
-                         check-strictly
-                         node-key="id"
-                         @check-change="handleTreeClick"
-                         ref="treeCategory"
-                         show-checkbox style="margin-left: 100px;">
-
-                </el-tree>
+                <label>{{parentName}}</label>
             </el-form-item>
             <el-form-item label="排序优先级" prop="sort_order">
                 <el-input v-model="categoryForm.sort_order"></el-input>
@@ -56,26 +47,21 @@
                         {required: true, message: '请输入商品名称', trigger: 'blur'}
                     ]
                 },
-                categoryList: [],
+                parentId: 0,
+                parentName: ""
             }
         },
         mounted: function () {
             let that = this;
-            axios.get("category/treeList").then(res => {
-                if (res.data.code === 2000) {
-                    that.categoryList = res.data.data;
-                    console.info(that.categoryList);
-                }
-            }).catch(err => {
-            });
+            that.parentId = that.$route.query.parentId;
+            that.parentName = that.$route.query.parentName;
         },
         methods: {
             onSubmit: function () {
                 let that = this;
                 that.$refs.categoryForm.validate((valid) => {
                     if (valid) {
-                        let key = that.$refs.treeCategory.getCheckedKeys();
-                        if (key.length) that.categoryForm.parent_id = key[0];
+                        that.categoryForm.parent_id = that.parentId;
                         axios.post("category/create", that.categoryForm)
                             .then(res => {
                                 if (res.data.code === 2000) {
