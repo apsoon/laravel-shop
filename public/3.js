@@ -55,6 +55,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -145,15 +151,23 @@ var render = function() {
             "el-form-item",
             { attrs: { label: "广告名称", prop: "name" } },
             [
-              _c("el-input", {
-                model: {
-                  value: _vm.adForm.name,
-                  callback: function($$v) {
-                    _vm.$set(_vm.adForm, "name", $$v)
-                  },
-                  expression: "adForm.name"
-                }
-              })
+              _c(
+                "el-col",
+                { attrs: { span: 3 } },
+                [
+                  _c("el-input", {
+                    attrs: { span: 3, placeholder: "请输入内容" },
+                    model: {
+                      value: _vm.adForm.name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.adForm, "name", $$v)
+                      },
+                      expression: "adForm.name"
+                    }
+                  })
+                ],
+                1
+              )
             ],
             1
           ),
@@ -162,15 +176,22 @@ var render = function() {
             "el-form-item",
             { attrs: { label: "广告描述", prop: "content" } },
             [
-              _c("el-input", {
-                model: {
-                  value: _vm.adForm.content,
-                  callback: function($$v) {
-                    _vm.$set(_vm.adForm, "content", $$v)
-                  },
-                  expression: "adForm.content"
-                }
-              })
+              _c(
+                "el-col",
+                { attrs: { span: 3 } },
+                [
+                  _c("el-input", {
+                    model: {
+                      value: _vm.adForm.content,
+                      callback: function($$v) {
+                        _vm.$set(_vm.adForm, "content", $$v)
+                      },
+                      expression: "adForm.content"
+                    }
+                  })
+                ],
+                1
+              )
             ],
             1
           ),
@@ -207,15 +228,22 @@ var render = function() {
             "el-form-item",
             { attrs: { label: "排序", prop: "sortOrder" } },
             [
-              _c("el-input", {
-                model: {
-                  value: _vm.adForm.sortOrder,
-                  callback: function($$v) {
-                    _vm.$set(_vm.adForm, "sortOrder", $$v)
-                  },
-                  expression: "adForm.sortOrder"
-                }
-              })
+              _c(
+                "el-col",
+                { attrs: { span: 3 } },
+                [
+                  _c("el-input", {
+                    model: {
+                      value: _vm.adForm.sortOrder,
+                      callback: function($$v) {
+                        _vm.$set(_vm.adForm, "sortOrder", $$v)
+                      },
+                      expression: "adForm.sortOrder"
+                    }
+                  })
+                ],
+                1
+              )
             ],
             1
           ),

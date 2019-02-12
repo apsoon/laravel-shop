@@ -2,10 +2,14 @@
     <div>
         <el-form ref="adForm" :rules="rules" :model="adForm" label-width="100px">
             <el-form-item label="广告名称" prop="name">
-                <el-input v-model="adForm.name"></el-input>
+                <el-col :span="3">
+                    <el-input v-model="adForm.name" :span="3" placeholder="请输入内容"></el-input>
+                </el-col>
             </el-form-item>
             <el-form-item label="广告描述" prop="content">
-                <el-input v-model="adForm.content"></el-input>
+                <el-col :span="3">
+                    <el-input v-model="adForm.content"></el-input>
+                </el-col>
             </el-form-item>
             <el-form-item label="广告位置" prop="positionId">
                 <el-select v-model="adForm.positionId" placeholder="请选广告位置">
@@ -17,7 +21,9 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="排序" prop="sortOrder">
-                <el-input v-model="adForm.sortOrder"></el-input>
+                <el-col :span="3">
+                    <el-input v-model="adForm.sortOrder"></el-input>
+                </el-col>
             </el-form-item>
             <el-form-item label="添加图片">
                 <el-upload
