@@ -50,7 +50,7 @@ class CategoryDao
     /**
      * 根据 id 查找
      *
-     * @param Integer $id
+     * @param int $id
      * @return mixed
      */
     public function findById(int $id)
