@@ -1,9 +1,11 @@
 <template>
-    <el-container>
-        <el-header>Header</el-header>
-        <el-container>
+    <el-container class="app-container" direction="vertical">
+        <el-header class="app-header">
+            <Header></Header>
+        </el-header>
+        <el-container style="height: 100%;" direction="horizontal">
             <el-aside width="200px">
-                <Siderbar></Siderbar>
+                <Sidebar></Sidebar>
             </el-aside>
             <el-main>
                 <router-view></router-view>
@@ -12,45 +14,35 @@
     </el-container>
 </template>
 <script scoped>
+    import Sidebar from "./components/layouts/Sidebar";
+    import Header from "./components/layouts/Header";
+
     export default {
         data() {
-            return {}
+            return {
+                windowHeight: 0,
+            }
         },
-        components: {Siderbar},
+        components: {Header, Sidebar},
         computed: {},
         methods: {},
+        beforeMount() {
+
+            let h = document.documentElement.clientHeight || document.body.clientHeight;
+
+            this.windowHeight = h+"px"; //减去页面上固定高度height
+
+        },
         mounted() {
         },
     }
 </script>
 <style scoped>
-    .header {
-        position: relative;
-        box-sizing: border-box;
+    .app-container {
         width: 100%;
-        height: 70px;
-        font-size: 22px;
-        background-color: #518CB8;
-        color: #fff;
     }
 
-    .header-left {
-        width: 250px;
-        height: 70px;
-        background-color: #497EA5;
-    }
-
-    .sidebar-el-menu:not(.el-menu--collapse) {
-        width: 250px;
-    }
-
-    .sidebar {
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 70px;
-        bottom: 0;
-        overflow-y: scroll;
-        background: #242C31;
+    .app-header {
+        padding: 0;
     }
 </style>

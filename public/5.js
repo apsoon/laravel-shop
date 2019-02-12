@@ -49,9 +49,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BrandAdd",
   data: function data() {
@@ -96,7 +93,7 @@ var render = function() {
         [
           _c(
             "el-form-item",
-            { attrs: { label: "广告名称", prop: "name" } },
+            { attrs: { label: "品牌名称", prop: "name" } },
             [
               _c("el-input", {
                 model: {
@@ -113,15 +110,15 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "广告描述", prop: "content" } },
+            { attrs: { label: "品牌描述", prop: "content" } },
             [
               _c("el-input", {
                 model: {
-                  value: _vm.brandForm.content,
+                  value: _vm.brandForm.brief,
                   callback: function($$v) {
-                    _vm.$set(_vm.brandForm, "content", $$v)
+                    _vm.$set(_vm.brandForm, "brief", $$v)
                   },
-                  expression: "brandForm.content"
+                  expression: "brandForm.brief"
                 }
               })
             ],
@@ -152,23 +149,6 @@ var render = function() {
                 }),
                 1
               )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "排序", prop: "sortOrder" } },
-            [
-              _c("el-input", {
-                model: {
-                  value: _vm.brandForm.sortOrder,
-                  callback: function($$v) {
-                    _vm.$set(_vm.brandForm, "sortOrder", $$v)
-                  },
-                  expression: "brandForm.sortOrder"
-                }
-              })
             ],
             1
           ),

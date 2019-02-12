@@ -54,7 +54,7 @@
 
 <script>
     export default {
-        name: "Siderbar"
+        name: "Sidebar"
     }
 </script>
 

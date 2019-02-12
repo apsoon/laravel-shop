@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
 </head>
-<body>
+<body style="margin: 0;">
 <div id="app">
 </div>
 </body>
