@@ -26,6 +26,17 @@ class CategoryDao
     private $category;
 
     /**
+     * list
+     *
+     * @return Category[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function list()
+    {
+        $result = $this->category::all();
+        return $result;
+    }
+
+    /**
      * 添加商标
      *
      * @param  Category $category
@@ -80,23 +91,12 @@ class CategoryDao
      * @param $size
      * @return mixed
      */
-    public function getLimitedAll(int $pageNo, int $size)
+    public function findByPage(int $pageNo, int $size)
     {
         $offset = ($pageNo - 1) * $size;
         $result = $this->category::offset($offset)
             ->limit($size)
             ->get();
-        return $result;
-    }
-
-    /**
-     * 获取所有的分类
-     *
-     * @return mixed
-     */
-    public function getAll()
-    {
-        $result = $this->category::all();
         return $result;
     }
 

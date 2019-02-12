@@ -11,7 +11,6 @@ namespace App\Http\Service;
 
 use App\Http\Dao\CategoryDao;
 use App\Http\Model\Category;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class CategoryService
@@ -27,7 +26,6 @@ class CategoryService
 
     public function createCategory(array $req)
     {
-        Log::info($req);
         $category = new Category();
         $category->name = $req["name"];
         $category->sort_order = empty($req["sort_order"]) ? 1 : $req["sort_order"];
@@ -47,34 +45,39 @@ class CategoryService
     /**
      * 获取所有分类
      *
-     * @param $req
      * @return mixed
      */
-    public function getAllCategory($req)
+    public function getCategoryList()
     {
-        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
-        $size = empty($req["size"]) ? 20 : $req["size"];
-        $result = $this->categoryDao->getLimitedAll($pageNo, $size);
+//        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+//        $size = empty($req["size"]) ? 20 : $req["size"];
+        $result = $this->categoryDao->list();
         return $result;
     }
 
     /**
-     * 获取合并父类的分类
+     * 获取树形分类
      *
      * @return \App\Http\Model\Category[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function getUnitCategory()
+    public function getCategoryTreeList()
     {
-        $categories = $this->categoryDao->getAll();
+        $categories = $this->categoryDao->list();
         $sorted = array_values(array_sort($categories, function ($category) {
             return $category->level;
         }));
         $sorted = array_reverse($sorted);
-        $result = $this->unitMultiCategory($sorted);
+        $result = $this->treeCategoryList($sorted);
         return $result;
     }
 
-    private function unitMultiCategory($categories)
+    /**
+     * 树形化分类
+     *
+     * @param $categories
+     * @return array
+     */
+    private function treeCategoryList($categories)
     {
         $temp = [];
         foreach ($categories as $category) {
@@ -84,13 +87,13 @@ class CategoryService
             } else {
                 foreach ($categories as $item) {
                     if ($item->id == $category->parent_id) {
-                        $sublist = empty($item->sublist) == 1 ? [] : $item->sublist;
+                        $children = empty($item->children) == 1 ? [] : $item->children;
                         $res_ = $this->copyCategoryBean($category);
-                        array_push($sublist, $res_);
-                        $sorted = array_values(array_sort($sublist, function ($cat) {
+                        array_push($children, $res_);
+                        $sorted = array_values(array_sort($children, function ($cat) {
                             return $cat->sort_order;
                         }));
-                        $item->sublist = $sorted;
+                        $item->children = $sorted;
                     }
                 }
             }
@@ -102,6 +105,7 @@ class CategoryService
     }
 
     /**
+     * 复制属性
      *
      * @param $origin
      * @return \stdClass
@@ -111,9 +115,10 @@ class CategoryService
         $result = new \stdClass();
         $result->id = $origin->id;
         $result->name = $origin->name;
+        $result->label = $origin->name;
         $result->image_url = $origin->image_url;
         $result->sort_order = $origin->sort_order;
-        $result->sublist = empty($origin->sublist) ? [] : $origin->sublist;
+        $result->children = empty($origin->children) ? [] : $origin->children;
         return $result;
     }
 

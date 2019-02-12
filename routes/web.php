@@ -35,7 +35,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
 
     // 分类
     Route::GET("category/list", "CategoryMapi@list");
-    Route::GET("category/add", "CategoryMapi@add");
+    Route::GET("category/treeList", "CategoryMapi@treeList");
     Route::POST("category/create", "CategoryMapi@create");
 
     // 品牌

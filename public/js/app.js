@@ -85581,9 +85581,11 @@ var render = function() {
                         _vm._v("商品列表")
                       ]),
                       _vm._v(" "),
-                      _c("el-menu-item", { attrs: { index: "category" } }, [
-                        _vm._v("商品分类")
-                      ]),
+                      _c(
+                        "el-menu-item",
+                        { attrs: { index: "category-list" } },
+                        [_vm._v("商品分类")]
+                      ),
                       _vm._v(" "),
                       _c("el-menu-item", { attrs: { index: "brand-list" } }, [
                         _vm._v("品牌管理")
@@ -99858,6 +99860,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     path: '/demo',
     component: function component(resolve) {
       return void __webpack_require__.e(/*! AMD require */ 1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/demo.vue */ "./resources/js/components/demo.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
+    name: "CategoryAdd",
+    path: "/category-list",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 7).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/CategoryList.vue */ "./resources/js/components/pages/goods/CategoryList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
+    name: "CategoryAdd",
+    path: "/category-add",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 6).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/CategoryAdd.vue */ "./resources/js/components/pages/goods/CategoryAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "BrandList",

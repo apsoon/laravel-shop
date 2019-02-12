@@ -13,8 +13,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "BrandAdd"
+  name: "BrandAdd",
+  data: function data() {
+    return {
+      brandForm: {
+        name: ""
+      }
+    };
+  }
 });
 
 /***/ }),
@@ -34,7 +80,187 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "div",
+    [
+      _c(
+        "el-form",
+        {
+          ref: "brandForm",
+          attrs: {
+            rules: _vm.rules,
+            model: _vm.brandForm,
+            "label-width": "100px"
+          }
+        },
+        [
+          _c(
+            "el-form-item",
+            { attrs: { label: "广告名称", prop: "name" } },
+            [
+              _c("el-input", {
+                model: {
+                  value: _vm.brandForm.name,
+                  callback: function($$v) {
+                    _vm.$set(_vm.brandForm, "name", $$v)
+                  },
+                  expression: "brandForm.name"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "广告描述", prop: "content" } },
+            [
+              _c("el-input", {
+                model: {
+                  value: _vm.brandForm.content,
+                  callback: function($$v) {
+                    _vm.$set(_vm.brandForm, "content", $$v)
+                  },
+                  expression: "brandForm.content"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "广告位置", prop: "positionId" } },
+            [
+              _c(
+                "el-select",
+                {
+                  attrs: { placeholder: "请选广告位置" },
+                  model: {
+                    value: _vm.brandForm.positionId,
+                    callback: function($$v) {
+                      _vm.$set(_vm.brandForm, "positionId", $$v)
+                    },
+                    expression: "brandForm.positionId"
+                  }
+                },
+                _vm._l(_vm.positionList, function(item) {
+                  return _c("el-option", {
+                    key: item.id,
+                    attrs: { label: item.name, value: item.id }
+                  })
+                }),
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "排序", prop: "sortOrder" } },
+            [
+              _c("el-input", {
+                model: {
+                  value: _vm.brandForm.sortOrder,
+                  callback: function($$v) {
+                    _vm.$set(_vm.brandForm, "sortOrder", $$v)
+                  },
+                  expression: "brandForm.sortOrder"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "添加图片" } },
+            [
+              _c(
+                "el-upload",
+                {
+                  staticClass: "upload-demo",
+                  attrs: {
+                    action: "",
+                    "on-preview": _vm.handlePreview,
+                    "on-remove": _vm.handleRemove,
+                    "before-remove": _vm.beforeRemove,
+                    limit: 1,
+                    "file-list": _vm.fileList
+                  }
+                },
+                [
+                  _c(
+                    "el-button",
+                    { attrs: { size: "small", type: "primary" } },
+                    [_vm._v("点击上传")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "el-upload__tip",
+                      attrs: { slot: "tip" },
+                      slot: "tip"
+                    },
+                    [_vm._v("只能上传jpg/png文件，且不超过500kb")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "是否启用", prop: "state" } },
+            [
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "0" },
+                  model: {
+                    value: _vm.brandForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.brandForm, "state", $$v)
+                    },
+                    expression: "brandForm.state"
+                  }
+                },
+                [_vm._v("禁用")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "1" },
+                  model: {
+                    value: _vm.brandForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.brandForm, "state", $$v)
+                    },
+                    expression: "brandForm.state"
+                  }
+                },
+                [_vm._v("启用")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
+            [_vm._v("立即创建")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

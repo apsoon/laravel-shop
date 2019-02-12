@@ -3,9 +3,16 @@
 namespace App\Http\Controllers\Mapi;
 
 use App\Http\Controllers\Controller;
+use App\Http\Enum\StatusCode;
 use App\Http\Service\CategoryService;
+use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 
+/**
+ * Class CategoryMapi
+ *
+ * @package App\Http\Controllers\Mapi
+ */
 class CategoryMapi extends Controller
 {
     /**
@@ -14,41 +21,38 @@ class CategoryMapi extends Controller
     private $categoryService;
 
     /**
-     * list
+     * 获取分类列表
      *
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return JsonResult
      */
-    public function list(Request $request)
+    public function list()
     {
-        $req = $request->all();
-        $result = $this->categoryService->getAllCategory($req);
-        return view('admin.pages.goods.category_list', ["categories" => $result]);
+        $result = $this->categoryService->getCategoryList();
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
+     * 获取树形分类
+     *
+     * @return JsonResult
+     */
+    public function treeList()
+    {
+        $result = $this->categoryService->getCategoryTreeList();
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * 添加分类
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function add(Request $request)
-    {
-        $result = $this->categoryService->getUnitCategory();
-        return view('admin.pages.goods.category_add', ["categoryList" => $result]);
-    }
-
-    /**
-     * 添加分类
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return JsonResult
      */
     public function create(Request $request)
     {
         $req = $request->all();
         $result = $this->categoryService->createCategory($req);
-        return redirect('category/list');
+        if ($result) return new JsonResult();
     }
 
     /**
