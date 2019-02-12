@@ -1,11 +1,11 @@
 <template>
     <div>
         <el-form ref="brandForm" :rules="rules" :model="brandForm" label-width="100px">
-            <el-form-item label="广告名称" prop="name">
+            <el-form-item label="品牌名称" prop="name">
                 <el-input v-model="brandForm.name"></el-input>
             </el-form-item>
-            <el-form-item label="广告描述" prop="content">
-                <el-input v-model="brandForm.content"></el-input>
+            <el-form-item label="品牌描述" prop="content">
+                <el-input v-model="brandForm.brief"></el-input>
             </el-form-item>
             <el-form-item label="广告位置" prop="positionId">
                 <el-select v-model="brandForm.positionId" placeholder="请选广告位置">
@@ -15,9 +15,6 @@
                                :value="item.id">
                     </el-option>
                 </el-select>
-            </el-form-item>
-            <el-form-item label="排序" prop="sortOrder">
-                <el-input v-model="brandForm.sortOrder"></el-input>
             </el-form-item>
             <el-form-item label="添加图片">
                 <el-upload
