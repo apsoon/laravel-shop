@@ -61,6 +61,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -96,7 +98,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("adPosition/list").then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("adPos/list").then(function (res) {
       that.positionList = res.data.data;
       console.info(that.positionList);
     });
@@ -153,10 +155,10 @@ var render = function() {
             [
               _c(
                 "el-col",
-                { attrs: { span: 3 } },
+                { attrs: { span: 5 } },
                 [
                   _c("el-input", {
-                    attrs: { span: 3, placeholder: "请输入内容" },
+                    attrs: { span: 3, placeholder: "请输入广告名称" },
                     model: {
                       value: _vm.adForm.name,
                       callback: function($$v) {
@@ -178,9 +180,10 @@ var render = function() {
             [
               _c(
                 "el-col",
-                { attrs: { span: 3 } },
+                { attrs: { span: 5 } },
                 [
                   _c("el-input", {
+                    attrs: { placeholder: "请输入广告描述" },
                     model: {
                       value: _vm.adForm.content,
                       callback: function($$v) {
@@ -201,23 +204,30 @@ var render = function() {
             { attrs: { label: "广告位置", prop: "positionId" } },
             [
               _c(
-                "el-select",
-                {
-                  attrs: { placeholder: "请选广告位置" },
-                  model: {
-                    value: _vm.adForm.positionId,
-                    callback: function($$v) {
-                      _vm.$set(_vm.adForm, "positionId", $$v)
+                "el-col",
+                { attrs: { span: 5 } },
+                [
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { placeholder: "请选广告位置" },
+                      model: {
+                        value: _vm.adForm.positionId,
+                        callback: function($$v) {
+                          _vm.$set(_vm.adForm, "positionId", $$v)
+                        },
+                        expression: "adForm.positionId"
+                      }
                     },
-                    expression: "adForm.positionId"
-                  }
-                },
-                _vm._l(_vm.positionList, function(item) {
-                  return _c("el-option", {
-                    key: item.id,
-                    attrs: { label: item.name, value: item.id }
-                  })
-                }),
+                    _vm._l(_vm.positionList, function(item) {
+                      return _c("el-option", {
+                        key: item.id,
+                        attrs: { label: item.name, value: item.id }
+                      })
+                    }),
+                    1
+                  )
+                ],
                 1
               )
             ],
@@ -230,7 +240,7 @@ var render = function() {
             [
               _c(
                 "el-col",
-                { attrs: { span: 3 } },
+                { attrs: { span: 5 } },
                 [
                   _c("el-input", {
                     model: {

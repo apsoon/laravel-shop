@@ -2,26 +2,28 @@
     <div>
         <el-form ref="adForm" :rules="rules" :model="adForm" label-width="100px">
             <el-form-item label="广告名称" prop="name">
-                <el-col :span="3">
-                    <el-input v-model="adForm.name" :span="3" placeholder="请输入内容"></el-input>
+                <el-col :span="5">
+                    <el-input v-model="adForm.name" :span="3" placeholder="请输入广告名称"></el-input>
                 </el-col>
             </el-form-item>
             <el-form-item label="广告描述" prop="content">
-                <el-col :span="3">
-                    <el-input v-model="adForm.content"></el-input>
+                <el-col :span="5">
+                    <el-input v-model="adForm.content" placeholder="请输入广告描述"></el-input>
                 </el-col>
             </el-form-item>
             <el-form-item label="广告位置" prop="positionId">
-                <el-select v-model="adForm.positionId" placeholder="请选广告位置">
-                    <el-option v-for="item in positionList"
-                               :key="item.id"
-                               :label="item.name"
-                               :value="item.id">
-                    </el-option>
-                </el-select>
+                <el-col :span="5">
+                    <el-select v-model="adForm.positionId" placeholder="请选广告位置">
+                        <el-option v-for="item in positionList"
+                                   :key="item.id"
+                                   :label="item.name"
+                                   :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-col>
             </el-form-item>
             <el-form-item label="排序" prop="sortOrder">
-                <el-col :span="3">
+                <el-col :span="5">
                     <el-input v-model="adForm.sortOrder"></el-input>
                 </el-col>
             </el-form-item>
@@ -76,7 +78,7 @@
         },
         mounted: function () {
             let that = this;
-            axios.get("adPosition/list").then(res => {
+            axios.get("adPos/list").then(res => {
                 that.positionList = res.data.data;
                 console.info(that.positionList);
             });
