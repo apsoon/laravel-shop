@@ -5,10 +5,10 @@
             <el-tab-pane label="商品属性" name="attr">商品属性</el-tab-pane>
             <el-tab-pane label="产品列表" name="sku">
                 <router-link :to="{path:'/spec-option-add', query: {spuId: spuId}}">
-                    <el-button type="primary">添加规格选项</el-button>
+                    <el-button type="primary" size="medium">添加规格选项</el-button>
                 </router-link>
                 <router-link to="/sku-add">
-                    <el-button type="primary">添加产品</el-button>
+                    <el-button type="primary" size="medium">添加产品</el-button>
                 </router-link>
             </el-tab-pane>
         </el-tabs>
@@ -26,11 +26,12 @@
                 activeName: "info"
             }
         },
+        beforeCreate: function () {
+        },
         mounted: function () {
             let that = this;
-            console.info(that.$route.query);
-            that.spuid = that.$route.query.spuId;
-            axios.get("spu/detail?spuId=" + that.spuid)
+            that.spuId = that.$route.query.spuId;
+            axios.get("spu/detail?spuId=" + that.spuId)
                 .then(res => {
                     if (res.data.code === 2000) {
                         console.info(res);
@@ -43,6 +44,6 @@
 
 <style scoped>
     /*.el-tabs {*/
-        /*background-color: white;*/
+    /*background-color: white;*/
     /*}*/
 </style>

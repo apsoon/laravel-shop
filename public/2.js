@@ -37,11 +37,11 @@ __webpack_require__.r(__webpack_exports__);
       activeName: "info"
     };
   },
+  beforeCreate: function beforeCreate() {},
   mounted: function mounted() {
     var that = this;
-    console.info(that.$route.query);
-    that.spuid = that.$route.query.spuId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/detail?spuId=" + that.spuid).then(function (res) {
+    that.spuId = that.$route.query.spuId;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/detail?spuId=" + that.spuId).then(function (res) {
       if (res.data.code === 2000) {
         console.info(res);
       }
@@ -63,7 +63,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.el-tabs {*/\n    /*background-color: white;*/\n/*}*/\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.el-tabs {*/\n/*background-color: white;*/\n/*}*/\n", ""]);
 
 // exports
 
@@ -155,9 +155,11 @@ var render = function() {
                   }
                 },
                 [
-                  _c("el-button", { attrs: { type: "primary" } }, [
-                    _vm._v("添加规格选项")
-                  ])
+                  _c(
+                    "el-button",
+                    { attrs: { type: "primary", size: "medium" } },
+                    [_vm._v("添加规格选项")]
+                  )
                 ],
                 1
               ),
@@ -166,9 +168,11 @@ var render = function() {
                 "router-link",
                 { attrs: { to: "/sku-add" } },
                 [
-                  _c("el-button", { attrs: { type: "primary" } }, [
-                    _vm._v("添加产品")
-                  ])
+                  _c(
+                    "el-button",
+                    { attrs: { type: "primary", size: "medium" } },
+                    [_vm._v("添加产品")]
+                  )
                 ],
                 1
               )
