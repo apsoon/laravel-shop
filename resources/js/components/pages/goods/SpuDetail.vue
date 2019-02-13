@@ -10,6 +10,68 @@
                 <router-link to="/sku-add">
                     <el-button type="primary" size="medium">添加产品</el-button>
                 </router-link>
+                <el-table ref="skuList"
+                          :data="skuList"
+                          tooltip-effect="dark"
+                          width="100%">
+                    <el-table-column
+                            prop="name"
+                            label="名称"
+                            width="150px">
+                    </el-table-column>
+                    <el-table-column
+                            prop="origin_price"
+                            label="原价"
+                            width="150px">
+                    </el-table-column>
+                    <el-table-column
+                            prop="price"
+                            label="价格"
+                            width="150px">
+                    </el-table-column>
+                    <el-table-column
+                            prop="number"
+                            label="数量"
+                            width="150px">
+                    </el-table-column>
+                    <el-table-column
+                            prop="value"
+                            label="规格"
+                            min-width="1">
+                    </el-table-column>
+                    <el-table-column
+                            prop="state"
+                            label="状态"
+                            width="150px">
+                    </el-table-column>
+                    <el-table-column
+                            prop=""
+                            label="操作"
+                            width="200px">
+                        <template slot-scope="scope">
+                            <el-button
+                                    size="mini"
+                                    type="info"
+                                    @click="">修改
+                            </el-button>
+                            <el-button v-if="scope.row.state"
+                                       size="mini"
+                                       type="warning"
+                                       @click="modifyState('disable', scope.$index, scope.row.id)">禁用
+                            </el-button>
+                            <el-button v-else
+                                       size="mini"
+                                       type="success"
+                                       @click="modifyState('enable', scope.$index, scope.row.id)">启用
+                            </el-button>
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="deleteAd(scope.$index, scope.row.id)">删除
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -23,7 +85,8 @@
         data: function () {
             return {
                 spuId: 0,
-                activeName: "info"
+                activeName: "info",
+                skuList: []
             }
         },
         beforeCreate: function () {

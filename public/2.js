@@ -28,13 +28,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
   data: function data() {
     return {
       spuId: 0,
-      activeName: "info"
+      activeName: "info",
+      skuList: []
     };
   },
   beforeCreate: function beforeCreate() {},
@@ -63,7 +126,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.el-tabs {*/\n/*background-color: white;*/\n/*}*/\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.el-tabs {*/\n/*background-color: white;*/\n/*}*/\n", ""]);
 
 // exports
 
@@ -173,6 +236,116 @@ var render = function() {
                     { attrs: { type: "primary", size: "medium" } },
                     [_vm._v("添加产品")]
                   )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "el-table",
+                {
+                  ref: "skuList",
+                  attrs: {
+                    data: _vm.skuList,
+                    "tooltip-effect": "dark",
+                    width: "100%"
+                  }
+                },
+                [
+                  _c("el-table-column", {
+                    attrs: { prop: "name", label: "名称", width: "150px" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      prop: "origin_price",
+                      label: "原价",
+                      width: "150px"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "price", label: "价格", width: "150px" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "number", label: "数量", width: "150px" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "value", label: "规格", "min-width": "1" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "state", label: "状态", width: "150px" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "", label: "操作", width: "200px" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "info" },
+                                on: { click: function($event) {} }
+                              },
+                              [_vm._v("修改\n                        ")]
+                            ),
+                            _vm._v(" "),
+                            scope.row.state
+                              ? _c(
+                                  "el-button",
+                                  {
+                                    attrs: { size: "mini", type: "warning" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.modifyState(
+                                          "disable",
+                                          scope.$index,
+                                          scope.row.id
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("禁用\n                        ")]
+                                )
+                              : _c(
+                                  "el-button",
+                                  {
+                                    attrs: { size: "mini", type: "success" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.modifyState(
+                                          "enable",
+                                          scope.$index,
+                                          scope.row.id
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("启用\n                        ")]
+                                ),
+                            _vm._v(" "),
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "danger" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.deleteAd(scope.$index, scope.row.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("删除\n                        ")]
+                            )
+                          ]
+                        }
+                      }
+                    ])
+                  })
                 ],
                 1
               )
