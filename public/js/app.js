@@ -3618,17 +3618,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Sidebar"
 });
@@ -85830,48 +85819,12 @@ var render = function() {
             [
               _c("template", { slot: "title" }, [
                 _c("i", { staticClass: "el-icon-setting" }),
-                _vm._v("导航三")
+                _vm._v("优惠券")
               ]),
               _vm._v(" "),
-              _c(
-                "el-menu-item-group",
-                [
-                  _c("template", { slot: "title" }, [_vm._v("分组一")]),
-                  _vm._v(" "),
-                  _c("el-menu-item", { attrs: { index: "3-1" } }, [
-                    _vm._v("选项1")
-                  ]),
-                  _vm._v(" "),
-                  _c("el-menu-item", { attrs: { index: "3-2" } }, [
-                    _vm._v("选项2")
-                  ])
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "el-menu-item-group",
-                { attrs: { title: "分组2" } },
-                [
-                  _c("el-menu-item", { attrs: { index: "3-3" } }, [
-                    _vm._v("选项3")
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-submenu",
-                { attrs: { index: "3-4" } },
-                [
-                  _c("template", { slot: "title" }, [_vm._v("选项4")]),
-                  _vm._v(" "),
-                  _c("el-menu-item", { attrs: { index: "3-4-1" } }, [
-                    _vm._v("选项4-1")
-                  ])
-                ],
-                2
-              )
+              _c("el-menu-item", { attrs: { index: "coupon-list" } }, [
+                _vm._v("优惠券列表")
+              ])
             ],
             2
           ),
@@ -100187,19 +100140,31 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "CategoryAdd",
     path: "/category-add",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 7).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/CategoryAdd.vue */ "./resources/js/components/pages/goods/CategoryAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 9).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/CategoryAdd.vue */ "./resources/js/components/pages/goods/CategoryAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "BrandList",
     path: "/brand-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 6).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/BrandList.vue */ "./resources/js/components/pages/goods/BrandList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 8).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/BrandList.vue */ "./resources/js/components/pages/goods/BrandList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "BrandAdd",
     path: "/brand-add",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 5).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/BrandAdd.vue */ "./resources/js/components/pages/goods/BrandAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 7).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/BrandAdd.vue */ "./resources/js/components/pages/goods/BrandAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
+    name: "CouponList",
+    path: "/coupon-list",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 6).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/coupon/CouponList.vue */ "./resources/js/components/pages/coupon/CouponList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
+    name: "CouponAdd",
+    path: "/coupon-add",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 5).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/coupon/CouponAdd.vue */ "./resources/js/components/pages/coupon/CouponAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "AdList",
