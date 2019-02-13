@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-card class="box-card" shadow="never">
+        <el-card class="box-card">
             <div slot="header" class="clearfix">
                 <span>规格列表</span>
             </div>

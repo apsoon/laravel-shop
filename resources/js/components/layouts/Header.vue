@@ -20,7 +20,7 @@
     }
 
     .left {
-        width: 200px;
+        width: 229px;
         height: 100%;
         background-color: #367fa9;
         display: flex;

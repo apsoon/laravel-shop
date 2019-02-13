@@ -163,7 +163,7 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("el-card", { staticClass: "box-card", attrs: { shadow: "never" } }, [
+      _c("el-card", { staticClass: "box-card" }, [
         _c(
           "div",
           {

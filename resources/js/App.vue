@@ -1,10 +1,10 @@
 <template>
     <el-container class="app-container" direction="vertical">
-        <el-header class="app-header">
+        <el-header class="app-header" height="50px">
             <Header></Header>
         </el-header>
         <el-container style="height: 100%;" direction="horizontal">
-            <el-aside width="200px">
+            <el-aside width="230px">
                 <Sidebar></Sidebar>
             </el-aside>
             <el-main>
