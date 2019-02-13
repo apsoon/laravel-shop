@@ -125,6 +125,12 @@ class SpuService
         return $result;
     }
 
+    public function createSpuSpecWithOption(array $req)
+    {
+        $spuId = $req["spuId"];
+
+    }
+
     /**
      * @param $req
      * @return mixed
@@ -207,4 +213,6 @@ class SpuService
         $this->specificationOptionDao = $specificationOptionDao;
         $this->productSpecificationOptionDao = $productSpecificationOptionDao;
     }
+
+
 }

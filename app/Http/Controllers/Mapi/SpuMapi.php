@@ -61,6 +61,14 @@ class SpuMapi extends Controller
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
+    public function relateSpec(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->spuService->createSpuSpecWithOption($req);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
     /**
      * SpuMapi constructor.
      * @param SpuService $spuService
