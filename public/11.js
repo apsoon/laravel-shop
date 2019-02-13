@@ -13,8 +13,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "SpecAdd"
+  name: "SpecAdd",
+  data: function data() {
+    return {
+      specForm: {
+        name: ""
+      }
+    };
+  }
 });
 
 /***/ }),
@@ -34,7 +48,48 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "div",
+    [
+      _c(
+        "el-form",
+        {
+          ref: "specForm",
+          attrs: {
+            rules: _vm.rules,
+            model: _vm.specForm,
+            "label-width": "100px"
+          }
+        },
+        [
+          _c(
+            "el-form-item",
+            { attrs: { label: "规格名称", prop: "name" } },
+            [
+              _c("el-input", {
+                model: {
+                  value: _vm.specForm.name,
+                  callback: function($$v) {
+                    _vm.$set(_vm.specForm, "name", $$v)
+                  },
+                  expression: "specForm.name"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
+            [_vm._v("立即创建")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

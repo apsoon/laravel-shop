@@ -1,5 +1,9 @@
 <template>
-    
+    <div>
+        <router-link to="/spec-add">
+            <el-button type="primary">添加规格</el-button>
+        </router-link>
+    </div>
 </template>
 
 <script>
