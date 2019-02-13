@@ -239,7 +239,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { staticStyle: { "z-index": "999" }, attrs: { label: "选择品牌" } },
+            { attrs: { label: "选择品牌" } },
             [
               _c(
                 "el-select",

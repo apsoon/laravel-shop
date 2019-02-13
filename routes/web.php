@@ -27,6 +27,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
 
     // SPU
     Route::GET("spu/list", "SpuMapi@list");
+    Route::GET("spu/pagedList", "SpuMapi@listByPage");
     Route::POST("spu/create", "SpuMapi@create");
     Route::GET("spu/detail", "SpuMapi@detail");
 

@@ -9,6 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -17,8 +19,66 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "SpuList"
+  name: "SpuList",
+  data: function data() {
+    return {
+      spuList: [],
+      pageNo: 1
+    };
+  },
+  mounted: function mounted() {
+    var that = this;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/pagedList?pageNo=1").then(function (res) {
+      console.info(" ------------------- ", res);
+
+      if (res.data.code && res.data.data) {
+        that.spuList = that.spuList.concat(res.data.data);
+        that.pageNo++;
+        console.info(" ------------------- ", that.spuList);
+      }
+    }).catch(function (err) {});
+  }
 });
 
 /***/ }),
@@ -45,6 +105,53 @@ var render = function() {
         "router-link",
         { attrs: { to: "/spu-add" } },
         [_c("el-button", { attrs: { type: "primary" } }, [_vm._v("添加商品")])],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-table",
+        {
+          ref: "spuList",
+          attrs: { data: _vm.spuList, "tooltip-effect": "dark", width: "100%" }
+        },
+        [
+          _c("el-table-column", {
+            attrs: { prop: "name", label: "名称", width: "120" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "category", label: "分类", width: "120" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "品牌", label: "排序", width: "120" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "brief", label: "简述", "min-width": "1" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "", width: "120", label: "操作" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { size: "mini", type: "info" },
+                        on: { click: function($event) {} }
+                      },
+                      [_vm._v("\n                    详情\n                ")]
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        ],
         1
       )
     ],

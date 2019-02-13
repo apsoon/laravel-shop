@@ -3,12 +3,71 @@
         <router-link to="/spu-add">
             <el-button type="primary">添加商品</el-button>
         </router-link>
+        <el-table
+                ref="spuList"
+                :data="spuList"
+                tooltip-effect="dark"
+                width="100%">
+            <el-table-column
+                    prop="name"
+                    label="名称"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="category"
+                    label="分类"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="品牌"
+                    label="排序"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="brief"
+                    label="简述"
+                    min-width="1">
+            </el-table-column>
+            <el-table-column
+                    prop=""
+                    width="120"
+                    label="操作">
+                <template slot-scope="scope">
+                    <el-button
+                            size="mini"
+                            type="info"
+                            @click="">
+                        详情
+                    </el-button>
+                </template>
+            </el-table-column>
+        </el-table>
     </div>
 </template>
 
 <script>
+    import axios from "axios";
+
     export default {
-        name: "SpuList"
+        name: "SpuList",
+        data: function () {
+            return {
+                spuList: [],
+                pageNo: 1,
+            }
+        },
+        mounted: function () {
+            let that = this;
+            axios.get("spu/pagedList?pageNo=1")
+                .then(res => {
+                    if (res.data.code && res.data.data) {
+                        that.spuList = that.spuList.concat(res.data.data);
+                        that.pageNo++;
+                        console.info(" ------------------- ", that.spuList);
+                    }
+                }).catch(err => {
+            });
+        }
     }
 </script>
 

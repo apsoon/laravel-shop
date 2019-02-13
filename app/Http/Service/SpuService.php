@@ -84,6 +84,21 @@ class SpuService
         return $result;
     }
 
+
+    /**
+     * 获取商品列表
+     *
+     * @param $req
+     * @return mixed
+     */
+    public function getPagedSpuList($req)
+    {
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $size = empty($req["size"]) ? 20 : $req["size"];
+        $result = $this->spuDao->getByPage($pageNo, $size);
+        return $result;
+    }
+
     /**
      * id获取商品
      *
@@ -120,19 +135,6 @@ class SpuService
         return $result;
     }
 
-    /**
-     * 获取商品列表
-     *
-     * @param $req
-     * @return mixed
-     */
-    public function getSpuList($req)
-    {
-        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
-        $size = empty($req["size"]) ? 20 : $req["size"];
-        $result = $this->spuDao->getByPage($pageNo, $size);
-        return $result;
-    }
 
     /**
      * 获取最新

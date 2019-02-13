@@ -26,6 +26,13 @@ class SpuMapi extends Controller
     {
     }
 
+    public function listByPage(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->spuService->getPagedSpuList($req);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
     /**
      * 创建SPU
      *
