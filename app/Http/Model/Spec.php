@@ -4,7 +4,7 @@ namespace App\Http\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sku extends Model
+class Spec extends Model
 {
-    protected $table = "sku";
+    protected $table = "spec";
 }

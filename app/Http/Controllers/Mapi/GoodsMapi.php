@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Service\BrandService;
 use App\Http\Service\CategoryService;
 use App\Http\Service\GoodsService;
-use App\Http\Service\SpecificationService;
+use App\Http\Service\SpecService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -128,9 +128,9 @@ class GoodsMapi extends Controller
      * @param GoodsService $goodsService
      * @param CategoryService $categoryService
      * @param BrandService $brandService
-     * @param SpecificationService $specificationService
+     * @param SpecService $specificationService
      */
-    public function __construct(GoodsService $goodsService, CategoryService $categoryService, BrandService $brandService, SpecificationService $specificationService)
+    public function __construct(GoodsService $goodsService, CategoryService $categoryService, BrandService $brandService, SpecService $specificationService)
     {
         $this->middleware('auth');
         $this->goodsService = $goodsService;

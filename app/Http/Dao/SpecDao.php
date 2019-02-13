@@ -9,25 +9,25 @@
 namespace App\Http\Dao;
 
 
-use App\Http\Model\Specification;
+use App\Http\Model\Spec;
 
-class SpecificationDao
+class SpecDao
 {
 
     /**
-     * @var Specification
+     * @var Spec
      */
-    private $specification;
+    private $spec;
 
     /**
      * 添加
      *
-     * @param Specification $specification
+     * @param Spec $spec
      * @return bool
      */
-    public function insert(Specification $specification)
+    public function insert(Spec $spec)
     {
-        $result = $specification->save();
+        $result = $spec->save();
         return $result;
     }
 
@@ -41,7 +41,7 @@ class SpecificationDao
     public function getByPage(int $pageNo, int $size)
     {
         $offset = ($pageNo - 1) * $size;
-        $result = $this->specification::offset($offset)
+        $result = $this->spec::offset($offset)
             ->limit($size)
             ->get();
         return $result;
@@ -55,7 +55,7 @@ class SpecificationDao
      */
     public function findByCategoryId(int $categoryId)
     {
-        $result = $this->specification::where(["category_id" => $categoryId])
+        $result = $this->spec::where(["category_id" => $categoryId])
             ->get();
         return $result;
     }
@@ -68,18 +68,18 @@ class SpecificationDao
      */
     public function findById(int $id)
     {
-        $result = $this->specification::where(["id" => $id])
+        $result = $this->spec::where(["id" => $id])
             ->first();
         return $result;
     }
 
     /**
-     * SpecificationDao constructor.
+     * SpecDao constructor.
      *
-     * @param Specification $specification
+     * @param Spec $spec
      */
-    public function __construct(Specification $specification)
+    public function __construct(Spec $spec)
     {
-        $this->specification = $specification;
+        $this->spec = $spec;
     }
 }

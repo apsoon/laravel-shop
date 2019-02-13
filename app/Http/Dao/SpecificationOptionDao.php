@@ -9,7 +9,7 @@
 namespace App\Http\Dao;
 
 
-use App\Http\Model\SpecificationOption;
+use App\Http\Model\SpuSpecOption;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -17,17 +17,17 @@ class SpecificationOptionDao
 {
 
     /**
-     * @var SpecificationOption
+     * @var SpuSpecOption
      */
     private $specificationOption;
 
     /**
      * 添加
      *
-     * @param SpecificationOption $specificationOption
+     * @param SpuSpecOption $specificationOption
      * @return mixed
      */
-    public function insert(SpecificationOption $specificationOption)
+    public function insert(SpuSpecOption $specificationOption)
     {
         $result = $specificationOption->save();
         return $result;
@@ -74,9 +74,9 @@ class SpecificationOptionDao
     /**
      * SpecificationOptionDao constructor.
      *
-     * @param SpecificationOption $specificationOption
+     * @param SpuSpecOption $specificationOption
      */
-    public function __construct(SpecificationOption $specificationOption)
+    public function __construct(SpuSpecOption $specificationOption)
     {
         $this->specificationOption = $specificationOption;
     }

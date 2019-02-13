@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Mapi;
 
 use App\Http\Controllers\Controller;
 use App\Http\Service\CategoryService;
-use App\Http\Service\SpecificationService;
+use App\Http\Service\SpecService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Log;
 class SpecMapi extends Controller
 {
     /**
-     * @var SpecificationService
+     * @var SpecService
      */
     private $specificationService;
 
@@ -84,10 +84,10 @@ class SpecMapi extends Controller
     /**
      * SpecificationMapi constructor.
      *
-     * @param SpecificationService $specificationService
+     * @param SpecService $specificationService
      * @param CategoryService $categoryService
      */
-    public function __construct(SpecificationService $specificationService, CategoryService $categoryService)
+    public function __construct(SpecService $specificationService, CategoryService $categoryService)
     {
         $this->middleware('auth');
         $this->specificationService = $specificationService;
