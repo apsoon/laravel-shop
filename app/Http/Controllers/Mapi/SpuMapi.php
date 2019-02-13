@@ -9,6 +9,7 @@ use App\Http\Service\SpuService;
 use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Psy\Util\Json;
 
 class SpuMapi extends Controller
 {
@@ -44,10 +45,20 @@ class SpuMapi extends Controller
         $req = $request->all();
         $result = $this->spuService->createSpu($req);
         if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
+    /**
+     * 获取spu
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function detail(Request $request)
     {
+        $req = $request->all();
+        $result = $this->spuService->getSpuWithDetail($req);
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**

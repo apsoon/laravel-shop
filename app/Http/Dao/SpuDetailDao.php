@@ -36,7 +36,7 @@ class SpuDetailDao
      * @param $spuId
      * @return mixed
      */
-    public function findByGoodsId(int $spuId)
+    public function findBySpuId(int $spuId)
     {
         $result = $this->spuDetail::where(["spu_id" => $spuId])
             ->first();
@@ -44,7 +44,7 @@ class SpuDetailDao
     }
 
     /**
-     * GoodsDetailDao constructor.
+     * SpuDetailDao constructor.
      *
      * @param SpuDetail $spuDetail
      */

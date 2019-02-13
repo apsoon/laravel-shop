@@ -70,8 +70,6 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var that = this;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/pagedList?pageNo=1").then(function (res) {
-      console.info(" ------------------- ", res);
-
       if (res.data.code && res.data.data) {
         that.spuList = that.spuList.concat(res.data.data);
         that.pageNo++;
@@ -139,12 +137,23 @@ var render = function() {
                 fn: function(scope) {
                   return [
                     _c(
-                      "el-button",
+                      "router-link",
                       {
-                        attrs: { size: "mini", type: "info" },
-                        on: { click: function($event) {} }
+                        attrs: {
+                          to: {
+                            path: "/spu-detail",
+                            query: { spuId: scope.row.id }
+                          }
+                        }
                       },
-                      [_vm._v("\n                    详情\n                ")]
+                      [
+                        _c(
+                          "el-button",
+                          { attrs: { size: "mini", type: "info" } },
+                          [_vm._v("详情\n                    ")]
+                        )
+                      ],
+                      1
                     )
                   ]
                 }

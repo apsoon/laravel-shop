@@ -117,8 +117,8 @@ class SpuService
      */
     public function getSpuWithDetail(array $req)
     {
-        $spu = $this->spuDao->findById($req["spu_id"]);
-        $detail = $this->spuDetailDao->findBySpuId($req["spu_id"]);
+        $spu = $this->spuDao->findById($req["spuId"]);
+        $detail = $this->spuDetailDao->findBySpuId($req["spuId"]);
         $result = new \stdClass();
         $result->spu = $spu;
         $result->detail = $detail;

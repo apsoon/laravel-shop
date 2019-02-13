@@ -33,12 +33,12 @@
                     width="120"
                     label="操作">
                 <template slot-scope="scope">
-                    <el-button
-                            size="mini"
-                            type="info"
-                            @click="">
-                        详情
-                    </el-button>
+                    <router-link :to="{path:'/spu-detail', query: {spuId: scope.row.id}}">
+                        <el-button
+                                size="mini"
+                                type="info">详情
+                        </el-button>
+                    </router-link>
                 </template>
             </el-table-column>
         </el-table>

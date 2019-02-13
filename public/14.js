@@ -9,12 +9,30 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "SpuDetail"
+  name: "SpuDetail",
+  data: function data() {
+    return {
+      spuId: 0
+    };
+  },
+  mounted: function mounted() {
+    var that = this;
+    console.info(that.$route.query);
+    that.spuid = that.$route.query.spuId;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/detail?spuId=" + that.spuid).then(function (res) {
+      if (res.data.code === 2000) {
+        console.info(res);
+      }
+    }).catch(function (err) {});
+  }
 });
 
 /***/ }),
