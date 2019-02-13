@@ -13,6 +13,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuList"
 });
@@ -34,7 +38,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "div",
+    [
+      _c(
+        "router-link",
+        { attrs: { to: "/spu-add" } },
+        [_c("el-button", { attrs: { type: "primary" } }, [_vm._v("添加商品")])],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

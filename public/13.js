@@ -13,8 +13,83 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "SpuAdd"
+  name: "SpuAdd",
+  data: function data() {
+    return {
+      spuForm: {
+        name: "",
+        brief: "",
+        categoryId: "",
+        brandId: "",
+        cover: "",
+        detailHtml: "",
+        detailText: ""
+      },
+      categoryList: [],
+      category: [],
+      categoryProps: {
+        value: 'id',
+        children: 'children'
+      },
+      brandList: []
+    };
+  },
+  mounted: function mounted() {
+    var that = this;
+    axios.get("category/treeList").then(function (res) {
+      if (res.data.code === 2000) {
+        that.categoryList = res.data.data;
+      }
+    }).catch(function (err) {});
+    axios.get("brand/list").then(function (res) {
+      if (res.data.code === 2000) {
+        that.brandList = res.data.data;
+        console.info(that.brandList);
+      }
+    }).catch(function (err) {});
+  },
+  methods: {
+    onSubmit: function onSubmit() {
+      var that = this;
+      console.info(that.category);
+    }
+  }
 });
 
 /***/ }),
@@ -34,7 +109,123 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "div",
+    [
+      _c(
+        "el-form",
+        {
+          ref: "spuForm",
+          attrs: { id: "goods-form" },
+          model: {
+            value: _vm.spuForm,
+            callback: function($$v) {
+              _vm.spuForm = $$v
+            },
+            expression: "spuForm"
+          }
+        },
+        [
+          _c(
+            "el-form-item",
+            { attrs: { label: "商品名称", prop: "name" } },
+            [
+              _c("el-input", {
+                staticClass: "form-control",
+                attrs: {
+                  id: "goods-name",
+                  name: "name",
+                  placeholder: "请输入商品名称"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "简要描述", prop: "brief" } },
+            [
+              _c("el-input", {
+                staticClass: "form-control",
+                attrs: {
+                  id: "goods-brief",
+                  name: "brief",
+                  placeholder: "请输入简要描述"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "选择分类" } },
+            [
+              _c("el-cascader", {
+                attrs: {
+                  "show-all-levels": false,
+                  "expand-trigger": "hover",
+                  options: _vm.categoryList,
+                  props: _vm.categoryProps,
+                  "change-on-select": true,
+                  filterable: ""
+                },
+                model: {
+                  value: _vm.category,
+                  callback: function($$v) {
+                    _vm.category = $$v
+                  },
+                  expression: "category"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "选择品牌" } },
+            [
+              _c(
+                "el-select",
+                {
+                  attrs: { placeholder: "请选择" },
+                  model: {
+                    value: _vm.spuForm.brandId,
+                    callback: function($$v) {
+                      _vm.$set(_vm.spuForm, "brandId", $$v)
+                    },
+                    expression: "spuForm.brandId"
+                  }
+                },
+                _vm._l(_vm.brandList, function(item) {
+                  return _c("el-option", {
+                    key: item.id,
+                    attrs: { label: item.name, value: item.id }
+                  })
+                }),
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("el-form-item", { attrs: { label: "添加图片" } }),
+          _vm._v(" "),
+          _c("el-form-item", { attrs: { label: "商品描述" } }),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
+            [_vm._v("添加商品")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

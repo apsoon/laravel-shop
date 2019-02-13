@@ -1,5 +1,9 @@
 <template>
-    
+    <div>
+        <router-link to="/spu-add">
+            <el-button type="primary">添加商品</el-button>
+        </router-link>
+    </div>
 </template>
 
 <script>
