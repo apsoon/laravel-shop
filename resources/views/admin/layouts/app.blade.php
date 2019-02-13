@@ -39,7 +39,7 @@
     <!-- FastClick -->
     <script src="{{asset('lib/fastclick/lib/fastclick.js')}}"></script>
     <!-- adminlte custom -->
-    <script src="{{asset('js/adminlte.js')}}"></script>
+{{--    <script src="{{asset('js/adminlte.js')}}"></script>--}}
 </head>
 <body class="hold-transition skin-blue sidebar-mini fixed">
 <div class="wrapper">

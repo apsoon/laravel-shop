@@ -30,7 +30,8 @@
             </el-form-item>
             <el-form-item label="添加图片">
             </el-form-item>
-            <el-form-item label="商品描述">
+            <el-form-item label="商品描述" prop="spuFrom.detailHtml">
+                <div ref="editor" style="text-align:left; width: 100%"></div>
             </el-form-item>
             <el-button type="primary" @click="onSubmit">添加商品</el-button>
         </el-form>
@@ -38,6 +39,8 @@
 </template>
 
 <script>
+    import WangEditor from "wangeditor";
+
     export default {
         name: "SpuAdd",
         data: function () {
@@ -57,7 +60,7 @@
                     value: 'id',
                     children: 'children'
                 },
-                brandList: []
+                brandList: [],
             }
 
         },
@@ -76,11 +79,17 @@
                 }
             }).catch(err => {
             });
+            let editor = new WangEditor(that.$refs.editor); //这个地方传入div元素的id 需要加#号
+            editor.customConfig.onchange = (html) => {
+                that.spuForm.detailHtml = html;
+                that.spuForm.detailText = editor.txt.text();
+            }
+            editor.create();    // 生成编辑器
         },
         methods: {
             onSubmit: function () {
                 let that = this;
-                console.info(that.category);
+                console.info(that.spuForm);
             }
         }
     }

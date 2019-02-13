@@ -1,7 +1,15 @@
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[16],{
+
+/***/ "./node_modules/wangeditor/release/wangEditor.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/wangeditor/release/wangEditor.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.wangEditor = factory());
+	 true ? module.exports = factory() :
+	undefined;
 }(this, (function () { 'use strict';
 
 /*
@@ -4672,3 +4680,8 @@ var index = window.wangEditor || Editor;
 return index;
 
 })));
+
+
+/***/ })
+
+}]);

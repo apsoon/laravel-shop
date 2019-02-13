@@ -9,6 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var wangeditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! wangeditor */ "./node_modules/wangeditor/release/wangEditor.js");
+/* harmony import */ var wangeditor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(wangeditor__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -48,6 +50,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuAdd",
   data: function data() {
@@ -83,11 +87,19 @@ __webpack_require__.r(__webpack_exports__);
         console.info(that.brandList);
       }
     }).catch(function (err) {});
+    var editor = new wangeditor__WEBPACK_IMPORTED_MODULE_0___default.a(that.$refs.editor); //这个地方传入div元素的id 需要加#号
+
+    editor.customConfig.onchange = function (html) {
+      that.spuForm.detailHtml = html;
+      that.spuForm.detailText = editor.txt.text();
+    };
+
+    editor.create(); // 生成编辑器
   },
   methods: {
     onSubmit: function onSubmit() {
       var that = this;
-      console.info(that.category);
+      console.info(that.spuForm);
     }
   }
 });
@@ -213,7 +225,16 @@ var render = function() {
           _vm._v(" "),
           _c("el-form-item", { attrs: { label: "添加图片" } }),
           _vm._v(" "),
-          _c("el-form-item", { attrs: { label: "商品描述" } }),
+          _c(
+            "el-form-item",
+            { attrs: { label: "商品描述", prop: "spuFrom.detailHtml" } },
+            [
+              _c("div", {
+                ref: "editor",
+                staticStyle: { "text-align": "left", width: "100%" }
+              })
+            ]
+          ),
           _vm._v(" "),
           _c(
             "el-button",
