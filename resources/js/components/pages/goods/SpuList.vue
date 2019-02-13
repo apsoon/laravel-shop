@@ -1,8 +1,10 @@
 <template>
-    <div>
-        <router-link to="/spu-add">
-            <el-button type="primary">添加商品</el-button>
-        </router-link>
+    <el-card>
+        <div slot="header" class="clearfix">
+            <router-link to="/spu-add">
+                <el-button type="primary" size="medium">添加商品</el-button>
+            </router-link>
+        </div>
         <el-table
                 ref="spuList"
                 :data="spuList"
@@ -11,17 +13,17 @@
             <el-table-column
                     prop="name"
                     label="名称"
-                    width="120">
+                    width="150">
             </el-table-column>
             <el-table-column
                     prop="category"
                     label="分类"
-                    width="120">
+                    width="150">
             </el-table-column>
             <el-table-column
                     prop="品牌"
                     label="排序"
-                    width="120">
+                    width="150">
             </el-table-column>
             <el-table-column
                     prop="brief"
@@ -30,7 +32,7 @@
             </el-table-column>
             <el-table-column
                     prop=""
-                    width="120"
+                    width="200"
                     label="操作">
                 <template slot-scope="scope">
                     <router-link :to="{path:'/spu-detail', query: {spuId: scope.row.id}}">
@@ -42,7 +44,7 @@
                 </template>
             </el-table-column>
         </el-table>
-    </div>
+    </el-card>
 </template>
 
 <script>

@@ -58,6 +58,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuList",
@@ -97,12 +99,23 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "el-card",
     [
       _c(
-        "router-link",
-        { attrs: { to: "/spu-add" } },
-        [_c("el-button", { attrs: { type: "primary" } }, [_vm._v("添加商品")])],
+        "div",
+        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+        [
+          _c(
+            "router-link",
+            { attrs: { to: "/spu-add" } },
+            [
+              _c("el-button", { attrs: { type: "primary", size: "medium" } }, [
+                _vm._v("添加商品")
+              ])
+            ],
+            1
+          )
+        ],
         1
       ),
       _vm._v(" "),
@@ -114,15 +127,15 @@ var render = function() {
         },
         [
           _c("el-table-column", {
-            attrs: { prop: "name", label: "名称", width: "120" }
+            attrs: { prop: "name", label: "名称", width: "150" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "category", label: "分类", width: "120" }
+            attrs: { prop: "category", label: "分类", width: "150" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "品牌", label: "排序", width: "120" }
+            attrs: { prop: "品牌", label: "排序", width: "150" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -130,7 +143,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "", width: "120", label: "操作" },
+            attrs: { prop: "", width: "200", label: "操作" },
             scopedSlots: _vm._u([
               {
                 key: "default",
