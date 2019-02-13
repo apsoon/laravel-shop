@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Mapi;
 
 use App\Http\Controllers\Controller;
+use App\Http\Enum\StatusCode;
 use App\Http\Service\CategoryService;
 use App\Http\Service\SpecService;
+use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 /**
- * Class SpecificationMapi
+ * Class SpecMapi
  *
  * @package App\Http\Controllers\Mapi
  */
@@ -18,7 +20,7 @@ class SpecMapi extends Controller
     /**
      * @var SpecService
      */
-    private $specificationService;
+    private $specService;
 
     /**
      * @var CategoryService
@@ -28,46 +30,26 @@ class SpecMapi extends Controller
     /**
      * 获取规格列表
      *
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return JsonResult
      */
-    public function list(Request $request)
+    public function list()
     {
-        $req = $request->all();
-        $result = $this->specificationService->getSpecificationList($req);
-        return view('admin.pages.goods.specification_list', ["specifications" => $result]);
-    }
-
-
-    /**
-     * 添加规格
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function add()
-    {
-        $categoryList = $this->categoryService->getUnitCategory();
-        return view('admin.pages.goods.specification_add', ["categoryList" => $categoryList]);
-    }
-
-    public function addOption(Request $request)
-    {
-        $req = $request->all();
-        $specification_id = $req["specification_id"];
-        return view('admin.pages.goods.specificationOption_add', ["specification_id" => $specification_id]);
+        $result = $this->specService->getSpecList();
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * 创建
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return JsonResult
      */
     public function create(Request $request)
     {
         $req = $request->all();
-        $result = $this->specificationService->createSpecification($req);
-        if ($result) return redirect("specification/list");
+        $result = $this->specService->createSpec($req);
+        if ($result) new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
@@ -77,20 +59,20 @@ class SpecMapi extends Controller
     public function createOption(Request $request)
     {
         $req = $request->all();
-        $result = $this->specificationService->createSpecificationOption($req);
-        if ($result) return url("specification/list");
+        $result = $this->specService->createSpecOption($req);
+        if ($result) return url("spec/list");
     }
 
     /**
-     * SpecificationMapi constructor.
+     * SpecMapi constructor.
      *
-     * @param SpecService $specificationService
+     * @param SpecService $specService
      * @param CategoryService $categoryService
      */
-    public function __construct(SpecService $specificationService, CategoryService $categoryService)
+    public function __construct(SpecService $specService, CategoryService $categoryService)
     {
-        $this->middleware('auth');
-        $this->specificationService = $specificationService;
+//        $this->middleware('auth');
+        $this->specService = $specService;
         $this->categoryService = $categoryService;
     }
 }

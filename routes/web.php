@@ -56,11 +56,11 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::POST("attrOption/create", "AttributeMapi@createOption");
 
     // 规格
-    Route::GET("spec/list", "SpecificationMapi@list");
-    Route::GET("spec/add", "SpecificationMapi@add");
-    Route::POST("spec/create", "SpecificationMapi@create");
-    Route::GET("specOption/add", "SpecificationMapi@addOption");
-    Route::POST("specOption/create", "SpecificationMapi@createOption");
+    Route::GET("spec/list", "SpecMapi@list");
+    Route::GET("spec/add", "SpecMapi@add");
+    Route::POST("spec/create", "SpecMapi@create");
+    Route::GET("specOption/add", "SpecMapi@addOption");
+    Route::POST("specOption/create", "SpecMapi@createOption");
 
     // 广告
     Route::GET("ad/list", "AdMapi@list");

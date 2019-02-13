@@ -15,7 +15,7 @@ class CreateSpecTable extends Migration
     {
         Schema::create('spec', function (Blueprint $table) {
             $table->increments('id');
-            $table->string("name")->default("规格名称");
+            $table->string("name")->default("")->comment("规格名称");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

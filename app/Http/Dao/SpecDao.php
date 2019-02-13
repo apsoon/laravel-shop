@@ -32,6 +32,17 @@ class SpecDao
     }
 
     /**
+     * 获取所有规格
+     *
+     * @return Spec[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function list()
+    {
+        $result = $this->spec->all();
+        return $result;
+    }
+
+    /**
      * 按页获取
      *
      * @param int $pageNo
