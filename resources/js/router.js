@@ -8,6 +8,8 @@ Vue.use(VueRouter);
 export default new VueRouter({
     saveScrollPosition: true,
     routes: [
+
+        // =============================  首页  ===============================
         {
             name: "index",
             path: '/',
@@ -15,6 +17,16 @@ export default new VueRouter({
         },
 
         // =============================  商品  ===============================
+        {
+            name: "SpuList",
+            path: "/spu-list",
+            component: resolve => void (require(['./components/pages/goods/SpuList.vue'], resolve))
+        },
+        {
+            name: "SpuAdd",
+            path: "/spu-add",
+            component: resolve => void (require(['./components/pages/goods/SpuAdd.vue'], resolve))
+        },
         {
             name: "CategoryList",
             path: "/category-list",
@@ -45,7 +57,23 @@ export default new VueRouter({
             path: "/Attr-add",
             component: resolve => void (require(['./components/pages/goods/AttrAdd.vue'], resolve))
         },
+        {
+            name: "SpecList",
+            path: "/spec-list",
+            component: resolve => void (require(['./components/pages/goods/SpecList.vue'], resolve))
+        },
+        {
+            name: "SpecAdd",
+            path: "/spec-add",
+            component: resolve => void (require(['./components/pages/goods/SpecAdd.vue'], resolve))
+        },
 
+        // =============================  交易  ===============================
+        {
+            name: "OrderList",
+            path: "/Order-list",
+            component: resolve => void (require(['./components/pages/trade/OrderList.vue'], resolve))
+        },
 
         // =============================  优惠券  ===============================
         {

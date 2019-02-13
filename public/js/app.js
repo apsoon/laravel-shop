@@ -3607,17 +3607,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Sidebar"
 });
@@ -85738,7 +85727,7 @@ var render = function() {
                 _vm._v("商品管理")
               ]),
               _vm._v(" "),
-              _c("el-menu-item", { attrs: { index: "list" } }, [
+              _c("el-menu-item", { attrs: { index: "spu-list" } }, [
                 _vm._v("商品列表")
               ]),
               _vm._v(" "),
@@ -85750,11 +85739,11 @@ var render = function() {
                 _vm._v("品牌管理")
               ]),
               _vm._v(" "),
-              _c("el-menu-item", { attrs: { index: "specification" } }, [
+              _c("el-menu-item", { attrs: { index: "spec-list" } }, [
                 _vm._v("规格管理")
               ]),
               _vm._v(" "),
-              _c("el-menu-item", { attrs: { index: "attribute" } }, [
+              _c("el-menu-item", { attrs: { index: "attr-list" } }, [
                 _vm._v("属性管理")
               ])
             ],
@@ -85767,48 +85756,12 @@ var render = function() {
             [
               _c("template", { slot: "title" }, [
                 _c("i", { staticClass: "el-icon-menu" }),
-                _vm._v("导航二")
+                _vm._v("交易管理")
               ]),
               _vm._v(" "),
-              _c(
-                "el-menu-item-group",
-                [
-                  _c("template", { slot: "title" }, [_vm._v("分组一")]),
-                  _vm._v(" "),
-                  _c("el-menu-item", { attrs: { index: "2-1" } }, [
-                    _vm._v("选项1")
-                  ]),
-                  _vm._v(" "),
-                  _c("el-menu-item", { attrs: { index: "2-2" } }, [
-                    _vm._v("选项2")
-                  ])
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "el-menu-item-group",
-                { attrs: { title: "分组2" } },
-                [
-                  _c("el-menu-item", { attrs: { index: "2-3" } }, [
-                    _vm._v("选项3")
-                  ])
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "el-submenu",
-                { attrs: { index: "2-4" } },
-                [
-                  _c("template", { slot: "title" }, [_vm._v("选项4")]),
-                  _vm._v(" "),
-                  _c("el-menu-item", { attrs: { index: "2-4-1" } }, [
-                    _vm._v("选项4-1")
-                  ])
-                ],
-                2
-              )
+              _c("el-menu-item", { attrs: { index: "order-list" } }, [
+                _vm._v("订单管理")
+              ])
             ],
             2
           ),
@@ -100117,7 +100070,8 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   saveScrollPosition: true,
-  routes: [{
+  routes: [// =============================  首页  ===============================
+  {
     name: "index",
     path: '/',
     component: function component(resolve) {
@@ -100125,6 +100079,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     }
   }, // =============================  商品  ===============================
   {
+    name: "SpuList",
+    path: "/spu-list",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 14).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpuList.vue */ "./resources/js/components/pages/goods/SpuList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
+    name: "SpuAdd",
+    path: "/spu-add",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 13).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpuAdd.vue */ "./resources/js/components/pages/goods/SpuAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
     name: "CategoryList",
     path: "/category-list",
     component: function component(resolve) {
@@ -100159,6 +100125,25 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     path: "/Attr-add",
     component: function component(resolve) {
       return void __webpack_require__.e(/*! AMD require */ 6).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/AttrAdd.vue */ "./resources/js/components/pages/goods/AttrAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
+    name: "SpecList",
+    path: "/spec-list",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 12).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpecList.vue */ "./resources/js/components/pages/goods/SpecList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
+    name: "SpecAdd",
+    path: "/spec-add",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 11).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpecAdd.vue */ "./resources/js/components/pages/goods/SpecAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, // =============================  交易  ===============================
+  {
+    name: "OrderList",
+    path: "/Order-list",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 15).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/trade/OrderList.vue */ "./resources/js/components/pages/trade/OrderList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, // =============================  优惠券  ===============================
   {
