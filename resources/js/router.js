@@ -32,6 +32,16 @@ export default new VueRouter({
             path: "/spu-add",
             component: resolve => void (require(['./components/pages/goods/SpuAdd.vue'], resolve))
         },
+        // {
+        //     name: "SkuDetail",
+        //     path: "/sku-detail",
+        //     component: resolve => void (require(['./components/pages/goods/SkuDetail.vue'], resolve))
+        // },
+        {
+            name: "SkuAdd",
+            path: "/sku-add",
+            component: resolve => void (require(['./components/pages/goods/SkuAdd.vue'], resolve))
+        },
         {
             name: "CategoryList",
             path: "/category-list",
