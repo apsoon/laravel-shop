@@ -82,6 +82,11 @@ export default new VueRouter({
             path: "/spec-add",
             component: resolve => void (require(['./components/pages/goods/SpecAdd.vue'], resolve))
         },
+        {
+            name: "SpecOptionAdd",
+            path: "/spec-option-add",
+            component: resolve => void (require(['./components/pages/goods/SpecOptionAdd.vue'], resolve))
+        },
 
         // =============================  交易  ===============================
         {

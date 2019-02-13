@@ -25,12 +25,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
   data: function data() {
     return {
-      spuId: 0
+      spuId: 0,
+      activeName: "info"
     };
   },
   mounted: function mounted() {
@@ -78,18 +82,29 @@ var render = function() {
           }
         },
         [
-          _c("el-tab-pane", { attrs: { label: "商品信息", name: "first" } }, [
+          _c("el-tab-pane", { attrs: { label: "商品信息", name: "info" } }, [
             _vm._v("商品信息")
           ]),
           _vm._v(" "),
-          _c("el-tab-pane", { attrs: { label: "商品属性", name: "second" } }, [
+          _c("el-tab-pane", { attrs: { label: "商品属性", name: "attr" } }, [
             _vm._v("商品属性")
           ]),
           _vm._v(" "),
           _c(
             "el-tab-pane",
-            { attrs: { label: "产品列表", name: "third" } },
+            { attrs: { label: "产品列表", name: "sku" } },
             [
+              _c(
+                "router-link",
+                { attrs: { to: "/attr-option-add" } },
+                [
+                  _c("el-button", { attrs: { type: "primary" } }, [
+                    _vm._v("添加规格选项")
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
               _c(
                 "router-link",
                 { attrs: { to: "/sku-add" } },
