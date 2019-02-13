@@ -10,13 +10,13 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\SpuDao;
-use App\Http\Dao\GoodsDetailDao;
+use App\Http\Dao\SpuDetailDao;
 use App\Http\Dao\SkuDao;
 use App\Http\Dao\ProductSpecificationOptionDao;
 use App\Http\Dao\SpecificationDao;
 use App\Http\Dao\SpecificationOptionDao;
 use App\Http\Model\Goods;
-use App\Http\Model\GoodsDetail;
+use App\Http\Model\SpuDetail;
 use App\Http\Model\Product;
 use App\Http\Model\ProductSpecificationOption;
 use Illuminate\Support\Facades\Log;
@@ -35,7 +35,7 @@ class GoodsService
     private $goodsDao;
 
     /**
-     * @var GoodsDetailDao
+     * @var SpuDetailDao
      */
     private $goodsDetailDao;
 
@@ -76,7 +76,7 @@ class GoodsService
         $goods->cover = $req["cover"];
         $result = $goods->save();
         if ($result) {
-            $goodsDetail = new GoodsDetail();
+            $goodsDetail = new SpuDetail();
             $goodsDetail->goods_id = $goods->id;
             $goodsDetail->html = $req["detailHtml"];
             $goodsDetail->text = $req["detailText"];
@@ -191,13 +191,13 @@ class GoodsService
      * GoodsService constructor.
      *
      * @param SpuDao $goodsDao
-     * @param GoodsDetailDao $goodsDetailDao
+     * @param SpuDetailDao $goodsDetailDao
      * @param SkuDao $productDao
      * @param SpecificationDao $specificationDao
      * @param SpecificationOptionDao $specificationOptionDao
      * @param ProductSpecificationOptionDao $productSpecificationOptionDao
      */
-    public function __construct(SpuDao $goodsDao, GoodsDetailDao $goodsDetailDao, SkuDao $productDao, SpecificationDao $specificationDao, SpecificationOptionDao $specificationOptionDao, ProductSpecificationOptionDao $productSpecificationOptionDao)
+    public function __construct(SpuDao $goodsDao, SpuDetailDao $goodsDetailDao, SkuDao $productDao, SpecificationDao $specificationDao, SpecificationOptionDao $specificationOptionDao, ProductSpecificationOptionDao $productSpecificationOptionDao)
     {
         $this->goodsDao = $goodsDao;
         $this->goodsDetailDao = $goodsDetailDao;

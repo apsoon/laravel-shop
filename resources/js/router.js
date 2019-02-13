@@ -23,6 +23,11 @@ export default new VueRouter({
             component: resolve => void (require(['./components/pages/goods/SpuList.vue'], resolve))
         },
         {
+            name: "SpuDetail",
+            path: "/spu-detail",
+            component: resolve => void (require(['./components/pages/goods/SpuDetail.vue'], resolve))
+        },
+        {
             name: "SpuAdd",
             path: "/spu-add",
             component: resolve => void (require(['./components/pages/goods/SpuAdd.vue'], resolve))

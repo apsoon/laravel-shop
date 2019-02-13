@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Mapi;
 
 use App\Http\Controllers\Controller;
+use App\Http\Enum\StatusCode;
 use App\Http\Service\SkuService;
 use App\Http\Service\SpuService;
+use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SpuMapi extends Controller
 {
@@ -23,17 +26,29 @@ class SpuMapi extends Controller
     {
     }
 
+    /**
+     * 创建SPU
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function create(Request $request)
     {
+        $req = $request->all();
+        $result = $this->spuService->createSpu($req);
+        if ($result) return new JsonResult();
     }
 
     public function detail(Request $request)
     {
     }
 
-    public function __construct(SpuService $spuService, SkuService $skuService)
+    /**
+     * SpuMapi constructor.
+     * @param SpuService $spuService
+     */
+    public function __construct(SpuService $spuService)
     {
         $this->spuService = $spuService;
-        $this->skuService = $skuService;
     }
 }

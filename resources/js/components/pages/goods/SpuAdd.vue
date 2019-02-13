@@ -1,19 +1,20 @@
 <template>
     <div>
-        <el-form id="goods-form" ref="spuForm" v-model="spuForm">
+        <el-form ref="spuForm" :rules="rules" :model="spuForm" label-width="100px">
             <el-form-item label="商品名称" prop="name">
-                <el-input class="form-control" id="goods-name" name="name" placeholder="请输入商品名称"/>
+                <el-input v-model="spuForm.name" placeholder="请输入商品名称"/>
             </el-form-item>
             <el-form-item label="简要描述" prop="brief">
-                <el-input class="form-control" id="goods-brief" name="brief" placeholder="请输入简要描述"/>
+                <el-input v-model="spuForm.brief" placeholder="请输入简要描述"/>
             </el-form-item>
-            <el-form-item label="选择分类">
+            <el-form-item label="选择分类" prop="categoryId">
                 <el-cascader
                         :show-all-levels="false"
                         expand-trigger="hover"
                         :options="categoryList"
                         :props="categoryProps"
                         :change-on-select="true"
+                        :change="onCategoryChange()"
                         filterable
                         v-model="category">
                 </el-cascader>
@@ -30,7 +31,7 @@
             </el-form-item>
             <el-form-item label="添加图片">
             </el-form-item>
-            <el-form-item label="商品描述" prop="spuFrom.detailHtml">
+            <el-form-item label="商品描述" prop="detailHtml">
                 <div ref="editor" style="text-align:left; width: 100%"></div>
             </el-form-item>
             <el-button type="primary" @click="onSubmit">添加商品</el-button>
@@ -40,6 +41,7 @@
 
 <script>
     import WangEditor from "wangeditor";
+    import axios from "axios";
 
     export default {
         name: "SpuAdd",
@@ -53,6 +55,17 @@
                     cover: "",
                     detailHtml: "",
                     detailText: ""
+                },
+                rules: {
+                    name: [
+                        {required: true, message: '请输入广告名称', trigger: 'blur'}
+                    ],
+                    brief: [
+                        {required: true, message: '请输入广告名称', trigger: 'blur'}
+                    ],
+                    categoryId: [
+                        {required: true, message: '请输入广告名称', trigger: 'blur'}
+                    ],
                 },
                 categoryList: [],
                 category: [],
@@ -75,7 +88,6 @@
             axios.get("brand/list").then(res => {
                 if (res.data.code === 2000) {
                     that.brandList = res.data.data;
-                    console.info(that.brandList);
                 }
             }).catch(err => {
             });
@@ -83,13 +95,34 @@
             editor.customConfig.onchange = (html) => {
                 that.spuForm.detailHtml = html;
                 that.spuForm.detailText = editor.txt.text();
-            }
+            };
             editor.create();    // 生成编辑器
         },
         methods: {
             onSubmit: function () {
                 let that = this;
-                console.info(that.spuForm);
+                that.$refs.spuForm.validate((valid) => {
+                    if (valid) {
+                        axios.post("spu/create", that.spuForm).then(res => {
+                            if (res.data.code === 2000) {
+                                that.$message({
+                                    type: 'success',
+                                    message: '添加成功!'
+                                });
+                                setTimeout(() => {
+                                    that.$router.push("/spu-list");
+                                }, 1000);
+                            }
+                        }).catch(err => {
+                        });
+                    } else {
+                        return false;
+                    }
+                });
+            },
+            onCategoryChange: function () {
+                let that = this;
+                if (that.category) that.spuForm.categoryId = that.category[that.category.length - 1];
             }
         }
     }

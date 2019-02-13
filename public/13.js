@@ -11,6 +11,8 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var wangeditor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! wangeditor */ "./node_modules/wangeditor/release/wangEditor.js");
 /* harmony import */ var wangeditor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(wangeditor__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -51,6 +53,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuAdd",
@@ -65,6 +69,23 @@ __webpack_require__.r(__webpack_exports__);
         detailHtml: "",
         detailText: ""
       },
+      rules: {
+        name: [{
+          required: true,
+          message: '请输入广告名称',
+          trigger: 'blur'
+        }],
+        brief: [{
+          required: true,
+          message: '请输入广告名称',
+          trigger: 'blur'
+        }],
+        categoryId: [{
+          required: true,
+          message: '请输入广告名称',
+          trigger: 'blur'
+        }]
+      },
       categoryList: [],
       category: [],
       categoryProps: {
@@ -76,15 +97,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var that = this;
-    axios.get("category/treeList").then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("category/treeList").then(function (res) {
       if (res.data.code === 2000) {
         that.categoryList = res.data.data;
       }
     }).catch(function (err) {});
-    axios.get("brand/list").then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("brand/list").then(function (res) {
       if (res.data.code === 2000) {
         that.brandList = res.data.data;
-        console.info(that.brandList);
       }
     }).catch(function (err) {});
     var editor = new wangeditor__WEBPACK_IMPORTED_MODULE_0___default.a(that.$refs.editor); //这个地方传入div元素的id 需要加#号
@@ -99,7 +119,27 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onSubmit: function onSubmit() {
       var that = this;
-      console.info(that.spuForm);
+      that.$refs.spuForm.validate(function (valid) {
+        if (valid) {
+          axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("spu/create", that.spuForm).then(function (res) {
+            if (res.data.code === 2000) {
+              that.$message({
+                type: 'success',
+                message: '添加成功!'
+              });
+              setTimeout(function () {
+                that.$router.push("/spu-list");
+              }, 1000);
+            }
+          }).catch(function (err) {});
+        } else {
+          return false;
+        }
+      });
+    },
+    onCategoryChange: function onCategoryChange() {
+      var that = this;
+      if (that.category) that.spuForm.categoryId = that.category[that.category.length - 1];
     }
   }
 });
@@ -128,13 +168,10 @@ var render = function() {
         "el-form",
         {
           ref: "spuForm",
-          attrs: { id: "goods-form" },
-          model: {
-            value: _vm.spuForm,
-            callback: function($$v) {
-              _vm.spuForm = $$v
-            },
-            expression: "spuForm"
+          attrs: {
+            rules: _vm.rules,
+            model: _vm.spuForm,
+            "label-width": "100px"
           }
         },
         [
@@ -143,11 +180,13 @@ var render = function() {
             { attrs: { label: "商品名称", prop: "name" } },
             [
               _c("el-input", {
-                staticClass: "form-control",
-                attrs: {
-                  id: "goods-name",
-                  name: "name",
-                  placeholder: "请输入商品名称"
+                attrs: { placeholder: "请输入商品名称" },
+                model: {
+                  value: _vm.spuForm.name,
+                  callback: function($$v) {
+                    _vm.$set(_vm.spuForm, "name", $$v)
+                  },
+                  expression: "spuForm.name"
                 }
               })
             ],
@@ -159,11 +198,13 @@ var render = function() {
             { attrs: { label: "简要描述", prop: "brief" } },
             [
               _c("el-input", {
-                staticClass: "form-control",
-                attrs: {
-                  id: "goods-brief",
-                  name: "brief",
-                  placeholder: "请输入简要描述"
+                attrs: { placeholder: "请输入简要描述" },
+                model: {
+                  value: _vm.spuForm.brief,
+                  callback: function($$v) {
+                    _vm.$set(_vm.spuForm, "brief", $$v)
+                  },
+                  expression: "spuForm.brief"
                 }
               })
             ],
@@ -172,7 +213,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "选择分类" } },
+            { attrs: { label: "选择分类", prop: "categoryId" } },
             [
               _c("el-cascader", {
                 attrs: {
@@ -181,6 +222,7 @@ var render = function() {
                   options: _vm.categoryList,
                   props: _vm.categoryProps,
                   "change-on-select": true,
+                  change: _vm.onCategoryChange(),
                   filterable: ""
                 },
                 model: {
@@ -197,7 +239,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "选择品牌" } },
+            { staticStyle: { "z-index": "999" }, attrs: { label: "选择品牌" } },
             [
               _c(
                 "el-select",
@@ -227,7 +269,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "商品描述", prop: "spuFrom.detailHtml" } },
+            { attrs: { label: "商品描述", prop: "detailHtml" } },
             [
               _c("div", {
                 ref: "editor",
