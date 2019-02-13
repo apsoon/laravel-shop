@@ -185,7 +185,6 @@ var render = function() {
         "el-tabs",
         {
           attrs: { type: "border-card" },
-          on: { "tab-click": _vm.handleClick },
           model: {
             value: _vm.activeName,
             callback: function($$v) {

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+        <el-tabs v-model="activeName" type="border-card">
             <el-tab-pane label="商品信息" name="info">商品信息</el-tab-pane>
             <el-tab-pane label="商品属性" name="attr">商品属性</el-tab-pane>
             <el-tab-pane label="产品列表" name="sku">
