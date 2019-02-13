@@ -99846,6 +99846,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
 /* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./router */ "./resources/js/router.js");
+/* jshint esversion: 6 */
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -99861,9 +99863,6 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 
 
@@ -100122,15 +100121,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "index",
     path: '/',
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/Index.vue */ "./resources/js/components/pages/Index.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
-  }, {
-    name: "demo",
-    path: '/demo',
-    component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 2).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/demo.vue */ "./resources/js/components/demo.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
-    }
-  }, {
+  }, // =============================  商品  ===============================
+  {
     name: "CategoryList",
     path: "/category-list",
     component: function component(resolve) {
@@ -100140,43 +100134,57 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "CategoryAdd",
     path: "/category-add",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 9).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/CategoryAdd.vue */ "./resources/js/components/pages/goods/CategoryAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 10).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/CategoryAdd.vue */ "./resources/js/components/pages/goods/CategoryAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "BrandList",
     path: "/brand-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 8).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/BrandList.vue */ "./resources/js/components/pages/goods/BrandList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 9).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/BrandList.vue */ "./resources/js/components/pages/goods/BrandList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "BrandAdd",
     path: "/brand-add",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 7).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/BrandAdd.vue */ "./resources/js/components/pages/goods/BrandAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 8).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/BrandAdd.vue */ "./resources/js/components/pages/goods/BrandAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
+    name: "AttrList",
+    path: "/attr-list",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 7).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/AttrList.vue */ "./resources/js/components/pages/goods/AttrList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
+    name: "AttrAdd",
+    path: "/Attr-add",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 6).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/AttrAdd.vue */ "./resources/js/components/pages/goods/AttrAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, // =============================  优惠券  ===============================
+  {
     name: "CouponList",
     path: "/coupon-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 6).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/coupon/CouponList.vue */ "./resources/js/components/pages/coupon/CouponList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 5).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/coupon/CouponList.vue */ "./resources/js/components/pages/coupon/CouponList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "CouponAdd",
     path: "/coupon-add",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 5).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/coupon/CouponAdd.vue */ "./resources/js/components/pages/coupon/CouponAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 4).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/coupon/CouponAdd.vue */ "./resources/js/components/pages/coupon/CouponAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
-  }, {
+  }, // =============================  广告  ===============================
+  {
     name: "AdList",
     path: '/ad-list',
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 4).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/ad/AdList.vue */ "./resources/js/components/pages/ad/AdList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 3).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/ad/AdList.vue */ "./resources/js/components/pages/ad/AdList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "AdAdd",
     path: '/ad-add',
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 3).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/ad/AdAdd.vue */ "./resources/js/components/pages/ad/AdAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 2).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/ad/AdAdd.vue */ "./resources/js/components/pages/ad/AdAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }]
 }));

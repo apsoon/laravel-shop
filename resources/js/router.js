@@ -11,13 +11,10 @@ export default new VueRouter({
         {
             name: "index",
             path: '/',
-            component: resolve => void(require(['./components/ExampleComponent.vue'], resolve))
+            component: resolve => void(require(['./components/pages/Index.vue'], resolve))
         },
-        {
-            name: "demo",
-            path: '/demo',
-            component: resolve => void(require(['./components/demo.vue'], resolve))
-        },
+
+        // =============================  商品  ===============================
         {
             name: "CategoryList",
             path: "/category-list",
@@ -39,6 +36,19 @@ export default new VueRouter({
             component: resolve => void (require(['./components/pages/goods/BrandAdd.vue'], resolve))
         },
         {
+            name: "AttrList",
+            path: "/attr-list",
+            component: resolve => void (require(['./components/pages/goods/AttrList.vue'], resolve))
+        },
+        {
+            name: "AttrAdd",
+            path: "/Attr-add",
+            component: resolve => void (require(['./components/pages/goods/AttrAdd.vue'], resolve))
+        },
+
+
+        // =============================  优惠券  ===============================
+        {
             name: "CouponList",
             path: "/coupon-list",
             component: resolve => void (require(['./components/pages/coupon/CouponList.vue'], resolve))
@@ -48,6 +58,8 @@ export default new VueRouter({
             path: "/coupon-add",
             component: resolve => void (require(['./components/pages/coupon/CouponAdd.vue'], resolve))
         },
+
+        // =============================  广告  ===============================
         {
             name: "AdList",
             path: '/ad-list',
