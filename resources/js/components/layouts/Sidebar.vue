@@ -1,6 +1,9 @@
 <template>
     <div>
         <el-menu :unique-opened="true"
+                 background-color="#222d32"
+                 text-color="#b8c7ce"
+                 active-text-color="#fff"
                  :router="true" default-active="1">
             <el-menu-item index="index">
                 <i class="el-icon-menu"></i>

@@ -40,6 +40,7 @@
 <style scoped>
     .app-container {
         width: 100%;
+        background-color: #ecf0f5;
     }
 
     .app-header {

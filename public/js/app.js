@@ -3607,6 +3607,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Sidebar"
 });
@@ -9710,7 +9713,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.app-container[data-v-f348271a] {\n    width: 100%;\n}\n.app-header[data-v-f348271a] {\n    padding: 0;\n}\n", ""]);
+exports.push([module.i, "\n.app-container[data-v-f348271a] {\n    width: 100%;\n    background-color: #ecf0f5;\n}\n.app-header[data-v-f348271a] {\n    padding: 0;\n}\n", ""]);
 
 // exports
 
@@ -85707,7 +85710,14 @@ var render = function() {
       _c(
         "el-menu",
         {
-          attrs: { "unique-opened": true, router: true, "default-active": "1" }
+          attrs: {
+            "unique-opened": true,
+            "background-color": "#222d32",
+            "text-color": "#b8c7ce",
+            "active-text-color": "#fff",
+            router: true,
+            "default-active": "1"
+          }
         },
         [
           _c("el-menu-item", { attrs: { index: "index" } }, [
