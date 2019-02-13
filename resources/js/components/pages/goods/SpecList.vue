@@ -7,7 +7,7 @@
             <div>
                 <el-tag
                         v-for="spec in specList"
-                        :key="spec.id"
+                        :key="spec"
                         :type="primary"
                         disable-transitions=true>
                     {{spec.name}}
@@ -16,10 +16,10 @@
                         class="input-new-tag"
                         v-if="inputVisible"
                         v-model="inputValue"
-                        ref="saveTagInput"
+                        ref="specInput"
                         size="small"
-                        @keyup.enter.native="handleInputConfirm"
-                        @blur="handleInputConfirm">
+                        @keyup.enter.native="addSpec"
+                        @blur="addSpec">
                 </el-input>
                 <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加规格</el-button>
             </div>
@@ -34,7 +34,9 @@
         name: "SpecList",
         data: function () {
             return {
-                specList: []
+                specList: [],
+                inputVisible: false,
+                inputValue: ''
             }
         },
         mounted: function () {
@@ -47,17 +49,46 @@
                 })
                 .catch(err => {
                 })
+        },
+        methods: {
+            showInput: function () {
+                this.inputVisible = true;
+                this.$nextTick(_ => {
+                    this.$refs.specInput.$refs.input.focus();
+                });
+            },
+            addSpec: function () {
+                let that = this,
+                    inputValue = that.inputValue;
+                if (inputValue) {
+                    axios.post("/spec/create", {
+                        name: inputValue
+                    }).then(res => {
+                        if (res.data.code === 2000) {
+                            that.specList.push({name: inputValue});
+                        } else {
+                            that.$message({
+                                type: 'error',
+                                message: '添加失败!'
+                            });
+                        }
+                    }).catch(err => {
+                    });
+                }
+                this.inputVisible = false;
+                this.inputValue = '';
+            }
         }
     }
 </script>
 
 <style scoped>
-    .el-tag + .el-tag {
-        margin-left: 10px;
+    .el-tag {
+        margin-right: 10px;
+        margin-bottom: 10px;
     }
 
     .button-new-tag {
-        margin-left: 10px;
         height: 32px;
         line-height: 30px;
         padding-top: 0;
@@ -65,8 +96,8 @@
     }
 
     .input-new-tag {
+        margin-bottom: 10px;
         width: 90px;
-        margin-left: 10px;
         vertical-align: bottom;
     }
 </style>

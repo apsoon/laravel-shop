@@ -48,7 +48,7 @@ class SpecMapi extends Controller
     {
         $req = $request->all();
         $result = $this->specService->createSpec($req);
-        if ($result) new JsonResult();
+        if ($result) return new JsonResult();
         return new JsonResult(StatusCode::SERVER_ERROR);
     }
 

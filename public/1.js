@@ -45,7 +45,9 @@ __webpack_require__.r(__webpack_exports__);
   name: "SpecList",
   data: function data() {
     return {
-      specList: []
+      specList: [],
+      inputVisible: false,
+      inputValue: ''
     };
   },
   mounted: function mounted() {
@@ -55,6 +57,40 @@ __webpack_require__.r(__webpack_exports__);
         that.specList = res.data.data;
       }
     }).catch(function (err) {});
+  },
+  methods: {
+    showInput: function showInput() {
+      var _this = this;
+
+      this.inputVisible = true;
+      this.$nextTick(function (_) {
+        _this.$refs.specInput.$refs.input.focus();
+      });
+    },
+    addSpec: function addSpec() {
+      var that = this,
+          inputValue = that.inputValue;
+
+      if (inputValue) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/spec/create", {
+          name: inputValue
+        }).then(function (res) {
+          if (res.data.code === 2000) {
+            that.specList.push({
+              name: inputValue
+            });
+          } else {
+            that.$message({
+              type: 'error',
+              message: '添加失败!'
+            });
+          }
+        }).catch(function (err) {});
+      }
+
+      this.inputVisible = false;
+      this.inputValue = '';
+    }
   }
 });
 
@@ -72,7 +108,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.el-tag + .el-tag[data-v-259cbda8] {\n    margin-left: 10px;\n}\n.button-new-tag[data-v-259cbda8] {\n    margin-left: 10px;\n    height: 32px;\n    line-height: 30px;\n    padding-top: 0;\n    padding-bottom: 0;\n}\n.input-new-tag[data-v-259cbda8] {\n    width: 90px;\n    margin-left: 10px;\n    vertical-align: bottom;\n}\n", ""]);
+exports.push([module.i, "\n.el-tag[data-v-259cbda8] {\n    margin-right: 10px;\n    margin-bottom: 10px;\n}\n.button-new-tag[data-v-259cbda8] {\n    height: 32px;\n    line-height: 30px;\n    padding-top: 0;\n    padding-bottom: 0;\n}\n.input-new-tag[data-v-259cbda8] {\n    margin-bottom: 10px;\n    width: 90px;\n    vertical-align: bottom;\n}\n", ""]);
 
 // exports
 
@@ -145,7 +181,7 @@ var render = function() {
               return _c(
                 "el-tag",
                 {
-                  key: spec.id,
+                  key: spec,
                   attrs: { type: _vm.primary, "disable-transitions": "true" }
                 },
                 [
@@ -158,10 +194,10 @@ var render = function() {
             _vm._v(" "),
             _vm.inputVisible
               ? _c("el-input", {
-                  ref: "saveTagInput",
+                  ref: "specInput",
                   staticClass: "input-new-tag",
                   attrs: { size: "small" },
-                  on: { blur: _vm.handleInputConfirm },
+                  on: { blur: _vm.addSpec },
                   nativeOn: {
                     keyup: function($event) {
                       if (
@@ -170,7 +206,7 @@ var render = function() {
                       ) {
                         return null
                       }
-                      return _vm.handleInputConfirm($event)
+                      return _vm.addSpec($event)
                     }
                   },
                   model: {
