@@ -90,6 +90,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -126,7 +131,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.el-tabs {*/\n/*background-color: white;*/\n/*}*/\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.el-tabs {*/\n/*background-color: white;*/\n/*}*/\n", ""]);
 
 // exports
 
@@ -204,16 +209,13 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-tab-pane",
-            { attrs: { label: "产品列表", name: "sku" } },
+            { attrs: { label: "商品规格", name: "spec" } },
             [
               _c(
                 "router-link",
                 {
                   attrs: {
-                    to: {
-                      path: "/spec-option-add",
-                      query: { spuId: _vm.spuId }
-                    }
+                    to: { path: "/spu-spec-add", query: { spuId: _vm.spuId } }
                   }
                 },
                 [
@@ -226,6 +228,15 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
+              _c("el-table")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "产品列表", name: "sku" } },
+            [
               _c(
                 "router-link",
                 { attrs: { to: "/sku-add" } },

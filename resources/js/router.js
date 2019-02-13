@@ -78,14 +78,9 @@ export default new VueRouter({
             component: resolve => void (require(['./components/pages/goods/SpecList.vue'], resolve))
         },
         {
-            name: "SpecAdd",
-            path: "/spec-add",
-            component: resolve => void (require(['./components/pages/goods/SpecAdd.vue'], resolve))
-        },
-        {
-            name: "SpecOptionAdd",
-            path: "/spec-option-add",
-            component: resolve => void (require(['./components/pages/goods/SpecOptionAdd.vue'], resolve))
+            name: "SpuSpecAdd",
+            path: "/spu-spec-add",
+            component: resolve => void (require(['./components/pages/goods/SpuSpecAdd.vue'], resolve))
         },
 
         // =============================  交易  ===============================

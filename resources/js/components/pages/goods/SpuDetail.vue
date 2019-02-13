@@ -3,10 +3,15 @@
         <el-tabs v-model="activeName" type="border-card">
             <el-tab-pane label="商品信息" name="info">商品信息</el-tab-pane>
             <el-tab-pane label="商品属性" name="attr">商品属性</el-tab-pane>
-            <el-tab-pane label="产品列表" name="sku">
-                <router-link :to="{path:'/spec-option-add', query: {spuId: spuId}}">
+            <el-tab-pane label="商品规格" name="spec">
+                <router-link :to="{path:'/spu-spec-add', query: {spuId: spuId}}">
                     <el-button type="primary" size="medium">添加规格选项</el-button>
                 </router-link>
+                <el-table>
+
+                </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="产品列表" name="sku">
                 <router-link to="/sku-add">
                     <el-button type="primary" size="medium">添加产品</el-button>
                 </router-link>
