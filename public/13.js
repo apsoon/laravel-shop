@@ -9,12 +9,91 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "SkuAdd"
+  name: "SkuAdd",
+  data: function data() {
+    return {
+      skuId: "",
+      skuForm: {
+        spuId: "",
+        name: "",
+        originPrice: "",
+        price: "",
+        number: "",
+        state: "0"
+      },
+      rules: {
+        name: [{
+          required: true,
+          message: '请输入产品名称',
+          trigger: 'blur'
+        }],
+        price: [{
+          required: true,
+          message: '请输入产品价格',
+          trigger: 'blur'
+        }],
+        number: [{
+          required: true,
+          message: '请输入产品数量',
+          trigger: 'blur'
+        }]
+      }
+    };
+  },
+  mounted: function mounted() {
+    var that = this,
+        spuId = that.$route.query.spuId;
+    that.spuId = spuId;
+    that.skuForm.spuId = spuId;
+  },
+  methods: {
+    onSubmit: function onSubmit() {
+      var that = this;
+      that.$refs.skuForm.validate(function (valid) {
+        if (valid) {
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/create", that.skuForm).then(function (res) {
+            if (res.data.code === 2000) {
+              // message
+              that.$router.push("/spu/detail");
+            }
+          }).catch(function (err) {});
+        } else {
+          return false;
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -34,7 +113,144 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "el-card",
+    [
+      _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+        _c("span", [_vm._v("创建产品")])
+      ]),
+      _vm._v(" "),
+      _c(
+        "el-form",
+        {
+          ref: "skuForm",
+          attrs: {
+            rules: _vm.rules,
+            model: _vm.skuForm,
+            "label-width": "100px"
+          }
+        },
+        [
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品名称", prop: "name" } },
+            [
+              _c("el-input", {
+                attrs: { placeholder: "请输入产品名称" },
+                model: {
+                  value: _vm.skuForm.name,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "name", $$v)
+                  },
+                  expression: "skuForm.name"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品原价", prop: "originPrice" } },
+            [
+              _c("el-input", {
+                attrs: { type: "number", placeholder: "请输入产品原价" },
+                model: {
+                  value: _vm.skuForm.originPrice,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "originPrice", $$v)
+                  },
+                  expression: "skuForm.originPrice"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品价格", prop: "price" } },
+            [
+              _c("el-input", {
+                attrs: { type: "number", placeholder: "请输入产品价格" },
+                model: {
+                  value: _vm.skuForm.price,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "price", $$v)
+                  },
+                  expression: "skuForm.price"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品数量", prop: "number" } },
+            [
+              _c("el-input", {
+                attrs: { type: "number", placeholder: "请输入产品数量" },
+                model: {
+                  value: _vm.skuForm.number,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "number", $$v)
+                  },
+                  expression: "skuForm.number"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "是否上架", prop: "state" } },
+            [
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "0" },
+                  model: {
+                    value: _vm.skuForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.skuForm, "state", $$v)
+                    },
+                    expression: "skuForm.state"
+                  }
+                },
+                [_vm._v("暂不上架")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "1" },
+                  model: {
+                    value: _vm.skuForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.skuForm, "state", $$v)
+                    },
+                    expression: "skuForm.state"
+                  }
+                },
+                [_vm._v("立即上架")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
+            [_vm._v("立即创建")]
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
