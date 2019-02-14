@@ -3610,6 +3610,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Sidebar"
 });
@@ -85787,11 +85792,31 @@ var render = function() {
             [
               _c("template", { slot: "title" }, [
                 _c("i", { staticClass: "el-icon-setting" }),
-                _vm._v("优惠券")
+                _vm._v("营销管理")
               ]),
               _vm._v(" "),
               _c("el-menu-item", { attrs: { index: "coupon-list" } }, [
-                _vm._v("优惠券列表")
+                _vm._v("优惠券管理")
+              ])
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "el-submenu",
+            { attrs: { index: "coupon" } },
+            [
+              _c("template", { slot: "title" }, [
+                _c("i", { staticClass: "el-icon-setting" }),
+                _vm._v("用户管理")
+              ]),
+              _vm._v(" "),
+              _c("el-menu-item", { attrs: { index: "user-list" } }, [
+                _vm._v("用户列表")
+              ]),
+              _vm._v(" "),
+              _c("el-menu-item", { attrs: { index: "addr-list" } }, [
+                _vm._v("用户地址")
               ])
             ],
             2
@@ -100092,7 +100117,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     component: function component(resolve) {
       return void __webpack_require__.e(/*! AMD require */ 4).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/Index.vue */ "./resources/js/components/pages/Index.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
-  }, // =============================  商品  ===============================
+  }, // =============================  商品管理  ===============================
   {
     name: "SpuList",
     path: "/spu-list",
@@ -100109,7 +100134,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "SpuAdd",
     path: "/spu-add",
     component: function component(resolve) {
-      return void Promise.all(/*! AMD require */[__webpack_require__.e(19), __webpack_require__.e(15)]).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpuAdd.vue */ "./resources/js/components/pages/goods/SpuAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void Promise.all(/*! AMD require */[__webpack_require__.e(21), __webpack_require__.e(15)]).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpuAdd.vue */ "./resources/js/components/pages/goods/SpuAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "SpuSpecAdd",
@@ -100176,14 +100201,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     component: function component(resolve) {
       return void __webpack_require__.e(/*! AMD require */ 1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpecList.vue */ "./resources/js/components/pages/goods/SpecList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
-  }, // =============================  交易  ===============================
+  }, // =============================  交易管理  ===============================
   {
     name: "OrderList",
     path: "/Order-list",
     component: function component(resolve) {
       return void __webpack_require__.e(/*! AMD require */ 18).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/trade/OrderList.vue */ "./resources/js/components/pages/trade/OrderList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
-  }, // =============================  优惠券  ===============================
+  }, // ================================================  营销管理  =================================================
   {
     name: "CouponList",
     path: "/coupon-list",
@@ -100195,6 +100220,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     path: "/coupon-add",
     component: function component(resolve) {
       return void __webpack_require__.e(/*! AMD require */ 7).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/coupon/CouponAdd.vue */ "./resources/js/components/pages/coupon/CouponAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, // ================================================  用户管理  =================================================
+  {
+    name: "UserList",
+    path: "/user-list",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 20).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/user/UserList.vue */ "./resources/js/components/pages/user/UserList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
+    name: "AddrList",
+    path: "/addr-list",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 19).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/user/AddrList.vue */ "./resources/js/components/pages/user/AddrList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, // =============================  广告  ===============================
   {

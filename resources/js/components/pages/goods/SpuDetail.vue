@@ -21,9 +21,9 @@
                         <template slot-scope="scope">
                             <el-tag
                                     v-for="option in scope.row.options"
-                                    :key="option"
-                                    :type="primary"
-                                    disable-transitions=true>
+                                    :key="option.id"
+                                    type="primary"
+                                    :disable-transitions="true">
                                 {{option.name}}
                             </el-tag>
                         </template>

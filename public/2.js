@@ -303,10 +303,10 @@ var render = function() {
                             return _c(
                               "el-tag",
                               {
-                                key: option,
+                                key: option.id,
                                 attrs: {
-                                  type: _vm.primary,
-                                  "disable-transitions": "true"
+                                  type: "primary",
+                                  "disable-transitions": true
                                 }
                               },
                               [
