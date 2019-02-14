@@ -16,6 +16,7 @@ use App\Http\Dao\ProductSpecificationOptionDao;
 use App\Http\Dao\SpecDao;
 use App\Http\Dao\SpecificationOptionDao;
 use App\Http\Dao\SpuSpecDao;
+use App\Http\Dao\SpuSpecOptionDao;
 use App\Http\Model\Spu;
 use App\Http\Model\SpuDetail;
 use App\Http\Model\Product;
@@ -39,8 +40,22 @@ class SpuService
      */
     private $spuDetailDao;
 
+    /**
+     * @var SpuSpecDao
+     */
     private $spuSpecDao;
 
+    /**
+     * @var SpuSpecOptionDao
+     */
+    private $spuSpecOptionDao;
+
+    /**
+     * ?????? TODO
+     *
+     * @var SpecDao
+     */
+    private $specDao;
     /**
      * @var SkuDao
      */
@@ -147,7 +162,7 @@ class SpuService
     }
 
     /**
-     * 获取对应列表列表
+     * 获取对应规格列表
      *
      * @param array $req
      * @return mixed
@@ -164,14 +179,27 @@ class SpuService
         return $result;
     }
 
+    /**
+     * 获取带选项的规格列表
+     *
+     * @param array $req
+     * @return mixed
+     */
     public function getSpuSpecListWithOption(array $req)
     {
         $spuId = $req["spuId"];
+        $specs = $this->spuSpecDao->findBySpuId($spuId);
         $options = $this->spuSpecOptionDao->findBySpuId($spuId);
-        $result = [];
+        foreach ($specs as $spec) $spec->options = [];
         foreach ($options as $option) {
-
+            foreach ($specs as $spec) {
+                if ($option->spec_id == $spec->id) {
+                    array_push($spec->options, $option);
+                    break;
+                }
+            }
         }
+        return $specs;
     }
 
     /**
@@ -242,16 +270,20 @@ class SpuService
      *
      * @param SpuDao $spuDao
      * @param SpuDetailDao $spuDetailDao
+     * @param SpuSpecDao $spuSpecDao
+     * @param SpuSpecOptionDao $spuSpecOptionDao
      * @param SkuDao $productDao
      * @param SpecDao $specificationDao
      * @param SpecificationOptionDao $specificationOptionDao
      * @param ProductSpecificationOptionDao $productSpecificationOptionDao
      */
-    public function __construct(SpuDao $spuDao, SpuDetailDao $spuDetailDao, SpuSpecDao $spuSpecDao, SkuDao $productDao, SpecDao $specificationDao, SpecificationOptionDao $specificationOptionDao, ProductSpecificationOptionDao $productSpecificationOptionDao)
+    public function __construct(SpecDao $specDao, SpuDao $spuDao, SpuDetailDao $spuDetailDao, SpuSpecDao $spuSpecDao, SpuSpecOptionDao $spuSpecOptionDao, SkuDao $productDao, SpecDao $specificationDao, SpecificationOptionDao $specificationOptionDao, ProductSpecificationOptionDao $productSpecificationOptionDao)
     {
+        $this->specDao = $specDao;
         $this->spuDao = $spuDao;
         $this->spuDetailDao = $spuDetailDao;
         $this->spuSpecDao = $spuSpecDao;
+        $this->spuSpecOptionDao = $spuSpecOptionDao;
         $this->productDao = $productDao;
         $this->specificationDao = $specificationDao;
         $this->specificationOptionDao = $specificationOptionDao;

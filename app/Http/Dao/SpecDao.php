@@ -85,6 +85,19 @@ class SpecDao
     }
 
     /**
+     * ID批量查找
+     *
+     * @param array $specIds
+     * @return mixed
+     */
+    public function findByIds(array $specIds)
+    {
+        $result = $this->spec::whereIn("id", $specIds)
+            ->get();
+        return $result;
+    }
+
+    /**
      * SpecDao constructor.
      *
      * @param Spec $spec

@@ -43,7 +43,7 @@ class SpuMapi extends Controller
 
     /**
      * 获取spu对应的spec列表
-     * 
+     *
      * @param Request $request
      * @return JsonResult
      */
@@ -51,6 +51,19 @@ class SpuMapi extends Controller
     {
         $req = $request->all();
         $result = $this->spuService->getSpuSpecList($req);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
+     * 获取规格选项列表
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function listSpecOption(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->spuService->getSpuSpecListWithOption($req);
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 

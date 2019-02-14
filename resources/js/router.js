@@ -32,6 +32,16 @@ export default new VueRouter({
             path: "/spu-add",
             component: resolve => void (require(['./components/pages/goods/SpuAdd.vue'], resolve))
         },
+        {
+            name: "SpuSpecAdd",
+            path: "/spu-spec-add",
+            component: resolve => void (require(['./components/pages/goods/SpuSpecAdd.vue'], resolve))
+        },
+        {
+            name: "SpuSpecOption",
+            path: "/spu-spec-option",
+            component: resolve => void (require(['./components/pages/goods/SpuSpecOption.vue'], resolve))
+        },
         // {
         //     name: "SkuDetail",
         //     path: "/sku-detail",
@@ -76,11 +86,6 @@ export default new VueRouter({
             name: "SpecList",
             path: "/spec-list",
             component: resolve => void (require(['./components/pages/goods/SpecList.vue'], resolve))
-        },
-        {
-            name: "SpuSpecAdd",
-            path: "/spu-spec-add",
-            component: resolve => void (require(['./components/pages/goods/SpuSpecAdd.vue'], resolve))
         },
 
         // =============================  交易  ===============================

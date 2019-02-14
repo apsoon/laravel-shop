@@ -32,6 +32,19 @@ class SpuSpecOptionDao
     }
 
     /**
+     * spuId查找
+     *
+     * @param $spuId
+     * @return mixed
+     */
+    public function findBySpuId($spuId)
+    {
+        $result = $this->spuSpecOption::where("spu_id", "=", $spuId)
+            ->get();
+        return $result;
+    }
+
+    /**
      * 根据spuId获取
      *
      * @param $spuId

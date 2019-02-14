@@ -5,9 +5,12 @@
             <el-tab-pane label="商品属性" name="attr">商品属性</el-tab-pane>
             <el-tab-pane label="商品规格" name="spec">
                 <router-link :to="{path: '/spu-spec-add', query: {spuId: spuId}}">
-                    <el-button type="primary" size="medium">添加规格选项</el-button>
+                    <el-button type="primary" size="medium">添加规格</el-button>
                 </router-link>
-                <el-table width="100%">
+                <el-table width="100%"
+                          ref="specList"
+                          tooltip-effect="dark"
+                          :data="specList">
                     <el-table-column prop="name"
                                      label="名称"
                                      width="150px">
@@ -15,6 +18,26 @@
                     <el-table-column prop="options"
                                      label="选项"
                                      min-width="1">
+                    </el-table-column>
+                    <el-table-column
+                            prop=""
+                            label="操作"
+                            width="200px">
+                        <template slot-scope="scope">
+                            <router-link
+                                    :to="{path: '/spu-spec-option', query: {spuId: spuId, specId: scope.row.id}}">
+                                <el-button
+                                        size="mini"
+                                        type="info"
+                                        @click="">修改选项
+                                </el-button>
+                            </router-link>
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="deleteSpec(scope.$index, scope.row.id)">删除
+                            </el-button>
+                        </template>
                     </el-table-column>
                 </el-table>
             </el-tab-pane>
@@ -98,21 +121,27 @@
             return {
                 spuId: 0,
                 activeName: "info",
-                skuList: []
+                skuList: [],
+                specList: []
             }
         },
-        beforeCreate: function () {
-        },
         mounted: function () {
-            let that = this;
-            that.spuId = that.$route.query.spuId;
-            axios.get("spu/detail?spuId=" + that.spuId)
+            let that = this,
+                spuId = that.$route.query.spuId;
+            that.spuId = spuId;
+            axios.get("spu/detail?spuId=" + spuId)
                 .then(res => {
                     if (res.data.code === 2000) {
                         console.info(res);
                     }
                 }).catch(err => {
             });
+            axios.get("spu/specOptionList?spuId=" + spuId)
+                .then(res => {
+                    if (res.data.code === 2000) {
+                        that.specList = res.data.data;
+                    }
+                })
         }
     }
 </script>

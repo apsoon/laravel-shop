@@ -102,6 +102,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -109,18 +132,24 @@ __webpack_require__.r(__webpack_exports__);
     return {
       spuId: 0,
       activeName: "info",
-      skuList: []
+      skuList: [],
+      specList: []
     };
   },
-  beforeCreate: function beforeCreate() {},
   mounted: function mounted() {
-    var that = this;
-    that.spuId = that.$route.query.spuId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/detail?spuId=" + that.spuId).then(function (res) {
+    var that = this,
+        spuId = that.$route.query.spuId;
+    that.spuId = spuId;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/detail?spuId=" + spuId).then(function (res) {
       if (res.data.code === 2000) {
         console.info(res);
       }
     }).catch(function (err) {});
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/specOptionList?spuId=" + spuId).then(function (res) {
+      if (res.data.code === 2000) {
+        that.specList = res.data.data;
+      }
+    });
   }
 });
 
@@ -138,7 +167,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.el-tabs {*/\n/*background-color: white;*/\n/*}*/\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.el-tabs {*/\n/*background-color: white;*/\n/*}*/\n", ""]);
 
 // exports
 
@@ -229,7 +258,7 @@ var render = function() {
                   _c(
                     "el-button",
                     { attrs: { type: "primary", size: "medium" } },
-                    [_vm._v("添加规格选项")]
+                    [_vm._v("添加规格")]
                   )
                 ],
                 1
@@ -237,7 +266,14 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "el-table",
-                { attrs: { width: "100%" } },
+                {
+                  ref: "specList",
+                  attrs: {
+                    width: "100%",
+                    "tooltip-effect": "dark",
+                    data: _vm.specList
+                  }
+                },
                 [
                   _c("el-table-column", {
                     attrs: { prop: "name", label: "名称", width: "150px" }
@@ -245,6 +281,61 @@ var render = function() {
                   _vm._v(" "),
                   _c("el-table-column", {
                     attrs: { prop: "options", label: "选项", "min-width": "1" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "", label: "操作", width: "200px" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "router-link",
+                              {
+                                attrs: {
+                                  to: {
+                                    path: "/spu-spec-option",
+                                    query: {
+                                      spuId: _vm.spuId,
+                                      specId: scope.row.id
+                                    }
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "el-button",
+                                  {
+                                    attrs: { size: "mini", type: "info" },
+                                    on: { click: function($event) {} }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "修改选项\n                            "
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "danger" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.deleteSpec(scope.$index, scope.row.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("删除\n                        ")]
+                            )
+                          ]
+                        }
+                      }
+                    ])
                   })
                 ],
                 1
