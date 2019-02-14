@@ -1,30 +1,28 @@
 <template>
-    <div>
-        <el-card class="box-card">
-            <div slot="header" class="clearfix">
-                <span>规格列表</span>
-            </div>
-            <div>
-                <el-tag
-                        v-for="spec in specList"
-                        :key="spec"
-                        :type="primary"
-                        disable-transitions=true>
-                    {{spec.name}}
-                </el-tag>
-                <el-input
-                        class="input-new-tag"
-                        v-if="inputVisible"
-                        v-model="inputValue"
-                        ref="specInput"
-                        size="small"
-                        @keyup.enter.native="addSpec"
-                        @blur="addSpec">
-                </el-input>
-                <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加规格</el-button>
-            </div>
-        </el-card>
-    </div>
+    <el-card class="box-card">
+        <div slot="header" class="clearfix">
+            <span>规格列表</span>
+        </div>
+        <div>
+            <el-tag
+                    v-for="spec in specList"
+                    :key="spec"
+                    :type="primary"
+                    disable-transitions=true>
+                {{spec.name}}
+            </el-tag>
+            <el-input
+                    class="input-new-tag"
+                    v-if="inputVisible"
+                    v-model="inputValue"
+                    ref="specInput"
+                    size="small"
+                    @keyup.enter.native="addSpec"
+                    @blur="addSpec">
+            </el-input>
+            <el-button v-else class="button-new-tag" size="small" @click="showInput">+ 添加规格</el-button>
+        </div>
+    </el-card>
 </template>
 
 <script>

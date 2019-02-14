@@ -125,6 +125,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -167,7 +176,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.el-tabs {*/\n/*background-color: white;*/\n/*}*/\n", ""]);
+exports.push([module.i, "\n.el-tag + .el-tag[data-v-7110b88a] {\n    margin-left: 10px;\n}\n", ""]);
 
 // exports
 
@@ -280,7 +289,33 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "options", label: "选项", "min-width": "1" }
+                    attrs: { label: "选项", "min-width": "1" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return _vm._l(scope.row.options, function(option) {
+                            return _c(
+                              "el-tag",
+                              {
+                                key: option,
+                                attrs: {
+                                  type: _vm.primary,
+                                  "disable-transitions": "true"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(option.name) +
+                                    "\n                        "
+                                )
+                              ]
+                            )
+                          })
+                        }
+                      }
+                    ])
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {

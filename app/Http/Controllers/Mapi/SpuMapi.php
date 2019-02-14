@@ -68,6 +68,33 @@ class SpuMapi extends Controller
     }
 
     /**
+     * 获取规格的选项
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function listOption(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->spuService->getSpecOptionList($req);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
+     * 创建选项
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function createOption(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->spuService->insertSpuSpecOption($req);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
      * 创建SPU
      *
      * @param Request $request

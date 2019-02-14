@@ -15,9 +15,18 @@
                                      label="名称"
                                      width="150px">
                     </el-table-column>
-                    <el-table-column prop="options"
-                                     label="选项"
-                                     min-width="1">
+                    <el-table-column
+                            label="选项"
+                            min-width="1">
+                        <template slot-scope="scope">
+                            <el-tag
+                                    v-for="option in scope.row.options"
+                                    :key="option"
+                                    :type="primary"
+                                    disable-transitions=true>
+                                {{option.name}}
+                            </el-tag>
+                        </template>
                     </el-table-column>
                     <el-table-column
                             prop=""
@@ -147,7 +156,7 @@
 </script>
 
 <style scoped>
-    /*.el-tabs {*/
-    /*background-color: white;*/
-    /*}*/
+    .el-tag + .el-tag {
+        margin-left: 10px;
+    }
 </style>

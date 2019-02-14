@@ -20,6 +20,7 @@ use App\Http\Dao\SpuSpecOptionDao;
 use App\Http\Model\Spu;
 use App\Http\Model\SpuDetail;
 use App\Http\Model\Product;
+use App\Http\Model\SpuSpecOption;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -194,12 +195,44 @@ class SpuService
         foreach ($options as $option) {
             foreach ($specs as $spec) {
                 if ($option->spec_id == $spec->id) {
-                    array_push($spec->options, $option);
+                    $arr = $spec->options;
+                    array_push($arr, $option);
+                    $spec->options = $arr;
                     break;
                 }
             }
         }
         return $specs;
+    }
+
+    /**
+     * 获取规格的所有选项
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function getSpecOptionList(array $req)
+    {
+        $spuId = $req["spuId"];
+        $specId = $req["specId"];
+        $result = $this->spuSpecOptionDao->findBySpuIdSpecId($spuId, $specId);
+        return $result;
+    }
+
+    /**
+     * 创建规格选项
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function insertSpuSpecOption(array $req)
+    {
+        $option = new SpuSpecOption();
+        $option->spu_id = $req["spuId"];
+        $option->spec_id = $req["specId"];
+        $option->name = $req["name"];
+        $result = $this->spuSpecOptionDao->insert($option);
+        return $result;
     }
 
     /**
@@ -211,7 +244,6 @@ class SpuService
         $result = $this->spuDao->findByCategoryPaged($req["categoryId"], $req["pageNo"], $req["size"]);
         return $result;
     }
-
 
     /**
      * 获取最新

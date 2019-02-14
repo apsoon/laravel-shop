@@ -20,6 +20,17 @@ class SpuSpecOptionDao
     private $spuSpecOption;
 
     /**
+     * 创建选项
+     *
+     * @param SpuSpecOption $option
+     * @return bool
+     */
+    public function insert(SpuSpecOption $option)
+    {
+        return $option->save();
+    }
+
+    /**
      * 列表添加
      *
      * @param array $spuSpecOptionList
@@ -48,6 +59,7 @@ class SpuSpecOptionDao
      * 根据spuId获取
      *
      * @param $spuId
+     * @param $specId
      * @return mixed
      */
     public function findBySpuIdSpecId($spuId, $specId)

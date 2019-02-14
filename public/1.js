@@ -38,8 +38,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpecList",
@@ -160,79 +158,65 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("el-card", { staticClass: "box-card" }, [
-        _c(
-          "div",
-          {
-            staticClass: "clearfix",
-            attrs: { slot: "header" },
-            slot: "header"
-          },
-          [_c("span", [_vm._v("规格列表")])]
-        ),
+  return _c("el-card", { staticClass: "box-card" }, [
+    _c(
+      "div",
+      { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+      [_c("span", [_vm._v("规格列表")])]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      [
+        _vm._l(_vm.specList, function(spec) {
+          return _c(
+            "el-tag",
+            {
+              key: spec,
+              attrs: { type: _vm.primary, "disable-transitions": "true" }
+            },
+            [_vm._v("\n            " + _vm._s(spec.name) + "\n        ")]
+          )
+        }),
         _vm._v(" "),
-        _c(
-          "div",
-          [
-            _vm._l(_vm.specList, function(spec) {
-              return _c(
-                "el-tag",
-                {
-                  key: spec,
-                  attrs: { type: _vm.primary, "disable-transitions": "true" }
-                },
-                [
-                  _vm._v(
-                    "\n                " + _vm._s(spec.name) + "\n            "
-                  )
-                ]
-              )
-            }),
-            _vm._v(" "),
-            _vm.inputVisible
-              ? _c("el-input", {
-                  ref: "specInput",
-                  staticClass: "input-new-tag",
-                  attrs: { size: "small" },
-                  on: { blur: _vm.addSpec },
-                  nativeOn: {
-                    keyup: function($event) {
-                      if (
-                        !("button" in $event) &&
-                        _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                      ) {
-                        return null
-                      }
-                      return _vm.addSpec($event)
-                    }
-                  },
-                  model: {
-                    value: _vm.inputValue,
-                    callback: function($$v) {
-                      _vm.inputValue = $$v
-                    },
-                    expression: "inputValue"
+        _vm.inputVisible
+          ? _c("el-input", {
+              ref: "specInput",
+              staticClass: "input-new-tag",
+              attrs: { size: "small" },
+              on: { blur: _vm.addSpec },
+              nativeOn: {
+                keyup: function($event) {
+                  if (
+                    !("button" in $event) &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
                   }
-                })
-              : _c(
-                  "el-button",
-                  {
-                    staticClass: "button-new-tag",
-                    attrs: { size: "small" },
-                    on: { click: _vm.showInput }
-                  },
-                  [_vm._v("+ 添加规格")]
-                )
-          ],
-          2
-        )
-      ])
-    ],
-    1
-  )
+                  return _vm.addSpec($event)
+                }
+              },
+              model: {
+                value: _vm.inputValue,
+                callback: function($$v) {
+                  _vm.inputValue = $$v
+                },
+                expression: "inputValue"
+              }
+            })
+          : _c(
+              "el-button",
+              {
+                staticClass: "button-new-tag",
+                attrs: { size: "small" },
+                on: { click: _vm.showInput }
+              },
+              [_vm._v("+ 添加规格")]
+            )
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
