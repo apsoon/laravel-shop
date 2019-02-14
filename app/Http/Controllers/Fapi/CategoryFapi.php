@@ -16,13 +16,13 @@ class CategoryFapi extends Controller
     private $categoryService;
 
     /**
-     * unitList
+     * treeList
      *
      * @return JsonResult
      */
-    public function unitList()
+    public function treeList()
     {
-        $result = $this->categoryService->getUnitCategory();
+        $result = $this->categoryService->getCategoryTreeList();
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 

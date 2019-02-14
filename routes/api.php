@@ -26,7 +26,7 @@ Route::group(["namespace" => "Fapi"], function () {
     Route::POST("user/createAddrs", "UserFapi@createAddrs");
 
     // 分类
-    Route::GET("category/list", "CategoryFapi@unitList");
+    Route::GET("category/list", "CategoryFapi@treeList");
 
     // 收藏
     Route::POST("collection/create", "CollectionFapi@create");
