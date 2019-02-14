@@ -7,8 +7,15 @@
                 <router-link :to="{path: '/spu-spec-add', query: {spuId: spuId}}">
                     <el-button type="primary" size="medium">添加规格选项</el-button>
                 </router-link>
-                <el-table>
-
+                <el-table width="100%">
+                    <el-table-column prop="name"
+                                     label="名称"
+                                     width="150px">
+                    </el-table-column>
+                    <el-table-column prop="options"
+                                     label="选项"
+                                     min-width="1">
+                    </el-table-column>
                 </el-table>
             </el-tab-pane>
             <el-tab-pane label="产品列表" name="sku">

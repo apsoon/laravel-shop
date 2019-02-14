@@ -155,8 +155,23 @@ class SpuService
     public function getSpuSpecList(array $req)
     {
         $spuId = $req["spuId"];
-        $result = $this->spuSpecDao->findBySpuId($spuId);
+        $spuSpecs = $this->spuSpecDao->findBySpuId($spuId);
+        $specIds = [];
+        foreach ($spuSpecs as $spuSpec) {
+            array_push($specIds, $spuSpec->specId);
+        }
+        $result = $this->specDao->findByIds($specIds);
         return $result;
+    }
+
+    public function getSpuSpecListWithOption(array $req)
+    {
+        $spuId = $req["spuId"];
+        $options = $this->spuSpecOptionDao->findBySpuId($spuId);
+        $result = [];
+        foreach ($options as $option) {
+
+        }
     }
 
     /**

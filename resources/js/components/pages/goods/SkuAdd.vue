@@ -16,6 +16,9 @@
             <el-form-item label="产品数量" prop="number">
                 <el-input type="number" v-model="skuForm.number" placeholder="请输入产品数量"></el-input>
             </el-form-item>
+            <el-form-item v-for="">
+
+            </el-form-item>
             <el-form-item label="是否上架" prop="state">
                 <el-radio v-model="skuForm.state" label="0">暂不上架</el-radio>
                 <el-radio v-model="skuForm.state" label="1">立即上架</el-radio>

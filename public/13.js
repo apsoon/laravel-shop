@@ -38,6 +38,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SkuAdd",
@@ -208,6 +211,8 @@ var render = function() {
             ],
             1
           ),
+          _vm._v(" "),
+          _c("el-form-item"),
           _vm._v(" "),
           _c(
             "el-form-item",
