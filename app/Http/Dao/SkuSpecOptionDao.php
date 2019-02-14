@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\DB;
  *
  * @package App\Http\Dao
  */
-class ProductSpecificationOptionDao
+class SkuSpecOptionDao
 {
 
     /**

@@ -41,6 +41,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SkuAdd",
@@ -80,8 +89,9 @@ __webpack_require__.r(__webpack_exports__);
         spuId = that.$route.query.spuId;
     that.spuId = spuId;
     that.skuForm.spuId = spuId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/specList?spuId=" + spuId).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/specOptionList?spuId=" + spuId).then(function (res) {
       if (res.data.code === 2000) {
+        console.info(res.data.data);
         that.specList = res.data.data;
       }
     }).catch(function (err) {});
@@ -212,7 +222,37 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("el-form-item"),
+          _vm._l(_vm.specList, function(spec) {
+            return [
+              _c(
+                "el-form-item",
+                { attrs: { label: spec.name, prop: "specOption" } },
+                [
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { placeholder: "请选择" },
+                      model: {
+                        value: spec.option,
+                        callback: function($$v) {
+                          _vm.$set(spec, "option", $$v)
+                        },
+                        expression: "spec.option"
+                      }
+                    },
+                    _vm._l(spec.options, function(option) {
+                      return _c("el-option", {
+                        key: option.id,
+                        attrs: { label: option.name, value: option.id }
+                      })
+                    }),
+                    1
+                  )
+                ],
+                1
+              )
+            ]
+          }),
           _vm._v(" "),
           _c(
             "el-form-item",
@@ -257,7 +297,7 @@ var render = function() {
             [_vm._v("立即创建")]
           )
         ],
-        1
+        2
       )
     ],
     1

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Mapi;
 
 use App\Http\Controllers\Controller;
+use App\Http\Enum\StatusCode;
 use App\Http\Service\SkuService;
 use App\Http\Service\SpuService;
+use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 
 class SkuMapi extends Controller
@@ -23,8 +25,18 @@ class SkuMapi extends Controller
     {
     }
 
+    /**
+     * 创建Sku
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function create(Request $request)
     {
+        $req = $request->all();
+        $result = $this->skuService->createSku($req);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     public function detail(Request $request)

@@ -12,7 +12,7 @@ namespace App\Http\Service;
 use App\Http\Dao\SpuDao;
 use App\Http\Dao\SpuDetailDao;
 use App\Http\Dao\SkuDao;
-use App\Http\Dao\ProductSpecificationOptionDao;
+use App\Http\Dao\SkuSpecOptionDao;
 use App\Http\Dao\SpecDao;
 use App\Http\Dao\SpecificationOptionDao;
 use App\Http\Dao\SpuSpecDao;
@@ -73,7 +73,7 @@ class SpuService
     private $specificationOptionDao;
 
     /**
-     * @var ProductSpecificationOptionDao
+     * @var SkuSpecOptionDao
      */
     private $productSpecificationOptionDao;
 
@@ -312,9 +312,9 @@ class SpuService
      * @param SkuDao $productDao
      * @param SpecDao $specificationDao
      * @param SpecificationOptionDao $specificationOptionDao
-     * @param ProductSpecificationOptionDao $productSpecificationOptionDao
+     * @param SkuSpecOptionDao $productSpecificationOptionDao
      */
-    public function __construct(SpecDao $specDao, SpuDao $spuDao, SpuDetailDao $spuDetailDao, SpuSpecDao $spuSpecDao, SpuSpecOptionDao $spuSpecOptionDao, SkuDao $productDao, SpecDao $specificationDao, SpecificationOptionDao $specificationOptionDao, ProductSpecificationOptionDao $productSpecificationOptionDao)
+    public function __construct(SpecDao $specDao, SpuDao $spuDao, SpuDetailDao $spuDetailDao, SpuSpecDao $spuSpecDao, SpuSpecOptionDao $spuSpecOptionDao, SkuDao $productDao, SpecDao $specificationDao, SpecificationOptionDao $specificationOptionDao, SkuSpecOptionDao $productSpecificationOptionDao)
     {
         $this->specDao = $specDao;
         $this->spuDao = $spuDao;

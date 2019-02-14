@@ -12,13 +12,10 @@ namespace App\Http\Service;
 use App\Http\Dao\SpuDao;
 use App\Http\Dao\SpuDetailDao;
 use App\Http\Dao\SkuDao;
-use App\Http\Dao\ProductSpecificationOptionDao;
+use App\Http\Dao\SkuSpecOptionDao;
 use App\Http\Dao\SpecDao;
-use App\Http\Dao\SpecificationOptionDao;
-use App\Http\Model\Goods;
-use App\Http\Model\SpuDetail;
-use App\Http\Model\Product;
-use Illuminate\Support\Facades\Log;
+use App\Http\Dao\SpuSpecOptionDao;
+use App\Http\Model\Sku;
 
 /**
  * Class SkuService
@@ -31,178 +28,92 @@ class SkuService
     /**
      * @var SpuDao
      */
-    private $goodsDao;
+    private $spuDao;
 
     /**
      * @var SpuDetailDao
      */
-    private $goodsDetailDao;
+    private $spuDetailDao;
 
     /**
      * @var SkuDao
      */
-    private $productDao;
+    private $skuDao;
 
     /**
      * @var SpecDao
      */
-    private $specificationDao;
+    private $specDao;
 
     /**
-     * @var SpecificationOptionDao
+     * @var SpuSpecOptionDao
      */
-    private $specificationOptionDao;
+    private $spuSpecOptionDao;
 
     /**
-     * @var ProductSpecificationOptionDao
+     * @var SkuSpecOptionDao
      */
-    private $productSpecificationOptionDao;
-
-    // ===========================================================================  goods ===========================================================================
+    private $skuSpecOptionDao;
 
     /**
-     * @param $req
+     * 创建产品
+     *
+     * @param array $req
      * @return bool
      */
-    public function createGoods($req)
+    public function createSku(array $req)
     {
-        Log::info($req);
-        $goods = new Goods();
-        $goods->category_id = $req["categoryId"];
-        $goods->brand_id = $req["brandId"];
-        $goods->name = $req["name"];
-        $goods->brief = $req["brief"];
-        $goods->cover = $req["cover"];
-        $result = $goods->save();
-        if ($result) {
-            $goodsDetail = new SpuDetail();
-            $goodsDetail->goods_id = $goods->id;
-            $goodsDetail->html = $req["detailHtml"];
-            $goodsDetail->text = $req["detailText"];
-            $result = $goodsDetail->save();
-        }
-        return $result;
-    }
-
-    /**
-     * id获取商品
-     *
-     * @param int $goodsId
-     * @return mixed
-     */
-    public function getGoodsById(int $goodsId)
-    {
-        $result = $this->goodsDao->findById($goodsId);
-        return $result;
-    }
-
-    /**
-     * @param array $req
-     * @return mixed
-     */
-    public function getGoodsWithDetail(array $req)
-    {
-        $goods = $this->goodsDao->findById($req["goods_id"]);
-        $detail = $this->goodsDetailDao->findByGoodsId($req["goods_id"]);
-        $result = new \stdClass();
-        $result->goods = $goods;
-        $result->detail = $detail;
-        return $result;
-    }
-
-    /**
-     * @param $req
-     * @return mixed
-     */
-    public function getGoodsByCategory($req)
-    {
-        $result = $this->goodsDao->findByCategoryPaged($req["categoryId"], $req["pageNo"], $req["size"]);
-        return $result;
-    }
-
-    /**
-     * 获取商品列表
-     *
-     * @param $req
-     * @return mixed
-     */
-    public function getGoodsList($req)
-    {
-        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
-        $size = empty($req["size"]) ? 20 : $req["size"];
-        $result = $this->goodsDao->getByPage($pageNo, $size);
-        return $result;
-    }
-
-    /**
-     * 获取最新
-     *
-     * @param int $size
-     * @return mixed
-     */
-    public function getLastGoods(int $size)
-    {
-        $result = $this->goodsDao->findByCreateDesc($size);
-        return $result;
-    }
-
-    // ===========================================================================  product ===========================================================================
-
-    public function createProduct(array $req)
-    {
-        $product = new Product();
-        $product->name = $req["name"];
-        $product->goods_id = $req["goodsId"];
-        $product->origin_price = $req["originPrice"];
-        $product->price = $req["price"];
-        $result = $product->save();
+        $sku = new Sku();
+        $sku->name = $req["name"];
+        $sku->spu_id = $req["spuId"];
+        $sku->origin_price = $req["originPrice"];
+        $sku->price = $req["price"];
+        $result = $sku->save();
         $options = [];
         if ($result) {
             foreach ($req["options"] as $option) {
-                array_push($options, ["product_id" => $product->id, "specification_id" => $option["specificationId"], "specification_option_id" => $option["optionId"]]);
+                array_push($options, ["sku_id" => $sku->id, "option_id" => $option["specId"]]);
             }
         }
-        $result = $this->productSpecificationOptionDao->insertList($options);
+        $result = $this->skuSpecOptionDao->insertList($options);
         return $result;
     }
 
     /**
-     * @param int $goodsId
+     * @param int $spuId
      * @return mixed
      */
-    public function getProductByGoodsId(int $goodsId)
+    public function getSkuBySpuId(int $spuId)
     {
-        $result = $this->productDao->findByGoodsId($goodsId);
-        foreach ($result as $product) {
-            $specifications = $this->productSpecificationOptionDao->findByProductId($product->id);
-            foreach ($specifications as $specification) {
-                $specification->name = $this->specificationDao->findById($specification->specification_id)->name;
-                $specification->option = $this->specificationOptionDao->findById($specification->specification_option_id)->name;
+        $result = $this->skuDao->findBySpuId($spuId);
+        foreach ($result as $sku) {
+            $specs = $this->skuSpecOptionDao->findBySkuId($sku->id);
+            foreach ($specs as $spec) {
+                $spec->name = $this->specDao->findById($spec->spec_id)->name;
+                $spec->option = $this->specOptionDao->findById($spec->spec_option_id)->name;
             }
-            $product->specifications = $specifications;
+            $sku->specs = $specs;
         }
         return $result;
     }
 
-    // ===========================================================================  construct ===========================================================================
-
     /**
-     * GoodsService constructor.
+     * SpuService constructor.
      *
-     * @param SpuDao $goodsDao
-     * @param SpuDetailDao $goodsDetailDao
-     * @param SkuDao $productDao
-     * @param SpecDao $specificationDao
-     * @param SpecificationOptionDao $specificationOptionDao
-     * @param ProductSpecificationOptionDao $productSpecificationOptionDao
+     * @param SpuDao $spuDao
+     * @param SpuDetailDao $spuDetailDao
+     * @param SkuDao $skuDao
+     * @param SpecDao $specDao
+     * @param SpuSpecOptionDao $spuSpecOptionDao
+     * @param SkuSpecOptionDao $skuSpecOptionDao
      */
-    public function __construct(SpuDao $goodsDao, SpuDetailDao $goodsDetailDao, SkuDao $productDao, SpecDao $specificationDao, SpecificationOptionDao $specificationOptionDao, ProductSpecificationOptionDao $productSpecificationOptionDao)
+    public function __construct(SpuDao $spuDao, SpuDetailDao $spuDetailDao, SkuDao $skuDao, SpecDao $specDao, SpuSpecOptionDao $spuSpecOptionDao, SkuSpecOptionDao $skuSpecOptionDao)
     {
-        $this->goodsDao = $goodsDao;
-        $this->goodsDetailDao = $goodsDetailDao;
-        $this->productDao = $productDao;
-        $this->specificationDao = $specificationDao;
-        $this->specificationOptionDao = $specificationOptionDao;
-        $this->productSpecificationOptionDao = $productSpecificationOptionDao;
+        $this->spuDao = $spuDao;
+        $this->spuDetailDao = $spuDetailDao;
+        $this->skuDao = $skuDao;
+        $this->specDao = $specDao;
+        $this->spuSpecOptionDao = $spuSpecOptionDao;
+        $this->skuSpecOptionDao = $skuSpecOptionDao;
     }
 }

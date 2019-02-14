@@ -68,7 +68,7 @@ class SpuMapi extends Controller
     }
 
     /**
-     * 获取规格的选项
+     * 获取单个规格的选项
      *
      * @param Request $request
      * @return JsonResult

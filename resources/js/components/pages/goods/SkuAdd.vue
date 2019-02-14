@@ -16,9 +16,18 @@
             <el-form-item label="产品数量" prop="number">
                 <el-input type="number" v-model="skuForm.number" placeholder="请输入产品数量"></el-input>
             </el-form-item>
-            <el-form-item v-for="">
-
-            </el-form-item>
+            <template slot-slop="scope" v-for="spec in specList">
+                <el-form-item :label="spec.name" prop="specOption">
+                    <el-select placeholder="请选择" v-model="spec.option">
+                        <el-option
+                                v-for="option in spec.options"
+                                :key="option.id"
+                                :label="option.name"
+                                :value="option.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+            </template>
             <el-form-item label="是否上架" prop="state">
                 <el-radio v-model="skuForm.state" label="0">暂不上架</el-radio>
                 <el-radio v-model="skuForm.state" label="1">立即上架</el-radio>
@@ -63,9 +72,10 @@
                 spuId = that.$route.query.spuId;
             that.spuId = spuId;
             that.skuForm.spuId = spuId;
-            axios.get("spu/specList?spuId=" + spuId)
+            axios.get("/spu/specOptionList?spuId=" + spuId)
                 .then(res => {
                     if (res.data.code === 2000) {
+                        console.info(res.data.data);
                         that.specList = res.data.data;
                     }
                 })
