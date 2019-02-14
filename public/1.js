@@ -172,8 +172,8 @@ var render = function() {
           return _c(
             "el-tag",
             {
-              key: spec,
-              attrs: { type: _vm.primary, "disable-transitions": "true" }
+              key: spec.name,
+              attrs: { type: "primary", "disable-transitions": true }
             },
             [_vm._v("\n            " + _vm._s(spec.name) + "\n        ")]
           )

@@ -10,6 +10,8 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\SkuDao;
+use App\Http\Dao\SkuSpecOptionDao;
+use App\Http\Model\Sku;
 
 class SkuService
 {
@@ -17,6 +19,28 @@ class SkuService
      * @var SkuDao
      */
     private $skuDao;
+
+    private $skuSpecOptionDao;
+
+    public function createSku(array $req)
+    {
+        $sku = new Sku();
+        $sku->spu_id = $req["spuId"];
+        $sku->name = $req["name"];
+        $sku->origin_price = $req["originPrice"];
+        $sku->price = $req["price"];
+        $sku->number = $req["number"];
+        $sku->state = $req["state"];
+        $options = $req["options"];
+        $optionList = [];
+        if ($sku->save()) {
+            foreach ($options as $option) {
+                array_push($optionList, ["sku_id" => $sku->id, "option_id" => $option]);
+            }
+        }
+        $result = $this->skuSpecOptionDao->insertList($optionList);
+        return $result;
+    }
 
     /**
      * spu id 获取
@@ -29,8 +53,15 @@ class SkuService
         return $result;
     }
 
-    public function __construct(SkuDao $skuDao)
+    /**
+     * SkuService constructor.
+     *
+     * @param SkuDao $skuDao
+     * @param SkuSpecOptionDao $skuSpecOptionDao
+     */
+    public function __construct(SkuDao $skuDao, SkuSpecOptionDao $skuSpecOptionDao)
     {
         $this->skuDao = $skuDao;
+        $this->skuSpecOptionDao = $skuSpecOptionDao;
     }
 }

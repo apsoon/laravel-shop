@@ -6,9 +6,9 @@
         <div>
             <el-tag
                     v-for="spec in specList"
-                    :key="spec"
-                    :type="primary"
-                    disable-transitions=true>
+                    :key="spec.name"
+                    type="primary"
+                    :disable-transitions="true">
                 {{spec.name}}
             </el-tag>
             <el-input
