@@ -28,7 +28,7 @@ Route::group(["namespace" => "Fapi"], function () {
     // 分类
     Route::GET("category/list", "CategoryFapi@treeList");
 
-    //
+    // spu
     Route::GET("spu/list-category", "SpuFapi@listByCategory");
 
     // 收藏

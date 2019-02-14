@@ -59,6 +59,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -73,7 +77,8 @@ __webpack_require__.r(__webpack_exports__);
         brandId: "",
         cover: "",
         detailHtml: "",
-        detailText: ""
+        detailText: "",
+        state: "0"
       },
       rules: {
         name: [{
@@ -307,6 +312,43 @@ var render = function() {
                 staticStyle: { "text-align": "left", width: "100%" }
               })
             ]
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "是否上架", prop: "state" } },
+            [
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "0" },
+                  model: {
+                    value: _vm.spuForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.spuForm, "state", $$v)
+                    },
+                    expression: "spuForm.state"
+                  }
+                },
+                [_vm._v("暂不上架")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "1" },
+                  model: {
+                    value: _vm.spuForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.spuForm, "state", $$v)
+                    },
+                    expression: "spuForm.state"
+                  }
+                },
+                [_vm._v("立即上架")]
+              )
+            ],
+            1
           ),
           _vm._v(" "),
           _c(

@@ -39,6 +39,10 @@
             <el-form-item label="商品描述" prop="detailHtml">
                 <div ref="editor" style="text-align:left; width: 100%"></div>
             </el-form-item>
+            <el-form-item label="是否上架" prop="state">
+                <el-radio v-model="spuForm.state" label="0">暂不上架</el-radio>
+                <el-radio v-model="spuForm.state" label="1">立即上架</el-radio>
+            </el-form-item>
             <el-button type="primary" @click="onSubmit">添加商品</el-button>
         </el-form>
     </div>
@@ -60,7 +64,8 @@
                     brandId: "",
                     cover: "",
                     detailHtml: "",
-                    detailText: ""
+                    detailText: "",
+                    state: "0"
                 },
                 rules: {
                     name: [
