@@ -9,7 +9,7 @@ class ProductFapi extends Controller
 {
     private $productService;
     //
-    public function __construct(ProductService $productService)
+    public function __construct(SkuService $productService)
     {
         $this->productService = $productService;
     }

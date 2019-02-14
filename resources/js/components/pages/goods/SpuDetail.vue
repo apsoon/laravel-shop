@@ -91,7 +91,7 @@
                     <el-table-column
                             prop=""
                             label="操作"
-                            width="200px">
+                            width="300px">
                         <template slot-scope="scope">
                             <el-button
                                     size="mini"
@@ -143,14 +143,24 @@
                     if (res.data.code === 2000) {
                         console.info(res);
                     }
-                }).catch(err => {
-            });
+                })
+                .catch(err => {
+                });
             axios.get("spu/specOptionList?spuId=" + spuId)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.specList = res.data.data;
                     }
+                });
+            axios.get("sku/listBySpu?spuId=" + that.spuId)
+                .then(res => {
+                    if (res.data.code === 2000) {
+                        that.skuList = res.data.data;
+                    }
                 })
+                .catch(err => {
+
+                });
         }
     }
 </script>

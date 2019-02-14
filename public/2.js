@@ -159,6 +159,11 @@ __webpack_require__.r(__webpack_exports__);
         that.specList = res.data.data;
       }
     });
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("sku/listBySpu?spuId=" + that.spuId).then(function (res) {
+      if (res.data.code === 2000) {
+        that.skuList = res.data.data;
+      }
+    }).catch(function (err) {});
   }
 });
 
@@ -440,7 +445,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "", label: "操作", width: "200px" },
+                    attrs: { prop: "", label: "操作", width: "300px" },
                     scopedSlots: _vm._u([
                       {
                         key: "default",

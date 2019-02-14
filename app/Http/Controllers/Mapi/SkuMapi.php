@@ -26,6 +26,18 @@ class SkuMapi extends Controller
     }
 
     /**
+     * spu id获取sku
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function listBySpu(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->skuService->getSkuBySpu($req);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
      * 创建Sku
      *
      * @param Request $request
