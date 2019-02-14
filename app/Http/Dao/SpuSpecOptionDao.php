@@ -11,6 +11,7 @@ namespace App\Http\Dao;
 
 use App\Http\Model\SpuSpecOption;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class SpuSpecOptionDao
 {

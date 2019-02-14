@@ -174,7 +174,7 @@ class SpuService
         $spuSpecs = $this->spuSpecDao->findBySpuId($spuId);
         $specIds = [];
         foreach ($spuSpecs as $spuSpec) {
-            array_push($specIds, $spuSpec->specId);
+            array_push($specIds, $spuSpec->spec_id);
         }
         $result = $this->specDao->findByIds($specIds);
         return $result;
@@ -191,9 +191,14 @@ class SpuService
         $spuId = $req["spuId"];
         $specs = $this->spuSpecDao->findBySpuId($spuId);
         $options = $this->spuSpecOptionDao->findBySpuId($spuId);
-        foreach ($specs as $spec) $spec->options = [];
+        $specIds = [];
+        foreach ($specs as $spec) {
+            array_push($specIds, $spec->spec_id);
+        }
+        $nameSpecs = $this->specDao->findByIds($specIds);
+        foreach ($nameSpecs as $spec) $spec->options = [];
         foreach ($options as $option) {
-            foreach ($specs as $spec) {
+            foreach ($nameSpecs as $spec) {
                 if ($option->spec_id == $spec->id) {
                     $arr = $spec->options;
                     array_push($arr, $option);
@@ -202,7 +207,7 @@ class SpuService
                 }
             }
         }
-        return $specs;
+        return $nameSpecs;
     }
 
     /**
