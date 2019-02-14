@@ -15,8 +15,9 @@ class CreateSpuTable extends Migration
     {
         Schema::create('spu', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("category_id")->nullable()->comment("分类id");
-            $table->integer("brand_id")->nullable()->comment("品牌id");
+            $table->integer("category_id")->comment("分类id");
+            $table->integer("brand_id")->comment("品牌id");
+            $table->integer("list_price")->comment("列表价");
             $table->string("name")->comment("SPU名称");
             $table->string("brief")->comment("简述");
             $table->string("cover")->nullable()->comment("商品封面图片");

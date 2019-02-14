@@ -60,6 +60,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuList",
@@ -135,7 +140,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "品牌", label: "排序", width: "150" }
+            attrs: { prop: "brand", label: "排序", width: "150" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "list_price", label: "列表价", width: "150" }
           }),
           _vm._v(" "),
           _c("el-table-column", {

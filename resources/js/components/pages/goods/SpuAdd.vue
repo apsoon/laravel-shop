@@ -29,6 +29,11 @@
                     </el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item label="商品列表价" prop="listPrice">
+                <el-col :span="5">
+                    <el-input v-model="spuForm.listPrice" placeholder="请输入商品列表价"/>
+                </el-col>
+            </el-form-item>
             <el-form-item label="添加图片">
             </el-form-item>
             <el-form-item label="商品描述" prop="detailHtml">
@@ -51,6 +56,7 @@
                     name: "",
                     brief: "",
                     categoryId: "",
+                    listPrice: "",
                     brandId: "",
                     cover: "",
                     detailHtml: "",

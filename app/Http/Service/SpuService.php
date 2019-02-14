@@ -90,6 +90,7 @@ class SpuService
         $spu->category_id = $req["categoryId"];
         $spu->brand_id = $req["brandId"];
         $spu->name = $req["name"];
+        $spu->list_price = $req["listPrice"];
         $spu->brief = $req["brief"];
         $spu->cover = $req["cover"];
         $result = $spu->save();

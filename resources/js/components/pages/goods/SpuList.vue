@@ -21,8 +21,13 @@
                     width="150">
             </el-table-column>
             <el-table-column
-                    prop="品牌"
+                    prop="brand"
                     label="排序"
+                    width="150">
+            </el-table-column>
+            <el-table-column
+                    prop="list_price"
+                    label="列表价"
                     width="150">
             </el-table-column>
             <el-table-column
