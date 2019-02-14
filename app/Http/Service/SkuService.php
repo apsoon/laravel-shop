@@ -72,7 +72,8 @@ class SkuService
         $options = [];
         if ($result) {
             foreach ($req["options"] as $option) {
-                array_push($options, ["sku_id" => $sku->id, "option_id" => $option["specId"]]);
+                if ($option == null) continue;
+                array_push($options, ["sku_id" => $sku->id, "option_id" => $option]);
             }
         }
         $result = $this->skuSpecOptionDao->insertList($options);

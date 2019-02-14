@@ -9,11 +9,11 @@
 namespace App\Http\Dao;
 
 
-use App\Http\Model\ProductSpecificationOption;
+use App\Http\Model\SkuSpecOption;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class ProductSpecificationOptionDao
+ * Class SkuSpecOptionDao
  *
  * @package App\Http\Dao
  */
@@ -21,9 +21,9 @@ class SkuSpecOptionDao
 {
 
     /**
-     * @var ProductSpecificationOption
+     * @var SkuSpecOption
      */
-    private $productSpecificationOption;
+    private $skuSpecOption;
 
     /**
      * 插入列表
@@ -33,30 +33,30 @@ class SkuSpecOptionDao
      */
     public function insertList(array $options)
     {
-        $result = DB::table($this->productSpecificationOption->getTable())->insert($options);
+        $result = DB::table($this->skuSpecOption->getTable())->insert($options);
         return $result;
     }
 
     /**
      * 根据产品id查找
      *
-     * @param int $productId
+     * @param int $skuId
      * @return mixed
      */
-    public function findByProductId(int $productId)
+    public function findBySkuId(int $skuId)
     {
-        $result = $this->productSpecificationOption::where(["product_id" => $productId])
+        $result = $this->skuSpecOption::where(["sku_id" => $skuId])
             ->get();
         return $result;
     }
 
     /**
-     * ProductSpecificationOptionDao constructor.
+     * SkuSpecOptionDao constructor.
      *
-     * @param ProductSpecificationOption $productSpecificationOption
+     * @param SkuSpecOption $skuSpecOption
      */
-    public function __construct(ProductSpecificationOption $productSpecificationOption)
+    public function __construct(SkuSpecOption $skuSpecOption)
     {
-        $this->productSpecificationOption = $productSpecificationOption;
+        $this->skuSpecOption = $skuSpecOption;
     }
 }

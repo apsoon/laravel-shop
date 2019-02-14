@@ -59,6 +59,7 @@ __webpack_require__.r(__webpack_exports__);
       skuForm: {
         spuId: "",
         name: "",
+        options: [],
         originPrice: "",
         price: "",
         number: "",
@@ -91,7 +92,6 @@ __webpack_require__.r(__webpack_exports__);
     that.skuForm.spuId = spuId;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/specOptionList?spuId=" + spuId).then(function (res) {
       if (res.data.code === 2000) {
-        console.info(res.data.data);
         that.specList = res.data.data;
       }
     }).catch(function (err) {});
@@ -101,6 +101,34 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       that.$refs.skuForm.validate(function (valid) {
         if (valid) {
+          var options = [],
+              specList = that.specList;
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (var _iterator = specList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var spec = _step.value;
+              options.push(spec.option);
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator.return != null) {
+                _iterator.return();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+
+          that.skuForm.options = options;
+          console.info(that.skuForm);
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/create", that.skuForm).then(function (res) {
             if (res.data.code === 2000) {
               // message

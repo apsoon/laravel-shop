@@ -48,6 +48,7 @@
                 skuForm: {
                     spuId: "",
                     name: "",
+                    options: [],
                     originPrice: "",
                     price: "",
                     number: "",
@@ -75,7 +76,6 @@
             axios.get("/spu/specOptionList?spuId=" + spuId)
                 .then(res => {
                     if (res.data.code === 2000) {
-                        console.info(res.data.data);
                         that.specList = res.data.data;
                     }
                 })
@@ -88,6 +88,13 @@
                 let that = this;
                 that.$refs.skuForm.validate((valid) => {
                     if (valid) {
+                        let options = [],
+                            specList = that.specList;
+                        for (let spec of specList) {
+                            options.push(spec.option);
+                        }
+                        that.skuForm.options = options;
+                        console.info(that.skuForm);
                         axios.post("/sku/create", that.skuForm)
                             .then(res => {
                                 if (res.data.code === 2000) {
