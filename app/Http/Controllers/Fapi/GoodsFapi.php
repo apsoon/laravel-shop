@@ -3,15 +3,15 @@
 namespace App\Http\Controllers\Fapi;
 
 use App\Http\Controllers\Controller;
-use App\Http\Service\GoodsService;
+use App\Http\Service\SpuService;
 use Illuminate\Http\Request;
 
 class GoodsFapi extends Controller
 {
     /**
-     * @var GoodsService
+     * @var SpuService
      */
-    private $goodsService;
+    private $SpuService;
 
     /**
      * @param Request $request
@@ -20,7 +20,7 @@ class GoodsFapi extends Controller
     public function detail(Request $request)
     {
         $req = $request->all();
-        $result = $this->goodsService->getGoodsDetail($req);
+        $result = $this->SpuService->getSpuDetail($req);
         return $result;
     }
 
@@ -33,16 +33,16 @@ class GoodsFapi extends Controller
     public function getByCategory(Request $request)
     {
         $req = $request->all();
-        $result = $this->goodsService->getGoodsByCategory($req);
+        $result = $this->SpuService->getSpuByCategory($req);
         return $result;
     }
 
     /**
-     * GoodsFapi constructor.
-     * @param GoodsService $goodsService
+     * SpuFapi constructor.
+     * @param SpuService $SpuService
      */
-    public function __construct(GoodsService $goodsService)
+    public function __construct(SpuService $SpuService)
     {
-        $this->goodsService = $goodsService;
+        $this->SpuService = $SpuService;
     }
 }
