@@ -85,7 +85,7 @@
                     </el-table-column>
                     <el-table-column
                             prop="state"
-                            label="状态"
+                            label="规格"
                             width="150px">
                     </el-table-column>
                     <el-table-column

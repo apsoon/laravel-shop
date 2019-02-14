@@ -12,7 +12,6 @@ namespace App\Http\Service;
 use App\Http\Dao\SkuDao;
 use App\Http\Dao\SkuSpecOptionDao;
 use App\Http\Model\Sku;
-use Illuminate\Support\Facades\Log;
 
 class SkuService
 {
