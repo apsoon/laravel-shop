@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Fapi;
 
 use App\Http\Controllers\Controller;
 use App\Http\Enum\StatusCode;
+use App\Http\Service\AddrService;
 use App\Http\Service\UserService;
 use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
@@ -21,6 +22,11 @@ class UserFapi extends Controller
     private $userService;
 
     /**
+     * @var AddrService
+     */
+    private $addrService;
+
+    /**
      * 登录方法
      *
      * @param Request $request
@@ -35,6 +41,12 @@ class UserFapi extends Controller
         return $result;
     }
 
+    /**
+     * 设置用户信息
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function setUserInfo(Request $request)
     {
         $info = $request->all();
@@ -42,13 +54,29 @@ class UserFapi extends Controller
         $this->userService->setUserInfo($info);
     }
 
+    /**
+     * 创建地址
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function createAddrs(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->addrService->insertAddrList();
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
 
     /**
-     * UserApi constructor.
+     * UserFapi constructor.
+     *
      * @param UserService $userService
+     * @param AddrService $addrService
      */
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, AddrService $addrService)
     {
         $this->userService = $userService;
+        $this->addrService = $addrService;
     }
 }

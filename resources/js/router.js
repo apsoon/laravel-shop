@@ -16,7 +16,7 @@ export default new VueRouter({
             component: resolve => void(require(['./components/pages/Index.vue'], resolve))
         },
 
-        // =============================  商品  ===============================
+        // =============================  商品管理  ===============================
         {
             name: "SpuList",
             path: "/spu-list",
@@ -88,14 +88,14 @@ export default new VueRouter({
             component: resolve => void (require(['./components/pages/goods/SpecList.vue'], resolve))
         },
 
-        // =============================  交易  ===============================
+        // =============================  交易管理  ===============================
         {
             name: "OrderList",
             path: "/Order-list",
             component: resolve => void (require(['./components/pages/trade/OrderList.vue'], resolve))
         },
 
-        // =============================  优惠券  ===============================
+        // ================================================  营销管理  =================================================
         {
             name: "CouponList",
             path: "/coupon-list",
@@ -105,6 +105,18 @@ export default new VueRouter({
             name: "CouponAdd",
             path: "/coupon-add",
             component: resolve => void (require(['./components/pages/coupon/CouponAdd.vue'], resolve))
+        },
+
+        // ================================================  用户管理  =================================================
+        {
+            name: "UserList",
+            path: "/user-list",
+            component: resolve => void (require(['./components/pages/user/UserList.vue'], resolve))
+        },
+        {
+            name: "AddrList",
+            path: "/addr-list",
+            component: resolve => void (require(['./components/pages/user/AddrList.vue'], resolve))
         },
 
         // =============================  广告  ===============================
