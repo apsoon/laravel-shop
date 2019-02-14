@@ -12,6 +12,7 @@ namespace App\Http\Service;
 use App\Http\Dao\SkuDao;
 use App\Http\Dao\SkuSpecOptionDao;
 use App\Http\Model\Sku;
+use Illuminate\Support\Facades\Log;
 
 class SkuService
 {
@@ -49,9 +50,23 @@ class SkuService
      */
     public function getSkuBySpu(array $req)
     {
-        $result = $this->skuDao->findBySpuId($req["spuId"]);
+        $skuList = $this->skuDao->findBySpuId($req["spuId"]);
+        foreach ($skuList as $sku) {
+            $sku->specList = $this->getSpecOptionBySku($sku->id);
+        }
+        return $skuList;
+    }
 
-        return $result;
+    /**
+     * skuId 获取规格
+     *
+     * @param int $skuId
+     * @return mixed
+     */
+    public function getSpecOptionBySku(int $skuId)
+    {
+        $specOptionList = $this->skuSpecOptionDao->findBySkuId($skuId);
+        return $specOptionList;
     }
 
     /**

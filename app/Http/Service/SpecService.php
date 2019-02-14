@@ -9,11 +9,10 @@
 namespace App\Http\Service;
 
 
+use App\Http\Dao\SkuSpecOptionDao;
 use App\Http\Dao\SpecDao;
-use App\Http\Dao\SpecOptionDao;
+use App\Http\Dao\SpuSpecOptionDao;
 use App\Http\Model\Spec;
-use App\Http\Model\SpuSpecOption;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class SpecService
@@ -26,6 +25,16 @@ class SpecService
      * @var SpecDao
      */
     private $specDao;
+
+    /**
+     * @var SpuSpecOptionDao
+     */
+    private $spuSpecOptionDao;
+
+    /**
+     * @var SkuSpecOptionDao
+     */
+    private $skuSpecOptionDao;
 
     /**
      * 创建
@@ -71,12 +80,28 @@ class SpecService
     }
 
     /**
+     * spuSpecOptionId 获取规格
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function getSpecOptionById(int $id)
+    {
+        $result = $this->spuSpecOptionDao->findById($id);
+        return $result;
+    }
+
+    /**
      * SpecService constructor.
      *
      * @param SpecDao $specDao
+     * @param SkuSpecOptionDao $skuSpecOptionDao
+     * @param SpuSpecOptionDao $spuSpecOptionDao
      */
-    public function __construct(SpecDao $specDao)
+    public function __construct(SpecDao $specDao, SkuSpecOptionDao $skuSpecOptionDao, SpuSpecOptionDao $spuSpecOptionDao)
     {
         $this->specDao = $specDao;
+        $this->skuSpecOptionDao = $skuSpecOptionDao;
+        $this->spuSpecOptionDao = $spuSpecOptionDao;
     }
 }
