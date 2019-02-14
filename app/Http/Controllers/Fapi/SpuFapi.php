@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Fapi;
 
 use App\Http\Controllers\Controller;
+use App\Http\Enum\StatusCode;
 use App\Http\Service\SpuService;
+use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -12,7 +14,7 @@ class SpuFapi extends Controller
     /**
      * @var SpuService
      */
-    private $SpuService;
+    private $spuService;
 
     /**
      * @param Request $request
@@ -21,7 +23,7 @@ class SpuFapi extends Controller
     public function detail(Request $request)
     {
         $req = $request->all();
-        $result = $this->SpuService->getSpuDetail($req);
+        $result = $this->spuService->getSpuDetail($req);
         return $result;
     }
 
@@ -34,18 +36,23 @@ class SpuFapi extends Controller
     public function listByCategory(Request $request)
     {
         $req = $request->all();
-        Log::info($req);
-        $result = $this->SpuService->getPagedSpuByCategoryEffect($req);
-        Log::info($result);
+        $result = $this->spuService->getPagedSpuByCategoryEffect($req);
         return $result;
+    }
+
+    public function specList(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->spuService->getSpuSpecListWithOption($req);
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * SpuFapi constructor.
-     * @param SpuService $SpuService
+     * @param SpuService $spuService
      */
-    public function __construct(SpuService $SpuService)
+    public function __construct(SpuService $spuService)
     {
-        $this->SpuService = $SpuService;
+        $this->spuService = $spuService;
     }
 }

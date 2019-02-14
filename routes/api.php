@@ -30,6 +30,7 @@ Route::group(["namespace" => "Fapi"], function () {
 
     // spu
     Route::GET("spu/list-category", "SpuFapi@listByCategory");
+    Route::GET("spu/spec-list", "SpuFapi@SpecList");
 
     // 收藏
     Route::POST("collection/create", "CollectionFapi@create");
