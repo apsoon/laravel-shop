@@ -45,7 +45,7 @@ class OrderMapi extends Controller
      */
     public function __construct(OrderService $orderService)
     {
-        $this->middleware("auth");
+//        $this->middleware("auth");
         $this->orderService = $orderService;
     }
 }

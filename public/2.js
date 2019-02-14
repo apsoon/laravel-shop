@@ -239,7 +239,11 @@ var render = function() {
             [
               _c(
                 "router-link",
-                { attrs: { to: "/sku-add" } },
+                {
+                  attrs: {
+                    to: { path: "/sku-add", query: { spuId: _vm.spuId } }
+                  }
+                },
                 [
                   _c(
                     "el-button",

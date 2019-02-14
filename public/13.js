@@ -68,7 +68,8 @@ __webpack_require__.r(__webpack_exports__);
           message: '请输入产品数量',
           trigger: 'blur'
         }]
-      }
+      },
+      specList: []
     };
   },
   mounted: function mounted() {
@@ -76,6 +77,11 @@ __webpack_require__.r(__webpack_exports__);
         spuId = that.$route.query.spuId;
     that.spuId = spuId;
     that.skuForm.spuId = spuId;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/specList?spuId=" + spuId).then(function (res) {
+      if (res.data.code === 2000) {
+        that.specList = res.data.data;
+      }
+    }).catch(function (err) {});
   },
   methods: {
     onSubmit: function onSubmit() {

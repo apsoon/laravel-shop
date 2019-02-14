@@ -23,14 +23,34 @@ class SpuMapi extends Controller
      */
     private $skuService;
 
+    /**
+     * @param Request $request
+     */
     public function list(Request $request)
     {
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResult
+     */
     public function listByPage(Request $request)
     {
         $req = $request->all();
         $result = $this->spuService->getPagedSpuList($req);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
+     * 获取spu对应的spec列表
+     * 
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function listSpec(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->spuService->getSpuSpecList($req);
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 

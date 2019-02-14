@@ -128,6 +128,12 @@ class SpuService
         return $result;
     }
 
+    /**
+     * 插入列表
+     *
+     * @param array $req
+     * @return bool
+     */
     public function insertSpuSpecList(array $req)
     {
         $spuId = $req["spuId"];
@@ -138,7 +144,19 @@ class SpuService
         }
         $result = $this->spuSpecDao->insertList($relates);
         return $result;
+    }
 
+    /**
+     * 获取对应列表列表
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function getSpuSpecList(array $req)
+    {
+        $spuId = $req["spuId"];
+        $result = $this->spuSpecDao->findBySpuId($spuId);
+        return $result;
     }
 
     /**
@@ -224,6 +242,4 @@ class SpuService
         $this->specificationOptionDao = $specificationOptionDao;
         $this->productSpecificationOptionDao = $productSpecificationOptionDao;
     }
-
-
 }

@@ -32,6 +32,19 @@ class SpuSpecDao
     }
 
     /**
+     * 根据spuId获取
+     *
+     * @param $spuId
+     * @return mixed
+     */
+    public function findBySpuId($spuId)
+    {
+        $result = $this->spuSpec::where("spu_id", "=", $spuId)
+            ->get();
+        return $result;
+    }
+
+    /**
      * SpuSpecDao constructor.
      * @param SpuSpec $spuSpec
      */

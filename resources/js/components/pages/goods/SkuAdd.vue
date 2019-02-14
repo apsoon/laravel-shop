@@ -51,7 +51,8 @@
                     number: [
                         {required: true, message: '请输入产品数量', trigger: 'blur'},
                     ]
-                }
+                },
+                specList: []
             }
         },
         mounted: function () {
@@ -59,6 +60,15 @@
                 spuId = that.$route.query.spuId;
             that.spuId = spuId;
             that.skuForm.spuId = spuId;
+            axios.get("spu/specList?spuId=" + spuId)
+                .then(res => {
+                    if (res.data.code === 2000) {
+                        that.specList = res.data.data;
+                    }
+                })
+                .catch(err => {
+
+                });
         },
         methods: {
             onSubmit: function () {
