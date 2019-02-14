@@ -61,10 +61,16 @@ class SpuMapi extends Controller
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
+    /**
+     * spu添加特定的规格及选项
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function relateSpec(Request $request)
     {
         $req = $request->all();
-        $result = $this->spuService->createSpuSpecWithOption($req);
+        $result = $this->spuService->insertSpuSpecList($req);
         if ($result) return new JsonResult();
         return new JsonResult(StatusCode::SERVER_ERROR);
     }

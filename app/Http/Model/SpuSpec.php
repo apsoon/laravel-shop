@@ -4,7 +4,7 @@ namespace App\Http\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Spec extends Model
+class SpuSpec extends Model
 {
     protected $table = "spu_spec";
 }

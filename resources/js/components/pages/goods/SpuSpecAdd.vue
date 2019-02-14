@@ -37,8 +37,10 @@
             }
         },
         mounted: function () {
-            let that = this;
-            that.spuid = that.$route.query.spuId;
+            let that = this,
+                spuId = that.$route.query.spuId;
+            that.spuid = spuId;
+            that.spuSForm.spuId = spuId;
             axios.get("spec/list")
                 .then(res => {
                     if (res.data.code === 2000) {

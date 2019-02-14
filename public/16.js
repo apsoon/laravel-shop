@@ -48,8 +48,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var that = this;
-    that.spuid = that.$route.query.spuId;
+    var that = this,
+        spuId = that.$route.query.spuId;
+    that.spuid = spuId;
+    that.spuSForm.spuId = spuId;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spec/list").then(function (res) {
       if (res.data.code === 2000) {
         that.specList = res.data.data;

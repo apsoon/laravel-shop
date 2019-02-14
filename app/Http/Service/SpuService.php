@@ -15,6 +15,7 @@ use App\Http\Dao\SkuDao;
 use App\Http\Dao\ProductSpecificationOptionDao;
 use App\Http\Dao\SpecDao;
 use App\Http\Dao\SpecificationOptionDao;
+use App\Http\Dao\SpuSpecDao;
 use App\Http\Model\Spu;
 use App\Http\Model\SpuDetail;
 use App\Http\Model\Product;
@@ -37,6 +38,8 @@ class SpuService
      * @var SpuDetailDao
      */
     private $spuDetailDao;
+
+    private $spuSpecDao;
 
     /**
      * @var SkuDao
@@ -125,9 +128,16 @@ class SpuService
         return $result;
     }
 
-    public function createSpuSpecWithOption(array $req)
+    public function insertSpuSpecList(array $req)
     {
         $spuId = $req["spuId"];
+        $specIds = $req["specIds"];
+        $relates = [];
+        foreach ($specIds as $specId) {
+            array_push($relates, ["spu_id" => $spuId, "spec_id" => $specId]);
+        }
+        $result = $this->spuSpecDao->insertList($relates);
+        return $result;
 
     }
 
@@ -204,10 +214,11 @@ class SpuService
      * @param SpecificationOptionDao $specificationOptionDao
      * @param ProductSpecificationOptionDao $productSpecificationOptionDao
      */
-    public function __construct(SpuDao $spuDao, SpuDetailDao $spuDetailDao, SkuDao $productDao, SpecDao $specificationDao, SpecificationOptionDao $specificationOptionDao, ProductSpecificationOptionDao $productSpecificationOptionDao)
+    public function __construct(SpuDao $spuDao, SpuDetailDao $spuDetailDao, SpuSpecDao $spuSpecDao, SkuDao $productDao, SpecDao $specificationDao, SpecificationOptionDao $specificationOptionDao, ProductSpecificationOptionDao $productSpecificationOptionDao)
     {
         $this->spuDao = $spuDao;
         $this->spuDetailDao = $spuDetailDao;
+        $this->spuSpecDao = $spuSpecDao;
         $this->productDao = $productDao;
         $this->specificationDao = $specificationDao;
         $this->specificationOptionDao = $specificationOptionDao;
