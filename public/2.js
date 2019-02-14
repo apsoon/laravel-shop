@@ -441,7 +441,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "state", label: "规格", width: "150px" }
+                    attrs: { prop: "state", label: "状态", width: "150px" }
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
