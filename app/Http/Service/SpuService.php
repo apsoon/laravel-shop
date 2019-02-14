@@ -120,6 +120,21 @@ class SpuService
     }
 
     /**
+     * 分类分页获取上架的SPU
+     *
+     * @param $req
+     * @return mixed
+     */
+    public function getPagedSpuByCategoryEffect($req)
+    {
+        $categoryId = $req["categoryId"];
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $size = empty($req["size"]) ? 20 : $req["size"];
+        $result = $this->spuDao->findByCategoryEffectPaged($categoryId, $pageNo, $size);
+        return $result;
+    }
+
+    /**
      * id获取商品
      *
      * @param int $spuId

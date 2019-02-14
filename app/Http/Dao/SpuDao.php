@@ -78,6 +78,24 @@ class SpuDao
     }
 
     /**
+     * 分类分页获取
+     *
+     * @param $categoryId
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findByCategoryEffectPaged($categoryId, int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->spu::where(["category_id" => $categoryId, "state" => 1])
+            ->offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * 最近添加
      *
      * @param int $size

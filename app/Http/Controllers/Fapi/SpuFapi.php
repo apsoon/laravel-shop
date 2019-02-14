@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Fapi;
 use App\Http\Controllers\Controller;
 use App\Http\Service\SpuService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SpuFapi extends Controller
 {
@@ -33,7 +34,9 @@ class SpuFapi extends Controller
     public function listByCategory(Request $request)
     {
         $req = $request->all();
-        $result = $this->SpuService->getSpuByCategory($req);
+        Log::info($req);
+        $result = $this->SpuService->getPagedSpuByCategoryEffect($req);
+        Log::info($result);
         return $result;
     }
 
