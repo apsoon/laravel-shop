@@ -56,6 +56,21 @@ class SkuService
         return $skuList;
     }
 
+
+    /**
+     * spu id 获取
+     * @param array $req
+     * @return mixed
+     */
+    public function getSpuBySpuIdEffect(array $req)
+    {
+        $skuList = $this->skuDao->findBySpuIdEffect($req["spuId"]);
+        foreach ($skuList as $sku) {
+            $sku->specList = $this->getSpecOptionBySku($sku->id);
+        }
+        return $skuList;
+    }
+
     /**
      * skuId 获取规格
      *

@@ -49,6 +49,19 @@ class SkuDao
     }
 
     /**
+     * spu获取上架的sku
+     *
+     * @param int $spuId
+     * @return mixed
+     */
+    public function findBySpuIdEffect(int $spuId)
+    {
+        $result = $this->sku::where(["spu_id" => $spuId, "state" => 1])
+            ->get();
+        return $result;
+    }
+
+    /**
      * SkuDao constructor.
      *
      * @param Sku $sku
