@@ -50,6 +50,7 @@ class SkuService
     public function getSkuBySpu(array $req)
     {
         $result = $this->skuDao->findBySpuId($req["spuId"]);
+
         return $result;
     }
 

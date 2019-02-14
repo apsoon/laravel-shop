@@ -132,7 +132,7 @@ __webpack_require__.r(__webpack_exports__);
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/create", that.skuForm).then(function (res) {
             if (res.data.code === 2000) {
               // message
-              that.$router.push("/spu/detail");
+              that.$router.push("/spu/detail?spuId=", that.spuId);
             }
           }).catch(function (err) {});
         } else {

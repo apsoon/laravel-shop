@@ -99,7 +99,7 @@
                             .then(res => {
                                 if (res.data.code === 2000) {
                                     // message
-                                    that.$router.push("/spu/detail");
+                                    that.$router.push("/spu/detail?spuId=", that.spuId);
                                 }
                             })
                             .catch(err => {
