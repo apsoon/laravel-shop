@@ -76,6 +76,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BrandList",
@@ -215,26 +217,37 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "el-card",
     [
       _c(
-        "router-link",
-        { attrs: { to: "/brand-add" } },
-        [_c("el-button", { attrs: { type: "primary" } }, [_vm._v("添加品牌")])],
+        "div",
+        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+        [
+          _c(
+            "router-link",
+            { attrs: { to: "/brand-add" } },
+            [
+              _c("el-button", { attrs: { type: "primary" } }, [
+                _vm._v("添加品牌")
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            {
+              attrs: { type: "danger" },
+              on: {
+                click: function($event) {
+                  _vm.deleteBrands()
+                }
+              }
+            },
+            [_vm._v("批量删除")]
+          )
+        ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-button",
-        {
-          attrs: { type: "danger" },
-          on: {
-            click: function($event) {
-              _vm.deleteBrands()
-            }
-          }
-        },
-        [_vm._v("批量删除")]
       ),
       _vm._v(" "),
       _c(

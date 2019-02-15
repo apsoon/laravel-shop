@@ -1,9 +1,11 @@
 <template>
-    <div>
-        <router-link to="/brand-add">
-            <el-button type="primary">添加品牌</el-button>
-        </router-link>
-        <el-button type="danger" @click="deleteBrands()">批量删除</el-button>
+    <el-card>
+        <div slot="header" class="clearfix">
+            <router-link to="/brand-add">
+                <el-button type="primary">添加品牌</el-button>
+            </router-link>
+            <el-button type="danger" @click="deleteBrands()">批量删除</el-button>
+        </div>
         <el-table
                 ref="multipleTable"
                 :data="brandList"
@@ -60,7 +62,7 @@
                 </template>
             </el-table-column>
         </el-table>
-    </div>
+    </el-card>
 </template>
 
 <script>

@@ -85788,7 +85788,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-submenu",
-            { attrs: { index: "coupon" } },
+            { attrs: { index: "market" } },
             [
               _c("template", { slot: "title" }, [
                 _c("i", { staticClass: "el-icon-setting" }),
@@ -85804,7 +85804,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-submenu",
-            { attrs: { index: "coupon" } },
+            { attrs: { index: "user" } },
             [
               _c("template", { slot: "title" }, [
                 _c("i", { staticClass: "el-icon-setting" }),
