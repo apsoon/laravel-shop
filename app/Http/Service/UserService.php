@@ -71,12 +71,14 @@ class UserService
     }
 
     /**
-     * @param $info
+     * @param $req
      * @return mixed
      */
-    public function setUserInfo($info)
+    public function setUserInfo($req)
     {
-        $result = $this->userDao->updateUserInfo($info["user_id"], $info["userInfo"]);
+        $userId = $req["userId"];
+        $userInfo = json_decode($req["userInfo"]);
+        $result = $this->userDao->updateUserInfo($userId, $userInfo);
         return $result;
     }
 
