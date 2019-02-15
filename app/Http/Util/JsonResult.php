@@ -53,6 +53,7 @@ class JsonResult
      */
     public function __toString()
     {
-        return json_encode(["code" => $this->code, "message" => $this->message, "data" => $this->data], JSON_UNESCAPED_UNICODE);
+        if (empty($this->data)) return json_encode(["code" => $this->code, "message" => $this->message], JSON_UNESCAPED_UNICODE);
+        else return json_encode(["code" => $this->code, "message" => $this->message, "data" => $this->data], JSON_UNESCAPED_UNICODE);
     }
 }
