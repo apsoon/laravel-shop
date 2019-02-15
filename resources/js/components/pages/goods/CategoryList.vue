@@ -1,8 +1,10 @@
 <template>
-    <div>
-        <router-link :to="{path:'/category-add', query: {parentId: 0, parentName:'一级分类'}}">
-            <el-button type="primary" size="medium">添加一级分类</el-button>
-        </router-link>
+    <el-card>
+        <div slot="header" class="clearfix">
+            <router-link :to="{path:'/category-add', query: {parentId: 0, parentName:'一级分类'}}">
+                <el-button type="primary" size="medium">添加一级分类</el-button>
+            </router-link>
+        </div>
         <el-tree :data="categoryList"
                  empty-text="没有分类"
                  node-key="id"
@@ -24,7 +26,7 @@
                 </span>
             </span>
         </el-tree>
-    </div>
+    </el-card>
 </template>
 
 <script>
@@ -88,7 +90,14 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 14px;
+        font-size: 16px;
         padding-right: 8px;
+    }
+
+</style>
+<style>
+    .el-tree-node__content {
+        height: 40px !important;
+        font-size: 16px;
     }
 </style>
