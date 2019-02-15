@@ -1,5 +1,8 @@
 <template>
-    <div>
+    <el-card>
+        <div slot="header" class="clearfix">
+            <span>添加品牌</span>
+        </div>
         <el-form ref="brandForm" :rules="rules" :model="brandForm" label-width="100px">
             <el-form-item label="品牌名称" prop="name">
                 <el-input v-model="brandForm.name"></el-input>
@@ -29,7 +32,7 @@
             </el-form-item>
             <el-button type="primary" @click="onSubmit">立即创建</el-button>
         </el-form>
-    </div>
+    </el-card>
 </template>
 
 <script>

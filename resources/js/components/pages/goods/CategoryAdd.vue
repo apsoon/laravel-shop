@@ -1,5 +1,8 @@
 <template>
-    <div>
+    <el-card>
+        <div slot="header" class="clearfix">
+            <span>添加分类</span>
+        </div>
         <el-form ref="categoryForm" :rules="rules" :model="categoryForm" label-width="100px;">
             <el-form-item label="分类名称" prop="name">
                 <el-input v-model="categoryForm.name"></el-input>
@@ -25,7 +28,7 @@
             </el-form-item>
             <el-button type="primary" @click="onSubmit">立即创建</el-button>
         </el-form>
-    </div>
+    </el-card>
 </template>
 
 <script>
