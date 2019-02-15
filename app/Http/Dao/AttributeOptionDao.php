@@ -8,7 +8,7 @@
 
 namespace App\Http\Dao;
 
-use App\Http\Model\AttributeOption;
+use App\Http\Model\AttrOption;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -20,7 +20,7 @@ class AttributeOptionDao
 {
 
     /**
-     * @var AttributeOption
+     * @var AttrOption
      */
     private $attributeOption;
 
@@ -52,9 +52,9 @@ class AttributeOptionDao
     /**
      * AttributeOptionDao constructor.
      *
-     * @param AttributeOption $attributeOption
+     * @param AttrOption $attributeOption
      */
-    public function __construct(AttributeOption $attributeOption)
+    public function __construct(AttrOption $attributeOption)
     {
         $this->attributeOption = $attributeOption;
     }

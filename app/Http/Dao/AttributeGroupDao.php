@@ -9,7 +9,7 @@
 namespace App\Http\Dao;
 
 
-use App\Http\Model\AttributeGroup;
+use App\Http\Model\AttrGroup;
 
 /**
  * Class AttributeDao
@@ -19,15 +19,15 @@ use App\Http\Model\AttributeGroup;
 class AttributeGroupDao
 {
     /**
-     * @var AttributeGroup
+     * @var AttrGroup
      */
     private $attributeGroup;
 
     /**
-     * @param AttributeGroup $attributeGroup
+     * @param AttrGroup $attributeGroup
      * @return bool
      */
-    public function insert(AttributeGroup $attributeGroup)
+    public function insert(AttrGroup $attributeGroup)
     {
         $result = $attributeGroup->save();
         return $result;
@@ -49,7 +49,7 @@ class AttributeGroupDao
     /**
      * 获取所有属性组
      *
-     * @return AttributeGroup[]|\Illuminate\Database\Eloquent\Collection
+     * @return AttrGroup[]|\Illuminate\Database\Eloquent\Collection
      */
     public function findAll()
     {
@@ -64,9 +64,9 @@ class AttributeGroupDao
     /**
      * AttributeGroupDao constructor.
      *
-     * @param AttributeGroup $attributeGroup
+     * @param AttrGroup $attributeGroup
      */
-    public function __construct(AttributeGroup $attributeGroup)
+    public function __construct(AttrGroup $attributeGroup)
     {
         $this->attributeGroup = $attributeGroup;
     }

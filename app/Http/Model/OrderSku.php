@@ -4,8 +4,8 @@ namespace App\Http\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AttributeGroup extends Model
+class OrderSku extends Model
 {
     //
-    protected $table = "attribute_group";
+    protected $table = "order_sku";
 }

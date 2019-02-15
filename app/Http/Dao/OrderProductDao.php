@@ -9,12 +9,12 @@
 namespace App\Http\Dao;
 
 
-use App\Http\Model\OrderProduct;
+use App\Http\Model\OrderSku;
 
 class OrderProductDao
 {
     /**
-     * @var OrderProduct
+     * @var OrderSku
      */
     private $orderProduct;
 
@@ -47,9 +47,9 @@ class OrderProductDao
     /**
      * OrderProductDao constructor.
      *
-     * @param OrderProduct $orderProduct
+     * @param OrderSku $orderProduct
      */
-    public function __construct(OrderProduct $orderProduct)
+    public function __construct(OrderSku $orderProduct)
     {
         $this->orderProduct = $orderProduct;
     }

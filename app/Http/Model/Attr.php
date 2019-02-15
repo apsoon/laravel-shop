@@ -4,8 +4,8 @@ namespace App\Http\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Attr extends Model
 {
     //
-    protected $table = 'product';
+    protected $table = "attr";
 }

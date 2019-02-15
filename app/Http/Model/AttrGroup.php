@@ -4,8 +4,8 @@ namespace App\Http\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AttributeOption extends Model
+class AttrGroup extends Model
 {
     //
-    protected $table = "attribute_option";
+    protected $table = "attr_group";
 }

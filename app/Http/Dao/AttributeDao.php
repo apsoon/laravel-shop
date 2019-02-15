@@ -9,7 +9,7 @@
 namespace App\Http\Dao;
 
 
-use App\Http\Model\Attribute;
+use App\Http\Model\Attr;
 
 /**
  * Class AttributeDao
@@ -19,15 +19,15 @@ use App\Http\Model\Attribute;
 class AttributeDao
 {
     /**
-     * @var Attribute
+     * @var Attr
      */
     private $attribute;
 
     /**
-     * @param Attribute $attribute
+     * @param Attr $attribute
      * @return bool
      */
-    public function insert(Attribute $attribute)
+    public function insert(Attr $attribute)
     {
         $result = $attribute->save();
         return $result;
@@ -64,9 +64,9 @@ class AttributeDao
     /**
      * AttributeDao constructor.
      *
-     * @param Attribute $attribute
+     * @param Attr $attribute
      */
-    public function __construct(Attribute $attribute)
+    public function __construct(Attr $attribute)
     {
         $this->attribute = $attribute;
     }

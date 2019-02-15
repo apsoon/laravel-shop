@@ -13,9 +13,9 @@ use App\Http\Dao\AttributeDao;
 use App\Http\Dao\AttributeGroupDao;
 use App\Http\Dao\AttributeOptionDao;
 use App\Http\Dao\CategoryDao;
-use App\Http\Model\Attribute;
-use App\Http\Model\AttributeGroup;
-use App\Http\Model\AttributeOption;
+use App\Http\Model\Attr;
+use App\Http\Model\AttrGroup;
+use App\Http\Model\AttrOption;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -53,7 +53,7 @@ class AttributeService
      */
     public function createAttribute(array $req)
     {
-        $attribute = new Attribute();
+        $attribute = new Attr();
         $attribute->name = $req["name"];
         $attribute->attribute_group_id = $req["attribute_group_id"];
         $result = $this->attributeDao->insert($attribute);
@@ -114,7 +114,7 @@ class AttributeService
      */
     public function createAttributeGroup(array $req)
     {
-        $attributeGroup = new AttributeGroup();
+        $attributeGroup = new AttrGroup();
         $attributeGroup->name = $req["name"];
         $attributeGroup->category_id = $req["category_id"];
         $result = $this->attributeGroupDao->insert($attributeGroup);
@@ -124,7 +124,7 @@ class AttributeService
     /**
      * 获取属性组列表
      *
-     * @return \App\Http\Model\AttributeGroup[]|\Illuminate\Database\Eloquent\Collection
+     * @return \App\Http\Model\AttrGroup[]|\Illuminate\Database\Eloquent\Collection
      */
     public function getAttributeGroupList()
     {
