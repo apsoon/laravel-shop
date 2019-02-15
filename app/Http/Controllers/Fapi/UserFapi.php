@@ -51,7 +51,9 @@ class UserFapi extends Controller
     {
         $info = $request->all();
         if (empty($info) || empty($info["userInfo"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        $this->userService->setUserInfo($info);
+        $result = $this->userService->setUserInfo($info);
+        if ($result) return new JsonResult();
+        else return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
