@@ -14,7 +14,7 @@ class SkuFapi extends Controller
     /**
      * @var SkuService
      */
-    private $SkuService;
+    private $skuService;
 
     /**
      * @param Request $request
@@ -23,7 +23,7 @@ class SkuFapi extends Controller
     public function detail(Request $request)
     {
         $req = $request->all();
-        $result = $this->SkuService->getSkuDetail($req);
+        $result = $this->skuService->getSkuDetail($req);
         return $result;
     }
 
@@ -36,23 +36,36 @@ class SkuFapi extends Controller
     public function listBySpu(Request $request)
     {
         $req = $request->all();
-        $result = $this->SkuService->getSpuBySpuIdEffect($req);
+        $result = $this->skuService->getSpuBySpuIdEffect($req);
+        return $result;
+    }
+
+    /**
+     * 分类获取
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function listByCategory(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->skuService->getPagedSkuByCategoryEffect($req);
         return $result;
     }
 
     public function specList(Request $request)
     {
         $req = $request->all();
-        $result = $this->SkuService->getSkuSpecListWithOption($req);
+        $result = $this->skuService->getSkuSpecListWithOption($req);
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * SkuFapi constructor.
-     * @param SkuService $SkuService
+     * @param SkuService $skuService
      */
-    public function __construct(SkuService $SkuService)
+    public function __construct(SkuService $skuService)
     {
-        $this->SkuService = $SkuService;
+        $this->skuService = $skuService;
     }
 }

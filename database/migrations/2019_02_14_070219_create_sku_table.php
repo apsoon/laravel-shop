@@ -16,6 +16,7 @@ class CreateSkuTable extends Migration
         Schema::create('sku', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("spu_id")->comment("商品id");
+            $table->integer("category_id")->comment("分类id");
             $table->string("name")->comment("名称");
             $table->decimal("origin_price")->default(0);
             $table->decimal("price")->default(0);

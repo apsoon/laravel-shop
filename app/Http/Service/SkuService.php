@@ -20,6 +20,9 @@ class SkuService
      */
     private $skuDao;
 
+    /**
+     * @var SkuSpecOptionDao
+     */
     private $skuSpecOptionDao;
 
     public function createSku(array $req)
@@ -56,7 +59,6 @@ class SkuService
         return $skuList;
     }
 
-
     /**
      * spu id 获取
      * @param array $req
@@ -69,6 +71,21 @@ class SkuService
             $sku->specList = $this->getSpecOptionBySku($sku->id);
         }
         return $skuList;
+    }
+
+    /**
+     * 分类分页获取上架的SPU
+     *
+     * @param $req
+     * @return mixed
+     */
+    public function getPagedSkuByCategoryEffect($req)
+    {
+        $categoryId = $req["categoryId"];
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $size = empty($req["size"]) ? 20 : $req["size"];
+        $result = $this->skuDao->findByCategoryEffectPaged($categoryId, $pageNo, $size);
+        return $result;
     }
 
     /**
