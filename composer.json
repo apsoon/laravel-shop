@@ -13,7 +13,8 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
       "ext-json": "*",
-        "ext-spltype": "*"
+        "ext-spltype": "*",
+      "ext-http": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

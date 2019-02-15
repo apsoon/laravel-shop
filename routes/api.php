@@ -20,22 +20,27 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(["namespace" => "Fapi"], function () {
 
-    // 用户相关
+    // user 用户相关
     Route::POST("user/login", "UserFapi@login");
     Route::POST("user/setInfo", "UserFapi@setUserInfo");
     Route::POST("user/createAddrs", "UserFapi@createAddrs");
 
-    // 分类
+    // category 分类
     Route::GET("category/list", "CategoryFapi@treeList");
 
-    // spu
+    // spu 商品
     Route::GET("spu/list-category", "SpuFapi@listByCategory");
     Route::GET("spu/spec-list", "SpuFapi@SpecList");
 
-    // sku
+    // sku 产品
     Route::GET("sku/list-spu", "SkuFapi@listBySpu");
 
-    // 收藏
+    // cart 购物车
+    Route::POST("cart/add", "CartFapi@create");
+    Route::GET("cart/list", "CartFapi@list");
+    Route::POST("cart/delete", "CartFapi@delete");
+
+    // collection 收藏
     Route::POST("collection/create", "CollectionFapi@create");
     Route::GET("collection/list", "CollectionFapi@list");
     Route::DELETE("collection/delete", "CollectionFapi@remove");

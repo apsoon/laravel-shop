@@ -4,8 +4,7 @@ namespace App\Http\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CartProduct extends Model
+class CartSku extends Model
 {
-    //
-    protected $table = "cart_product";
+    protected $table = "cart_sku";
 }
