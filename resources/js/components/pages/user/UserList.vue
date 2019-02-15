@@ -1,6 +1,8 @@
 <template>
     <el-card>
-        <span>用户列表</span>
+        <div slot="header" class="clearfix">
+            <span>用户列表</span>
+        </div>
         <el-table
                 ref="userList"
                 :data="userList"
