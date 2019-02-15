@@ -70,7 +70,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
 
     // ================================================  用户管理  =================================================
     // 用户
-    Route::GET("user/pagedList", "UserMapi@listByPage");
+    Route::GET("user/list-page", "UserMapi@listByPage");
     // 地址
     Route::GET("addr/list", "UserMapi@list");
 

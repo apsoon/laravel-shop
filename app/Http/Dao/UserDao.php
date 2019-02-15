@@ -35,6 +35,22 @@ class UserDao
     }
 
     /**
+     * 分页获取
+     *
+     * @param $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function listByPage($pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->user::offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * 根据 userId 查找用户
      *
      * @param String $userId

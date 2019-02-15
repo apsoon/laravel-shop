@@ -82,6 +82,25 @@ class UserService
         return $result;
     }
 
+    /**
+     * 分页获取用户信息
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function getPageUserList(array $req)
+    {
+        $pageNo = $req["pageNo"];
+        $size = 20;
+        $result = $this->userDao->listByPage($pageNo, $size);
+        return $result;
+    }
+
+    /**
+     * UserService constructor.
+     *
+     * @param UserDao $userDao
+     */
     public function __construct(UserDao $userDao)
     {
         $this->userDao = $userDao;

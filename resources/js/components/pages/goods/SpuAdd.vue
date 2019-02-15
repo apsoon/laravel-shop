@@ -1,5 +1,8 @@
 <template>
-    <div>
+    <el-card>
+        <div slot="header" class="clearfix">
+            <span>添加商品</span>
+        </div>
         <el-form ref="spuForm" :rules="rules" :model="spuForm" label-width="100px">
             <el-form-item label="商品名称" prop="name">
                 <el-input v-model="spuForm.name" placeholder="请输入商品名称"/>
@@ -45,7 +48,7 @@
             </el-form-item>
             <el-button type="primary" @click="onSubmit">添加商品</el-button>
         </el-form>
-    </div>
+    </el-card>
 </template>
 
 <script>
