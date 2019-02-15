@@ -25,7 +25,7 @@ class SkuFapi extends Controller
     public function detail(Request $request)
     {
         $req = $request->all();
-        $result = $this->skuService->getSkuDetail($req);
+        $result = $this->skuService->getSkuById($req);
         return $result;
     }
 

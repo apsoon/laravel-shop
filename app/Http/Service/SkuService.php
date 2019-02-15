@@ -25,6 +25,12 @@ class SkuService
      */
     private $skuSpecOptionDao;
 
+    /**
+     * 创建sku
+     *
+     * @param array $req
+     * @return bool
+     */
     public function createSku(array $req)
     {
         $sku = new Sku();
@@ -57,6 +63,18 @@ class SkuService
             $sku->specList = $this->getSpecOptionBySku($sku->id);
         }
         return $skuList;
+    }
+
+    /**
+     * id获取SKU
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function getSkuById(array $req)
+    {
+        $result = $this->skuDao->findById($req["skuId"]);
+        return $result;
     }
 
     /**
