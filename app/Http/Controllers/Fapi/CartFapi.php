@@ -22,6 +22,9 @@ use Illuminate\Http\Request;
  */
 class CartFapi extends Controller
 {
+    /**
+     * @var CartService
+     */
     private $cartService;
 
     /**
@@ -52,6 +55,12 @@ class CartFapi extends Controller
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
+    /**
+     * 删除
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function delete(Request $request)
     {
         $req = $request->all();
