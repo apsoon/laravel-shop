@@ -169,7 +169,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "created_at", label: "注册时间", width: "150" }
+            attrs: { prop: "created_at", label: "注册时间", "min-width": "1" }
           })
         ],
         1

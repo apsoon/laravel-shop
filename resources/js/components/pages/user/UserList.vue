@@ -27,7 +27,7 @@
             <el-table-column
                     prop="created_at"
                     label="注册时间"
-                    width="150">
+                    min-width="1">
             </el-table-column>
         </el-table>
     </el-card>
