@@ -17,6 +17,8 @@ class SkuFapi extends Controller
     private $skuService;
 
     /**
+     * 产品详情页
+     *
      * @param Request $request
      * @return mixed
      */

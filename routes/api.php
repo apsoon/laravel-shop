@@ -35,6 +35,7 @@ Route::group(["namespace" => "Fapi"], function () {
     // sku 产品
     Route::GET("sku/list-spu", "SkuFapi@listBySpu");
     Route::GET("sku/list-category", "SkuFapi@listByCategory");
+    Route::GET("sku/detail", "SkuFapi@detail");
 
     // cart 购物车
     Route::POST("cart/add", "CartFapi@create");
