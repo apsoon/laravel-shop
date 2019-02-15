@@ -36,7 +36,7 @@ class CollectionFapi extends Controller
     public function create(Request $request)
     {
         $req = $request->all();
-        if (empty($req["userId"]) || empty($req["productId"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        if (empty($req["userId"]) || empty($req["skuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $result = $this->collectionService->createCollection($req);
         if ($result) return new JsonResult(); else return new JsonResult(StatusCode::SERVER_ERROR);
     }
@@ -50,8 +50,8 @@ class CollectionFapi extends Controller
     public function remove(Request $request)
     {
         $req = $request->all();
-        if (empty($req["userId"]) || empty($req["productIds"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        $result = $this->collectionService->removeCollection($req["userId"], $req["productIds"]);
+        if (empty($req["userId"]) || empty($req["skuIds"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $result = $this->collectionService->removeCollection($req["userId"], $req["skuIds"]);
         if ($result) return new JsonResult(); else return new JsonResult(StatusCode::SERVER_ERROR);
     }
 

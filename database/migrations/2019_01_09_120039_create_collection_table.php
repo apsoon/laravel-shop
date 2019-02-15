@@ -16,8 +16,7 @@ class CreateCollectionTable extends Migration
         Schema::create('collection', function (Blueprint $table) {
             $table->increments('id');
             $table->string("user_id");
-            $table->integer("goods_id");
-            $table->timestamp("time")->useCurrent();
+            $table->integer("sku_id");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

@@ -40,6 +40,7 @@ class CollectionService
     public function createCollection(array $req)
     {
         $collection = new Collection();
+
         $result = $collection->save();
         return $result;
     }
