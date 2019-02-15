@@ -18,6 +18,9 @@ use App\Http\Model\Collection;
  */
 class CollectionDao
 {
+    /**
+     * @var Collection
+     */
     private $collection;
 
     /**
@@ -28,8 +31,7 @@ class CollectionDao
      */
     public function insert(Collection $collection)
     {
-        $result = $collection->save();
-        return $result;
+        return $result = $collection->save();
     }
 
     /**
@@ -68,13 +70,13 @@ class CollectionDao
      * 根据用户ID和产品ID删除
      *
      * @param string $userId
-     * @param array $productIds
+     * @param array $skuIds
      * @return mixed
      */
-    public function deleteByUserProductId(string $userId, array $productIds)
+    public function deleteByUserSkuId(string $userId, array $skuIds)
     {
         $result = $this->collection::where(["user_id" => $userId])
-            ->whereIn("product_id", $productIds)
+            ->whereIn("sku_id", $skuIds)
             ->delete();
         return $result;
     }

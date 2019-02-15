@@ -29,7 +29,7 @@ class CollectionService
     /**
      * @var SkuDao
      */
-    private $productDao;
+    private $skuDao;
 
     /**
      * 创建收藏
@@ -40,8 +40,9 @@ class CollectionService
     public function createCollection(array $req)
     {
         $collection = new Collection();
-
-        $result = $collection->save();
+        $collection->user_id = $req["userId"];
+        $collection->sku_id = $req["skuId"];
+        $result = $this->collectionDao->insert($collection);
         return $result;
     }
 
@@ -56,8 +57,8 @@ class CollectionService
         $pageNo = empty($reqp["pageNo"]) ? 1 : $req["pageNo"];
         $result = $this->collectionDao->findByUserIdPaged($req["userId"], $pageNo, 20);
         foreach ($result as $collection) {
-            $product = $this->productDao->findById($collection->product_id);
-            $collection->product = $product;
+            $sku = $this->skuDao->findById($collection->sku_id);
+            $collection->sku = $sku;
         }
         return $result;
     }
@@ -66,12 +67,12 @@ class CollectionService
      * 用户删除收藏
      *
      * @param string $userId
-     * @param array $productIds
+     * @param array $skuIds
      * @return mixed
      */
-    public function removeCollection(string $userId, array $productIds)
+    public function removeCollection(string $userId, array $skuIds)
     {
-        $result = $this->collectionDao->deleteByUserProductId($userId, $productIds);
+        $result = $this->collectionDao->deleteByUserSkuId($userId, $skuIds);
         return $result;
     }
 
@@ -79,11 +80,11 @@ class CollectionService
      * CollectionService constructor.
      *
      * @param CollectionDao $collectionDao
-     * @param SkuDao $productDao
+     * @param SkuDao $skuDao
      */
-    function __construct(CollectionDao $collectionDao, SkuDao $productDao)
+    function __construct(CollectionDao $collectionDao, SkuDao $skuDao)
     {
         $this->collectionDao = $collectionDao;
-        $this->productDao = $productDao;
+        $this->skuDao = $skuDao;
     }
 }

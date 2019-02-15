@@ -45,7 +45,7 @@ class CollectionFapi extends Controller
      * 删除收藏
      *
      * @param Request $request
-     * @return JsonResult|mixed
+     * @return JsonResult
      */
     public function remove(Request $request)
     {
@@ -55,19 +55,17 @@ class CollectionFapi extends Controller
         if ($result) return new JsonResult(); else return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
-
     /**
      * 分页获取收藏列表
      *
      * @param Request $request
-     * @return mixed
+     * @return JsonResult
      */
     public function list(Request $request)
     {
         $req = $request->all();
         $result = $this->collectionService->getCollectionList($req);
         return new JsonResult(StatusCode::SUCCESS,$result);
-
     }
 
     /**
