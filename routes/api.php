@@ -33,7 +33,7 @@ Route::group(["namespace" => "Fapi"], function () {
     Route::GET("spu/spec-list", "SpuFapi@SpecList");
 
     // sku
-    Route::GET("sku/list-spu", "SkuFapi@listBySpu"); // TODO 调试
+    Route::GET("sku/list-spu", "SkuFapi@listBySpu");
 
     // 收藏
     Route::POST("collection/create", "CollectionFapi@create");
