@@ -23,7 +23,7 @@ class SpuFapi extends Controller
     public function detail(Request $request)
     {
         $req = $request->all();
-        $result = $this->spuService->getSpuDetail($req);
+        $result = $this->spuService->getSpuById($req);
         return $result;
     }
 
