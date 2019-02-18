@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[13],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/BrandList.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/goods/BrandList.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/SkuAdd.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/goods/SkuAdd.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -50,117 +50,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "BrandList",
+  name: "SkuAdd",
   data: function data() {
     return {
-      brandList: [],
-      pageNo: 1
+      skuId: "",
+      skuForm: {
+        spuId: "",
+        name: "",
+        options: [],
+        originPrice: "",
+        price: "",
+        number: "",
+        state: "0"
+      },
+      rules: {
+        name: [{
+          required: true,
+          message: '请输入产品名称',
+          trigger: 'blur'
+        }],
+        price: [{
+          required: true,
+          message: '请输入产品价格',
+          trigger: 'blur'
+        }],
+        number: [{
+          required: true,
+          message: '请输入产品数量',
+          trigger: 'blur'
+        }]
+      },
+      specList: []
     };
   },
   mounted: function mounted() {
-    var that = this;
-    console.info("---------");
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('brand/list').then(function (res) {
+    var that = this,
+        spuId = that.$route.query.spuId;
+    that.spuId = spuId;
+    that.skuForm.spuId = spuId;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/specOptionList?spuId=" + spuId).then(function (res) {
       if (res.data.code === 2000) {
-        // if (res.data.data) {
-        // that.pageNo++;
-        that.brandList = res.data.data;
-        console.info(res.data.data); // }
+        that.specList = res.data.data;
       }
-    });
+    }).catch(function (err) {});
   },
   methods: {
-    modifyState: function modifyState(type, index, id) {
-      var state = 1;
-      if (type === "disable") state = 0;
+    onSubmit: function onSubmit() {
       var that = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/modState", {
-        state: state,
-        id: id
-      }).then(function (res) {
-        if (res.data.code === 2000) that.brandList[index].state = state;
-      });
-    },
-    deleteBrand: function deleteBrand(index, id) {
-      var _this = this;
-
-      var that = this;
-      this.$confirm("删除品牌可能会导致严重的问题，是否确认删除！", '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(function () {
-        var ids = [];
-        ids.push(id);
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", {
-          ids: ids
-        }).then(function (res) {
-          if (res.data.code === 2000) {
-            that.brandList.splice(index, 1);
-            that.$message({
-              type: 'success',
-              message: '删除成功!'
-            });
-          }
-        });
-      }).catch(function () {
-        _this.$message({
-          type: 'info',
-          message: '已取消删除'
-        });
-      });
-    },
-    deleteBrands: function deleteBrands() {
-      var _this2 = this;
-
-      var that = this;
-      var selections = that.$refs.multipleTable.selection;
-
-      if (selections.length) {
-        that.$confirm("删除品牌可能会导致严重的问题，是否确认删除！", '提示', {
-          confirmButtonText: "确认",
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(function () {
-          var ids = [];
+      that.$refs.skuForm.validate(function (valid) {
+        if (valid) {
+          var options = [],
+              specList = that.specList;
           var _iteratorNormalCompletion = true;
           var _didIteratorError = false;
           var _iteratorError = undefined;
 
           try {
-            for (var _iterator = selections[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              var section = _step.value;
-              ids.push(section.id);
+            for (var _iterator = specList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var spec = _step.value;
+              options.push(spec.option);
             }
           } catch (err) {
             _didIteratorError = true;
@@ -177,34 +127,28 @@ __webpack_require__.r(__webpack_exports__);
             }
           }
 
-          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", {
-            ids: ids
-          }).then(function (res) {
+          that.skuForm.options = options;
+          console.info(that.skuForm);
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/create", that.skuForm).then(function (res) {
             if (res.data.code === 2000) {
-              that.$message({
-                type: 'success',
-                message: '删除成功!'
-              });
-              that.$router.reload();
+              // message
+              that.$router.push("/spu/detail?spuId=", that.spuId);
             }
-          });
-        }).catch(function () {
-          _this2.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
-        });
-      }
+          }).catch(function (err) {});
+        } else {
+          return false;
+        }
+      });
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/BrandList.vue?vue&type=template&id=052ec726&scoped=true&":
-/*!************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/goods/BrandList.vue?vue&type=template&id=052ec726&scoped=true& ***!
-  \************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/SkuAdd.vue?vue&type=template&id=5536359a&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/goods/SkuAdd.vue?vue&type=template&id=5536359a&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -219,132 +163,169 @@ var render = function() {
   return _c(
     "el-card",
     [
+      _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+        _c("span", [_vm._v("创建产品")])
+      ]),
+      _vm._v(" "),
       _c(
-        "div",
-        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+        "el-form",
+        {
+          ref: "skuForm",
+          attrs: {
+            rules: _vm.rules,
+            model: _vm.skuForm,
+            "label-width": "100px"
+          }
+        },
         [
           _c(
-            "router-link",
-            { attrs: { to: "/brand-add" } },
+            "el-form-item",
+            { attrs: { label: "产品名称", prop: "name" } },
             [
-              _c("el-button", { attrs: { type: "primary" } }, [
-                _vm._v("添加品牌")
-              ])
+              _c("el-input", {
+                attrs: { placeholder: "请输入产品名称" },
+                model: {
+                  value: _vm.skuForm.name,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "name", $$v)
+                  },
+                  expression: "skuForm.name"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品原价", prop: "originPrice" } },
+            [
+              _c("el-input", {
+                attrs: { type: "number", placeholder: "请输入产品原价" },
+                model: {
+                  value: _vm.skuForm.originPrice,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "originPrice", $$v)
+                  },
+                  expression: "skuForm.originPrice"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品价格", prop: "price" } },
+            [
+              _c("el-input", {
+                attrs: { type: "number", placeholder: "请输入产品价格" },
+                model: {
+                  value: _vm.skuForm.price,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "price", $$v)
+                  },
+                  expression: "skuForm.price"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品数量", prop: "number" } },
+            [
+              _c("el-input", {
+                attrs: { type: "number", placeholder: "请输入产品数量" },
+                model: {
+                  value: _vm.skuForm.number,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "number", $$v)
+                  },
+                  expression: "skuForm.number"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.specList, function(spec) {
+            return [
+              _c(
+                "el-form-item",
+                { attrs: { label: spec.name, prop: "specOption" } },
+                [
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { placeholder: "请选择" },
+                      model: {
+                        value: spec.option,
+                        callback: function($$v) {
+                          _vm.$set(spec, "option", $$v)
+                        },
+                        expression: "spec.option"
+                      }
+                    },
+                    _vm._l(spec.options, function(option) {
+                      return _c("el-option", {
+                        key: option.id,
+                        attrs: { label: option.name, value: option.id }
+                      })
+                    }),
+                    1
+                  )
+                ],
+                1
+              )
+            ]
+          }),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "是否上架", prop: "state" } },
+            [
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "0" },
+                  model: {
+                    value: _vm.skuForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.skuForm, "state", $$v)
+                    },
+                    expression: "skuForm.state"
+                  }
+                },
+                [_vm._v("暂不上架")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "1" },
+                  model: {
+                    value: _vm.skuForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.skuForm, "state", $$v)
+                    },
+                    expression: "skuForm.state"
+                  }
+                },
+                [_vm._v("立即上架")]
+              )
             ],
             1
           ),
           _vm._v(" "),
           _c(
             "el-button",
-            {
-              attrs: { type: "danger" },
-              on: {
-                click: function($event) {
-                  _vm.deleteBrands()
-                }
-              }
-            },
-            [_vm._v("批量删除")]
+            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
+            [_vm._v("立即创建")]
           )
         ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-table",
-        {
-          ref: "multipleTable",
-          staticStyle: { width: "100%" },
-          attrs: { data: _vm.brandList, "tooltip-effect": "dark" }
-        },
-        [
-          _c("el-table-column", { attrs: { type: "selection", width: "55" } }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "name", label: "名称", width: "120" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "region", label: "地区", width: "120" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "describe", label: "描述", width: "120" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "state", label: "状态", width: "120" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "", label: "操作" },
-            scopedSlots: _vm._u([
-              {
-                key: "default",
-                fn: function(scope) {
-                  return [
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { size: "mini", type: "info" },
-                        on: { click: function($event) {} }
-                      },
-                      [_vm._v("修改\n                ")]
-                    ),
-                    _vm._v(" "),
-                    scope.row.state
-                      ? _c(
-                          "el-button",
-                          {
-                            attrs: { size: "mini", type: "warning" },
-                            on: {
-                              click: function($event) {
-                                _vm.modifyState(
-                                  "disable",
-                                  scope.$index,
-                                  scope.row.id
-                                )
-                              }
-                            }
-                          },
-                          [_vm._v("禁用\n                ")]
-                        )
-                      : _c(
-                          "el-button",
-                          {
-                            attrs: { size: "mini", type: "success" },
-                            on: {
-                              click: function($event) {
-                                _vm.modifyState(
-                                  "enable",
-                                  scope.$index,
-                                  scope.row.id
-                                )
-                              }
-                            }
-                          },
-                          [_vm._v("启用\n                ")]
-                        ),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { size: "mini", type: "danger" },
-                        on: {
-                          click: function($event) {
-                            _vm.deleteBrand(scope.$index, scope.row.id)
-                          }
-                        }
-                      },
-                      [_vm._v("删除\n                ")]
-                    )
-                  ]
-                }
-              }
-            ])
-          })
-        ],
-        1
+        2
       )
     ],
     1
@@ -357,17 +338,17 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/goods/BrandList.vue":
-/*!***********************************************************!*\
-  !*** ./resources/js/components/pages/goods/BrandList.vue ***!
-  \***********************************************************/
+/***/ "./resources/js/components/pages/goods/SkuAdd.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/pages/goods/SkuAdd.vue ***!
+  \********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _BrandList_vue_vue_type_template_id_052ec726_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BrandList.vue?vue&type=template&id=052ec726&scoped=true& */ "./resources/js/components/pages/goods/BrandList.vue?vue&type=template&id=052ec726&scoped=true&");
-/* harmony import */ var _BrandList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BrandList.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/goods/BrandList.vue?vue&type=script&lang=js&");
+/* harmony import */ var _SkuAdd_vue_vue_type_template_id_5536359a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SkuAdd.vue?vue&type=template&id=5536359a&scoped=true& */ "./resources/js/components/pages/goods/SkuAdd.vue?vue&type=template&id=5536359a&scoped=true&");
+/* harmony import */ var _SkuAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SkuAdd.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/goods/SkuAdd.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -377,50 +358,50 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _BrandList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _BrandList_vue_vue_type_template_id_052ec726_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _BrandList_vue_vue_type_template_id_052ec726_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _SkuAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SkuAdd_vue_vue_type_template_id_5536359a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SkuAdd_vue_vue_type_template_id_5536359a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "052ec726",
+  "5536359a",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/pages/goods/BrandList.vue"
+component.options.__file = "resources/js/components/pages/goods/SkuAdd.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/goods/BrandList.vue?vue&type=script&lang=js&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/pages/goods/BrandList.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************/
+/***/ "./resources/js/components/pages/goods/SkuAdd.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/pages/goods/SkuAdd.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BrandList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./BrandList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/BrandList.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BrandList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SkuAdd.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/SkuAdd.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/goods/BrandList.vue?vue&type=template&id=052ec726&scoped=true&":
-/*!******************************************************************************************************!*\
-  !*** ./resources/js/components/pages/goods/BrandList.vue?vue&type=template&id=052ec726&scoped=true& ***!
-  \******************************************************************************************************/
+/***/ "./resources/js/components/pages/goods/SkuAdd.vue?vue&type=template&id=5536359a&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/pages/goods/SkuAdd.vue?vue&type=template&id=5536359a&scoped=true& ***!
+  \***************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BrandList_vue_vue_type_template_id_052ec726_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./BrandList.vue?vue&type=template&id=052ec726&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/BrandList.vue?vue&type=template&id=052ec726&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BrandList_vue_vue_type_template_id_052ec726_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuAdd_vue_vue_type_template_id_5536359a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SkuAdd.vue?vue&type=template&id=5536359a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/SkuAdd.vue?vue&type=template&id=5536359a&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuAdd_vue_vue_type_template_id_5536359a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BrandList_vue_vue_type_template_id_052ec726_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuAdd_vue_vue_type_template_id_5536359a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

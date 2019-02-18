@@ -99,12 +99,12 @@ export default new VueRouter({
         {
             name: "CouponList",
             path: "/coupon-list",
-            component: resolve => void (require(['./components/pages/coupon/CouponList.vue'], resolve))
+            component: resolve => void (require(['./components/pages/market/CouponList.vue'], resolve))
         },
         {
             name: "CouponAdd",
             path: "/coupon-add",
-            component: resolve => void (require(['./components/pages/coupon/CouponAdd.vue'], resolve))
+            component: resolve => void (require(['./components/pages/market/CouponAdd.vue'], resolve))
         },
 
         // ================================================  用户管理  =================================================

@@ -11,9 +11,8 @@
                 <el-input v-model="couponForm.sn" placeholder="请输入优惠券编号"/>
             </el-form-item>
             <el-form-item label="使用说明" prop="number">
-                <el-input v-model="couponForm.number" placeholder="请输入优惠券使用说明"/>
+                <el-input type="textarea" rows="4" v-model="couponForm.number" placeholder="请输入优惠券使用说明"/>
             </el-form-item>
-            
             <el-form-item label="发放总量" prop="number">
                 <el-input v-model="couponForm.number" placeholder="请输入优惠券发放数量"/>
             </el-form-item>
