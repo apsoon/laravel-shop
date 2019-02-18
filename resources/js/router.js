@@ -78,8 +78,13 @@ export default new VueRouter({
             component: resolve => void (require(['./components/pages/goods/AttrList.vue'], resolve))
         },
         {
+            name: "AttrGroupAdd",
+            path: "/attr-group-add",
+            component: resolve => void (require(['./components/pages/goods/AttrAdd.vue'], resolve))
+        },
+        {
             name: "AttrAdd",
-            path: "/Attr-add",
+            path: "/attr-add",
             component: resolve => void (require(['./components/pages/goods/AttrAdd.vue'], resolve))
         },
         {
