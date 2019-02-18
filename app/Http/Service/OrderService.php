@@ -11,7 +11,10 @@ namespace App\Http\Service;
 
 use App\Http\Dao\OrderDao;
 use App\Http\Dao\OrderSkuDao;
+use App\Http\Dao\SkuDao;
 use App\Http\Enum\OrderStatus;
+use App\Http\Model\Order;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class OrderService
@@ -26,6 +29,10 @@ class OrderService
     private $orderDao;
 
     /**
+     * @var SkuDao
+     */
+    private $skuDao;
+    /**
      * @var OrderSkuDao
      */
     private $orderSkuDao;
@@ -34,8 +41,37 @@ class OrderService
     {
         // 事务
         // 创建订单
-        // 关联sku
+        DB::beginTransaction();
+        try {
+            $order = new Order();
+            $order->user_id = $req["userId"];
+            // 生成唯一的编码
+//            $order->sn =
+            // ----- 关联sku
+            $skuIds = $req["skuIds"];
+            $skus = [];
+            $originPrice = 0;
+            $number = 0;
+            $price = [];
+            foreach ($skuIds as $skuId) {
+                $sku = $this->skuDao->findById($skuId);
+                if ($sku) {
+                    array_push($skus, $sku);
+                    $originPrice += $sku->price;
+                    $number++;
+                }
+            }
+            // ------ 优惠券
+            if ($req["couponId"]) {
+
+            }
+            $result = $this->orderSkuDao->insertList();
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+        return $result;
         // 优惠券条件
+
     }
 
     /**
@@ -98,11 +134,13 @@ class OrderService
      * OrderService constructor.
      *
      * @param OrderDao $orderDao
+     * @param SkuDao $skuDao
      * @param OrderSkuDao $orderSkuDao
      */
-    public function __construct(OrderDao $orderDao, OrderSkuDao $orderSkuDao)
+    public function __construct(OrderDao $orderDao, SkuDao $skuDao, OrderSkuDao $orderSkuDao)
     {
         $this->orderDao = $orderDao;
+        $this->skuDao = $skuDao;
         $this->orderSkuDao = $orderSkuDao;
     }
 }

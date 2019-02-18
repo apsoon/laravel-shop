@@ -47,5 +47,10 @@ Route::group(["namespace" => "Fapi"], function () {
     Route::GET("collection/list", "CollectionFapi@list");
     Route::POST("collection/delete", "CollectionFapi@remove");
 
+    // 优惠券
+    Route::GET("coupon/list", "CouponFapi@list");
+    Route::POST("coupon/add", "CouponFapi@add");
+
+    // 广告
     Route::GET("ad/list", "AdFapi@list");
 });

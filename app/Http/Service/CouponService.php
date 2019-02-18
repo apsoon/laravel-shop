@@ -10,7 +10,9 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\CouponDao;
+use App\Http\Dao\UserCouponDao;
 use App\Http\Model\Coupon;
+use App\Http\Model\UserCoupon;
 
 class CouponService
 {
@@ -19,6 +21,11 @@ class CouponService
      * @var CouponDao
      */
     private $couponDao;
+
+    /**
+     * @var UserCouponDao
+     */
+    private $userCouponDao;
 
     /**
      * 创建优惠券
@@ -73,14 +80,38 @@ class CouponService
         return $result;
     }
 
+    /**
+     * 获取用户不同状态的优惠券
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function getPagedCouponListByStateUser(array $req)
+    {
+        $size = 20;
+        $coupons = $this->userCouponDao->findByStateUser($req["userId"], $req["state"], $req["pageNo"], $size);
+        foreach ($coupons as $coupon) {
+            $detail = $this->couponDao->findById($coupon->couponId);
+            $coupon->detail = $detail;
+        }
+        return $coupons;
+    }
+
+    public function addCouponToUser(array $req)
+    {
+        // 判断coupon 是否存在及数量
+        // 判断限领一个的是否已经领取
+    }
 
     /**
      * CouponService constructor.
      *
      * @param CouponDao $couponDao
+     * @param UserCouponDao $userCouponDao
      */
-    public function __construct(CouponDao $couponDao)
+    public function __construct(CouponDao $couponDao, UserCouponDao $userCouponDao)
     {
         $this->couponDao = $couponDao;
+        $this->userCouponDao = $userCouponDao;
     }
 }
