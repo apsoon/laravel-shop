@@ -84,7 +84,6 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
 
     // 优惠券
     Route::GET("coupon/list", "CouponMapi@list");
-    Route::GET("coupon/add", "CouponMapi@add");
     Route::POST("coupon/create", "CouponMapi@create");
 
     // 帮助

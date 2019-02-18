@@ -9,6 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -42,6 +44,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CouponAdd",
   data: function data() {
@@ -51,9 +68,52 @@ __webpack_require__.r(__webpack_exports__);
         sn: "",
         number: "",
         value: "",
-        desc: ""
-      }
+        effectStart: "",
+        effectEnd: "",
+        describe: "",
+        sendType: "1",
+        state: "0"
+      },
+      rules: {
+        name: [{
+          required: true,
+          message: '请输入优惠券名称',
+          trigger: 'blur'
+        }],
+        sn: [{
+          required: true,
+          message: '请输入优惠券编号',
+          trigger: 'blur'
+        }],
+        value: [{
+          required: true,
+          message: '请输入优惠券面值',
+          trigger: 'blur'
+        }]
+      },
+      effectDate: []
     };
+  },
+  mounted: function mounted() {},
+  methods: {
+    onSubmit: function onSubmit() {
+      var that = this;
+      that.$refs.couponForm.validate(function (valid) {
+        if (valid) {
+          if (that.effectDate) {
+            that.couponForm.effectStart = that.effectDate[0];
+            that.couponForm.effectEnd = that.effectDate[1];
+          }
+
+          console.info(that.couponForm);
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/coupon/create", that.couponForm).then(function (res) {
+            if (res.data.code === 2000) {
+              that.$router.push("/coupon/list");
+            }
+          }).catch(function (err) {});
+        }
+      });
+    }
   }
 });
 
@@ -114,7 +174,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "优惠券编号", prop: "name" } },
+            { attrs: { label: "优惠券编号", prop: "sn" } },
             [
               _c("el-input", {
                 attrs: { placeholder: "请输入优惠券编号" },
@@ -132,7 +192,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "使用说明", prop: "number" } },
+            { attrs: { label: "使用说明", prop: "describe" } },
             [
               _c("el-input", {
                 attrs: {
@@ -141,11 +201,11 @@ var render = function() {
                   placeholder: "请输入优惠券使用说明"
                 },
                 model: {
-                  value: _vm.couponForm.number,
+                  value: _vm.couponForm.describe,
                   callback: function($$v) {
-                    _vm.$set(_vm.couponForm, "number", $$v)
+                    _vm.$set(_vm.couponForm, "describe", $$v)
                   },
-                  expression: "couponForm.number"
+                  expression: "couponForm.describe"
                 }
               })
             ],
@@ -157,7 +217,7 @@ var render = function() {
             { attrs: { label: "发放总量", prop: "number" } },
             [
               _c("el-input", {
-                attrs: { placeholder: "请输入优惠券发放数量" },
+                attrs: { type: "number", placeholder: "请输入优惠券发放数量" },
                 model: {
                   value: _vm.couponForm.number,
                   callback: function($$v) {
@@ -172,16 +232,22 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "生效时间", prop: "number" } },
+            { attrs: { label: "有效期" } },
             [
-              _c("el-input", {
-                attrs: { placeholder: "请输入优惠券使用说明" },
+              _c("el-date-picker", {
+                attrs: {
+                  "unlink-panels": "",
+                  type: "daterange",
+                  "range-separator": "至",
+                  "start-placeholder": "开始日期",
+                  "end-placeholder": "结束日期"
+                },
                 model: {
-                  value: _vm.couponForm.number,
+                  value: _vm.effectDate,
                   callback: function($$v) {
-                    _vm.$set(_vm.couponForm, "number", $$v)
+                    _vm.effectDate = $$v
                   },
-                  expression: "couponForm.number"
+                  expression: "effectDate"
                 }
               })
             ],
@@ -190,23 +256,94 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "过期时间", prop: "number" } },
+            { attrs: { label: "面值", prop: "value" } },
             [
               _c("el-input", {
-                attrs: { placeholder: "请输入优惠券使用说明" },
+                attrs: { type: "number", placeholder: "请输入优惠券使用说明" },
                 model: {
-                  value: _vm.couponForm.number,
+                  value: _vm.couponForm.value,
                   callback: function($$v) {
-                    _vm.$set(_vm.couponForm, "number", $$v)
+                    _vm.$set(_vm.couponForm, "value", $$v)
                   },
-                  expression: "couponForm.number"
+                  expression: "couponForm.value"
                 }
               })
             ],
             1
           ),
           _vm._v(" "),
-          _c("el-form-item", { attrs: { label: "发放类型", prop: "number" } })
+          _c(
+            "el-form-item",
+            { attrs: { label: "发放类型", prop: "sendType" } },
+            [
+              _c(
+                "el-radio-group",
+                {
+                  model: {
+                    value: _vm.couponForm.method,
+                    callback: function($$v) {
+                      _vm.$set(_vm.couponForm, "method", $$v)
+                    },
+                    expression: "couponForm.method"
+                  }
+                },
+                [
+                  _c("el-radio", { attrs: { label: 1 } }, [_vm._v("用户领取")]),
+                  _vm._v(" "),
+                  _c("el-radio", { attrs: { label: 2 } }, [_vm._v("后台发放")]),
+                  _vm._v(" "),
+                  _c("el-radio", { attrs: { label: 3 } }, [
+                    _vm._v("优惠券号领取")
+                  ])
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "是否生效", prop: "state" } },
+            [
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "0" },
+                  model: {
+                    value: _vm.couponForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.couponForm, "state", $$v)
+                    },
+                    expression: "couponForm.state"
+                  }
+                },
+                [_vm._v("暂不生效")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "1" },
+                  model: {
+                    value: _vm.couponForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.couponForm, "state", $$v)
+                    },
+                    expression: "couponForm.state"
+                  }
+                },
+                [_vm._v("立即生效")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
+            [_vm._v("添加优惠券")]
+          )
         ],
         1
       )

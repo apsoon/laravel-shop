@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Mapi;
 
 use App\Http\Service\CouponService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CouponMapi
 {
@@ -28,6 +29,8 @@ class CouponMapi
      */
     public function create(Request $request)
     {
+        Log::info(gettype($request->effectStart));
+        Log::info($request->effectStart);
         $req = $request->all();
         $result = $this->couponService->createCoupon($req);
         return $result;

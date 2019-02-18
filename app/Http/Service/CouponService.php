@@ -13,6 +13,8 @@ use App\Http\Dao\CouponDao;
 use App\Http\Dao\UserCouponDao;
 use App\Http\Model\Coupon;
 use App\Http\Model\UserCoupon;
+use Illuminate\Support\Facades\Log;
+use function PHPSTORM_META\type;
 
 class CouponService
 {
@@ -36,6 +38,22 @@ class CouponService
     public function createCoupon($req)
     {
         $coupon = new Coupon();
+        $coupon->name = $req["name"];
+        $coupon->sn = $req["sn"];
+        $coupon->describe = $req["describe"];
+        $coupon->number = $req["number"];
+        Log::info(gettype($req["effectStart"]));
+        Log::info($req["effectStart"]);
+        if ($req["effectStart"])
+            $coupon->effect_start = strtotime($req["effectStart"]);
+        if ($req["effectEnd"])
+            $coupon->effect_end = strtotime($req["effectEnd"]);
+        Log::info(gettype($coupon->effect_start));
+        Log::info($coupon->effectStart);
+        Log::info($coupon->effect_end);
+        $coupon->value = $req["value"];
+        $coupon->send_type = $req["sendType"];
+        $coupon->state = $req["state"];
         $result = $coupon->save();
         return $result;
     }
