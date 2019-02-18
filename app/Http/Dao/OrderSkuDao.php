@@ -11,12 +11,12 @@ namespace App\Http\Dao;
 
 use App\Http\Model\OrderSku;
 
-class OrderProductDao
+class OrderSkuDao
 {
     /**
      * @var OrderSku
      */
-    private $orderProduct;
+    private $orderSku;
 
     /**
      * 订单id获取产品
@@ -26,7 +26,7 @@ class OrderProductDao
      */
     public function findByOrderId(int $orderId)
     {
-        $result = $this->orderProduct::where(["order_id" => $orderId])
+        $result = $this->orderSku::where(["order_id" => $orderId])
             ->get();
         return $result;
     }
@@ -39,18 +39,18 @@ class OrderProductDao
      */
     private function findByOrderSn(string $orderSn)
     {
-        $result = $this->orderProduct::where(["order_dn" => $orderSn])
+        $result = $this->orderSku::where(["order_dn" => $orderSn])
             ->first();
         return $result;
     }
 
     /**
-     * OrderProductDao constructor.
+     * OrderSkuDao constructor.
      *
-     * @param OrderSku $orderProduct
+     * @param OrderSku $orderSku
      */
-    public function __construct(OrderSku $orderProduct)
+    public function __construct(OrderSku $orderSku)
     {
-        $this->orderProduct = $orderProduct;
+        $this->orderSku = $orderSku;
     }
 }

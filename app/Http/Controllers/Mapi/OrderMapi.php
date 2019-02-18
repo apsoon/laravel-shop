@@ -11,6 +11,13 @@ class OrderMapi extends Controller
 
     private $orderService;
 
+    public function create(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->orderService->createOrder($req);
+        return $result;
+    }
+
     /**
      * 订单列表
      *

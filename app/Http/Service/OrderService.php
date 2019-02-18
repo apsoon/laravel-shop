@@ -10,7 +10,7 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\OrderDao;
-use App\Http\Dao\OrderProductDao;
+use App\Http\Dao\OrderSkuDao;
 use App\Http\Enum\OrderStatus;
 
 /**
@@ -26,13 +26,13 @@ class OrderService
     private $orderDao;
 
     /**
-     * @var OrderProductDao
+     * @var OrderSkuDao
      */
-    private $orderProductDao;
+    private $orderSkuDao;
 
     public function createOrder(array $req)
     {
-
+        
     }
 
     /**
@@ -84,7 +84,7 @@ class OrderService
     public function getOrderDetailByOrderId(int $orderId)
     {
         $order = $this->orderDao->findById($orderId);
-        $productList = $this->orderProductDao->findByOrderId($orderId);
+        $productList = $this->orderSkuDao->findByOrderId($orderId);
         $result = new \stdClass();
         $result->order = $order;
         $result->productList = $productList;
@@ -95,11 +95,11 @@ class OrderService
      * OrderService constructor.
      *
      * @param OrderDao $orderDao
-     * @param OrderProductDao $orderProductDao
+     * @param OrderSkuDao $orderSkuDao
      */
-    public function __construct(OrderDao $orderDao, OrderProductDao $orderProductDao)
+    public function __construct(OrderDao $orderDao, OrderSkuDao $orderSkuDao)
     {
         $this->orderDao = $orderDao;
-        $this->orderProductDao = $orderProductDao;
+        $this->orderSkuDao = $orderSkuDao;
     }
 }
