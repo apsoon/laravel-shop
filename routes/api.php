@@ -46,4 +46,6 @@ Route::group(["namespace" => "Fapi"], function () {
     Route::POST("collection/create", "CollectionFapi@create");
     Route::GET("collection/list", "CollectionFapi@list");
     Route::POST("collection/delete", "CollectionFapi@remove");
+
+    Route::GET("ad/list", "AdFapi@list");
 });

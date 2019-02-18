@@ -29,7 +29,7 @@ class CreateOrderProductTable extends Migration
             $table->timestamp('updated_at')->useCurrent();
         });
 
-        DB::statement("ALTER TABLE `order_goods` comment'订单-产品对应表'"); // 表注释
+        DB::statement("ALTER TABLE `order_product` comment'订单-产品对应表'"); // 表注释
     }
 
     /**

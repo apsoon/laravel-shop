@@ -25,7 +25,7 @@
             <el-form-item label="发放类型" prop="number">
 
             </el-form-item>
-
+<el-button ></el-button>
         </el-form>
     </el-card>
 </template>

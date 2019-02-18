@@ -63,7 +63,6 @@ class AdService
      */
     public function getAdListByKey(array $req)
     {
-        if (empty($req) || empty($req["key"])) return [];
         $result = $this->adDao->findByKey($req["key"]);
         return $result;
     }
