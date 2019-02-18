@@ -46,6 +46,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UserList",
@@ -134,7 +136,11 @@ var render = function() {
   return _c(
     "el-card",
     [
-      _c("span", [_vm._v("用户列表")]),
+      _c(
+        "div",
+        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+        [_c("span", [_vm._v("用户列表")])]
+      ),
       _vm._v(" "),
       _c(
         "el-table",

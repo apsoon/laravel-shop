@@ -17,6 +17,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CouponList"
 });
@@ -39,18 +46,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "el-card",
     [
       _c(
-        "router-link",
-        { attrs: { to: "/coupon-add" } },
+        "div",
+        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
         [
-          _c("el-button", { attrs: { type: "primary" } }, [
-            _vm._v("添加优惠券")
-          ])
+          _c(
+            "router-link",
+            { attrs: { to: "/coupon-add" } },
+            [
+              _c("el-button", { attrs: { type: "primary" } }, [
+                _vm._v("添加优惠券")
+              ])
+            ],
+            1
+          )
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("el-table", [_c("el-table-column")], 1)
     ],
     1
   )

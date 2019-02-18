@@ -42,32 +42,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CouponAdd",
   data: function data() {
     return {
       couponForm: {
-        name: ""
+        name: "",
+        sn: "",
+        number: "",
+        value: "",
+        desc: ""
       }
     };
   }
@@ -91,9 +75,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "el-card",
     [
-      _vm._v("\n    123\n    "),
+      _c(
+        "div",
+        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+        [_c("span", [_vm._v("添加优惠券")])]
+      ),
+      _vm._v(" "),
       _c(
         "el-form",
         {
@@ -107,26 +96,113 @@ var render = function() {
         [
           _c(
             "el-form-item",
-            { attrs: { "label-width": "优惠券名称", prop: "name" } },
+            { attrs: { label: "优惠券名称", prop: "name" } },
             [
-              _c(
-                "el-col",
-                { attrs: { span: "5" } },
-                [
-                  _c("el-input", {
-                    staticClass: "form-control",
-                    attrs: {
-                      id: "goods-name",
-                      name: "name",
-                      placeholder: "请输入优惠券名称"
-                    }
-                  })
-                ],
-                1
-              )
+              _c("el-input", {
+                attrs: { placeholder: "请输入优惠券名称" },
+                model: {
+                  value: _vm.couponForm.name,
+                  callback: function($$v) {
+                    _vm.$set(_vm.couponForm, "name", $$v)
+                  },
+                  expression: "couponForm.name"
+                }
+              })
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "优惠券编号", prop: "name" } },
+            [
+              _c("el-input", {
+                attrs: { placeholder: "请输入优惠券编号" },
+                model: {
+                  value: _vm.couponForm.sn,
+                  callback: function($$v) {
+                    _vm.$set(_vm.couponForm, "sn", $$v)
+                  },
+                  expression: "couponForm.sn"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "发放总量", prop: "number" } },
+            [
+              _c("el-input", {
+                attrs: { placeholder: "请输入优惠券发放数量" },
+                model: {
+                  value: _vm.couponForm.number,
+                  callback: function($$v) {
+                    _vm.$set(_vm.couponForm, "number", $$v)
+                  },
+                  expression: "couponForm.number"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "使用说明", prop: "number" } },
+            [
+              _c("el-input", {
+                attrs: { placeholder: "请输入优惠券使用说明" },
+                model: {
+                  value: _vm.couponForm.number,
+                  callback: function($$v) {
+                    _vm.$set(_vm.couponForm, "number", $$v)
+                  },
+                  expression: "couponForm.number"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "生效时间", prop: "number" } },
+            [
+              _c("el-input", {
+                attrs: { placeholder: "请输入优惠券使用说明" },
+                model: {
+                  value: _vm.couponForm.number,
+                  callback: function($$v) {
+                    _vm.$set(_vm.couponForm, "number", $$v)
+                  },
+                  expression: "couponForm.number"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "过期时间", prop: "number" } },
+            [
+              _c("el-input", {
+                attrs: { placeholder: "请输入优惠券使用说明" },
+                model: {
+                  value: _vm.couponForm.number,
+                  callback: function($$v) {
+                    _vm.$set(_vm.couponForm, "number", $$v)
+                  },
+                  expression: "couponForm.number"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("el-form-item", { attrs: { label: "发放类型", prop: "number" } })
         ],
         1
       )
