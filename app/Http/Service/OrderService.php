@@ -32,7 +32,10 @@ class OrderService
 
     public function createOrder(array $req)
     {
-        
+        // 事务
+        // 创建订单
+        // 关联sku
+        // 优惠券条件
     }
 
     /**
