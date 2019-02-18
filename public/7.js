@@ -76,6 +76,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdList",
@@ -209,19 +211,33 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "el-card",
     [
       _c(
-        "router-link",
-        { attrs: { to: "/ad-add" } },
-        [_c("el-button", { attrs: { type: "primary" } }, [_vm._v("添加广告")])],
+        "div",
+        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+        [
+          _c(
+            "router-link",
+            { attrs: { to: "/ad-add" } },
+            [
+              _c("el-button", { attrs: { type: "primary", size: "medium" } }, [
+                _vm._v("添加广告")
+              ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-button",
+            {
+              attrs: { type: "danger", size: "medium" },
+              on: { click: _vm.deleteAds }
+            },
+            [_vm._v("批量删除")]
+          )
+        ],
         1
-      ),
-      _vm._v(" "),
-      _c(
-        "el-button",
-        { attrs: { type: "danger" }, on: { click: _vm.deleteAds } },
-        [_vm._v("批量删除")]
       ),
       _vm._v(" "),
       _c(

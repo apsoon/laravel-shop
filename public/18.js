@@ -114,7 +114,7 @@ var render = function() {
             "router-link",
             { attrs: { to: "/coupon-add" } },
             [
-              _c("el-button", { attrs: { type: "primary" } }, [
+              _c("el-button", { attrs: { type: "primary", size: "medium" } }, [
                 _vm._v("添加优惠券")
               ])
             ],

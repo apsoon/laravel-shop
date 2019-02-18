@@ -1,9 +1,11 @@
 <template>
-    <div>
-        <router-link to="/ad-add">
-            <el-button type="primary">添加广告</el-button>
-        </router-link>
-        <el-button type="danger" @click="deleteAds">批量删除</el-button>
+    <el-card>
+        <div slot="header" class="clearfix">
+            <router-link to="/ad-add">
+                <el-button type="primary" size="medium">添加广告</el-button>
+            </router-link>
+            <el-button type="danger" size="medium" @click="deleteAds">批量删除</el-button>
+        </div>
         <el-table
                 ref="multipleTable"
                 :data="adList"
@@ -60,7 +62,7 @@
                 </template>
             </el-table-column>
         </el-table>
-    </div>
+    </el-card>
 </template>
 
 <script>

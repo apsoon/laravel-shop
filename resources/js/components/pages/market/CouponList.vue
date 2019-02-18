@@ -2,7 +2,7 @@
     <el-card>
         <div slot="header" class="clearfix">
             <router-link to="/coupon-add">
-                <el-button type="primary">添加优惠券</el-button>
+                <el-button type="primary" size="medium">添加优惠券</el-button>
             </router-link>
         </div>
         <el-table ref="couponList" tooltip-effect="dark" width="100%" :data="couponList">

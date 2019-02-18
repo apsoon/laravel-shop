@@ -227,7 +227,7 @@ var render = function() {
             "router-link",
             { attrs: { to: "/brand-add" } },
             [
-              _c("el-button", { attrs: { type: "primary" } }, [
+              _c("el-button", { attrs: { type: "primary", size: "medium" } }, [
                 _vm._v("添加品牌")
               ])
             ],
@@ -237,7 +237,7 @@ var render = function() {
           _c(
             "el-button",
             {
-              attrs: { type: "danger" },
+              attrs: { type: "danger", size: "medium" },
               on: {
                 click: function($event) {
                   _vm.deleteBrands()
