@@ -9,7 +9,9 @@
 namespace App\Http\Controllers\Mapi;
 
 
+use App\Http\Enum\StatusCode;
 use App\Http\Service\CouponService;
+use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -45,9 +47,8 @@ class CouponMapi
     public function list(Request $request)
     {
         $req = $request->all();
-        $pageNo = empty($req) || empty($req["pageNo"]) ? 1 : $req["pageNo"];
-        $result = $this->couponService->getPagedCouponList($pageNo);
-        return $result;
+        $result = $this->couponService->getPagedCouponList($req);
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     public function changeState(Request $request)

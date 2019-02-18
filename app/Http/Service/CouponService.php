@@ -61,12 +61,14 @@ class CouponService
     /**
      * 分页获取优惠券列表
      *
-     * @param int $pageNo
+     * @param array $req
      * @return mixed
      */
-    public function getPagedCouponList(int $pageNo)
+    public function getPagedCouponList(array $req)
     {
-        $result = $this->couponDao->findByPage($pageNo, 20);
+        $pageNo = empty($req) || empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $size = 20;
+        $result = $this->couponDao->findByPage($pageNo, $size);
         return $result;
     }
 

@@ -9,6 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -24,8 +26,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "CouponList"
+  name: "CouponList",
+  data: function data() {
+    return {
+      pageNo: 1,
+      couponList: []
+    };
+  },
+  mounted: function mounted() {
+    var that = this;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/coupon/list?pageNo=" + that.pageNo).then(function (res) {
+      if (res.data.code === 2000) {
+        that.couponList = res.data.data;
+      }
+
+      console.info(that.couponList);
+    });
+    console.info(that.couponList);
+  }
 });
 
 /***/ }),
@@ -66,7 +124,129 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("el-table", [_c("el-table-column")], 1)
+      _c(
+        "el-table",
+        {
+          ref: "couponList",
+          attrs: {
+            "tooltip-effect": "dark",
+            width: "100%",
+            data: _vm.couponList
+          }
+        },
+        [
+          _c("el-table-column", {
+            attrs: { type: "expand" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(props) {
+                  return [
+                    _c(
+                      "el-form",
+                      {
+                        staticClass: "demo-table-expand",
+                        attrs: { "label-position": "left", inline: "" }
+                      },
+                      [
+                        _c("el-form-item", { attrs: { label: "发放类型" } }, [
+                          _c("span", [_vm._v(_vm._s(props.row.send_type))])
+                        ])
+                      ],
+                      1
+                    )
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "优惠券名称", prop: "name", width: "150" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "优惠券编号", prop: "sn", width: "150" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "数量", prop: "number", width: "150" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "状态", prop: "state", width: "150" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "操作", prop: "" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { size: "mini", type: "info" },
+                        on: { click: function($event) {} }
+                      },
+                      [_vm._v("修改\n                ")]
+                    ),
+                    _vm._v(" "),
+                    scope.row.state
+                      ? _c(
+                          "el-button",
+                          {
+                            attrs: { size: "mini", type: "warning" },
+                            on: {
+                              click: function($event) {
+                                _vm.modifyState(
+                                  "disable",
+                                  scope.$index,
+                                  scope.row.id
+                                )
+                              }
+                            }
+                          },
+                          [_vm._v("禁用\n                ")]
+                        )
+                      : _c(
+                          "el-button",
+                          {
+                            attrs: { size: "mini", type: "success" },
+                            on: {
+                              click: function($event) {
+                                _vm.modifyState(
+                                  "enable",
+                                  scope.$index,
+                                  scope.row.id
+                                )
+                              }
+                            }
+                          },
+                          [_vm._v("启用\n                ")]
+                        ),
+                    _vm._v(" "),
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { size: "mini", type: "danger" },
+                        on: {
+                          click: function($event) {
+                            _vm.deleteBrand(scope.$index, scope.row.id)
+                          }
+                        }
+                      },
+                      [_vm._v("删除\n                ")]
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      )
     ],
     1
   )
