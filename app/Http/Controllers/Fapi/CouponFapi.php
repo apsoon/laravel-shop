@@ -40,7 +40,7 @@ class CouponFapi extends Controller
         $req = $request->all();
         if (empty($req) || empty($req["type"]) || empty($req["couponId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $result = $this->couponService->addCouponToUser($req);
-        if ($request) return new JsonResult();
+        if ($result) return new JsonResult();
         return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
