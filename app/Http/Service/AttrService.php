@@ -160,11 +160,15 @@ class AttrService
      * @param array $req
      * @return mixed
      */
-    public function getPagedAttrGroupList(array $req)
+    public function getPagedAttrGroupWithAttrList(array $req)
     {
         $size = 20;
-        $result = $this->attrGroupDao->findByPage($req["pageNo"], $size);
-        return $result;
+        $groups = $this->attrGroupDao->findByPage($req["pageNo"], $size);
+        foreach ($groups as $group) {
+            $attr = $this->attrDao->findByGroupId($group->id);
+            $group->attrs = $attr;
+        }
+        return $groups;
     }
 
     // ===========================================================================  attr option  ===========================================================================

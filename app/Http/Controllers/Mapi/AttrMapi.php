@@ -119,7 +119,7 @@ class AttrMapi extends Controller
     public function groupList(Request $request)
     {
         $req = $request->all();
-        $result = $this->attrService->getPagedAttrGroupList($req);
+        $result = $this->attrService->getPagedAttrGroupWithAttrList($req);
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 

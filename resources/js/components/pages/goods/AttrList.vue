@@ -11,6 +11,15 @@
             <el-table-column label="所属分类" prop="category_id" width="150px">
             </el-table-column>
             <el-table-column label="包含属性" prop="" min-width="1">
+                <template slot-scope="scope">
+                    <el-tag
+                            v-for="attr in scope.row.attrs"
+                            :key="attr.id"
+                            type="primary"
+                            :disable-transitions="true">
+                        {{attr.name}}
+                    </el-tag>
+                </template>
             </el-table-column>
             <el-table-column
                     prop=""
@@ -59,5 +68,7 @@
 </script>
 
 <style scoped>
-
+    .el-tag + .el-tag {
+        margin-left: 10px;
+    }
 </style>
