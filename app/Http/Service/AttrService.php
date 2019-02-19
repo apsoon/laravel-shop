@@ -53,7 +53,7 @@ class AttrService
     {
         $attr = new Attr();
         $attr->name = $req["name"];
-        $attr->attr_group_id = $req["attr_group_id"];
+        $attr->attr_group_id = $req["attrGroupId"];
         $result = $this->attrDao->insert($attr);
         return $result;
     }
@@ -80,6 +80,17 @@ class AttrService
             $options = $this->attrOptionDao->findByAttrId($attr->id);
             $attr->options = $options;
         }
+        return $result;
+    }
+
+    /**
+     * 分组获取属性
+     *
+     * @param array $req
+     */
+    public function getAttrListByGroup(array $req)
+    {
+        $result = $this->attrDao->findByGroupId($req["attrGroupId"]);
         return $result;
     }
 

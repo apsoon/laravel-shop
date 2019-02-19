@@ -44,6 +44,19 @@ class AttrMapi extends Controller
     }
 
     /**
+     * 根据分组获取属性
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function listByGroup(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->attrService->getAttrListByGroup($req);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
      * 添加属性
      *
      * @return \Illuminate\Contracts\View\Factory|View
@@ -64,7 +77,8 @@ class AttrMapi extends Controller
     {
         $req = $request->all();
         $result = $this->attrService->createAttr($req);
-        if ($result) return redirect("attr/list");
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     // ===========================================================================  attr group  ===========================================================================

@@ -56,9 +56,17 @@ class AttrDao
         return $result;
     }
 
-
-    public function findByGroupId($id)
+    /**
+     * 分组获取
+     *
+     * @param int $attrGroupId
+     * @return mixed
+     */
+    public function findByGroupId(int $attrGroupId)
     {
+        $result = $this->attr::where("attr_group_id", "=", $attrGroupId)
+            ->get();
+        return $result;
     }
 
     /**
