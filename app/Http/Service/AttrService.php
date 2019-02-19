@@ -103,12 +103,7 @@ class AttrService
      */
     public function getAttrListWithValueBySpu(array $req)
     {
-        $values = $this->spuAttrValueDao->findBySpuId($req["spuId"]);
-        $result = $values;
-        if (empty($values)) {
-            $groupList = $this->attrGroupDao->findByCategoryId($req["categoryId"]);
-            $result = $groupList;
-        }
+        $result = $this->spuAttrValueDao->findBySpuId($req["spuId"]);
         return $result;
     }
 

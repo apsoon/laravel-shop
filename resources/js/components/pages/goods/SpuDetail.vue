@@ -139,6 +139,7 @@
             return {
                 spuId: 0,
                 activeName: "info",
+                spu: {},
                 skuList: [],
                 specList: [],
                 attrList: []
@@ -151,7 +152,7 @@
             axios.get("spu/detail?spuId=" + spuId)
                 .then(res => {
                     if (res.data.code === 2000) {
-                        console.info(res);
+                        that.spu = res.data.data.spu;
                     }
                 })
                 .catch(err => {
@@ -171,7 +172,7 @@
                 .catch(err => {
 
                 });
-            axios.get("/attr/list-spu?spuId=" + that.spuId + "&categoryId=")
+            axios.get("/attr/list-spu?spuId=" + that.spuId + "&categoryId=" + that.spu.category_id)
                 .then(res => {
                     if (res.data.code === 2000) {
                         console.info(res.data.data);

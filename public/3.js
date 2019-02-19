@@ -150,6 +150,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       spuId: 0,
       activeName: "info",
+      spu: {},
       skuList: [],
       specList: [],
       attrList: []
@@ -161,7 +162,7 @@ __webpack_require__.r(__webpack_exports__);
     that.spuId = spuId;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/detail?spuId=" + spuId).then(function (res) {
       if (res.data.code === 2000) {
-        console.info(res);
+        that.spu = res.data.data.spu;
       }
     }).catch(function (err) {});
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/specOptionList?spuId=" + spuId).then(function (res) {
@@ -174,7 +175,7 @@ __webpack_require__.r(__webpack_exports__);
         that.skuList = res.data.data;
       }
     }).catch(function (err) {});
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-spu?spuId=" + that.spuId).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-spu?spuId=" + that.spuId + "&categoryId=" + that.spu.category_id).then(function (res) {
       if (res.data.code === 2000) {
         console.info(res.data.data);
         that.attrList = res.data.data;
