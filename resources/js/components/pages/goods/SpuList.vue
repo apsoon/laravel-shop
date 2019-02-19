@@ -26,16 +26,6 @@
                     width="150">
             </el-table-column>
             <el-table-column
-                    prop="list_price"
-                    label="列表价"
-                    width="150">
-            </el-table-column>
-            <el-table-column
-                    prop="brief"
-                    label="简述"
-                    min-width="1">
-            </el-table-column>
-            <el-table-column
                     prop="state"
                     label="状态"
                     width="150">

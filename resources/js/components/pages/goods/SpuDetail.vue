@@ -1,7 +1,20 @@
 <template>
     <div>
         <el-tabs v-model="activeName" type="border-card">
-            <el-tab-pane label="商品信息" name="info">商品信息</el-tab-pane>
+            <el-tab-pane label="商品信息" name="info">
+                <el-row>
+                    商品名称: {{spu.name}}
+                </el-row>
+                <el-row>
+                    品牌: {{spu.brand_id}}
+                </el-row>
+                <el-row>
+                    分类: {{spu.category_id}}
+                </el-row>
+                <el-row>
+                    状态: {{spu.state}}
+                </el-row>
+            </el-tab-pane>
             <el-tab-pane label="商品属性" name="attr">
                 <router-link :to="{path: '/spu-attr-add', query:{spuId:spuId,categoryId:spu.category_id}}">
                     <el-button type="primary" size="medium">

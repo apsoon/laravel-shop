@@ -148,6 +148,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -271,9 +284,44 @@ var render = function() {
           }
         },
         [
-          _c("el-tab-pane", { attrs: { label: "商品信息", name: "info" } }, [
-            _vm._v("商品信息")
-          ]),
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "商品信息", name: "info" } },
+            [
+              _c("el-row", [
+                _vm._v(
+                  "\n                商品名称: " +
+                    _vm._s(_vm.spu.name) +
+                    "\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c("el-row", [
+                _vm._v(
+                  "\n                品牌: " +
+                    _vm._s(_vm.spu.brand_id) +
+                    "\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c("el-row", [
+                _vm._v(
+                  "\n                分类: " +
+                    _vm._s(_vm.spu.category_id) +
+                    "\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c("el-row", [
+                _vm._v(
+                  "\n                状态: " +
+                    _vm._s(_vm.spu.state) +
+                    "\n            "
+                )
+              ])
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "el-tab-pane",
