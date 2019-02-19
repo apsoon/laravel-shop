@@ -13,6 +13,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "OrderList"
 });
@@ -34,7 +58,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "el-card",
+    [
+      _c(
+        "div",
+        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+        [_c("span", [_vm._v("订单列表")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "el-table",
+        [
+          _c("el-table-column", { attrs: { label: "订单号" } }),
+          _vm._v(" "),
+          _c("el-table-column", { attrs: { label: "下单时间" } }),
+          _vm._v(" "),
+          _c("el-table-column", { attrs: { label: "订单总额" } }),
+          _vm._v(" "),
+          _c("el-table-column", { attrs: { label: "收货人" } }),
+          _vm._v(" "),
+          _c("el-table-column", { attrs: { label: "订单状态" } }),
+          _vm._v(" "),
+          _c("el-table-column", { attrs: { label: "操作" } })
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
