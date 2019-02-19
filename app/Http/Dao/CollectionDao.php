@@ -89,7 +89,7 @@ class CollectionDao
      */
     public function deleteByUserSkuId(string $userId, int $skuId)
     {
-        $result = $this->collection::where(["user_id" => $userId, "skuId" => $skuId])
+        $result = $this->collection::where(["user_id" => $userId, "sku_id" => $skuId])
             ->delete();
         return $result;
     }
