@@ -7,6 +7,9 @@
             <el-form-item label="产品名称" prop="name">
                 <el-input v-model="skuForm.name" placeholder="请输入产品名称"></el-input>
             </el-form-item>
+            <el-form-item label="产品名称" prop="brief">
+                <el-input v-model="skuForm.brief" placeholder="请输入产品简述"></el-input>
+            </el-form-item>
             <el-form-item label="产品原价" prop="originPrice">
                 <el-input type="number" v-model="skuForm.originPrice" placeholder="请输入产品原价"></el-input>
             </el-form-item>
@@ -48,6 +51,7 @@
                 skuForm: {
                     spuId: "",
                     name: "",
+                    brief: "",
                     options: [],
                     originPrice: "",
                     price: "",
