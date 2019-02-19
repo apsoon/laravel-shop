@@ -134,6 +134,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -142,7 +151,8 @@ __webpack_require__.r(__webpack_exports__);
       spuId: 0,
       activeName: "info",
       skuList: [],
-      specList: []
+      specList: [],
+      attrList: []
     };
   },
   mounted: function mounted() {
@@ -164,6 +174,12 @@ __webpack_require__.r(__webpack_exports__);
         that.skuList = res.data.data;
       }
     }).catch(function (err) {});
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-spu?spuId=" + that.spuId).then(function (res) {
+      if (res.data.code === 2000) {
+        console.info(res.data.data);
+        that.attrList = res.data.data;
+      }
+    });
   }
 });
 
@@ -253,9 +269,32 @@ var render = function() {
             _vm._v("商品信息")
           ]),
           _vm._v(" "),
-          _c("el-tab-pane", { attrs: { label: "商品属性", name: "attr" } }, [
-            _vm._v("商品属性")
-          ]),
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "商品属性", name: "attr" } },
+            [
+              _c(
+                "el-table",
+                {
+                  ref: "attrList",
+                  attrs: {
+                    data: _vm.attrList,
+                    "tooltip-effect": "dark",
+                    width: "100%"
+                  }
+                },
+                [
+                  _c("el-table-column", { attrs: { label: "属性名称" } }),
+                  _vm._v(" "),
+                  _c("el-table-column", { attrs: { label: "值" } }),
+                  _vm._v(" "),
+                  _c("el-table-column", { attrs: { label: "操作" } })
+                ],
+                1
+              )
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "el-tab-pane",

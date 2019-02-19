@@ -8,7 +8,7 @@
 
 namespace App\Http\Dao;
 
-use App\Http\Model\AttrOption;
+use App\Http\Model\SpuAttrValue;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\DB;
  *
  * @package App\Http\Dao
  */
-class AttrOptionDao
+class SpuAttrValueDao
 {
 
     /**
-     * @var AttrOption
+     * @var SpuAttrValue
      */
-    private $attrOption;
+    private $spuAttrValue;
 
     /**
      * 批量插入
@@ -32,7 +32,7 @@ class AttrOptionDao
      */
     public function insertList(array $optionList)
     {
-        $result = DB::table($this->attrOption->getTable())->insert($optionList);
+        $result = DB::table($this->spuAttrValue->getTable())->insert($optionList);
         return $result;
     }
 
@@ -44,7 +44,18 @@ class AttrOptionDao
      */
     public function findByAttrId(int $attrId)
     {
-        $result = $this->attrOption::where(["attr_id" => $attrId])
+        $result = $this->spuAttrValue::where(["attr_id" => $attrId])
+            ->get();
+        return $result;
+    }
+
+    /**
+     * @param int $spuId
+     * @return mixed
+     */
+    public function findBySpuId(int $spuId)
+    {
+        $result = $this->spuAttrValue::where("spu_id", "=", $spuId)
             ->get();
         return $result;
     }
@@ -52,10 +63,10 @@ class AttrOptionDao
     /**
      * AttrOptionDao constructor.
      *
-     * @param AttrOption $attrOption
+     * @param SpuAttrValue $spuAttrValue
      */
-    public function __construct(AttrOption $attrOption)
+    public function __construct(SpuAttrValue $spuAttrValue)
     {
-        $this->attrOption = $attrOption;
+        $this->spuAttrValue = $spuAttrValue;
     }
 }

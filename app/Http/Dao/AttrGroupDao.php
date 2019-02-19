@@ -73,8 +73,17 @@ class AttrGroupDao
         return $result;
     }
 
+    /**
+     * 分类获取
+     *
+     * @param int $categoryId
+     * @return mixed
+     */
     public function findByCategoryId(int $categoryId)
     {
+        $result = $this->attrGroup::where("category_id", "=", $categoryId)
+            ->get();
+        return $result;
     }
 
     /**

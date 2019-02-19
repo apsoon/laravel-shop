@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGoodsAttributeOptionTable extends Migration
+class CreateSpuAttrValueTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateGoodsAttributeOptionTable extends Migration
      */
     public function up()
     {
-        Schema::create('goods_attribute_option', function (Blueprint $table) {
+        Schema::create('spu_attr_value', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("goods_id")->index()->comment("商品id");
-            $table->integer("attribute_id")->comment("属性id");
-            $table->integer("attribute_group_id")->comment("属性组id");
-            $table->integer("attribute_option_id")->comment("属性选项id");
+            $table->integer("spu_id")->index()->comment("spu Id");
+            $table->integer("attr_id")->comment("属性id");
+            $table->integer("attr_group_id")->comment("属性组id");
+            $table->integer("value")->comment("属性值");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -31,6 +31,6 @@ class CreateGoodsAttributeOptionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('goods_attribute');
+        Schema::dropIfExists('spu_attr_value');
     }
 }

@@ -2,7 +2,16 @@
     <div>
         <el-tabs v-model="activeName" type="border-card">
             <el-tab-pane label="商品信息" name="info">商品信息</el-tab-pane>
-            <el-tab-pane label="商品属性" name="attr">商品属性</el-tab-pane>
+            <el-tab-pane label="商品属性" name="attr">
+                <el-table ref="attrList" :data="attrList" tooltip-effect="dark" width="100%">
+                    <el-table-column label="属性名称">
+                    </el-table-column>
+                    <el-table-column label="值">
+                    </el-table-column>
+                    <el-table-column label="操作">
+                    </el-table-column>
+                </el-table>
+            </el-tab-pane>
             <el-tab-pane label="商品规格" name="spec">
                 <router-link :to="{path: '/spu-spec-add', query: {spuId: spuId}}">
                     <el-button type="primary" size="medium">添加规格</el-button>
@@ -131,7 +140,8 @@
                 spuId: 0,
                 activeName: "info",
                 skuList: [],
-                specList: []
+                specList: [],
+                attrList: []
             }
         },
         mounted: function () {
@@ -160,6 +170,13 @@
                 })
                 .catch(err => {
 
+                });
+            axios.get("/attr/list-spu?spuId=" + that.spuId + "&categoryId=")
+                .then(res => {
+                    if (res.data.code === 2000) {
+                        console.info(res.data.data);
+                        that.attrList = res.data.data;
+                    }
                 });
         }
     }

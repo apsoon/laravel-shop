@@ -11,7 +11,7 @@ namespace App\Http\Service;
 
 use App\Http\Dao\AttrDao;
 use App\Http\Dao\AttrGroupDao;
-use App\Http\Dao\AttrOptionDao;
+use App\Http\Dao\SpuAttrValueDao;
 use App\Http\Dao\CategoryDao;
 use App\Http\Model\Attr;
 use App\Http\Model\AttrGroup;
@@ -34,9 +34,9 @@ class AttrService
     private $attrGroupDao;
 
     /**
-     * @var AttrOptionDao
+     * @var SpuAttrValueDao
      */
-    private $attrOptionDao;
+    private $spuAttrValueDao;
 
     /**
      * @var CategoryDao
@@ -77,7 +77,7 @@ class AttrService
             $category = $this->categoryDao->findById($group->category_id);
 //            $attr->category_id = $category->id;
             $attr->category_name = $category->name;
-            $options = $this->attrOptionDao->findByAttrId($attr->id);
+            $options = $this->spuAttrValueDao->findByAttrId($attr->id);
             $attr->options = $options;
         }
         return $result;
@@ -87,10 +87,28 @@ class AttrService
      * 分组获取属性
      *
      * @param array $req
+     * @return mixed
      */
     public function getAttrListByGroup(array $req)
     {
         $result = $this->attrDao->findByGroupId($req["attrGroupId"]);
+        return $result;
+    }
+
+    /**
+     * SPU 获取
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function getAttrListWithValueBySpu(array $req)
+    {
+        $values = $this->spuAttrValueDao->findBySpuId($req["spuId"]);
+        $result = $values;
+        if (empty($values)) {
+            $groupList = $this->attrGroupDao->findByCategoryId($req["categoryId"]);
+            $result = $groupList;
+        }
         return $result;
     }
 
@@ -105,7 +123,7 @@ class AttrService
         foreach ($result as $group) {
             $attrs = $this->attrDao->findByGroupId($group->id);
             foreach ($attrs as $attr) {
-                $options = $this->attrOptionDao->findByAttrId($attr->id);
+                $options = $this->spuAttrValueDao->findByAttrId($attr->id);
                 $attr->options = $options;
             }
             $group->attrs = $attrs;
@@ -162,7 +180,7 @@ class AttrService
      * @param array $req
      * @return bool
      */
-    public function createAttrOption(array $req)
+    public function createSpuAttrValue(array $req)
     {
         $attrId = $req["attrId"];
         $groupId = $this->attrDao->findById($attrId)->attr_group_id;
@@ -171,7 +189,7 @@ class AttrService
         foreach ($options as $option) {
             array_push($arr, ["attr_id" => $attrId, "attr_group_id" => $groupId, "name" => $option]);
         }
-        $result = $this->attrOptionDao->insertList($arr);
+        $result = $this->spuAttrValueDao->insertList($arr);
         return $result;
     }
 
@@ -183,7 +201,7 @@ class AttrService
      */
     public function getOptionByAttrId(int $attrId)
     {
-        $result = $this->attrOptionDao->findByAttrId($attrId);
+        $result = $this->spuAttrValueDao->findByAttrId($attrId);
         return $result;
     }
 
@@ -194,14 +212,14 @@ class AttrService
      *
      * @param AttrDao $attrDao
      * @param AttrGroupDao $attrGroupDao
-     * @param AttrOptionDao $attrOptionDao
+     * @param SpuAttrValueDao $spuAttrValueDao
      * @param CategoryDao $categoryDao
      */
-    public function __construct(AttrDao $attrDao, AttrGroupDao $attrGroupDao, AttrOptionDao $attrOptionDao, CategoryDao $categoryDao)
+    public function __construct(AttrDao $attrDao, AttrGroupDao $attrGroupDao, SpuAttrValueDao $spuAttrValueDao, CategoryDao $categoryDao)
     {
         $this->attrDao = $attrDao;
         $this->attrGroupDao = $attrGroupDao;
-        $this->attrOptionDao = $attrOptionDao;
+        $this->spuAttrValueDao = $spuAttrValueDao;
         $this->categoryDao = $categoryDao;
     }
 }

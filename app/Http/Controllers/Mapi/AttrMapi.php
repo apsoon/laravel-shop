@@ -57,6 +57,19 @@ class AttrMapi extends Controller
     }
 
     /**
+     * 根据spu获取
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function listBySpu(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->attrService->getAttrListWithValueBySpu($req);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
      * 添加属性
      *
      * @return \Illuminate\Contracts\View\Factory|View
