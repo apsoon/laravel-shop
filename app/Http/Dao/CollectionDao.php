@@ -84,10 +84,24 @@ class CollectionDao
      * 根据用户ID和产品ID删除
      *
      * @param string $userId
+     * @param int $skuId
+     * @return mixed
+     */
+    public function deleteByUserSkuId(string $userId, int $skuId)
+    {
+        $result = $this->collection::where(["user_id" => $userId, "skuId" => $skuId])
+            ->delete();
+        return $result;
+    }
+
+    /**
+     * 批量取消收藏
+     *
+     * @param string $userId
      * @param array $skuIds
      * @return mixed
      */
-    public function deleteByUserSkuId(string $userId, array $skuIds)
+    public function deleteByUserSkuIdsIn(string $userId, array $skuIds)
     {
         $result = $this->collection::where(["user_id" => $userId])
             ->whereIn("sku_id", $skuIds)

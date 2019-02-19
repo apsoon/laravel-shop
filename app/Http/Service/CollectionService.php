@@ -72,7 +72,11 @@ class CollectionService
      */
     public function removeCollection(string $userId, array $skuIds)
     {
-        $result = $this->collectionDao->deleteByUserSkuId($userId, $skuIds);
+        if (sizeof($skuIds) == 1)
+            $result = $this->collectionDao->deleteByUserSkuId($userId, $skuIds[0]);
+        else {
+            $result = $this->collectionDao->deleteByUserSkuIdsIn($userId, $skuIds);
+        }
         return $result;
     }
 
