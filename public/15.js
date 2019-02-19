@@ -215,24 +215,6 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "简要描述", prop: "brief" } },
-            [
-              _c("el-input", {
-                attrs: { placeholder: "请输入简要描述" },
-                model: {
-                  value: _vm.spuForm.brief,
-                  callback: function($$v) {
-                    _vm.$set(_vm.spuForm, "brief", $$v)
-                  },
-                  expression: "spuForm.brief"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
             { attrs: { label: "选择分类", prop: "categoryId" } },
             [
               _c("el-cascader", {
@@ -284,33 +266,6 @@ var render = function() {
             ],
             1
           ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "商品列表价", prop: "listPrice" } },
-            [
-              _c(
-                "el-col",
-                { attrs: { span: 5 } },
-                [
-                  _c("el-input", {
-                    attrs: { placeholder: "请输入商品列表价" },
-                    model: {
-                      value: _vm.spuForm.listPrice,
-                      callback: function($$v) {
-                        _vm.$set(_vm.spuForm, "listPrice", $$v)
-                      },
-                      expression: "spuForm.listPrice"
-                    }
-                  })
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("el-form-item", { attrs: { label: "添加图片" } }),
           _vm._v(" "),
           _c(
             "el-form-item",

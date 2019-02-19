@@ -50,6 +50,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SkuAdd",
@@ -59,6 +62,7 @@ __webpack_require__.r(__webpack_exports__);
       skuForm: {
         spuId: "",
         name: "",
+        brief: "",
         options: [],
         originPrice: "",
         price: "",
@@ -190,6 +194,24 @@ var render = function() {
                     _vm.$set(_vm.skuForm, "name", $$v)
                   },
                   expression: "skuForm.name"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品名称", prop: "brief" } },
+            [
+              _c("el-input", {
+                attrs: { placeholder: "请输入产品简述" },
+                model: {
+                  value: _vm.skuForm.brief,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "brief", $$v)
+                  },
+                  expression: "skuForm.brief"
                 }
               })
             ],
