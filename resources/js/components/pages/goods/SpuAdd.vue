@@ -7,9 +7,9 @@
             <el-form-item label="商品名称" prop="name">
                 <el-input v-model="spuForm.name" placeholder="请输入商品名称"/>
             </el-form-item>
-            <el-form-item label="简要描述" prop="brief">
-                <el-input v-model="spuForm.brief" placeholder="请输入简要描述"/>
-            </el-form-item>
+            <!--<el-form-item label="简要描述" prop="brief">-->
+                <!--<el-input v-model="spuForm.brief" placeholder="请输入简要描述"/>-->
+            <!--</el-form-item>-->
             <el-form-item label="选择分类" prop="categoryId">
                 <el-cascader
                         :show-all-levels="false"
@@ -32,13 +32,13 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="商品列表价" prop="listPrice">
-                <el-col :span="5">
-                    <el-input v-model="spuForm.listPrice" placeholder="请输入商品列表价"/>
-                </el-col>
-            </el-form-item>
-            <el-form-item label="添加图片">
-            </el-form-item>
+            <!--<el-form-item label="商品列表价" prop="listPrice">-->
+                <!--<el-col :span="5">-->
+                    <!--<el-input v-model="spuForm.listPrice" placeholder="请输入商品列表价"/>-->
+                <!--</el-col>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="添加图片">-->
+            <!--</el-form-item>-->
             <el-form-item label="商品描述" prop="detailHtml">
                 <div ref="editor" style="text-align:left; width: 100%"></div>
             </el-form-item>
