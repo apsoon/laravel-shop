@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrderProductTable extends Migration
+class CreateOrderSkuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,22 +14,17 @@ class CreateOrderProductTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_product', function (Blueprint $table) {
+        Schema::create('order_sku', function (Blueprint $table) {
             $table->increments('id');
             $table->integer("order_id")->comment("订单id");
-            $table->integer("product_id")->comment("产品id");
+            $table->integer("sku_id")->comment("产品id");
             $table->string("order_sn")->comment("订单编号");
-            $table->string("product_sn")->comment("产品sn号");
-            $table->string("name")->default("")->comment("产品名称");
-            $table->string("cover")->default("")->comment("产品封面图片");
-            $table->decimal("origin_price")->default(0)->comment("产品原价");
-            $table->decimal("price")->default(0)->comment("商品价格");
             $table->integer("number")->default(0)->comment("商品数量");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
 
-        DB::statement("ALTER TABLE `order_product` comment'订单-产品对应表'"); // 表注释
+        DB::statement("ALTER TABLE `order_sku` comment'订单-SKU对应表'"); // 表注释
     }
 
     /**
@@ -39,6 +34,6 @@ class CreateOrderProductTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_product');
+        Schema::dropIfExists('order_sku');
     }
 }
