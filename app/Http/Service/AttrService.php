@@ -126,7 +126,20 @@ class AttrService
      */
     public function getAttrGroupList()
     {
-        $result = $this->attrGroupDao->findAll();
+        $result = $this->attrGroupDao->list();
+        return $result;
+    }
+
+    /**
+     * 分页获取分类
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function getPagedAttrGroupList(array $req)
+    {
+        $size = 20;
+        $result = $this->attrGroupDao->findByPage($req["pageNo"], $size);
         return $result;
     }
 

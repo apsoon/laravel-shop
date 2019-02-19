@@ -83,6 +83,19 @@ class AttrMapi extends Controller
         else return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
+    /**
+     * 分页获取属性组
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function groupList(Request $request)
+    {
+        $req = $request->all();
+        $result = $this->attrService->getPagedAttrGroupList($req);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
     // ===========================================================================  attr option  ===========================================================================
 
     /**

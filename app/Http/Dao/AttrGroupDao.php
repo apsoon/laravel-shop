@@ -51,9 +51,25 @@ class AttrGroupDao
      *
      * @return AttrGroup[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function findAll()
+    public function list()
     {
         $result = $this->attrGroup::all();
+        return $result;
+    }
+
+    /**
+     * 分页获取
+     *
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findByPage(int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->attrGroup::offset($offset)
+            ->limit($size)
+            ->get();
         return $result;
     }
 

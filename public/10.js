@@ -9,6 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -23,8 +25,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "AttrList"
+  name: "AttrList",
+  data: function data() {
+    return {
+      groupList: [],
+      pageNo: 1
+    };
+  },
+  mounted: function mounted() {
+    var that = this;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrGroup/list?pageNo=" + that.pageNo).then(function (res) {
+      if (res.data.code === 2000) {
+        that.groupList = res.data.data;
+        console.info(that.groupList);
+      }
+    }).catch(function (err) {});
+  },
+  methods: {}
 });
 
 /***/ }),
@@ -44,36 +81,87 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("el-card", [
-    _c(
-      "div",
-      { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
-      [
-        _c(
-          "router-link",
-          { attrs: { to: "/attr-group-add" } },
-          [
-            _c("el-button", { attrs: { type: "primary", size: "medium" } }, [
-              _vm._v("添加属性组")
+  return _c(
+    "el-card",
+    [
+      _c(
+        "div",
+        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+        [
+          _c(
+            "router-link",
+            { attrs: { to: "/attr-group-add" } },
+            [
+              _c("el-button", { attrs: { type: "primary", size: "medium" } }, [
+                _vm._v("添加属性组")
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-table",
+        {
+          ref: "groupList",
+          attrs: {
+            data: _vm.groupList,
+            "tooltip-effect": "dark",
+            width: "100%"
+          }
+        },
+        [
+          _c("el-table-column", {
+            attrs: { label: "属性组名称", prop: "name", width: "150px" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "所属分类", prop: "category_id", width: "150px" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "包含属性", prop: "", "min-width": "1" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "", width: "200", label: "操作" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            path: "/attr-add",
+                            query: { attrGroupId: scope.row.id }
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "el-button",
+                          { attrs: { size: "mini", type: "primary" } },
+                          [_vm._v("添加属性\n                    ")]
+                        )
+                      ],
+                      1
+                    )
+                  ]
+                }
+              }
             ])
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "router-link",
-          { attrs: { to: "/attr-add" } },
-          [
-            _c("el-button", { attrs: { type: "primary", size: "medium" } }, [
-              _vm._v("添加属性")
-            ])
-          ],
-          1
-        )
-      ],
-      1
-    )
-  ])
+          })
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
