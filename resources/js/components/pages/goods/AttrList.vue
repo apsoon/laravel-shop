@@ -2,10 +2,10 @@
     <el-card>
         <div slot="header" class="clearfix">
             <router-link to="/attr-group-add">
-                <el-button type="primary" size="medium">添加规格组</el-button>
+                <el-button type="primary" size="medium">添加属性组</el-button>
             </router-link>
             <router-link to="/attr-add">
-                <el-button type="primary" size="medium">添加规格</el-button>
+                <el-button type="primary" size="medium">添加属性</el-button>
             </router-link>
         </div>
     </el-card>

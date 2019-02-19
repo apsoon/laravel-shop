@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Mapi;
 
 use App\Http\Controllers\Controller;
-use App\Http\Service\AttributeService;
+use App\Http\Enum\StatusCode;
+use App\Http\Service\AttrService;
 use App\Http\Service\CategoryService;
+use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
@@ -17,16 +19,16 @@ use Illuminate\View\View;
 class AttrMapi extends Controller
 {
     /**
-     * @var AttributeService
+     * @var AttrService
      */
-    private $attributeService;
+    private $attrService;
 
     /**
      * @var CategoryService
      */
     private $categoryService;
 
-    // ===========================================================================  attribute ===========================================================================
+    // ===========================================================================  attr ===========================================================================
 
     /**
      * 获取属性列表
@@ -37,8 +39,8 @@ class AttrMapi extends Controller
     public function list(Request $request)
     {
         $req = $request->all();
-        $result = $this->attributeService->getAttributeList($req);
-        return view('admin.pages.goods.attribute_list', ["attributes" => $result]);
+        $result = $this->attrService->getAttrList($req);
+        return view('admin.pages.goods.attr_list', ["attrs" => $result]);
     }
 
     /**
@@ -48,8 +50,8 @@ class AttrMapi extends Controller
      */
     public function add()
     {
-        $groupList = $this->attributeService->getAttributeGroupList();
-        return view("admin.pages.goods.attribute_add", ["groupList" => $groupList]);
+        $groupList = $this->attrService->getAttrGroupList();
+        return view("admin.pages.goods.attr_add", ["groupList" => $groupList]);
     }
 
     /**
@@ -61,37 +63,27 @@ class AttrMapi extends Controller
     public function create(Request $request)
     {
         $req = $request->all();
-        $result = $this->attributeService->createAttribute($req);
-        if ($result) return redirect("attribute/list");
+        $result = $this->attrService->createAttr($req);
+        if ($result) return redirect("attr/list");
     }
 
-    // ===========================================================================  attribute group  ===========================================================================
-
-    /**
-     * 添加分组
-     *
-     * @return \Illuminate\Contracts\View\Factory|View
-     */
-    public function addGroup()
-    {
-        $categoryList = $this->categoryService->getUnitCategory();
-        return view("admin.pages.goods.attributeGroup_add", ["categoryList" => $categoryList]);
-    }
+    // ===========================================================================  attr group  ===========================================================================
 
     /**
      * 创建属性组
      *
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return JsonResult
      */
     public function createGroup(Request $request)
     {
         $req = $request->all();
-        $result = $this->attributeService->createAttributeGroup($req);
-        if ($result) return redirect("attribute/list");
+        $result = $this->attrService->createAttrGroup($req);
+        if ($result) return new JsonResult();
+        else return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
-    // ===========================================================================  attribute option  ===========================================================================
+    // ===========================================================================  attr option  ===========================================================================
 
     /**
      * 添加属性选项
@@ -101,29 +93,28 @@ class AttrMapi extends Controller
      */
     public function addOption(Request $request)
     {
-        $attributeId = $request->all()["attributeId"];
-        return view("admin.pages.goods.attributeOption_add", ["attributeId" => $attributeId]);
+        $attrId = $request->all()["attrId"];
+        return view("admin.pages.goods.attrOption_add", ["attrId" => $attrId]);
     }
 
     public function createOption(Request $request)
     {
         $req = $request->all();
-        $result = $this->attributeService->createAttributeOption($req);
-        if ($result) return url("attribute/list");
+        $result = $this->attrService->createAttrOption($req);
+        if ($result) return url("attr/list");
     }
 
     // ===========================================================================  constructor  ===========================================================================
 
     /**
-     * AttributeMapi constructor.
+     * AttrMapi constructor.
      *
-     * @param AttributeService $attributeService
+     * @param AttrService $attrService
      * @param CategoryService $categoryService
      */
-    public function __construct(AttributeService $attributeService, CategoryService $categoryService)
+    public function __construct(AttrService $attrService, CategoryService $categoryService)
     {
-        $this->middleware('auth');
-        $this->attributeService = $attributeService;
+        $this->attrService = $attrService;
         $this->categoryService = $categoryService;
     }
 }

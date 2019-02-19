@@ -25,6 +25,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     // 首页
     Route::get('/index', 'IndexMapi@index');
 
+    // ================================================  商品管理  =================================================
     // SPU
     Route::GET("spu/list", "SpuMapi@list");
     Route::GET("spu/pagedList", "SpuMapi@listByPage");
@@ -54,12 +55,12 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::POST("brand/modState", "BrandMapi@modifyState");
 
     // 属性
-    Route::GET("attr/list", "AttributeMapi@list");
-    Route::POST("attr/create", "AttributeMapi@create");
-    Route::GET("attrGroup/add", "AttributeMapi@addGroup");
-    Route::POST("attrGroup/create", "AttributeMapi@createGroup");
-    Route::GET("attrOption/add", "AttributeMapi@addOption");
-    Route::POST("attrOption/create", "AttributeMapi@createOption");
+    Route::GET("attr/list", "AttrMapi@list");
+    Route::POST("attr/create", "AttrMapi@create");
+    Route::GET("attrGroup/add", "AttrMapi@addGroup");
+    Route::POST("attrGroup/create", "AttrMapi@createGroup");
+    Route::GET("attrOption/add", "AttrMapi@addOption");
+    Route::POST("attrOption/create", "AttrMapi@createOption");
 
     // 规格
     Route::GET("spec/list", "SpecMapi@list");
@@ -68,12 +69,20 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::GET("specOption/add", "SpecMapi@addOption");
     Route::POST("specOption/create", "SpecMapi@createOption");
 
+    // ================================================  交易管理  =================================================
+
+    // ================================================  营销管理 =================================================
+    // 优惠券
+    Route::GET("coupon/list", "CouponMapi@list");
+    Route::POST("coupon/create", "CouponMapi@create");
+
     // ================================================  用户管理  =================================================
     // 用户
     Route::GET("user/list-page", "UserMapi@listByPage");
     // 地址
     Route::GET("addr/list", "UserMapi@list");
 
+    // ================================================  广告管理  =================================================
     // 广告
     Route::GET("ad/list", "AdMapi@list");
     Route::GET("ad/add", "AdMapi@add");
@@ -81,10 +90,6 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::POST("ad/modState", "AdMapi@modifyState");
     Route::POST("ad/delete", "AdMapi@delete");
     Route::GET("adPos/list", "AdMapi@listPosition");
-
-    // 优惠券
-    Route::GET("coupon/list", "CouponMapi@list");
-    Route::POST("coupon/create", "CouponMapi@create");
 
     // 帮助
     Route::GET("help", function () {

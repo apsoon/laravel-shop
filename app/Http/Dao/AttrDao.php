@@ -12,30 +12,30 @@ namespace App\Http\Dao;
 use App\Http\Model\Attr;
 
 /**
- * Class AttributeDao
+ * Class AttrDao
  *
  * @package App\Http\Dao
  */
-class AttributeDao
+class AttrDao
 {
     /**
      * @var Attr
      */
-    private $attribute;
+    private $attr;
 
     /**
-     * @param Attr $attribute
+     * @param Attr $attr
      * @return bool
      */
-    public function insert(Attr $attribute)
+    public function insert(Attr $attr)
     {
-        $result = $attribute->save();
+        $result = $attr->save();
         return $result;
     }
 
     public function findById(int $id)
     {
-        $result = $this->attribute::where(["id" => $id])
+        $result = $this->attr::where(["id" => $id])
             ->first();
         return $result;
     }
@@ -50,7 +50,7 @@ class AttributeDao
     public function getByPage(int $pageNo, int $size)
     {
         $offset = ($pageNo - 1) * $size;
-        $result = $this->attribute::offset($offset)
+        $result = $this->attr::offset($offset)
             ->limit($size)
             ->get();
         return $result;
@@ -62,12 +62,12 @@ class AttributeDao
     }
 
     /**
-     * AttributeDao constructor.
+     * AttrDao constructor.
      *
-     * @param Attr $attribute
+     * @param Attr $attr
      */
-    public function __construct(Attr $attribute)
+    public function __construct(Attr $attr)
     {
-        $this->attribute = $attribute;
+        $this->attr = $attr;
     }
 }

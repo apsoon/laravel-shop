@@ -1,8 +1,8 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[17],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/market/CouponAdd.vue?vue&type=script&lang=js&":
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/SpuSpecAdd.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/market/CouponAdd.vue?vue&type=script&lang=js& ***!
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/goods/SpuSpecAdd.vue?vue&type=script&lang=js& ***!
   \*********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -29,99 +29,57 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "CouponAdd",
+  name: "SpuSpecAdd",
   data: function data() {
     return {
-      couponForm: {
-        name: "",
-        sn: "",
-        number: "",
-        value: "",
-        effectStart: "",
-        effectEnd: "",
-        describe: "",
-        sendType: "1",
-        state: "0"
+      spuId: 0,
+      spuSForm: {
+        spuId: "",
+        specIds: []
       },
-      rules: {
-        name: [{
-          required: true,
-          message: '请输入优惠券名称',
-          trigger: 'blur'
-        }],
-        sn: [{
-          required: true,
-          message: '请输入优惠券编号',
-          trigger: 'blur'
-        }],
-        value: [{
-          required: true,
-          message: '请输入优惠券面值',
-          trigger: 'blur'
-        }]
-      },
-      effectDate: []
+      rules: {},
+      specList: [],
+      transferProp: {
+        key: 'id',
+        label: 'name'
+      }
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    var that = this,
+        spuId = that.$route.query.spuId;
+    that.spuid = spuId;
+    that.spuSForm.spuId = spuId;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spec/list").then(function (res) {
+      if (res.data.code === 2000) {
+        that.specList = res.data.data;
+      }
+    }).catch(function (err) {});
+  },
   methods: {
     onSubmit: function onSubmit() {
       var that = this;
-      that.$refs.couponForm.validate(function (valid) {
-        if (valid) {
-          if (that.effectDate) {
-            that.couponForm.effectStart = that.effectDate[0];
-            that.couponForm.effectEnd = that.effectDate[1];
-          }
-
-          console.info(that.couponForm);
-          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/coupon/create", that.couponForm).then(function (res) {
-            if (res.data.code === 2000) {
-              that.$router.push("/coupon/list");
-            }
-          }).catch(function (err) {});
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/spu/relateSpec", that.spuSForm).then(function (res) {
+        if (res.data.code === 2000) {
+          that.$router.push("spu/detail?spuId=" + that.spuId);
+        } else {
+          that.$message({
+            type: 'error',
+            message: '添加失败!'
+          });
         }
-      });
+      }).catch(function (err) {});
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/market/CouponAdd.vue?vue&type=template&id=76e149de&scoped=true&":
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/SpuSpecAdd.vue?vue&type=template&id=8ae67f06&scoped=true&":
 /*!*************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/market/CouponAdd.vue?vue&type=template&id=76e149de&scoped=true& ***!
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/goods/SpuSpecAdd.vue?vue&type=template&id=8ae67f06&scoped=true& ***!
   \*************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -140,201 +98,27 @@ var render = function() {
       _c(
         "div",
         { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
-        [_c("span", [_vm._v("添加优惠券")])]
+        [_c("span", [_vm._v("添加规格及选项")])]
       ),
       _vm._v(" "),
       _c(
         "el-form",
-        {
-          ref: "couponForm",
-          attrs: {
-            rules: _vm.rules,
-            model: _vm.couponForm,
-            "label-width": "100px"
-          }
-        },
+        { ref: "spuSForm", attrs: { model: _vm.spuSForm, rules: _vm.rules } },
         [
           _c(
             "el-form-item",
-            { attrs: { label: "优惠券名称", prop: "name" } },
+            { staticClass: "clearfix", attrs: { prop: "specId" } },
             [
-              _c("el-input", {
-                attrs: { placeholder: "请输入优惠券名称" },
+              _c("el-transfer", {
+                attrs: { data: _vm.specList, props: _vm.transferProp },
                 model: {
-                  value: _vm.couponForm.name,
+                  value: _vm.spuSForm.specIds,
                   callback: function($$v) {
-                    _vm.$set(_vm.couponForm, "name", $$v)
+                    _vm.$set(_vm.spuSForm, "specIds", $$v)
                   },
-                  expression: "couponForm.name"
+                  expression: "spuSForm.specIds"
                 }
               })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "优惠券编号", prop: "sn" } },
-            [
-              _c("el-input", {
-                attrs: { placeholder: "请输入优惠券编号" },
-                model: {
-                  value: _vm.couponForm.sn,
-                  callback: function($$v) {
-                    _vm.$set(_vm.couponForm, "sn", $$v)
-                  },
-                  expression: "couponForm.sn"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "使用说明", prop: "describe" } },
-            [
-              _c("el-input", {
-                attrs: {
-                  type: "textarea",
-                  rows: "4",
-                  placeholder: "请输入优惠券使用说明"
-                },
-                model: {
-                  value: _vm.couponForm.describe,
-                  callback: function($$v) {
-                    _vm.$set(_vm.couponForm, "describe", $$v)
-                  },
-                  expression: "couponForm.describe"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "发放总量", prop: "number" } },
-            [
-              _c("el-input", {
-                attrs: { type: "number", placeholder: "请输入优惠券发放数量" },
-                model: {
-                  value: _vm.couponForm.number,
-                  callback: function($$v) {
-                    _vm.$set(_vm.couponForm, "number", $$v)
-                  },
-                  expression: "couponForm.number"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "有效期" } },
-            [
-              _c("el-date-picker", {
-                attrs: {
-                  "unlink-panels": "",
-                  type: "daterange",
-                  "range-separator": "至",
-                  "start-placeholder": "开始日期",
-                  "end-placeholder": "结束日期"
-                },
-                model: {
-                  value: _vm.effectDate,
-                  callback: function($$v) {
-                    _vm.effectDate = $$v
-                  },
-                  expression: "effectDate"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "面值", prop: "value" } },
-            [
-              _c("el-input", {
-                attrs: { type: "number", placeholder: "请输入优惠券使用说明" },
-                model: {
-                  value: _vm.couponForm.value,
-                  callback: function($$v) {
-                    _vm.$set(_vm.couponForm, "value", $$v)
-                  },
-                  expression: "couponForm.value"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "发放类型", prop: "sendType" } },
-            [
-              _c(
-                "el-radio-group",
-                {
-                  model: {
-                    value: _vm.couponForm.method,
-                    callback: function($$v) {
-                      _vm.$set(_vm.couponForm, "method", $$v)
-                    },
-                    expression: "couponForm.method"
-                  }
-                },
-                [
-                  _c("el-radio", { attrs: { label: 1 } }, [_vm._v("用户领取")]),
-                  _vm._v(" "),
-                  _c("el-radio", { attrs: { label: 2 } }, [_vm._v("后台发放")]),
-                  _vm._v(" "),
-                  _c("el-radio", { attrs: { label: 3 } }, [
-                    _vm._v("优惠券号领取")
-                  ])
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "是否生效", prop: "state" } },
-            [
-              _c(
-                "el-radio",
-                {
-                  attrs: { label: "0" },
-                  model: {
-                    value: _vm.couponForm.state,
-                    callback: function($$v) {
-                      _vm.$set(_vm.couponForm, "state", $$v)
-                    },
-                    expression: "couponForm.state"
-                  }
-                },
-                [_vm._v("暂不生效")]
-              ),
-              _vm._v(" "),
-              _c(
-                "el-radio",
-                {
-                  attrs: { label: "1" },
-                  model: {
-                    value: _vm.couponForm.state,
-                    callback: function($$v) {
-                      _vm.$set(_vm.couponForm, "state", $$v)
-                    },
-                    expression: "couponForm.state"
-                  }
-                },
-                [_vm._v("立即生效")]
-              )
             ],
             1
           ),
@@ -342,7 +126,7 @@ var render = function() {
           _c(
             "el-button",
             { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
-            [_vm._v("添加优惠券")]
+            [_vm._v("添加规格")]
           )
         ],
         1
@@ -358,17 +142,17 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/market/CouponAdd.vue":
+/***/ "./resources/js/components/pages/goods/SpuSpecAdd.vue":
 /*!************************************************************!*\
-  !*** ./resources/js/components/pages/market/CouponAdd.vue ***!
+  !*** ./resources/js/components/pages/goods/SpuSpecAdd.vue ***!
   \************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CouponAdd_vue_vue_type_template_id_76e149de_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CouponAdd.vue?vue&type=template&id=76e149de&scoped=true& */ "./resources/js/components/pages/market/CouponAdd.vue?vue&type=template&id=76e149de&scoped=true&");
-/* harmony import */ var _CouponAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CouponAdd.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/market/CouponAdd.vue?vue&type=script&lang=js&");
+/* harmony import */ var _SpuSpecAdd_vue_vue_type_template_id_8ae67f06_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SpuSpecAdd.vue?vue&type=template&id=8ae67f06&scoped=true& */ "./resources/js/components/pages/goods/SpuSpecAdd.vue?vue&type=template&id=8ae67f06&scoped=true&");
+/* harmony import */ var _SpuSpecAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SpuSpecAdd.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/goods/SpuSpecAdd.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -378,50 +162,50 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _CouponAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CouponAdd_vue_vue_type_template_id_76e149de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CouponAdd_vue_vue_type_template_id_76e149de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _SpuSpecAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SpuSpecAdd_vue_vue_type_template_id_8ae67f06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SpuSpecAdd_vue_vue_type_template_id_8ae67f06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "76e149de",
+  "8ae67f06",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/pages/market/CouponAdd.vue"
+component.options.__file = "resources/js/components/pages/goods/SpuSpecAdd.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/market/CouponAdd.vue?vue&type=script&lang=js&":
+/***/ "./resources/js/components/pages/goods/SpuSpecAdd.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************!*\
-  !*** ./resources/js/components/pages/market/CouponAdd.vue?vue&type=script&lang=js& ***!
+  !*** ./resources/js/components/pages/goods/SpuSpecAdd.vue?vue&type=script&lang=js& ***!
   \*************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CouponAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./CouponAdd.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/market/CouponAdd.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CouponAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuSpecAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SpuSpecAdd.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/SpuSpecAdd.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuSpecAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/market/CouponAdd.vue?vue&type=template&id=76e149de&scoped=true&":
+/***/ "./resources/js/components/pages/goods/SpuSpecAdd.vue?vue&type=template&id=8ae67f06&scoped=true&":
 /*!*******************************************************************************************************!*\
-  !*** ./resources/js/components/pages/market/CouponAdd.vue?vue&type=template&id=76e149de&scoped=true& ***!
+  !*** ./resources/js/components/pages/goods/SpuSpecAdd.vue?vue&type=template&id=8ae67f06&scoped=true& ***!
   \*******************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CouponAdd_vue_vue_type_template_id_76e149de_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./CouponAdd.vue?vue&type=template&id=76e149de&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/market/CouponAdd.vue?vue&type=template&id=76e149de&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CouponAdd_vue_vue_type_template_id_76e149de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuSpecAdd_vue_vue_type_template_id_8ae67f06_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SpuSpecAdd.vue?vue&type=template&id=8ae67f06&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/SpuSpecAdd.vue?vue&type=template&id=8ae67f06&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuSpecAdd_vue_vue_type_template_id_8ae67f06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CouponAdd_vue_vue_type_template_id_76e149de_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuSpecAdd_vue_vue_type_template_id_8ae67f06_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

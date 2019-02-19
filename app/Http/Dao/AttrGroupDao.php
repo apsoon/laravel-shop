@@ -12,24 +12,24 @@ namespace App\Http\Dao;
 use App\Http\Model\AttrGroup;
 
 /**
- * Class AttributeDao
+ * Class AttrDao
  *
  * @package App\Http\Dao
  */
-class AttributeGroupDao
+class AttrGroupDao
 {
     /**
      * @var AttrGroup
      */
-    private $attributeGroup;
+    private $attrGroup;
 
     /**
-     * @param AttrGroup $attributeGroup
+     * @param AttrGroup $attrGroup
      * @return bool
      */
-    public function insert(AttrGroup $attributeGroup)
+    public function insert(AttrGroup $attrGroup)
     {
-        $result = $attributeGroup->save();
+        $result = $attrGroup->save();
         return $result;
     }
 
@@ -41,7 +41,7 @@ class AttributeGroupDao
      */
     public function findById(int $id)
     {
-        $result = $this->attributeGroup::where(["id" => $id])
+        $result = $this->attrGroup::where(["id" => $id])
             ->first();
         return $result;
     }
@@ -53,7 +53,7 @@ class AttributeGroupDao
      */
     public function findAll()
     {
-        $result = $this->attributeGroup::all();
+        $result = $this->attrGroup::all();
         return $result;
     }
 
@@ -62,12 +62,12 @@ class AttributeGroupDao
     }
 
     /**
-     * AttributeGroupDao constructor.
+     * AttrGroupDao constructor.
      *
-     * @param AttrGroup $attributeGroup
+     * @param AttrGroup $attrGroup
      */
-    public function __construct(AttrGroup $attributeGroup)
+    public function __construct(AttrGroup $attrGroup)
     {
-        $this->attributeGroup = $attributeGroup;
+        $this->attrGroup = $attrGroup;
     }
 }

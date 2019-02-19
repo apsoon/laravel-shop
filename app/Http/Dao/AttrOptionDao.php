@@ -12,17 +12,17 @@ use App\Http\Model\AttrOption;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class AttributeOptionDao
+ * Class AttrOptionDao
  *
  * @package App\Http\Dao
  */
-class AttributeOptionDao
+class AttrOptionDao
 {
 
     /**
      * @var AttrOption
      */
-    private $attributeOption;
+    private $attrOption;
 
     /**
      * 批量插入
@@ -32,30 +32,30 @@ class AttributeOptionDao
      */
     public function insertList(array $optionList)
     {
-        $result = DB::table($this->attributeOption->getTable())->insert($optionList);
+        $result = DB::table($this->attrOption->getTable())->insert($optionList);
         return $result;
     }
 
     /**
      * 属性id获取
      *
-     * @param int $attributeId
+     * @param int $attrId
      * @return mixed
      */
-    public function findByAttributeId(int $attributeId)
+    public function findByAttrId(int $attrId)
     {
-        $result = $this->attributeOption::where(["attribute_id" => $attributeId])
+        $result = $this->attrOption::where(["attr_id" => $attrId])
             ->get();
         return $result;
     }
 
     /**
-     * AttributeOptionDao constructor.
+     * AttrOptionDao constructor.
      *
-     * @param AttrOption $attributeOption
+     * @param AttrOption $attrOption
      */
-    public function __construct(AttrOption $attributeOption)
+    public function __construct(AttrOption $attrOption)
     {
-        $this->attributeOption = $attributeOption;
+        $this->attrOption = $attrOption;
     }
 }
