@@ -66,8 +66,8 @@ class CollectionFapi extends Controller
         $req = $request->all();
         $collection = $this->collectionService->getCollectionByUserSku($req);
         $result = new \stdClass();
-        if (empty($collection)) $result->isCollect = 0;
-        else $result->isCollect = 1;
+        if (empty($collection)) $result->isCollected = 0;
+        else $result->isCollected = 1;
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
