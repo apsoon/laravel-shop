@@ -14,6 +14,7 @@ use App\Http\Dao\OrderSkuDao;
 use App\Http\Dao\SkuDao;
 use App\Http\Enum\OrderStatus;
 use App\Http\Model\Order;
+use App\Http\Util\SNUtil;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -46,7 +47,7 @@ class OrderService
             $order = new Order();
             $order->user_id = $req["userId"];
             // 生成唯一的编码
-//            $order->sn =
+            $order->sn = SNUtil::generateOrderSn();
             // ----- 关联sku
             $skuIds = $req["skuIds"];
             $skus = [];
