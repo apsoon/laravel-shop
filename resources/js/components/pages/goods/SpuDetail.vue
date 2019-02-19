@@ -3,6 +3,11 @@
         <el-tabs v-model="activeName" type="border-card">
             <el-tab-pane label="商品信息" name="info">商品信息</el-tab-pane>
             <el-tab-pane label="商品属性" name="attr">
+                <router-link :to="{path: '/spu-attr-add', query:{spuId:spuId,categoryId:spu.category_id}}">
+                    <el-button type="primary" size="medium">
+                        添加属性
+                    </el-button>
+                </router-link>
                 <el-table ref="attrList" :data="attrList" tooltip-effect="dark" width="100%">
                     <el-table-column label="属性名称">
                     </el-table-column>

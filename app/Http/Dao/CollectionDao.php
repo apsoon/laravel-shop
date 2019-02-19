@@ -67,6 +67,20 @@ class CollectionDao
     }
 
     /**
+     * 用户和SKU 获取
+     *
+     * @param $userId
+     * @param $skuId
+     * @return mixed
+     */
+    public function findByUserSku($userId, $skuId)
+    {
+        $result = $this->collection::where(["user_id" => $userId, "sku_id" => $skuId])
+            ->first();
+        return $result;
+    }
+
+    /**
      * 根据用户ID和产品ID删除
      *
      * @param string $userId
@@ -90,5 +104,4 @@ class CollectionDao
     {
         $this->collection = $collection;
     }
-
 }

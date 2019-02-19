@@ -77,6 +77,18 @@ class CollectionService
     }
 
     /**
+     * 通过用户Sku获取
+     *
+     * @param array $req
+     * @return mixed
+     */
+    public function getCollectionByUserSku(array $req)
+    {
+        $result = $this->collectionDao->findByUserSku($req["userId"], $req["skuId"]);
+        return $result;
+    }
+
+    /**
      * CollectionService constructor.
      *
      * @param CollectionDao $collectionDao

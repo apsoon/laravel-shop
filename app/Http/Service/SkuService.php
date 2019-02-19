@@ -82,7 +82,7 @@ class SkuService
      * @param array $req
      * @return mixed
      */
-    public function getSpuBySpuIdEffect(array $req)
+    public function getSkuListBySpuIdEffect(array $req)
     {
         $skuList = $this->skuDao->findBySpuIdEffect($req["spuId"]);
         foreach ($skuList as $sku) {

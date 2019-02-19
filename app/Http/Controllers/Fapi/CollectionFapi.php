@@ -56,6 +56,22 @@ class CollectionFapi extends Controller
     }
 
     /**
+     * 判断sku是否收藏
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function check(Request $request)
+    {
+        $req = $request->all();
+        $collection = $this->collectionService->getCollectionByUserSku($req);
+        $result = new \stdClass();
+        if (empty($collection)) $result->isCollect = 0;
+        else $result->isCollect = 1;
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
      * 分页获取收藏列表
      *
      * @param Request $request
@@ -65,7 +81,7 @@ class CollectionFapi extends Controller
     {
         $req = $request->all();
         $result = $this->collectionService->getCollectionList($req);
-        return new JsonResult(StatusCode::SUCCESS,$result);
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**

@@ -143,6 +143,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -274,6 +279,29 @@ var render = function() {
             "el-tab-pane",
             { attrs: { label: "商品属性", name: "attr" } },
             [
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: {
+                      path: "/spu-attr-add",
+                      query: {
+                        spuId: _vm.spuId,
+                        categoryId: _vm.spu.category_id
+                      }
+                    }
+                  }
+                },
+                [
+                  _c(
+                    "el-button",
+                    { attrs: { type: "primary", size: "medium" } },
+                    [_vm._v("\n                    添加属性\n                ")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
               _c(
                 "el-table",
                 {

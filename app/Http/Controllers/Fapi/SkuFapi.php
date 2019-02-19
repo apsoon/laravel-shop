@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Fapi;
 
 use App\Http\Controllers\Controller;
+use App\Http\Dao\CollectionDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Service\SkuService;
 use App\Http\Util\JsonResult;
@@ -15,6 +16,11 @@ class SkuFapi extends Controller
      * @var SkuService
      */
     private $skuService;
+
+    /**
+     * @var CollectionDao
+     */
+    private $collectionDao;
 
     /**
      * 产品详情页
@@ -38,7 +44,7 @@ class SkuFapi extends Controller
     public function listBySpu(Request $request)
     {
         $req = $request->all();
-        $result = $this->skuService->getSpuBySpuIdEffect($req);
+        $result = $this->skuService->getSkuListBySpuIdEffect($req);
         return $result;
     }
 
@@ -55,6 +61,12 @@ class SkuFapi extends Controller
         return $result;
     }
 
+    /**
+     * 规格列表
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function specList(Request $request)
     {
         $req = $request->all();
@@ -64,10 +76,13 @@ class SkuFapi extends Controller
 
     /**
      * SkuFapi constructor.
+     *
      * @param SkuService $skuService
+     * @param CollectionDao $collectionDao
      */
-    public function __construct(SkuService $skuService)
+    public function __construct(SkuService $skuService, CollectionDao $collectionDao)
     {
         $this->skuService = $skuService;
+        $this->collectionDao = $collectionDao;
     }
 }
