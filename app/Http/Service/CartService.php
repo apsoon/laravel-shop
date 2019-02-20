@@ -44,7 +44,7 @@ class CartService
      */
     public function getCartByUserId(array $req)
     {
-        $result = $this->cartSkuDao->findByUserId($req["userId"], $req["pageNo"], 20);
+        $result = $this->cartSkuDao->findByUserId($req["userId"]);
         return $result;
     }
 

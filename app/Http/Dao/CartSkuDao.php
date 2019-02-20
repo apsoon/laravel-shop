@@ -27,16 +27,11 @@ class CartSkuDao
      * 用户分页获取
      *
      * @param string $userId
-     * @param int $pageNo
-     * @param int $size
      * @return mixed
      */
-    public function findByUserId(string $userId, int $pageNo, int $size)
+    public function findByUserId(string $userId)
     {
-        $offset = ($pageNo - 1) * $size;
         $result = $this->catSku::where("use_id", "=", $userId)
-            ->offert($offset)
-            ->limit($size)
             ->get();
         return $result;
     }
