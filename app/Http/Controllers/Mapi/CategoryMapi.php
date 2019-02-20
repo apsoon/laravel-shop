@@ -21,25 +21,13 @@ class CategoryMapi extends Controller
     private $categoryService;
 
     /**
-     * 获取分类列表
-     *
-     * @return JsonResult
-     */
-    public function list()
-    {
-        $result = $this->categoryService->getCategoryList();
-        return new JsonResult(StatusCode::SUCCESS, $result);
-    }
-
-    /**
      * 获取树形分类
      *
      * @return JsonResult
      */
     public function treeList()
     {
-        $result = $this->categoryService->getCategoryTreeList();
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->categoryService->getCategoryTreeList();
     }
 
     /**
@@ -51,8 +39,7 @@ class CategoryMapi extends Controller
     public function create(Request $request)
     {
         $req = $request->all();
-        $result = $this->categoryService->createCategory($req);
-        if ($result) return new JsonResult();
+        return $this->categoryService->createCategory($req);
     }
 
     /**
@@ -64,8 +51,7 @@ class CategoryMapi extends Controller
     public function delete(Request $request)
     {
         $req = $request->all();
-        $result = $this->categoryService->deleteCategoryById($req);
-        if ($result) return new JsonResult();
+        return $this->categoryService->deleteCategoryById($req);
     }
 
     /**

@@ -10,7 +10,9 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\CategoryDao;
+use App\Http\Enum\StatusCode;
 use App\Http\Model\Category;
+use App\Http\Util\JsonResult;
 
 /**
  * Class CategoryService
@@ -24,6 +26,12 @@ class CategoryService
      */
     private $categoryDao;
 
+    /**
+     * 创建分类
+     *
+     * @param array $req
+     * @return JsonResult
+     */
     public function createCategory(array $req)
     {
         $category = new Category();
@@ -39,39 +47,28 @@ class CategoryService
         }
         $category->image_url = $req["image_url"];
         $result = $this->categoryDao->insert($category);
-        return $result;
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
      * 删除分类
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function deleteCategoryById(array $req)
     {
-        if (empty($req) || empty($req["id"])) return false;
+        if (empty($req["id"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $result = $this->categoryDao->deleteById($req["id"]);
-        return $result;
-    }
-
-    /**
-     * 获取所有分类
-     *
-     * @return mixed
-     */
-    public function getCategoryList()
-    {
-//        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
-//        $size = empty($req["size"]) ? 20 : $req["size"];
-        $result = $this->categoryDao->list();
-        return $result;
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
      * 获取树形分类
      *
-     * @return \App\Http\Model\Category[]|\Illuminate\Database\Eloquent\Collection
+     * @return JsonResult
      */
     public function getCategoryTreeList()
     {
@@ -81,7 +78,7 @@ class CategoryService
         }));
         $sorted = array_reverse($sorted);
         $result = $this->treeCategoryList($sorted);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
@@ -116,24 +113,6 @@ class CategoryService
         }));
         return $result;
     }
-
-    /**
-     * 复制属性
-     *
-     * @param $origin
-     * @return \stdClass
-     */
-//    private function copyCategoryBean($origin)
-//    {
-//        $result = new \stdClass();
-//        $result->id = $origin->id;
-//        $result->name = $origin->name;
-//        $result->label = $origin->name;
-//        $result->image_url = $origin->image_url;
-//        $result->sort_order = $origin->sort_order;
-//        $result->children = empty($origin->children) ? [] : $origin->children;
-//        return $result;
-//    }
 
     /**
      * CategoryService constructor.

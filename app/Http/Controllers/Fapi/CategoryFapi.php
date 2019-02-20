@@ -22,8 +22,7 @@ class CategoryFapi extends Controller
      */
     public function treeList()
     {
-        $result = $this->categoryService->getCategoryTreeList();
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->categoryService->getCategoryTreeList();
     }
 
     /**
