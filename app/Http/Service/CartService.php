@@ -10,6 +10,7 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\CartSkuDao;
+use App\Http\Dao\SkuDao;
 use App\Http\Model\CartSku;
 
 class CartService
@@ -20,6 +21,8 @@ class CartService
      */
     private $cartSkuDao;
 
+    private $skuDao;
+
     /**
      * 添加至购物车
      *
@@ -28,15 +31,17 @@ class CartService
      */
     public function addSkuToCart(array $req)
     {
-        $cart = $this->cartSkuDao->findBySkuUser($req["userId"], $req["skuId"]);
-        if ($cart) {
-            $cart->number += $req["number"];
+        // TODO 判断库存
+        $cartSku = $this->cartSkuDao->findBySkuUser($req["userId"], $req["skuId"]);
+        if ($cartSku) {
+            $cartSku->number += $req["number"];
         } else {
             $cartSku = new CartSku();
             $cartSku->user_id = $req["userId"];
             $cartSku->sku_id = $req["skuId"];
             $cartSku->number = $req["number"];
         }
+//        $sku = $this->skuDao->findByIdEffect()
         $result = $cartSku->save();
         return $result;
     }
@@ -74,9 +79,11 @@ class CartService
      * CartService constructor.
      *
      * @param CartSkuDao $cartSkuDao
+     * @param SkuDao $skuDao
      */
-    public function __construct(CartSkuDao $cartSkuDao)
+    public function __construct(CartSkuDao $cartSkuDao, SkuDao $skuDao)
     {
         $this->cartSkuDao = $cartSkuDao;
+        $this->skuDao = $skuDao;
     }
 }
