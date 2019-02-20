@@ -56,10 +56,11 @@ class CartService
      */
     public function deleteCartSkusByUserId(array $req)
     {
-        if (sizeof($req["skuIds"]) == 1) {
-            $result = $this->cartSkuDao->deleteByUser($req["userId"], $req["skuIds"][0]);
+        $skuIds = json_decode($req["skuIds"]);
+        if (sizeof($skuIds) == 1) {
+            $result = $this->cartSkuDao->deleteByUser($req["userId"], $skuIds[0]);
         } else {
-            $result = $this->cartSkuDao->deleteListByUser($req["userId"], $req["skuIds"]);
+            $result = $this->cartSkuDao->deleteListByUser($req["userId"], $skuIds);
         }
         return $result;
     }
