@@ -57,7 +57,6 @@ class CollectionService
     {
         $pageNo = empty($reqp["pageNo"]) ? 1 : $req["pageNo"];
         $collections = $this->collectionDao->findByUserIdPaged($req["userId"], $pageNo, 20);
-        Log::info($collections);
         $result = [];
         foreach ($collections as $collection) {
             $sku = $this->skuDao->findById($collection->sku_id);
