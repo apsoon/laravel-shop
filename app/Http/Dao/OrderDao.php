@@ -59,6 +59,24 @@ class OrderDao
     }
 
     /**
+     * 获取用户所有分页
+     *
+     * @param $userId
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findByUserPaged($userId, int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->order::where("user_id", "=", $userId)
+            ->offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * 用户状态分页获取
      *
      * @param $userId

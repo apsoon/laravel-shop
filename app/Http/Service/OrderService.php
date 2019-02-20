@@ -14,8 +14,10 @@ use App\Http\Dao\OrderDao;
 use App\Http\Dao\OrderSkuDao;
 use App\Http\Dao\SkuDao;
 use App\Http\Enum\OrderStatus;
+use App\Http\Enum\StatusCode;
 use App\Http\Enum\UserCouponStatus;
 use App\Http\Model\Order;
+use App\Http\Util\JsonResult;
 use App\Http\Util\SNUtil;
 use Illuminate\Support\Facades\DB;
 
@@ -53,6 +55,7 @@ class OrderService
      */
     public function createOrder(array $req)
     {
+        // TODO : HALF
         // 事务
         // 创建订单
         DB::beginTransaction();
@@ -129,69 +132,63 @@ class OrderService
      * 用户分页状态获取
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getPagedOrderListByStatusUser(array $req)
     {
+        if (empty($req["userId"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = 20;
-        $result = $this->orderDao->findByStatusUserPaged($req["userId"], $req["status"], $req["pageNo"], $size);
-        return $result;
-    }
-
-    /**
-     *
-     * @param array $req
-     * @return mixed
-     */
-    public function getOrderPagedListByStatus(array $req)
-    {
-        $pageNo = $req["pageNo"];
-        $size = 20;
-        $result = $this->orderDao->find(Sreq["userId"], $req["status"], $pageNo, $size);
-        return $result;
+        if (empty($req["status"])) {
+            $result = $this->orderDao->findByUserPaged($req["userId"], $pageNo, $size);
+        } else {
+            $result = $this->orderDao->findByStatusUserPaged($req["userId"], $req["status"], $pageNo, $size);
+        }
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * 统计用户每种状态订单的数量
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getOrderNumber(array $req)
     {
         $userId = $req["userId"];
         $statusList = [OrderStatus::PAY_REQUIRED, OrderStatus::DELIVERY_REQUIRED, OrderStatus::RECEIVE_REQUIRED, OrderStatus::COMMENT_REQUIRED];
         $result = $this->orderDao->countStatusByUserId($userId, $statusList);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * 分页获取订单
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getOrderPagedList(array $req)
     {
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $result = $this->orderDao->findPagedList($pageNo, 20);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * 获取订单详情
      *
      * @param int $orderId
-     * @return \stdClass
+     * @return JsonResult
      */
     public function getOrderDetailByOrderId(int $orderId)
     {
+        if (empty($req) || empty($req["orderId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $order = $this->orderDao->findById($orderId);
         $productList = $this->orderSkuDao->findByOrderId($orderId);
         $result = new \stdClass();
         $result->order = $order;
         $result->productList = $productList;
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**

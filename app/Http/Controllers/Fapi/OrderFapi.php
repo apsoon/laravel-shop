@@ -8,6 +8,11 @@ use App\Http\Service\OrderService;
 use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 
+/**
+ * Class OrderFapi
+ *
+ * @package App\Http\Controllers\Fapi
+ */
 class OrderFapi extends Controller
 {
     private $orderService;
@@ -16,13 +21,12 @@ class OrderFapi extends Controller
      * 创建订单
      *
      * @param Request $request
-     * @return mixed
+     * @return JsonResult
      */
     public function create(Request $request)
     {
         $req = $request->all();
-        $result = $this->orderService->createOrder($req);
-        return $result;
+        return $this->orderService->createOrder($req);
     }
 
     /**
@@ -34,8 +38,7 @@ class OrderFapi extends Controller
     public function list(Request $request)
     {
         $req = $request->all();
-        $result = $this->orderService->getPagedOrderListByStatusUser($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->orderService->getPagedOrderListByStatusUser($req);
     }
 
     /**

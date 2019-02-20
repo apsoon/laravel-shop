@@ -4,45 +4,44 @@ namespace App\Http\Controllers\Mapi;
 
 use App\Http\Controllers\Controller;
 use App\Http\Service\OrderService;
+use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 
+/**
+ * Class OrderMapi
+ *
+ * @package App\Http\Controllers\Mapi
+ */
 class OrderMapi extends Controller
 {
 
+    /**
+     * @var OrderService
+     */
     private $orderService;
-
-    public function create(Request $request)
-    {
-        $req = $request->all();
-        $result = $this->orderService->createOrder($req);
-        return $result;
-    }
 
     /**
      * 订单列表
      *
      * @param Request $request
-     * @return mixed
+     * @return JsonResult
      */
     public function list(Request $request)
     {
         $req = $request->all();
-        $result = $this->orderService->getOrderPagedList($req);
-        return $result;
+        return $this->orderService->getOrderPagedList($req);
     }
 
     /**
      * 订单详情
      *
      * @param Request $request
-     * @return null|\stdClass
+     * @return JsonResult
      */
     public function detail(Request $request)
     {
         $req = $request->all();
-        if (empty($req) || empty($req["orderId"])) return null;
-        $result = $this->orderService->getOrderDetailByOrderId($req["orderId"]);
-        return $result;
+        return $this->orderService->getOrderDetailByOrderId($req["orderId"]);
     }
 
     /**
@@ -52,7 +51,6 @@ class OrderMapi extends Controller
      */
     public function __construct(OrderService $orderService)
     {
-//        $this->middleware("auth");
         $this->orderService = $orderService;
     }
 }
