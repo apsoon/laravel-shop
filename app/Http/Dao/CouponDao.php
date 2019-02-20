@@ -73,6 +73,36 @@ class CouponDao
     }
 
     /**
+     * id 用户获取
+     *
+     * @param $userId
+     * @param $couponId
+     * @return mixed
+     */
+    public function findByIdUser($userId, $couponId)
+    {
+        $result = $this->where(["user_id" => $userId, "id" => $couponId])
+            ->first();
+        return $result;
+
+    }
+
+    /**
+     * 跟新用户优惠券状态
+     *
+     * @param $userId
+     * @param int $couponId
+     * @param $status
+     * @return mixed
+     */
+    public function updateStateByIdUser($userId, int $couponId, $status)
+    {
+        $result = $this->where(["user_id" => $userId, "id" => $couponId])
+            ->update("status", $status);
+        return $result;
+    }
+
+    /**
      * CouponDao constructor.
      *
      * @param Coupon $coupon

@@ -59,6 +59,25 @@ class OrderDao
     }
 
     /**
+     * 用户状态分页获取
+     *
+     * @param $userId
+     * @param $status
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findByStatusUserPaged($userId, $status, int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->order::where(["user_id" => $userId, "status" => $status])
+            ->offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * OrderDao constructor.
      *
      * @param Order $order

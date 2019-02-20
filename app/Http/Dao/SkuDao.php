@@ -38,6 +38,19 @@ class SkuDao
     }
 
     /**
+     * 根据ID查找上架的SKU
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function findByIdEffect(int $id)
+    {
+        $result = $this->sku::where(["id" => $id, "status" => 1])
+            ->first();
+        return $result;
+    }
+
+    /**
      * @param int $spuId
      * @return mixed
      */
@@ -58,6 +71,20 @@ class SkuDao
     {
         $result = $this->sku::where(["spu_id" => $spuId, "state" => 1])
             ->get();
+        return $result;
+    }
+
+    /**
+     * 更新数量
+     *
+     * @param int $id
+     * @param int $number
+     * @return bool|int
+     */
+    public function updateNumber(int $id, int $number)
+    {
+        $result = $this->sku::with(["id" => $id])
+            ->update(["number" => $number]);
         return $result;
     }
 
