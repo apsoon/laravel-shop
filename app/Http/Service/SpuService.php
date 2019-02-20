@@ -54,32 +54,9 @@ class SpuService
     private $spuSpecOptionDao;
 
     /**
-     * ?????? TODO
-     *
      * @var SpecDao
      */
     private $specDao;
-    /**
-     * @var SkuDao
-     */
-    private $productDao;
-
-    /**
-     * @var SpecDao
-     */
-    private $specificationDao;
-
-    /**
-     * @var SpecificationOptionDao
-     */
-    private $specificationOptionDao;
-
-    /**
-     * @var SkuSpecOptionDao
-     */
-    private $productSpecificationOptionDao;
-
-    // ===========================================================================  spu ===========================================================================
 
     /**
      * @param $req
@@ -267,66 +244,28 @@ class SpuService
     }
 
     /**
+     * 分类获取SPU
+     *
      * @param $req
      * @return mixed
      */
     public function getSpuByCategory($req)
     {
         $result = $this->spuDao->findByCategoryPaged($req["categoryId"], $req["pageNo"], $req["size"]);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * 获取最新
      *
      * @param int $size
-     * @return mixed
+     * @return JsonResult
      */
     public function getLastSpu(int $size)
     {
         $result = $this->spuDao->findByCreateDesc($size);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
-
-    // ===========================================================================  product ===========================================================================
-
-    public function createProduct(array $req)
-    {
-        $product = new Product();
-        $product->name = $req["name"];
-        $product->spu_id = $req["spuId"];
-        $product->origin_price = $req["originPrice"];
-        $product->price = $req["price"];
-        $result = $product->save();
-        $options = [];
-        if ($result) {
-            foreach ($req["options"] as $option) {
-                array_push($options, ["product_id" => $product->id, "specification_id" => $option["specificationId"], "specification_option_id" => $option["optionId"]]);
-            }
-        }
-        $result = $this->productSpecificationOptionDao->insertList($options);
-        return $result;
-    }
-
-    /**
-     * @param int $spuId
-     * @return mixed
-     */
-    public function getProductBySpuId(int $spuId)
-    {
-        $result = $this->productDao->findBySpuId($spuId);
-        foreach ($result as $product) {
-            $specifications = $this->productSpecificationOptionDao->findByProductId($product->id);
-            foreach ($specifications as $specification) {
-                $specification->name = $this->specificationDao->findById($specification->specification_id)->name;
-                $specification->option = $this->specificationOptionDao->findById($specification->specification_option_id)->name;
-            }
-            $product->specifications = $specifications;
-        }
-        return $result;
-    }
-
-    // ===========================================================================  construct ===========================================================================
 
     /**
      * SpuService constructor.
@@ -335,21 +274,13 @@ class SpuService
      * @param SpuDetailDao $spuDetailDao
      * @param SpuSpecDao $spuSpecDao
      * @param SpuSpecOptionDao $spuSpecOptionDao
-     * @param SkuDao $productDao
-     * @param SpecDao $specificationDao
-     * @param SpecificationOptionDao $specificationOptionDao
-     * @param SkuSpecOptionDao $productSpecificationOptionDao
      */
-    public function __construct(SpecDao $specDao, SpuDao $spuDao, SpuDetailDao $spuDetailDao, SpuSpecDao $spuSpecDao, SpuSpecOptionDao $spuSpecOptionDao, SkuDao $productDao, SpecDao $specificationDao, SpecificationOptionDao $specificationOptionDao, SkuSpecOptionDao $productSpecificationOptionDao)
+    public function __construct(SpecDao $specDao, SpuDao $spuDao, SpuDetailDao $spuDetailDao, SpuSpecDao $spuSpecDao, SpuSpecOptionDao $spuSpecOptionDao)
     {
         $this->specDao = $specDao;
         $this->spuDao = $spuDao;
         $this->spuDetailDao = $spuDetailDao;
         $this->spuSpecDao = $spuSpecDao;
         $this->spuSpecOptionDao = $spuSpecOptionDao;
-        $this->productDao = $productDao;
-        $this->specificationDao = $specificationDao;
-        $this->specificationOptionDao = $specificationOptionDao;
-        $this->productSpecificationOptionDao = $productSpecificationOptionDao;
     }
 }
