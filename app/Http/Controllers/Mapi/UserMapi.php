@@ -25,8 +25,7 @@ class UserMapi extends Controller
     public function listByPage(Request $request)
     {
         $req = $request->all();
-        $result = $this->userService->getPageUserList($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->userService->getPageUserList($req);
     }
 
     /**

@@ -71,29 +71,33 @@ class UserService
     }
 
     /**
+     * 设置用户信息
+     *
      * @param $req
-     * @return mixed
+     * @return JsonResult
      */
     public function setUserInfo($req)
     {
+        if (empty($req) || empty($req["userInfo"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $userId = $req["userId"];
         $userInfo = json_decode($req["userInfo"]);
         $result = $this->userDao->updateUserInfo($userId, $userInfo);
-        return $result;
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
      * 分页获取用户信息
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getPageUserList(array $req)
     {
-        $pageNo = $req["pageNo"];
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = 20;
         $result = $this->userDao->listByPage($pageNo, $size);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
