@@ -9,12 +9,13 @@
                  empty-text="没有分类"
                  node-key="id"
                  ref="treeCategory"
-                 default-expand-all
+                 :props="categoryTreeProps"
+                 :default-expand-all="false"
                  :expand-on-click-node="false">
             <span class="custom-tree-node" slot-scope="{ node, data }">
-                <span>{{ node.label }}</span>
+                <span>{{ data.name }}</span>
                 <span>
-                    <router-link :to="{path:'/category-add', query: {parentId: data.id, parentName: data.name}}">
+                    <router-link :to="{path:'/category-add', query: {parentId: data.id, parentName: data.name}}" v-if="data.level &lt; 3">
                         <el-button type="text" size="mini">添加子分类</el-button>
                     </router-link>
                     <el-button
@@ -38,6 +39,10 @@
         data: function () {
             return {
                 categoryList: [],
+                categoryTreeProps: {
+                    label: name,
+                    // children: children
+                }
             }
         },
         mounted: function () {
@@ -45,6 +50,7 @@
             axios.get("category/treeList").then(res => {
                 if (res.data.code === 2000) {
                     that.categoryList = res.data.data;
+                    console.info(that.categoryList);
                 }
             }).catch(err => {
             });

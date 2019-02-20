@@ -43,13 +43,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CategoryList",
   data: function data() {
     return {
-      categoryList: []
+      categoryList: [],
+      categoryTreeProps: {
+        label: name // children: children
+
+      }
     };
   },
   mounted: function mounted() {
@@ -57,6 +62,7 @@ __webpack_require__.r(__webpack_exports__);
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("category/treeList").then(function (res) {
       if (res.data.code === 2000) {
         that.categoryList = res.data.data;
+        console.info(that.categoryList);
       }
     }).catch(function (err) {});
   },
@@ -246,7 +252,8 @@ var render = function() {
           data: _vm.categoryList,
           "empty-text": "没有分类",
           "node-key": "id",
-          "default-expand-all": "",
+          props: _vm.categoryTreeProps,
+          "default-expand-all": false,
           "expand-on-click-node": false
         },
         scopedSlots: _vm._u([
@@ -256,30 +263,35 @@ var render = function() {
               var node = ref.node
               var data = ref.data
               return _c("span", { staticClass: "custom-tree-node" }, [
-                _c("span", [_vm._v(_vm._s(node.label))]),
+                _c("span", [_vm._v(_vm._s(data.name))]),
                 _vm._v(" "),
                 _c(
                   "span",
                   [
-                    _c(
-                      "router-link",
-                      {
-                        attrs: {
-                          to: {
-                            path: "/category-add",
-                            query: { parentId: data.id, parentName: data.name }
-                          }
-                        }
-                      },
-                      [
-                        _c(
-                          "el-button",
-                          { attrs: { type: "text", size: "mini" } },
-                          [_vm._v("添加子分类")]
+                    data.level < 3
+                      ? _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to: {
+                                path: "/category-add",
+                                query: {
+                                  parentId: data.id,
+                                  parentName: data.name
+                                }
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "el-button",
+                              { attrs: { type: "text", size: "mini" } },
+                              [_vm._v("添加子分类 " + _vm._s(data.level))]
+                            )
+                          ],
+                          1
                         )
-                      ],
-                      1
-                    ),
+                      : _vm._e(),
                     _vm._v(" "),
                     _c(
                       "el-button",

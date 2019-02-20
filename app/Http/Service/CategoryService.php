@@ -95,13 +95,13 @@ class CategoryService
         $temp = [];
         foreach ($categories as $category) {
             if ($category->level == 1) {
-                $res = $this->copyCategoryBean($category);
+                $res = $category; // $this->copyCategoryBean($category);
                 array_push($temp, $res);
             } else {
                 foreach ($categories as $item) {
                     if ($item->id == $category->parent_id) {
                         $children = empty($item->children) == 1 ? [] : $item->children;
-                        $res_ = $this->copyCategoryBean($category);
+                        $res_ = $category; // $this->copyCategoryBean($category);
                         array_push($children, $res_);
                         $sorted = array_values(array_sort($children, function ($cat) {
                             return $cat->sort_order;
@@ -123,17 +123,17 @@ class CategoryService
      * @param $origin
      * @return \stdClass
      */
-    private function copyCategoryBean($origin)
-    {
-        $result = new \stdClass();
-        $result->id = $origin->id;
-        $result->name = $origin->name;
-        $result->label = $origin->name;
-        $result->image_url = $origin->image_url;
-        $result->sort_order = $origin->sort_order;
-        $result->children = empty($origin->children) ? [] : $origin->children;
-        return $result;
-    }
+//    private function copyCategoryBean($origin)
+//    {
+//        $result = new \stdClass();
+//        $result->id = $origin->id;
+//        $result->name = $origin->name;
+//        $result->label = $origin->name;
+//        $result->image_url = $origin->image_url;
+//        $result->sort_order = $origin->sort_order;
+//        $result->children = empty($origin->children) ? [] : $origin->children;
+//        return $result;
+//    }
 
     /**
      * CategoryService constructor.
