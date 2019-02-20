@@ -90,22 +90,15 @@ class CartService
      * @param array $req
      * @return JsonResult
      */
-    public function addOrMinusOneBySkuUser(array $req)
+    public function changeCartNumberBySkuUser(array $req)
     {
-        if (empty($req["userId"]) || empty($req["skuId"]) || empty($req["type"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        if (empty($req["userId"]) || empty($req["skuId"]) || empty($req["number"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $cartSku = $this->cartSkuDao->findBySkuUser($req["userId"], $req["skuId"]);
         if ($cartSku) {
-            switch ($req["type"]) {
-                case "add":
-                    $cartSku->number++;
-                    $sku = $this->skuDao->findByIdEffect($req["skuId"]);
-                    if (!$sku && $cartSku->number > $sku->number) {
-                        return new JsonResult(StatusCode::STOCK_NOT_ENOUGH);
-                    }
-                    break;
-                case "minus":
-                    $cartSku->number--;
-                    break;
+            $cartSku->number = $req["number"];
+            $sku = $this->skuDao->findByIdEffect($req["skuId"]);
+            if (!$sku && $cartSku->number > $sku->number) {
+                return new JsonResult(StatusCode::STOCK_NOT_ENOUGH);
             }
             $result = $cartSku->save();
             if ($result) return new JsonResult();

@@ -74,7 +74,7 @@ class CartFapi extends Controller
     public function number(Request $request)
     {
         $req = $request->all();
-        return $this->cartService->addOrMinusOneBySkuUser($req);
+        return $this->cartService->changeCartNumberBySkuUser($req);
     }
 
     /**
