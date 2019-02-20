@@ -36,9 +36,7 @@ class CollectionFapi extends Controller
     public function create(Request $request)
     {
         $req = $request->all();
-        if (empty($req["userId"]) || empty($req["skuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        $result = $this->collectionService->createCollection($req);
-        if ($result) return new JsonResult(); else return new JsonResult(StatusCode::SERVER_ERROR);
+        return $this->collectionService->createCollection($req);
     }
 
     /**
@@ -50,10 +48,8 @@ class CollectionFapi extends Controller
     public function remove(Request $request)
     {
         $req = $request->all();
-        if (empty($req["userId"]) || empty($req["skuIds"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $skuIds = json_decode($req["skuIds"]);
-        $result = $this->collectionService->removeCollection($req["userId"], $skuIds);
-        if ($result) return new JsonResult(); else return new JsonResult(StatusCode::SERVER_ERROR);
+        return $this->collectionService->removeCollection($req["userId"], $skuIds);
     }
 
     /**
@@ -65,11 +61,7 @@ class CollectionFapi extends Controller
     public function check(Request $request)
     {
         $req = $request->all();
-        $collection = $this->collectionService->getCollectionByUserSku($req);
-        $result = new \stdClass();
-        if (empty($collection)) $result->isCollected = 0;
-        else $result->isCollected = 1;
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->collectionService->checkCollectionByUserSku($req);
     }
 
     /**
@@ -81,8 +73,7 @@ class CollectionFapi extends Controller
     public function list(Request $request)
     {
         $req = $request->all();
-        $result = $this->collectionService->getCollectionList($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->collectionService->getCollectionList($req);
     }
 
     /**
