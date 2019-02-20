@@ -80,6 +80,7 @@ class AdMapi extends Controller
 
     /**
      * AdMapi constructor.
+     *
      * @param AdService $adService
      */
     public function __construct(AdService $adService)
