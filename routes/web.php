@@ -14,16 +14,12 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+// 首页
 Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
-
-    // 首页
-    Route::get('/index', 'IndexMapi@index');
 
     // ================================================  商品管理  =================================================
     // SPU
