@@ -15,6 +15,9 @@ use Illuminate\Http\Request;
  */
 class OrderFapi extends Controller
 {
+    /**
+     * @var OrderService
+     */
     private $orderService;
 
     /**
