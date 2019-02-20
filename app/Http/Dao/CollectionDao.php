@@ -48,8 +48,7 @@ class CollectionDao
         $result = $this->collection::where(["user_id" => $userId])
             ->offset($offset)
             ->limit($size)
-            ->get()
-            ->toArray();
+            ->get();
         return $result;
     }
 
