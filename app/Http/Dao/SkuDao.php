@@ -45,7 +45,7 @@ class SkuDao
      */
     public function findByIdEffect(int $id)
     {
-        $result = $this->sku::where(["id" => $id, "status" => 1])
+        $result = $this->sku::where(["id" => $id, "state" => 1])
             ->first();
         return $result;
     }
