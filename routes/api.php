@@ -55,4 +55,9 @@ Route::group(["namespace" => "Fapi"], function () {
 
     // 广告
     Route::GET("ad/list", "AdFapi@list");
+
+    // 订单
+    Route::POST("order/create", "OrderFapi@create");
+    Route::GET("order/number", "OrderFapi@number");
+    Route::GET("order/list", "OrderFapi@list");
 });

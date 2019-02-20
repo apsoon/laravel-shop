@@ -42,6 +42,18 @@ class OrderFapi extends Controller
     }
 
     /**
+     * 获取每种状态的订单数量
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function number(Request $request)
+    {
+        $req = $request->all();
+        return $this->orderService->getOrderStatusNumberByUser($req);
+    }
+
+    /**
      * OrderFapi constructor.
      *
      * @param OrderService $orderService

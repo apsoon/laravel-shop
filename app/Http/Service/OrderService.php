@@ -153,7 +153,7 @@ class OrderService
      * @param array $req
      * @return JsonResult
      */
-    public function getOrderNumber(array $req)
+    public function getOrderStatusNumberByUser(array $req)
     {
         $userId = $req["userId"];
         $statusList = [OrderStatus::PAY_REQUIRED, OrderStatus::DELIVERY_REQUIRED, OrderStatus::RECEIVE_REQUIRED, OrderStatus::COMMENT_REQUIRED];
