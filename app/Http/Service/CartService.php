@@ -37,7 +37,7 @@ class CartService
             $cartSku->sku_id = $req["skuId"];
             $cartSku->number = $req["number"];
         }
-        $result = $this->cartSkuDao->insert($cartSku);
+        $result = $cartSku->save();
         return $result;
     }
 
