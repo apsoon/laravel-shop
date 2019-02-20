@@ -11,7 +11,9 @@ namespace App\Http\Service;
 
 use App\Http\Dao\CartSkuDao;
 use App\Http\Dao\SkuDao;
+use App\Http\Enum\StatusCode;
 use App\Http\Model\CartSku;
+use App\Http\Util\JsonResult;
 
 class CartService
 {
@@ -27,11 +29,10 @@ class CartService
      * 添加至购物车
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function addSkuToCart(array $req)
     {
-        // TODO 判断库存
         $cartSku = $this->cartSkuDao->findBySkuUser($req["userId"], $req["skuId"]);
         if ($cartSku) {
             $cartSku->number += $req["number"];
@@ -41,9 +42,13 @@ class CartService
             $cartSku->sku_id = $req["skuId"];
             $cartSku->number = $req["number"];
         }
-//        $sku = $this->skuDao->findByIdEffect()
+        $sku = $this->skuDao->findByIdEffect($req["skuId"]);
+        if (!$sku || $sku->number < $cartSku->number) {
+            return new JsonResult(StatusCode::STOCK_NOT_ENOUGH);
+        }
         $result = $cartSku->save();
-        return $result;
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**

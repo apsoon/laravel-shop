@@ -54,4 +54,10 @@ class StatusCode
         "code" => 8004,
         "message" => "缺少微信code"
     ];
+
+    //
+    const STOCK_NOT_ENOUGH = [
+        "code" => 10001,
+        "message" => "库存不足"
+    ];
 }

@@ -37,9 +37,7 @@ class CartFapi extends Controller
     {
         $req = $request->all();
         if (empty($req) || empty($req["skuId"] || empty($req["number"]))) return new JsonResult(StatusCode::PARAM_LACKED);
-        $result = $this->cartService->addSkuToCart($req);
-        if ($result) return new JsonResult();
-        else return new JsonResult(StatusCode::SERVER_ERROR);
+        return $this->cartService->addSkuToCart($req);
     }
 
     /**
