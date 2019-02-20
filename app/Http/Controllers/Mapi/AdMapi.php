@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Psy\Util\Json;
 
+/**
+ * Class AdMapi
+ *
+ * @package App\Http\Controllers\Mapi
+ */
 class AdMapi extends Controller
 {
     /**
@@ -24,19 +29,7 @@ class AdMapi extends Controller
      */
     public function list()
     {
-        $adList = $this->adService->getAdList();
-        return new JsonResult(StatusCode::SUCCESS, $adList);
-    }
-
-    /**
-     * 添加广告
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function add()
-    {
-        $positionList = $this->adService->getAdPositionList();
-        return view("admin.pages.ad.ad_add", ["positionList" => $positionList]);
+        return $this->adService->getAdList();
     }
 
     /**
@@ -48,8 +41,7 @@ class AdMapi extends Controller
     public function create(Request $request)
     {
         $req = $request->all();
-        $result = $this->adService->createAd($req);
-        if ($result) return new JsonResult();
+        return $this->adService->createAd($req);
     }
 
     /**
@@ -61,19 +53,19 @@ class AdMapi extends Controller
     public function modifyState(Request $request)
     {
         $req = $request->all();
-        $result = $this->adService->modifyState($req);
-        if ($result) return new JsonResult();
+        return $this->adService->modifyState($req);
     }
 
     /**
+     * 删除广告
+     *
      * @param Request $request
      * @return JsonResult
      */
     public function delete(Request $request)
     {
         $req = $request->all();
-        $result = $this->adService->deleteAd($req);
-        if ($result) return new JsonResult();
+        return $this->adService->deleteAd($req);
     }
 
     /**
@@ -83,8 +75,7 @@ class AdMapi extends Controller
      */
     public function listPosition()
     {
-        $positionList = $this->adService->getAdPositionList();
-        return new JsonResult(StatusCode::SUCCESS, $positionList);
+        return $this->adService->getAdPositionList();
     }
 
     /**
@@ -93,7 +84,6 @@ class AdMapi extends Controller
      */
     public function __construct(AdService $adService)
     {
-//        $this->middleware("auth");
         $this->adService = $adService;
     }
 }

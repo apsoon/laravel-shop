@@ -15,6 +15,11 @@ use App\Http\Service\AdService;
 use App\Http\Util\JsonResult;
 use http\Env\Request;
 
+/**
+ * Class AdFapi
+ *
+ * @package App\Http\Controllers\Fapi
+ */
 class AdFapi extends Controller
 {
     private $adService;
@@ -28,9 +33,7 @@ class AdFapi extends Controller
     public function list(Request $request)
     {
         $req = $request->all();
-        if (empty($req) || empty($req["key"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        $result = $this->adService->getAdListByKey($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->adService->getAdListByKey($req);
     }
 
     /**

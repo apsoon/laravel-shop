@@ -11,9 +11,16 @@ namespace App\Http\Service;
 
 use App\Http\Dao\AdDao;
 use App\Http\Dao\AdPositionDao;
+use App\Http\Enum\StatusCode;
 use App\Http\Model\Ad;
+use App\Http\Util\JsonResult;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Class AdService
+ * 
+ * @package App\Http\Service
+ */
 class AdService
 {
     /**
@@ -41,70 +48,76 @@ class AdService
         $ad->sort_order = $req["sortOrder"];
         $ad->state = $req["state"];
         $result = $this->adDao->insert($ad);
-        return $result;
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
-     * 获取所有
+     * 获取所有广告
      *
-     * @return Ad[]|\Illuminate\Database\Eloquent\Collection
+     * @return JsonResult
      */
     public function getAdList()
     {
         $result = $this->adDao->findAll();
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * 根据key获取
      *
      * @param array $req
-     * @return array|mixed
+     * @return JsonResult
      */
     public function getAdListByKey(array $req)
     {
+        if (empty($req["key"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $result = $this->adDao->findByKey($req["key"]);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * 修改状态
      *
      * @param array $req
-     * @return bool
+     * @return JsonResult
      */
     public function modifyState(array $req)
     {
+        if (empty($req["id"]) || empty($reqp["state"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $result = $this->adDao->updateStateById($req["id"], $req["state"]);
-        return $result;
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
-     * 获取所有广告位置
+     * @return JsonResult
      *
-     * @return \App\Http\Model\AdPosition[]|\Illuminate\Database\Eloquent\Collection
+     * 获取所有广告位置
      */
     public function getAdPositionList()
     {
         $result = $this->adPositionDao->findAll();
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * 删除广告
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function deleteAd(array $req)
     {
+        if (empty($req["ids"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $ids = $req["ids"];
         if (sizeof($ids) == 1) {
             $result = $this->adDao->deleteById($ids[0]);
         } else {
             $result = $this->adDao->deleteByIds($ids);
         }
-        return $result;
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
