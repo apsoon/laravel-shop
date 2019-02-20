@@ -24,6 +24,19 @@ class CartSkuDao
     }
 
     /**
+     * 用户id sku id获取
+     * @param $userId
+     * @param $skuId
+     * @return mixed
+     */
+    public function findBySkuUser($userId, $skuId)
+    {
+        $result = $this->catSku::where(["user_id" => $userId, "sku_id" => $skuId])
+            ->first();
+        return $result;
+    }
+
+    /**
      * 用户分页获取
      *
      * @param string $userId

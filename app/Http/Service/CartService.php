@@ -28,10 +28,15 @@ class CartService
      */
     public function addSkuToCart(array $req)
     {
-        $cartSku = new CartSku();
-        $cartSku->user_id = $req["userId"];
-        $cartSku->sku_id = $req["skuId"];
-        $cartSku->number = $req["number"];
+        $cart = $this->cartSkuDao->findBySkuUser($req["userId"], $req["skuId"]);
+        if ($cart) {
+            $cart->number += $req["number"];
+        } else {
+            $cartSku = new CartSku();
+            $cartSku->user_id = $req["userId"];
+            $cartSku->sku_id = $req["skuId"];
+            $cartSku->number = $req["number"];
+        }
         $result = $this->cartSkuDao->insert($cartSku);
         return $result;
     }
