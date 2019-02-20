@@ -21,6 +21,11 @@
                     width="120">
             </el-table-column>
             <el-table-column
+                    prop="cover"
+                    label="品牌图片"
+                    width="120">
+            </el-table-column>
+            <el-table-column
                     prop="region"
                     label="地区"
                     width="120">
@@ -28,7 +33,7 @@
             <el-table-column
                     prop="describe"
                     label="描述"
-                    width="120">
+                    min-width="1">
             </el-table-column>
             <el-table-column
                     prop="state"
@@ -37,6 +42,7 @@
             </el-table-column>
             <el-table-column
                     prop=""
+                    width="300"
                     label="操作">
                 <template slot-scope="scope">
                     <el-button

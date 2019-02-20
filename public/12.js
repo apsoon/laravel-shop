@@ -78,6 +78,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BrandList",
@@ -265,11 +271,15 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
+            attrs: { prop: "cover", label: "品牌图片", width: "120" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
             attrs: { prop: "region", label: "地区", width: "120" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "describe", label: "描述", width: "120" }
+            attrs: { prop: "describe", label: "描述", "min-width": "1" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -277,7 +287,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "", label: "操作" },
+            attrs: { prop: "", width: "300", label: "操作" },
             scopedSlots: _vm._u([
               {
                 key: "default",

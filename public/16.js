@@ -131,11 +131,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "category", label: "分类", width: "150" }
+            attrs: { prop: "category_id", label: "分类", width: "150" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "brand", label: "排序", width: "150" }
+            attrs: { prop: "brand_id", label: "排序", width: "150" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -143,7 +143,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "", width: "200", label: "操作" },
+            attrs: { prop: "", "min-width": "1", label: "操作" },
             scopedSlots: _vm._u([
               {
                 key: "default",

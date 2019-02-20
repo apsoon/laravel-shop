@@ -16,12 +16,12 @@
                     width="150">
             </el-table-column>
             <el-table-column
-                    prop="category"
+                    prop="category_id"
                     label="分类"
                     width="150">
             </el-table-column>
             <el-table-column
-                    prop="brand"
+                    prop="brand_id"
                     label="排序"
                     width="150">
             </el-table-column>
@@ -32,7 +32,7 @@
             </el-table-column>
             <el-table-column
                     prop=""
-                    width="200"
+                    min-width="1"
                     label="操作">
                 <template slot-scope="scope">
                     <router-link :to="{path:'/spu-detail', query: {spuId: scope.row.id}}">
