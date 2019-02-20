@@ -12,6 +12,7 @@ namespace App\Http\Service;
 use App\Http\Dao\CollectionDao;
 use App\Http\Dao\SkuDao;
 use App\Http\Model\Collection;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class CollectionService
@@ -55,10 +56,12 @@ class CollectionService
     public function getCollectionList(array $req)
     {
         $pageNo = empty($reqp["pageNo"]) ? 1 : $req["pageNo"];
-        $result = $this->collectionDao->findByUserIdPaged($req["userId"], $pageNo, 20);
-        foreach ($result as $collection) {
+        $collections = $this->collectionDao->findByUserIdPaged($req["userId"], $pageNo, 20);
+        Log::info($collections);
+        $result = [];
+        foreach ($collections as $collection) {
             $sku = $this->skuDao->findById($collection->sku_id);
-            $collection->sku = $sku;
+            array_push($result, $sku);
         }
         return $result;
     }
