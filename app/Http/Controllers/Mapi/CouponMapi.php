@@ -15,6 +15,10 @@ use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Class CouponMapi
+ * @package App\Http\Controllers\Mapi
+ */
 class CouponMapi
 {
 
@@ -27,35 +31,30 @@ class CouponMapi
      * 创建优惠券
      *
      * @param Request $request
-     * @return bool
+     * @return JsonResult
      */
     public function create(Request $request)
     {
-        Log::info(gettype($request->effectStart));
-        Log::info($request->effectStart);
         $req = $request->all();
-        $result = $this->couponService->createCoupon($req);
-        return $result;
+        return $this->couponService->createCoupon($req);
     }
 
     /**
      * 优惠券列表
      *
      * @param Request $request
-     * @return mixed
+     * @return JsonResult
      */
     public function list(Request $request)
     {
         $req = $request->all();
-        $result = $this->couponService->getPagedCouponList($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->couponService->getPagedCouponList($req);
     }
 
     public function changeState(Request $request)
     {
 
     }
-
 
     /**
      * CouponMapi constructor.

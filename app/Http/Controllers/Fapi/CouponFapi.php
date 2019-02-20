@@ -8,6 +8,11 @@ use App\Http\Service\CouponService;
 use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 
+/**
+ * Class CouponFapi
+ * 
+ * @package App\Http\Controllers\Fapi
+ */
 class CouponFapi extends Controller
 {
     /**
@@ -24,9 +29,7 @@ class CouponFapi extends Controller
     public function list(Request $request)
     {
         $req = $request->all();
-        if (empty($req) || empty($req["state"]) || empty($req["pageNo"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        $result = $this->couponService->getPagedCouponListByStateUser($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->couponService->getPagedCouponListByStateUser($req);
     }
 
     /**
@@ -38,10 +41,7 @@ class CouponFapi extends Controller
     public function add(Request $request)
     {
         $req = $request->all();
-        if (empty($req) || empty($req["type"]) || empty($req["couponId"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        $result = $this->couponService->addCouponToUser($req);
-        if ($result) return new JsonResult();
-        return new JsonResult(StatusCode::SERVER_ERROR);
+        return $this->couponService->addCouponToUser($req);
     }
 
     /**

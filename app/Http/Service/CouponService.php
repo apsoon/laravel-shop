@@ -11,8 +11,10 @@ namespace App\Http\Service;
 
 use App\Http\Dao\CouponDao;
 use App\Http\Dao\UserCouponDao;
+use App\Http\Enum\StatusCode;
 use App\Http\Model\Coupon;
 use App\Http\Model\UserCoupon;
+use App\Http\Util\JsonResult;
 use Illuminate\Support\Facades\Log;
 use function PHPSTORM_META\type;
 
@@ -33,43 +35,41 @@ class CouponService
      * 创建优惠券
      *
      * @param $req
-     * @return bool
+     * @return JsonResult
      */
     public function createCoupon($req)
     {
-        $coupon = new Coupon();
-        $coupon->name = $req["name"];
-        $coupon->sn = $req["sn"];
-        $coupon->describe = $req["describe"];
-        $coupon->number = $req["number"];
-        Log::info(gettype($req["effectStart"]));
-        Log::info($req["effectStart"]);
-        if ($req["effectStart"])
-            $coupon->effect_start = strtotime($req["effectStart"]);
-        if ($req["effectEnd"])
-            $coupon->effect_end = strtotime($req["effectEnd"]);
-        Log::info(gettype($coupon->effect_start));
-        Log::info($coupon->effectStart);
-        Log::info($coupon->effect_end);
-        $coupon->value = $req["value"];
-        $coupon->send_type = $req["sendType"];
-        $coupon->state = $req["state"];
-        $result = $coupon->save();
-        return $result;
+        try {
+            $coupon = new Coupon();
+            $coupon->name = $req["name"];
+            $coupon->sn = $req["sn"];
+            $coupon->describe = $req["describe"];
+            $coupon->number = $req["number"];
+            if ($req["effectStart"]) $coupon->effect_start = strtotime($req["effectStart"]);
+            if ($req["effectEnd"]) $coupon->effect_end = strtotime($req["effectEnd"]);
+            $coupon->value = $req["value"];
+            $coupon->send_type = $req["sendType"];
+            $coupon->state = $req["state"];
+            $result = $coupon->save();
+            if ($result) return new JsonResult(StatusCode::SUCCESS, $result);
+        } catch (\Exception $e) {
+            return new JsonResult(StatusCode::SERVER_ERROR);
+        }
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
      * 分页获取优惠券列表
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getPagedCouponList(array $req)
     {
-        $pageNo = empty($req) || empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = 20;
         $result = $this->couponDao->findByPage($pageNo, $size);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     public function updateCoupon()
@@ -104,23 +104,35 @@ class CouponService
      * 获取用户不同状态的优惠券
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getPagedCouponListByStateUser(array $req)
     {
+        if (empty($req["state"]) || empty($req["pageNo"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $size = 20;
         $coupons = $this->userCouponDao->findByStateUser($req["userId"], $req["state"], $req["pageNo"], $size);
         foreach ($coupons as $coupon) {
             $detail = $this->couponDao->findById($coupon->couponId);
             $coupon->detail = $detail;
         }
-        return $coupons;
+        return new JsonResult(StatusCode::SUCCESS, $coupons);
     }
 
+    /**
+     * 用户获取优惠券
+     *
+     * @param array $req
+     * @return JsonResult
+     */
     public function addCouponToUser(array $req)
     {
+        // TODO
+        if (empty($req["type"]) || empty($req["couponId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         // 判断coupon 是否存在及数量
         // 判断限领一个的是否已经领取
+        $result = [];
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
