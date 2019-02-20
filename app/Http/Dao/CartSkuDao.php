@@ -31,7 +31,7 @@ class CartSkuDao
      */
     public function findByUserId(string $userId)
     {
-        $result = $this->catSku::where("use_id", "=", $userId)
+        $result = $this->catSku::where("user_id", "=", $userId)
             ->get();
         return $result;
     }
