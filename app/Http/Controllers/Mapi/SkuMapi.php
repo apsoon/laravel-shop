@@ -3,19 +3,17 @@
 namespace App\Http\Controllers\Mapi;
 
 use App\Http\Controllers\Controller;
-use App\Http\Enum\StatusCode;
 use App\Http\Service\SkuService;
-use App\Http\Service\SpuService;
 use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 
+/**
+ * Class SkuMapi
+ *
+ * @package App\Http\Controllers\Mapi
+ */
 class SkuMapi extends Controller
 {
-    /**
-     * @var SpuService
-     */
-    private $spuService;
-
     /**
      * @var SkuService
      */
@@ -27,14 +25,14 @@ class SkuMapi extends Controller
 
     /**
      * spu id获取sku
+     *
      * @param Request $request
      * @return JsonResult
      */
     public function listBySpu(Request $request)
     {
         $req = $request->all();
-        $result = $this->skuService->getSkuBySpu($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->skuService->getSkuBySpu($req);
     }
 
     /**
@@ -46,9 +44,7 @@ class SkuMapi extends Controller
     public function create(Request $request)
     {
         $req = $request->all();
-        $result = $this->skuService->createSku($req);
-        if ($result) return new JsonResult();
-        return new JsonResult(StatusCode::SERVER_ERROR);
+        return $this->skuService->createSku($req);
     }
 
     public function detail(Request $request)
@@ -56,9 +52,13 @@ class SkuMapi extends Controller
     }
 
 
-    public function __construct(SpuService $spuService, SkuService $skuService)
+    /**
+     * SkuMapi constructor.
+     *
+     * @param SkuService $skuService
+     */
+    public function __construct(SkuService $skuService)
     {
-        $this->spuService = $spuService;
         $this->skuService = $skuService;
     }
 }

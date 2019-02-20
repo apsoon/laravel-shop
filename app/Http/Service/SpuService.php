@@ -17,10 +17,12 @@ use App\Http\Dao\SpecDao;
 use App\Http\Dao\SpecificationOptionDao;
 use App\Http\Dao\SpuSpecDao;
 use App\Http\Dao\SpuSpecOptionDao;
+use App\Http\Enum\StatusCode;
 use App\Http\Model\Spu;
 use App\Http\Model\SpuDetail;
 use App\Http\Model\Product;
 use App\Http\Model\SpuSpecOption;
+use App\Http\Util\JsonResult;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -81,27 +83,28 @@ class SpuService
 
     /**
      * @param $req
-     * @return bool
+     * @return JsonResult
      */
     public function createSpu($req)
     {
-        Log::info($req);
         $spu = new Spu();
-        $spu->category_id = $req["categoryId"];
-        $spu->brand_id = $req["brandId"];
-        $spu->name = $req["name"];
-//        $spu->list_price = $req["listPrice"];
-//        $spu->brief = $req["brief"];
-//        $spu->cover = $req["cover"];
-        $result = $spu->save();
-        if ($result) {
-            $spuDetail = new SpuDetail();
-            $spuDetail->spu_id = $spu->id;
-            $spuDetail->html = $req["detailHtml"];
-            $spuDetail->text = $req["detailText"];
-            $result = $spuDetail->save();
+        try {
+            $spu->category_id = $req["categoryId"];
+            $spu->brand_id = $req["brandId"];
+            $spu->name = $req["name"];
+            $result = $spu->save();
+            if ($result) {
+                $spuDetail = new SpuDetail();
+                $spuDetail->spu_id = $spu->id;
+                $spuDetail->html = $req["detailHtml"];
+                $spuDetail->text = $req["detailText"];
+                $result = $spuDetail->save();
+            }
+            if ($result) return new JsonResult();
+        } catch (\Exception $e) {
+            return new JsonResult(StatusCode::SERVER_ERROR);
         }
-        return $result;
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
 
@@ -109,14 +112,14 @@ class SpuService
      * 获取商品列表
      *
      * @param $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getPagedSpuList($req)
     {
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = empty($req["size"]) ? 20 : $req["size"];
         $result = $this->spuDao->getByPage($pageNo, $size);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
@@ -147,27 +150,31 @@ class SpuService
     }
 
     /**
+     * 获取spu详情
+     *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getSpuWithDetail(array $req)
     {
+        if (empty($req["spuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $spu = $this->spuDao->findById($req["spuId"]);
         $detail = $this->spuDetailDao->findBySpuId($req["spuId"]);
         $result = new \stdClass();
         $result->spu = $spu;
         $result->detail = $detail;
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * 插入列表
      *
      * @param array $req
-     * @return bool
+     * @return JsonResult
      */
     public function insertSpuSpecList(array $req)
     {
+        if (empty($req["spuId"]) || empty($req["specIds"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $spuId = $req["spuId"];
         $specIds = $req["specIds"];
         $relates = [];
@@ -175,14 +182,15 @@ class SpuService
             array_push($relates, ["spu_id" => $spuId, "spec_id" => $specId]);
         }
         $result = $this->spuSpecDao->insertList($relates);
-        return $result;
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
      * 获取对应规格列表
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getSpuSpecList(array $req)
     {
@@ -193,17 +201,18 @@ class SpuService
             array_push($specIds, $spuSpec->spec_id);
         }
         $result = $this->specDao->findByIds($specIds);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * 获取带选项的规格列表
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getSpuSpecListWithOption(array $req)
     {
+        if (empty($req["spuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $spuId = $req["spuId"];
         $specs = $this->spuSpecDao->findBySpuId($spuId);
         $options = $this->spuSpecOptionDao->findBySpuId($spuId);
@@ -223,28 +232,28 @@ class SpuService
                 }
             }
         }
-        return $nameSpecs;
+        return new JsonResult(StatusCode::SUCCESS, $nameSpecs);
     }
 
     /**
      * 获取规格的所有选项
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getSpecOptionList(array $req)
     {
         $spuId = $req["spuId"];
         $specId = $req["specId"];
         $result = $this->spuSpecOptionDao->findBySpuIdSpecId($spuId, $specId);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * 创建规格选项
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function insertSpuSpecOption(array $req)
     {
@@ -253,7 +262,8 @@ class SpuService
         $option->spec_id = $req["specId"];
         $option->name = $req["name"];
         $result = $this->spuSpecOptionDao->insert($option);
-        return $result;
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**

@@ -11,8 +11,15 @@ namespace App\Http\Service;
 
 use App\Http\Dao\SkuDao;
 use App\Http\Dao\SkuSpecOptionDao;
+use App\Http\Enum\StatusCode;
 use App\Http\Model\Sku;
+use App\Http\Util\JsonResult;
 
+/**
+ * Class SkuService
+ *
+ * @package App\Http\Service
+ */
 class SkuService
 {
     /**
@@ -29,32 +36,38 @@ class SkuService
      * 创建sku
      *
      * @param array $req
-     * @return bool
+     * @return JsonResult
      */
     public function createSku(array $req)
     {
-        $sku = new Sku();
-        $sku->spu_id = $req["spuId"];
-        $sku->name = $req["name"];
-        $sku->origin_price = $req["originPrice"];
-        $sku->price = $req["price"];
-        $sku->number = $req["number"];
-        $sku->state = $req["state"];
-        $options = $req["options"];
-        $optionList = [];
-        if ($sku->save()) {
-            foreach ($options as $option) {
-                array_push($optionList, ["sku_id" => $sku->id, "option_id" => $option]);
+        try {
+            $sku = new Sku();
+            $sku->spu_id = $req["spuId"];
+            $sku->name = $req["name"];
+            $sku->origin_price = $req["originPrice"];
+            $sku->price = $req["price"];
+            $sku->number = $req["number"];
+            $sku->state = $req["state"];
+            $options = $req["options"];
+            $optionList = [];
+            if ($sku->save()) {
+                foreach ($options as $option) {
+                    array_push($optionList, ["sku_id" => $sku->id, "option_id" => $option]);
+                }
             }
+            $result = $this->skuSpecOptionDao->insertList($optionList);
+            if ($result) return new JsonResult();
+        } catch (\Exception $e) {
+            return new JsonResult(StatusCode::SERVER_ERROR);
         }
-        $result = $this->skuSpecOptionDao->insertList($optionList);
-        return $result;
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
      * spu id 获取
+     *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getSkuBySpu(array $req)
     {
@@ -62,48 +75,52 @@ class SkuService
         foreach ($skuList as $sku) {
             $sku->specList = $this->getSpecOptionBySku($sku->id);
         }
-        return $skuList;
+        return new JsonResult(StatusCode::SUCCESS, $skuList);
     }
 
     /**
      * id获取SKU
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getSkuById(array $req)
     {
+        if (empty($req["skuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $result = $this->skuDao->findById($req["skuId"]);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * spu id 获取
+     *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getSkuListBySpuIdEffect(array $req)
     {
+        if (empty($req["spuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $skuList = $this->skuDao->findBySpuIdEffect($req["spuId"]);
         foreach ($skuList as $sku) {
             $sku->specList = $this->getSpecOptionBySku($sku->id);
         }
-        return $skuList;
+        return new JsonResult(StatusCode::SUCCESS, $skuList);
     }
 
     /**
      * 分类分页获取上架的SPU
      *
      * @param $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getPagedSkuByCategoryEffect($req)
     {
+        if (empty($req["categoryId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $categoryId = $req["categoryId"];
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
-        $size = empty($req["size"]) ? 20 : $req["size"];
+        $size = 20;
         $result = $this->skuDao->findByCategoryEffectPaged($categoryId, $pageNo, $size);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**

@@ -11,17 +11,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Psy\Util\Json;
 
+/**
+ * Class SpuMapi
+ *
+ * @package App\Http\Controllers\Mapi
+ */
 class SpuMapi extends Controller
 {
     /**
      * @var SpuService
      */
     private $spuService;
-
-    /**
-     * @var SkuService
-     */
-    private $skuService;
 
     /**
      * @param Request $request
@@ -31,14 +31,15 @@ class SpuMapi extends Controller
     }
 
     /**
+     * 分页获取SPU
+     *
      * @param Request $request
      * @return JsonResult
      */
     public function listByPage(Request $request)
     {
         $req = $request->all();
-        $result = $this->spuService->getPagedSpuList($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->spuService->getPagedSpuList($req);
     }
 
     /**
@@ -50,8 +51,7 @@ class SpuMapi extends Controller
     public function listSpec(Request $request)
     {
         $req = $request->all();
-        $result = $this->spuService->getSpuSpecList($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->spuService->getSpuSpecList($req);
     }
 
     /**
@@ -63,8 +63,7 @@ class SpuMapi extends Controller
     public function listSpecOption(Request $request)
     {
         $req = $request->all();
-        $result = $this->spuService->getSpuSpecListWithOption($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->spuService->getSpuSpecListWithOption($req);
     }
 
     /**
@@ -76,8 +75,7 @@ class SpuMapi extends Controller
     public function listOption(Request $request)
     {
         $req = $request->all();
-        $result = $this->spuService->getSpecOptionList($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->spuService->getSpecOptionList($req);
     }
 
     /**
@@ -89,9 +87,7 @@ class SpuMapi extends Controller
     public function createOption(Request $request)
     {
         $req = $request->all();
-        $result = $this->spuService->insertSpuSpecOption($req);
-        if ($result) return new JsonResult();
-        return new JsonResult(StatusCode::SERVER_ERROR);
+        return $this->spuService->insertSpuSpecOption($req);
     }
 
     /**
@@ -103,9 +99,7 @@ class SpuMapi extends Controller
     public function create(Request $request)
     {
         $req = $request->all();
-        $result = $this->spuService->createSpu($req);
-        if ($result) return new JsonResult();
-        return new JsonResult(StatusCode::SERVER_ERROR);
+        return $this->spuService->createSpu($req);
     }
 
     /**
@@ -117,8 +111,7 @@ class SpuMapi extends Controller
     public function detail(Request $request)
     {
         $req = $request->all();
-        $result = $this->spuService->getSpuWithDetail($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->spuService->getSpuWithDetail($req);
     }
 
     /**
@@ -130,13 +123,12 @@ class SpuMapi extends Controller
     public function relateSpec(Request $request)
     {
         $req = $request->all();
-        $result = $this->spuService->insertSpuSpecList($req);
-        if ($result) return new JsonResult();
-        return new JsonResult(StatusCode::SERVER_ERROR);
+        return $this->spuService->insertSpuSpecList($req);
     }
 
     /**
      * SpuMapi constructor.
+     *
      * @param SpuService $spuService
      */
     public function __construct(SpuService $spuService)

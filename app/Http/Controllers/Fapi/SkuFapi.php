@@ -10,6 +10,11 @@ use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Class SkuFapi
+ *
+ * @package App\Http\Controllers\Fapi
+ */
 class SkuFapi extends Controller
 {
     /**
@@ -18,71 +23,61 @@ class SkuFapi extends Controller
     private $skuService;
 
     /**
-     * @var CollectionDao
-     */
-    private $collectionDao;
-
-    /**
      * 产品详情页
      *
      * @param Request $request
-     * @return mixed
+     * @return JsonResult
      */
     public function detail(Request $request)
     {
         $req = $request->all();
-        $result = $this->skuService->getSkuById($req);
-        return $result;
+        return $this->skuService->getSkuById($req);
     }
 
     /**
      * 通过SPU获取
      *
      * @param Request $request
-     * @return mixed
+     * @return JsonResult
      */
     public function listBySpu(Request $request)
     {
         $req = $request->all();
-        $result = $this->skuService->getSkuListBySpuIdEffect($req);
-        return $result;
+        return $this->skuService->getSkuListBySpuIdEffect($req);
     }
 
     /**
      * 分类获取
      *
      * @param Request $request
-     * @return mixed
+     * @return JsonResult
      */
     public function listByCategory(Request $request)
     {
         $req = $request->all();
-        $result = $this->skuService->getPagedSkuByCategoryEffect($req);
-        return $result;
+        return $this->skuService->getPagedSkuByCategoryEffect($req);
     }
 
-    /**
-     * 规格列表
-     *
-     * @param Request $request
-     * @return JsonResult
-     */
-    public function specList(Request $request)
-    {
-        $req = $request->all();
-        $result = $this->skuService->getSkuSpecListWithOption($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
-    }
+//    /**
+//     * 规格列表
+//     *
+//     * @param Request $request
+//     * @return JsonResult
+//     */
+//    public function specList(Request $request)
+//    {
+//        $req = $request->all();
+//        $result = $this->skuService->getSkuSpecListWithOption($req);
+//        return new JsonResult(StatusCode::SUCCESS, $result);
+//    }
 
     /**
      * SkuFapi constructor.
      *
      * @param SkuService $skuService
-     * @param CollectionDao $collectionDao
      */
-    public function __construct(SkuService $skuService, CollectionDao $collectionDao)
+    public function __construct(SkuService $skuService)
     {
         $this->skuService = $skuService;
-        $this->collectionDao = $collectionDao;
     }
 }

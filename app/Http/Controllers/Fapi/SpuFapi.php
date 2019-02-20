@@ -9,6 +9,11 @@ use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Class SpuFapi
+ *
+ * @package App\Http\Controllers\Fapi
+ */
 class SpuFapi extends Controller
 {
     /**
@@ -16,35 +21,40 @@ class SpuFapi extends Controller
      */
     private $spuService;
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function detail(Request $request)
-    {
-        $req = $request->all();
-        $result = $this->spuService->getSpuById($req);
-        return $result;
-    }
+//    /**
+//     * @param Request $request
+//     * @return mixed
+//     */
+//    public function detail(Request $request)
+//    {
+//        $req = $request->all();
+//        $result = $this->spuService->getSpuById($req);
+//        return $result;
+//    }
+//
+//    /**
+//     * 分类获取
+//     *
+//     * @param Request $request
+//     * @return mixed
+//     */
+//    public function listByCategory(Request $request)
+//    {
+//        $req = $request->all();
+//        $result = $this->spuService->getPagedSpuByCategoryEffect($req);
+//        return $result;
+//    }
 
     /**
-     * 分类获取
+     * spu获取规格列表
      *
      * @param Request $request
-     * @return mixed
+     * @return JsonResult
      */
-    public function listByCategory(Request $request)
-    {
-        $req = $request->all();
-        $result = $this->spuService->getPagedSpuByCategoryEffect($req);
-        return $result;
-    }
-
     public function specList(Request $request)
     {
         $req = $request->all();
-        $result = $this->spuService->getSpuSpecListWithOption($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->spuService->getSpuSpecListWithOption($req);
     }
 
     /**
