@@ -85,6 +85,35 @@ class CartService
     }
 
     /**
+     * 购物车数量加一或减一
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function addOrMinusOneBySkuUser(array $req)
+    {
+        if (empty($req["userId"]) || empty($req["skuId"]) || empty($req["type"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $cartSku = $this->cartSkuDao->findBySkuUser($req["userId"], $req["skuId"]);
+        if ($cartSku) {
+            switch ($req["type"]) {
+                case "add":
+                    $cartSku->number++;
+                    $sku = $this->skuDao->findByIdEffect($req["skuId"]);
+                    if (!$sku && $cartSku->number > $sku->number) {
+                        return new JsonResult(StatusCode::STOCK_NOT_ENOUGH);
+                    }
+                    break;
+                case "minus":
+                    $cartSku->number--;
+                    break;
+            }
+            $result = $cartSku->save();
+            if ($result) return new JsonResult();
+        }
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
      * CartService constructor.
      *
      * @param CartSkuDao $cartSkuDao

@@ -41,6 +41,7 @@ Route::group(["namespace" => "Fapi"], function () {
     Route::POST("cart/add", "CartFapi@create");
     Route::GET("cart/list", "CartFapi@list");
     Route::POST("cart/delete", "CartFapi@delete");
+    Route::POST("cart/number", "CartFapi@number");
 
     // collection 收藏
     Route::POST("collection/create", "CollectionFapi@create");

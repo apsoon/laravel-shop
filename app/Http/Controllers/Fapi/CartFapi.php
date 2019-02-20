@@ -66,6 +66,18 @@ class CartFapi extends Controller
     }
 
     /**
+     * 修改购物车数量
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function number(Request $request)
+    {
+        $req = $request->all();
+        return $this->cartService->addOrMinusOneBySkuUser($req);
+    }
+
+    /**
      * CartFapi constructor.
      *
      * @param CartService $cartService
