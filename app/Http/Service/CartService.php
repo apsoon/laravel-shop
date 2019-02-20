@@ -23,6 +23,9 @@ class CartService
      */
     private $cartSkuDao;
 
+    /**
+     * @var SkuDao
+     */
     private $skuDao;
 
     /**
@@ -55,19 +58,19 @@ class CartService
      * 用户Id获取
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getCartByUserId(array $req)
     {
         $result = $this->cartSkuDao->findByUserId($req["userId"]);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * 用户删除或批量删除
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function deleteCartSkusByUserId(array $req)
     {
@@ -77,7 +80,8 @@ class CartService
         } else {
             $result = $this->cartSkuDao->deleteListByUser($req["userId"], $skuIds);
         }
-        return $result;
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**

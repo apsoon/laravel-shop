@@ -49,8 +49,7 @@ class CartFapi extends Controller
     public function list(Request $request)
     {
         $req = $request->all();
-        $result = $this->cartService->getCartByUserId($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->cartService->getCartByUserId($req);
     }
 
     /**
@@ -63,9 +62,7 @@ class CartFapi extends Controller
     {
         $req = $request->all();
         if (empty($req) || empty($req["skuIds"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        $result = $this->cartService->deleteCartSkusByUserId($req);
-        if ($result) return new JsonResult();
-        else return new JsonResult(StatusCode::SERVER_ERROR);
+        return $this->cartService->deleteCartSkusByUserId($req);
     }
 
     /**
