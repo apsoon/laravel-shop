@@ -58,8 +58,8 @@
                 uploadHeader: {},
                 imageList: [],
                 uploadData: {
-                    type: "ad",
-                    position: "banner"
+                    type: "logo",
+                    position: "category"
                 }
             }
         },

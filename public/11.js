@@ -48,6 +48,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BrandAdd",
@@ -66,7 +69,19 @@ __webpack_require__.r(__webpack_exports__);
           message: '请输入广告名称',
           trigger: 'blur'
         }]
+      },
+      uploadHeader: {},
+      imageList: [],
+      uploadData: {
+        type: "logo",
+        position: "brand"
       }
+    };
+  },
+  mounted: function mounted() {
+    var that = this;
+    that.uploadHeader = {
+      'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
     };
   },
   methods: {
@@ -89,6 +104,24 @@ __webpack_require__.r(__webpack_exports__);
           return false;
         }
       });
+    },
+    onUploadSuccess: function onUploadSuccess(response, file, fileList) {
+      var that = this;
+
+      if (response.code === 2000) {
+        var brandForm = that.brandForm;
+        brandForm.logo = response.data.filePath;
+        that.brandForm = brandForm;
+      }
+    },
+    onUploadFailed: function onUploadFailed(err, file, fileList) {// TODO 上传失败
+    },
+    onUploadFileRemoved: function onUploadFileRemoved(file, fileList) {
+      var that = this; // TODO 删除文件
+
+      var brandForm = that.brandForm;
+      brandForm.logo = "";
+      that.brandForm = brandForm;
     }
   }
 });
@@ -190,12 +223,15 @@ var render = function() {
                 {
                   staticClass: "upload-demo",
                   attrs: {
-                    action: "",
-                    "on-preview": _vm.handlePreview,
-                    "on-remove": _vm.handleRemove,
-                    "before-remove": _vm.beforeRemove,
+                    action: "/upload/image",
+                    headers: _vm.uploadHeader,
+                    "on-success": _vm.onUploadSuccess,
+                    "on-error": _vm.onUploadFailed,
+                    "on-remove": _vm.onUploadFileRemoved,
                     limit: 1,
-                    "file-list": _vm.fileList
+                    data: _vm.uploadData,
+                    "file-list": _vm.imageList,
+                    "list-type": "picture"
                   }
                 },
                 [

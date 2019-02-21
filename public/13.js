@@ -72,8 +72,8 @@ __webpack_require__.r(__webpack_exports__);
       uploadHeader: {},
       imageList: [],
       uploadData: {
-        type: "ad",
-        position: "banner"
+        type: "logo",
+        position: "category"
       }
     };
   },

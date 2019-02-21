@@ -106,6 +106,7 @@ class BrandService
     public function getBrandById(array $req)
     {
         $result = $this->brandDao->findById($req["brandId"]);
+        if (!empty($result->logo)) $result->logo = asset($result->logo);
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 

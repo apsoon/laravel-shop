@@ -16,12 +16,15 @@
             <el-form-item label="品牌LOGO">
                 <el-upload
                         class="upload-demo"
-                        action=""
-                        :on-preview="handlePreview"
-                        :on-remove="handleRemove"
-                        :before-remove="beforeRemove"
+                        action="/upload/image"
+                        :headers="uploadHeader"
+                        :on-success="onUploadSuccess"
+                        :on-error="onUploadFailed"
+                        :on-remove="onUploadFileRemoved"
                         :limit="1"
-                        :file-list="fileList">
+                        :data="uploadData"
+                        :file-list="imageList"
+                        list-type="picture">
                     <el-button size="small" type="primary">点击上传</el-button>
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
@@ -53,8 +56,20 @@
                     name: [
                         {required: true, message: '请输入广告名称', trigger: 'blur'}
                     ]
+                },
+                uploadHeader: {},
+                imageList: [],
+                uploadData: {
+                    type: "logo",
+                    position: "brand"
                 }
             }
+        },
+        mounted: function () {
+            let that = this;
+            that.uploadHeader = {
+                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
+            };
         },
         methods: {
             onSubmit: function () {
@@ -78,7 +93,25 @@
                         return false;
                     }
                 });
-            }
+            },
+            onUploadSuccess: function (response, file, fileList) {
+                let that = this;
+                if (response.code === 2000) {
+                    let brandForm = that.brandForm;
+                    brandForm.logo = response.data.filePath;
+                    that.brandForm = brandForm;
+                }
+            },
+            onUploadFailed: function (err, file, fileList) {
+                // TODO 上传失败
+            },
+            onUploadFileRemoved: function (file, fileList) {
+                let that = this;
+                // TODO 删除文件
+                let brandForm = that.brandForm;
+                brandForm.logo = "";
+                that.brandForm = brandForm;
+            },
         }
     }
 </script>
