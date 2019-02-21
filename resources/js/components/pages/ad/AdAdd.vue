@@ -27,7 +27,7 @@
                     <el-input v-model="adForm.sortOrder"></el-input>
                 </el-col>
             </el-form-item>
-            <el-form-item label="添加图片" prop="imageUrl">
+            <el-form-item label="添加图片" prop="imageList">
                 <el-upload
                         class="upload-demo"
                         action="/upload/image"
@@ -84,8 +84,8 @@
                     positionId: [
                         {required: true, message: '请选择广告位置', trigger: 'change'}
                     ],
-                    imageUrl: [
-                        // {validator: uploadValidator, trigger: 'blur'},
+                    imageList: [
+                        // {required: true, message: '请上传广告图片', trigger: 'change'}
                     ]
                 },
                 positionList: [],
@@ -99,11 +99,9 @@
         },
         mounted: function () {
             let that = this;
-            let uploadHeader = {
+            that.uploadHeader = {
                 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
             };
-            that.uploadHeader = uploadHeader;
-            console.info(uploadHeader);
             axios.get("adPos/list").then(res => {
                 that.positionList = res.data.data;
                 console.info(that.positionList);

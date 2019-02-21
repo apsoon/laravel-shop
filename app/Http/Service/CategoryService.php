@@ -36,16 +36,16 @@ class CategoryService
     {
         $category = new Category();
         $category->name = $req["name"];
-        $category->sort_order = empty($req["sort_order"]) ? 1 : $req["sort_order"];
-        if (empty($req["parent_id"])) {
+        $category->sort_order = empty($req["sortOrder"]) ? 1 : $req["sortOrder"];
+        if (empty($req["parentId"])) {
             $category->level = 1;
             $category->parent_id = 0;
         } else {
-            $cat = $this->categoryDao->findById($req["parent_id"]);
-            $category->parent_id = $req["parent_id"];
+            $cat = $this->categoryDao->findById($req["parentId"]);
+            $category->parent_id = $req["parentId"];
             $category->level = $cat->level + 1;
         }
-        $category->image_url = $req["image_url"];
+        $category->image_url = $req["imageUrl"];
         $result = $this->categoryDao->insert($category);
         if ($result) return new JsonResult();
         return new JsonResult(StatusCode::SERVER_ERROR);
@@ -91,14 +91,15 @@ class CategoryService
     {
         $temp = [];
         foreach ($categories as $category) {
+            if (!empty($category->image_url) && !strpos($category->image_url, 'http')) $category->image_url = asset($category->image_url);
             if ($category->level == 1) {
-                $res = $category; // $this->copyCategoryBean($category);
+                $res = $category;
                 array_push($temp, $res);
             } else {
                 foreach ($categories as $item) {
                     if ($item->id == $category->parent_id) {
                         $children = empty($item->children) == 1 ? [] : $item->children;
-                        $res_ = $category; // $this->copyCategoryBean($category);
+                        $res_ = $category;
                         array_push($children, $res_);
                         $sorted = array_values(array_sort($children, function ($cat) {
                             return $cat->sort_order;

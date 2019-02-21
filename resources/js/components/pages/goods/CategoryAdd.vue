@@ -10,18 +10,21 @@
             <el-form-item label="上级分类">
                 <label>{{parentName}}</label>
             </el-form-item>
-            <el-form-item label="排序优先级" prop="sort_order">
-                <el-input v-model="categoryForm.sort_order"></el-input>
+            <el-form-item label="排序优先级" prop="sortOrder">
+                <el-input v-model="categoryForm.sortOrder"></el-input>
             </el-form-item>
             <el-form-item label="添加图片">
                 <el-upload
                         class="upload-demo"
+                        action="/upload/image"
+                        :headers="uploadHeader"
+                        :on-success="onUploadSuccess"
+                        :on-error="onUploadFailed"
+                        :on-remove="onUploadFileRemoved"
                         :limit="1"
-                        :file-list="fileList"
-                        action=""
-                        :on-preview="handlePreview"
-                        :on-remove="handleRemove"
-                        :before-remove="beforeRemove">
+                        :data="uploadData"
+                        :file-list="imageList"
+                        list-type="picture">
                     <el-button size="small" type="primary">点击上传</el-button>
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
@@ -41,9 +44,9 @@
             return {
                 categoryForm: {
                     name: "",
-                    parent_id: 0,
-                    sort_order: 0,
-                    image_url: ""
+                    parentId: 0,
+                    sortOrder: 0,
+                    imageUrl: ""
                 },
                 rules: {
                     name: [
@@ -51,20 +54,29 @@
                     ]
                 },
                 parentId: 0,
-                parentName: ""
+                parentName: "",
+                uploadHeader: {},
+                imageList: [],
+                uploadData: {
+                    type: "ad",
+                    position: "banner"
+                }
             }
         },
         mounted: function () {
             let that = this;
             that.parentId = that.$route.query.parentId;
             that.parentName = that.$route.query.parentName;
+            that.uploadHeader = {
+                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
+            };
         },
         methods: {
             onSubmit: function () {
                 let that = this;
                 that.$refs.categoryForm.validate((valid) => {
                     if (valid) {
-                        that.categoryForm.parent_id = that.parentId;
+                        that.categoryForm.parentId = that.parentId;
                         axios.post("category/create", that.categoryForm)
                             .then(res => {
                                 if (res.data.code === 2000) {
@@ -85,7 +97,25 @@
                     this.$refs.treeCategory.setCheckedNodes([]);
                     this.$refs.treeCategory.setCheckedNodes([data]);
                 }
-            }
+            },
+            onUploadSuccess: function (response, file, fileList) {
+                let that = this;
+                if (response.code === 2000) {
+                    let categoryForm = that.categoryForm;
+                    categoryForm.imageUrl = response.data.filePath;
+                    that.categoryForm = categoryForm;
+                }
+            },
+            onUploadFailed: function (err, file, fileList) {
+                // TODO 上传失败
+            },
+            onUploadFileRemoved: function (file, fileList) {
+                let that = this;
+                // TODO 删除文件
+                let categoryForm = that.categoryForm;
+                categoryForm.imageUrl = "";
+                that.categoryForm = categoryForm;
+            },
         }
     }
 </script>

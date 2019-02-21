@@ -99,7 +99,7 @@ __webpack_require__.r(__webpack_exports__);
           message: '请选择广告位置',
           trigger: 'change'
         }],
-        imageUrl: [// {validator: uploadValidator, trigger: 'blur'},
+        imageList: [// {required: true, message: '请上传广告图片', trigger: 'change'}
         ]
       },
       positionList: [],
@@ -113,11 +113,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var that = this;
-    var uploadHeader = {
+    that.uploadHeader = {
       'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
     };
-    that.uploadHeader = uploadHeader;
-    console.info(uploadHeader);
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("adPos/list").then(function (res) {
       that.positionList = res.data.data;
       console.info(that.positionList);
@@ -297,7 +295,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "添加图片", prop: "imageUrl" } },
+            { attrs: { label: "添加图片", prop: "imageList" } },
             [
               _c(
                 "el-upload",

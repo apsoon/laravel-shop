@@ -45,6 +45,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -53,9 +56,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       categoryForm: {
         name: "",
-        parent_id: 0,
-        sort_order: 0,
-        image_url: ""
+        parentId: 0,
+        sortOrder: 0,
+        imageUrl: ""
       },
       rules: {
         name: [{
@@ -65,20 +68,29 @@ __webpack_require__.r(__webpack_exports__);
         }]
       },
       parentId: 0,
-      parentName: ""
+      parentName: "",
+      uploadHeader: {},
+      imageList: [],
+      uploadData: {
+        type: "ad",
+        position: "banner"
+      }
     };
   },
   mounted: function mounted() {
     var that = this;
     that.parentId = that.$route.query.parentId;
     that.parentName = that.$route.query.parentName;
+    that.uploadHeader = {
+      'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
+    };
   },
   methods: {
     onSubmit: function onSubmit() {
       var that = this;
       that.$refs.categoryForm.validate(function (valid) {
         if (valid) {
-          that.categoryForm.parent_id = that.parentId;
+          that.categoryForm.parentId = that.parentId;
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("category/create", that.categoryForm).then(function (res) {
             if (res.data.code === 2000) {
               _router__WEBPACK_IMPORTED_MODULE_1__["default"].push("/category-list");
@@ -95,6 +107,24 @@ __webpack_require__.r(__webpack_exports__);
         this.$refs.treeCategory.setCheckedNodes([]);
         this.$refs.treeCategory.setCheckedNodes([data]);
       }
+    },
+    onUploadSuccess: function onUploadSuccess(response, file, fileList) {
+      var that = this;
+
+      if (response.code === 2000) {
+        var categoryForm = that.categoryForm;
+        categoryForm.imageUrl = response.data.filePath;
+        that.categoryForm = categoryForm;
+      }
+    },
+    onUploadFailed: function onUploadFailed(err, file, fileList) {// TODO 上传失败
+    },
+    onUploadFileRemoved: function onUploadFileRemoved(file, fileList) {
+      var that = this; // TODO 删除文件
+
+      var categoryForm = that.categoryForm;
+      categoryForm.imageUrl = "";
+      that.categoryForm = categoryForm;
     }
   }
 });
@@ -159,15 +189,15 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "排序优先级", prop: "sort_order" } },
+            { attrs: { label: "排序优先级", prop: "sortOrder" } },
             [
               _c("el-input", {
                 model: {
-                  value: _vm.categoryForm.sort_order,
+                  value: _vm.categoryForm.sortOrder,
                   callback: function($$v) {
-                    _vm.$set(_vm.categoryForm, "sort_order", $$v)
+                    _vm.$set(_vm.categoryForm, "sortOrder", $$v)
                   },
-                  expression: "categoryForm.sort_order"
+                  expression: "categoryForm.sortOrder"
                 }
               })
             ],
@@ -183,12 +213,15 @@ var render = function() {
                 {
                   staticClass: "upload-demo",
                   attrs: {
+                    action: "/upload/image",
+                    headers: _vm.uploadHeader,
+                    "on-success": _vm.onUploadSuccess,
+                    "on-error": _vm.onUploadFailed,
+                    "on-remove": _vm.onUploadFileRemoved,
                     limit: 1,
-                    "file-list": _vm.fileList,
-                    action: "",
-                    "on-preview": _vm.handlePreview,
-                    "on-remove": _vm.handleRemove,
-                    "before-remove": _vm.beforeRemove
+                    data: _vm.uploadData,
+                    "file-list": _vm.imageList,
+                    "list-type": "picture"
                   }
                 },
                 [
