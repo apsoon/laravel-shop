@@ -30,12 +30,15 @@
             <el-form-item label="添加图片">
                 <el-upload
                         class="upload-demo"
-                        action=""
+                        action="/upload/image"
+                        :headers="uploadHeader"
                         :on-preview="handlePreview"
                         :on-remove="handleRemove"
                         :before-remove="beforeRemove"
                         :limit="1"
-                        :file-list="fileList">
+                        :data="uploadData"
+                        :file-list="imageList"
+                        list-type="picture">
                     <el-button size="small" type="primary">点击上传</el-button>
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
@@ -73,11 +76,22 @@
                         {required: true, message: '请选择广告位置', trigger: 'change'}
                     ]
                 },
-                positionList: []
+                positionList: [],
+                uploadHeader: {},
+                imageList: [],
+                uploadData: {
+                    type: "ad",
+                    position: "banner"
+                }
             }
         },
         mounted: function () {
             let that = this;
+            let uploadHeader = {
+                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
+            };
+            that.uploadHeader = uploadHeader;
+            console.info(uploadHeader);
             axios.get("adPos/list").then(res => {
                 that.positionList = res.data.data;
                 console.info(that.positionList);

@@ -286,7 +286,7 @@ var render = function() {
                             _c(
                               "el-button",
                               { attrs: { type: "text", size: "mini" } },
-                              [_vm._v("添加子分类 " + _vm._s(data.level))]
+                              [_vm._v("添加子分类")]
                             )
                           ],
                           1

@@ -63,6 +63,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -93,11 +96,22 @@ __webpack_require__.r(__webpack_exports__);
           trigger: 'change'
         }]
       },
-      positionList: []
+      positionList: [],
+      uploadHeader: {},
+      imageList: [],
+      uploadData: {
+        type: "ad",
+        position: "banner"
+      }
     };
   },
   mounted: function mounted() {
     var that = this;
+    var uploadHeader = {
+      'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
+    };
+    that.uploadHeader = uploadHeader;
+    console.info(uploadHeader);
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("adPos/list").then(function (res) {
       that.positionList = res.data.data;
       console.info(that.positionList);
@@ -267,12 +281,15 @@ var render = function() {
                 {
                   staticClass: "upload-demo",
                   attrs: {
-                    action: "",
+                    action: "/upload/image",
+                    headers: _vm.uploadHeader,
                     "on-preview": _vm.handlePreview,
                     "on-remove": _vm.handleRemove,
                     "before-remove": _vm.beforeRemove,
                     limit: 1,
-                    "file-list": _vm.fileList
+                    data: _vm.uploadData,
+                    "file-list": _vm.imageList,
+                    "list-type": "picture"
                   }
                 },
                 [

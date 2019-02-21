@@ -60,4 +60,8 @@ class StatusCode
         "code" => 10001,
         "message" => "库存不足"
     ];
+    const INVALID_FILE = [
+        "code" => 11001,
+        "message" => "上传文件无效"
+    ];
 }

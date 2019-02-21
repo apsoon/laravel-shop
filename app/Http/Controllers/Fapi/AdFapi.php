@@ -10,10 +10,9 @@ namespace App\Http\Controllers\Fapi;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Enum\StatusCode;
 use App\Http\Service\AdService;
 use App\Http\Util\JsonResult;
-use http\Env\Request;
+use Illuminate\Http\Request;
 
 /**
  * Class AdFapi
