@@ -11,10 +11,12 @@ namespace App\Http\Service;
 
 use App\Http\Dao\CouponDao;
 use App\Http\Dao\UserCouponDao;
+use App\Http\Enum\CouponSendType;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Coupon;
 use App\Http\Model\UserCoupon;
 use App\Http\Util\JsonResult;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use function PHPSTORM_META\type;
 
@@ -55,7 +57,7 @@ class CouponService
                 Log::info("------------------");
             }
             if ($req["effectEnd"]) {
-                $time = $req["effectEnd"] / 1000 ;
+                $time = $req["effectEnd"] / 1000;
                 $coupon->effect_end = date('Y-m-d H:i:s', $time);
             }
             $coupon->value = $req["value"];
@@ -139,14 +141,46 @@ class CouponService
      */
     public function addCouponToUser(array $req)
     {
-        // TODO
         if (empty($req["type"]) || empty($req["couponId"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        // 判断coupon 是否存在及数量
-        // 判断限领一个的是否已经领取
-        $result = [];
-        if ($result) return new JsonResult();
+        // 是否已领取
+        $exist = $this->userCouponDao->findByCouponUser($req["couponId"], $req["userId"]);
+        if (sizeof($exist) > 0) {
+            return new JsonResult(StatusCode::COUPON_ALREADY_OBTAIN);
+        }
+        // 优惠券是否存在
+        $coupon = $this->couponDao->findById($req["couponId"]);
+        if ($req["type"] == CouponSendType::SN["key"] && ($coupon->sent_type != CouponSendType::SN["code"] || $coupon->sn != $req["sn"])) {
+            return new JsonResult(StatusCode::COUPON_NOT_EXIST);
+        }
+        // 优惠券数量
+        if ($coupon->number <= 0) {
+            return new JsonResult(StatusCode::COUPON_NOT_REST);
+        }
+        DB::beginTransaction();
+        try {
+            $decrement = $this->couponDao->decreaseNumber($req["couponId"], 1);
+            if (!$decrement) {
+                DB::rollBack();
+                return new JsonResult(StatusCode::COUPON_NOT_REST);
+            }
+            $userCoupon = new UserCoupon();
+            $userCoupon->user_id = $req["userId"];
+            $userCoupon->coupon_id = $req["couponId"];
+            $obtain = $userCoupon->save();
+//            Log::i
+            if (!$obtain) {
+                DB::rollBack();
+                return new JsonResult(StatusCode::SERVER_ERROR);
+            }
+            DB::commit();
+            return new JsonResult(StatusCode::SUCCESS);
+        } catch (\Exception $e) {
+            Log::info($e);
+            DB::rollBack();
+        }
         return new JsonResult(StatusCode::SERVER_ERROR);
     }
+
 
     /**
      * CouponService constructor.

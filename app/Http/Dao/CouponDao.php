@@ -39,7 +39,7 @@ class CouponDao
     public function findById(int $id)
     {
         $result = $this->coupon::where(["id" => $id])
-            ->get();
+            ->first();
         return $result;
     }
 
@@ -81,7 +81,7 @@ class CouponDao
      */
     public function findByIdUser($userId, $couponId)
     {
-        $result = $this->where(["user_id" => $userId, "id" => $couponId])
+        $result = $this->coupon::where(["user_id" => $userId, "id" => $couponId])
             ->first();
         return $result;
 
@@ -97,8 +97,22 @@ class CouponDao
      */
     public function updateStateByIdUser($userId, int $couponId, $status)
     {
-        $result = $this->where(["user_id" => $userId, "id" => $couponId])
+        $result = $this->coupon::where(["user_id" => $userId, "id" => $couponId])
             ->update("status", $status);
+        return $result;
+    }
+
+    /**
+     * 减少优惠券的数量
+     *
+     * @param $couponId
+     * @param $number
+     * @return mixed
+     */
+    public function decreaseNumber($couponId, $number)
+    {
+        $result = $this->coupon::where("id", "=", $couponId)
+            ->decrement("number", $number);
         return $result;
     }
 

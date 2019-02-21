@@ -39,6 +39,20 @@ class UserCouponDao
     }
 
     /**
+     * 优惠券编号用户获取
+     *
+     * @param $couponId
+     * @param $userId
+     * @return mixed
+     */
+    public function findByCouponUser($couponId, $userId)
+    {
+        $result = $this->userCoupon::where(["user_id" => $userId, "coupon_id" => $couponId])
+            ->get();
+        return $result;
+    }
+
+    /**
      * UserCouponDao constructor.
      *
      * @param UserCoupon $userCoupon

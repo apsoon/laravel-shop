@@ -55,13 +55,37 @@ class StatusCode
         "message" => "缺少微信code"
     ];
 
-    //
+    // 100XX 商品
     const STOCK_NOT_ENOUGH = [
         "code" => 10001,
         "message" => "库存不足"
     ];
+
+    // 110XX 文件上传
     const INVALID_FILE = [
         "code" => 11001,
         "message" => "上传文件无效"
+    ];
+
+    // 120xx 优惠券
+    const COUPON_NOT_EXIST = [
+        "code" => 12001,
+        "message" => "优惠券不存在"
+    ];
+    const COUPON_ALREADY_OBTAIN = [
+        "code" => 12002,
+        "message" => "已领取过当前优惠券"
+    ];
+    const COUPON_EXPIRED = [
+        "code" => 12003,
+        "message" => "优惠券已过期"
+    ];
+    const COUPON_BEEN_USED = [
+        "code" => 12004,
+        "message" => "优惠券已使用"
+    ];
+    const COUPON_NOT_REST = [
+        "code" => 12005,
+        "message" => "优惠券已领完"
     ];
 }
