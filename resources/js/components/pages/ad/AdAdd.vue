@@ -27,14 +27,14 @@
                     <el-input v-model="adForm.sortOrder"></el-input>
                 </el-col>
             </el-form-item>
-            <el-form-item label="添加图片">
+            <el-form-item label="添加图片" prop="imageUrl">
                 <el-upload
                         class="upload-demo"
                         action="/upload/image"
                         :headers="uploadHeader"
-                        :on-preview="handlePreview"
-                        :on-remove="handleRemove"
-                        :before-remove="beforeRemove"
+                        :on-success="onUploadSuccess"
+                        :on-error="onUploadFailed"
+                        :on-remove="onUploadFileRemoved"
                         :limit="1"
                         :data="uploadData"
                         :file-list="imageList"
@@ -58,7 +58,15 @@
 
     export default {
         name: "AdAdd",
-        data() {
+        data: function () {
+            // let uploadValidator = function (rule, value, callback) {
+            //     let adForm = this.adForm;
+            //     console.info(adForm);
+            //     if (adForm.imageUrl.length <= 0) {
+            //         callback(new Error('请上传广告图片'));
+            //     }
+            //     callback();
+            // };
             return {
                 adForm: {
                     name: '',
@@ -66,6 +74,7 @@
                     sortOrder: 1,
                     state: "0",
                     positionId: "",
+                    imageUrl: ""
                 },
                 rules: {
                     name: [
@@ -74,6 +83,9 @@
                     ],
                     positionId: [
                         {required: true, message: '请选择广告位置', trigger: 'change'}
+                    ],
+                    imageUrl: [
+                        // {validator: uploadValidator, trigger: 'blur'},
                     ]
                 },
                 positionList: [],
@@ -114,8 +126,23 @@
                         return false;
                     }
                 });
-            }
-        }
+            },
+            onUploadSuccess: function (response, file, fileList) {
+                console.info("========", response, file, fileList)
+            },
+            onUploadFailed: function (err, file, fileList) {
+
+            },
+            onUploadFileRemoved: function (file, fileList) {
+                let that = this;
+                // TODO 删除文件
+                let adForm = that.adForm;
+                adForm.imageUrl = "";
+                that.adForm = adForm;
+            },
+
+        },
+
     }
 </script>
 

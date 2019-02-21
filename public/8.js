@@ -71,13 +71,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdAdd",
   data: function data() {
+    // let uploadValidator = function (rule, value, callback) {
+    //     let adForm = this.adForm;
+    //     console.info(adForm);
+    //     if (adForm.imageUrl.length <= 0) {
+    //         callback(new Error('请上传广告图片'));
+    //     }
+    //     callback();
+    // };
     return {
       adForm: {
         name: '',
         content: '',
         sortOrder: 1,
         state: "0",
-        positionId: ""
+        positionId: "",
+        imageUrl: ""
       },
       rules: {
         name: [{
@@ -94,7 +103,9 @@ __webpack_require__.r(__webpack_exports__);
           required: true,
           message: '请选择广告位置',
           trigger: 'change'
-        }]
+        }],
+        imageUrl: [// {validator: uploadValidator, trigger: 'blur'},
+        ]
       },
       positionList: [],
       uploadHeader: {},
@@ -132,6 +143,17 @@ __webpack_require__.r(__webpack_exports__);
           return false;
         }
       });
+    },
+    onUploadSuccess: function onUploadSuccess(response, file, fileList) {
+      console.info("========", response, file, fileList);
+    },
+    onUploadFailed: function onUploadFailed(err, file, fileList) {},
+    onUploadFileRemoved: function onUploadFileRemoved(file, fileList) {
+      var that = this; // TODO 删除文件
+
+      var adForm = that.adForm;
+      adForm.imageUrl = "";
+      that.adForm = adForm;
     }
   }
 });
@@ -274,7 +296,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "添加图片" } },
+            { attrs: { label: "添加图片", prop: "imageUrl" } },
             [
               _c(
                 "el-upload",
@@ -283,9 +305,9 @@ var render = function() {
                   attrs: {
                     action: "/upload/image",
                     headers: _vm.uploadHeader,
-                    "on-preview": _vm.handlePreview,
-                    "on-remove": _vm.handleRemove,
-                    "before-remove": _vm.beforeRemove,
+                    "on-success": _vm.onUploadSuccess,
+                    "on-error": _vm.onUploadFailed,
+                    "on-remove": _vm.onUploadFileRemoved,
                     limit: 1,
                     data: _vm.uploadData,
                     "file-list": _vm.imageList,
