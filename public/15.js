@@ -104,7 +104,8 @@ __webpack_require__.r(__webpack_exports__);
       category: [],
       categoryProps: {
         value: 'id',
-        children: 'children'
+        children: 'children',
+        label: 'name'
       },
       brandList: []
     };
@@ -223,7 +224,7 @@ var render = function() {
                   "expand-trigger": "hover",
                   options: _vm.categoryList,
                   props: _vm.categoryProps,
-                  "change-on-select": true,
+                  "change-on-select": false,
                   change: _vm.onCategoryChange(),
                   filterable: ""
                 },

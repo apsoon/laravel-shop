@@ -8,7 +8,7 @@
                 <el-input v-model="spuForm.name" placeholder="请输入商品名称"/>
             </el-form-item>
             <!--<el-form-item label="简要描述" prop="brief">-->
-                <!--<el-input v-model="spuForm.brief" placeholder="请输入简要描述"/>-->
+            <!--<el-input v-model="spuForm.brief" placeholder="请输入简要描述"/>-->
             <!--</el-form-item>-->
             <el-form-item label="选择分类" prop="categoryId">
                 <el-cascader
@@ -16,7 +16,7 @@
                         expand-trigger="hover"
                         :options="categoryList"
                         :props="categoryProps"
-                        :change-on-select="true"
+                        :change-on-select="false"
                         :change="onCategoryChange()"
                         filterable
                         v-model="category">
@@ -33,9 +33,9 @@
                 </el-select>
             </el-form-item>
             <!--<el-form-item label="商品列表价" prop="listPrice">-->
-                <!--<el-col :span="5">-->
-                    <!--<el-input v-model="spuForm.listPrice" placeholder="请输入商品列表价"/>-->
-                <!--</el-col>-->
+            <!--<el-col :span="5">-->
+            <!--<el-input v-model="spuForm.listPrice" placeholder="请输入商品列表价"/>-->
+            <!--</el-col>-->
             <!--</el-form-item>-->
             <!--<el-form-item label="添加图片">-->
             <!--</el-form-item>-->
@@ -85,7 +85,8 @@
                 category: [],
                 categoryProps: {
                     value: 'id',
-                    children: 'children'
+                    children: 'children',
+                    label: 'name'
                 },
                 brandList: [],
             }
