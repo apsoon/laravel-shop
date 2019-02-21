@@ -27,27 +27,34 @@ class BrandService
 
 
     /**
-     * @return Brand[]|\Illuminate\Database\Eloquent\Collection
+     * 获取品牌列表
+     *
+     * @return JsonResult
      */
     public function getBrandList()
     {
-        $result = $this->brandDao->list();
-        return $result;
+        $brandList = $this->brandDao->list();
+        foreach ($brandList as $brand) {
+            if (!empty($brand->logo)) $brand->logo = asset($brand->logo);
+        }
+        return new JsonResult(StatusCode::SUCCESS, $brandList);
     }
 
     /**
      * 分页获取商品列表
      *
      * @param array $info
-     * @return array|mixed
+     * @return JsonResult
      */
     public function getPagedBrandList(array $info)
     {
-        if (empty($info)) return [];
         $pageNo = empty($info["pageNo"]) ? 1 : $info["pageNo"];
         $size = empty($info["size"]) ? 20 : $info["size"];
-        $result = $this->brandDao->findByPage($pageNo, $size);
-        return $result;
+        $brandList = $this->brandDao->findByPage($pageNo, $size);
+        foreach ($brandList as $brand) {
+            if (!empty($brand->logo)) $brand->logo = asset($brand->logo);
+        }
+        return new JsonResult(StatusCode::SUCCESS, $brandList);
     }
 
     /**

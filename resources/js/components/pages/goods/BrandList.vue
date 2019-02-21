@@ -24,6 +24,9 @@
                     prop="cover"
                     label="品牌图片"
                     width="120">
+                <template slot-scope="scope">
+                    <img class="logo" :src="scope.row.logo"/>
+                </template>
             </el-table-column>
             <el-table-column
                     prop="region"
@@ -174,5 +177,8 @@
 </script>
 
 <style scoped>
-
+    .logo {
+        width: 48px;
+        height: 48px;
+    }
 </style>

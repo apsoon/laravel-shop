@@ -23,8 +23,7 @@ class BrandMapi extends Controller
      */
     public function list()
     {
-        $result = $this->brandService->getBrandList();
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->brandService->getBrandList();
     }
 
     /**
@@ -35,9 +34,8 @@ class BrandMapi extends Controller
      */
     public function listByPage(Request $request)
     {
-        $info = $request->all();
-        $result = $this->brandService->getPagedBrandList($info);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        $req = $request->all();
+        return $this->brandService->getPagedBrandList($req);
     }
 
     /**
