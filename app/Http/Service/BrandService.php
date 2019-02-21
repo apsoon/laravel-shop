@@ -9,7 +9,9 @@
 namespace App\Http\Service;
 
 use App\Http\Dao\BrandDao;
+use App\Http\Enum\StatusCode;
 use App\Http\Model\Brand;
+use App\Http\Util\JsonResult;
 
 /**
  * Class UserService
@@ -93,6 +95,18 @@ class BrandService
             $result = $this->brandDao->deleteByIds($ids);
         }
         return $result;
+    }
+
+    /**
+     * id获取品牌
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getBrandById(array $req)
+    {
+        $result = $this->brandDao->findById($req["brandId"]);
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
