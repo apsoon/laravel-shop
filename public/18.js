@@ -56,8 +56,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CouponAdd",
@@ -101,14 +99,14 @@ __webpack_require__.r(__webpack_exports__);
       that.$refs.couponForm.validate(function (valid) {
         if (valid) {
           if (that.effectDate) {
-            that.couponForm.effectStart = that.effectDate[0];
-            that.couponForm.effectEnd = that.effectDate[1];
+            that.couponForm.effectStart = that.effectDate[0].getTime();
+            that.couponForm.effectEnd = that.effectDate[1].getTime();
           }
 
           console.info(that.couponForm);
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/coupon/create", that.couponForm).then(function (res) {
             if (res.data.code === 2000) {
-              that.$router.push("/coupon/list");
+              that.$router.push("/coupon-list");
             }
           }).catch(function (err) {});
         }
@@ -277,26 +275,48 @@ var render = function() {
             { attrs: { label: "发放类型", prop: "sendType" } },
             [
               _c(
-                "el-radio-group",
+                "el-radio",
                 {
+                  attrs: { label: "1" },
                   model: {
-                    value: _vm.couponForm.method,
+                    value: _vm.couponForm.sendType,
                     callback: function($$v) {
-                      _vm.$set(_vm.couponForm, "method", $$v)
+                      _vm.$set(_vm.couponForm, "sendType", $$v)
                     },
-                    expression: "couponForm.method"
+                    expression: "couponForm.sendType"
                   }
                 },
-                [
-                  _c("el-radio", { attrs: { label: 1 } }, [_vm._v("用户领取")]),
-                  _vm._v(" "),
-                  _c("el-radio", { attrs: { label: 2 } }, [_vm._v("后台发放")]),
-                  _vm._v(" "),
-                  _c("el-radio", { attrs: { label: 3 } }, [
-                    _vm._v("优惠券号领取")
-                  ])
-                ],
-                1
+                [_vm._v("用户领取")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "2" },
+                  model: {
+                    value: _vm.couponForm.sendType,
+                    callback: function($$v) {
+                      _vm.$set(_vm.couponForm, "sendType", $$v)
+                    },
+                    expression: "couponForm.sendType"
+                  }
+                },
+                [_vm._v("后台发放")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "3" },
+                  model: {
+                    value: _vm.couponForm.sendType,
+                    callback: function($$v) {
+                      _vm.$set(_vm.couponForm, "sendType", $$v)
+                    },
+                    expression: "couponForm.sendType"
+                  }
+                },
+                [_vm._v("优惠券号领取")]
               )
             ],
             1

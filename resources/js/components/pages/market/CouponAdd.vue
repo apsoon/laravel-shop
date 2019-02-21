@@ -30,11 +30,9 @@
                 <el-input type="number" v-model="couponForm.value" placeholder="请输入优惠券使用说明"/>
             </el-form-item>
             <el-form-item label="发放类型" prop="sendType">
-                <el-radio-group v-model="couponForm.method">
-                    <el-radio :label="1">用户领取</el-radio>
-                    <el-radio :label="2">后台发放</el-radio>
-                    <el-radio :label="3">优惠券号领取</el-radio>
-                </el-radio-group>
+                <el-radio v-model="couponForm.sendType" label="1">用户领取</el-radio>
+                <el-radio v-model="couponForm.sendType" label="2">后台发放</el-radio>
+                <el-radio v-model="couponForm.sendType" label="3">优惠券号领取</el-radio>
             </el-form-item>
             <el-form-item label="是否生效" prop="state">
                 <el-radio v-model="couponForm.state" label="0">暂不生效</el-radio>
@@ -86,14 +84,14 @@
                 that.$refs.couponForm.validate((valid) => {
                     if (valid) {
                         if (that.effectDate) {
-                            that.couponForm.effectStart = that.effectDate[0];
-                            that.couponForm.effectEnd = that.effectDate[1];
+                            that.couponForm.effectStart = that.effectDate[0].getTime();
+                            that.couponForm.effectEnd = that.effectDate[1].getTime();
                         }
                         console.info(that.couponForm);
                         axios.post("/coupon/create", that.couponForm)
                             .then(res => {
                                 if (res.data.code === 2000) {
-                                    that.$router.push("/coupon/list");
+                                    that.$router.push("/coupon-list");
                                 }
                             })
                             .catch(err => {

@@ -45,14 +45,27 @@ class CouponService
             $coupon->sn = $req["sn"];
             $coupon->describe = $req["describe"];
             $coupon->number = $req["number"];
-            if ($req["effectStart"]) $coupon->effect_start = strtotime($req["effectStart"]);
-            if ($req["effectEnd"]) $coupon->effect_end = strtotime($req["effectEnd"]);
+            if ($req["effectStart"]) {
+                Log::info("------------------");
+                Log::info($req["effectStart"]);
+                $time = $req["effectStart"] / 1000;
+                Log::info($time);
+                $coupon->effect_start = date('Y-m-d H:i:s', $time);
+                Log::info($coupon->effect_start);
+                Log::info("------------------");
+            }
+            if ($req["effectEnd"]) {
+                $time = $req["effectEnd"] / 1000 ;
+                $coupon->effect_end = date('Y-m-d H:i:s', $time);
+            }
             $coupon->value = $req["value"];
             $coupon->send_type = $req["sendType"];
             $coupon->state = $req["state"];
             $result = $coupon->save();
             if ($result) return new JsonResult(StatusCode::SUCCESS, $result);
         } catch (\Exception $e) {
+            Log::info("------------------");
+            Log::info($e);
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
         return new JsonResult(StatusCode::SERVER_ERROR);
