@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 /**
  * Class CouponFapi
- * 
+ *
  * @package App\Http\Controllers\Fapi
  */
 class CouponFapi extends Controller
@@ -21,7 +21,7 @@ class CouponFapi extends Controller
     private $couponService;
 
     /**
-     * 用户获取优惠券
+     * 获取用户领取的优惠券
      *
      * @param Request $request
      * @return JsonResult
