@@ -83,6 +83,11 @@ export default new VueRouter({
             component: resolve => void (require(['./components/pages/goods/AttrGroupAdd.vue'], resolve))
         },
         {
+            name: "SpuAttrAdd",
+            path: "/spu-attr-add",
+            component: resolve => void (require(['./components/pages/goods/SpuAttrAdd.vue'], resolve))
+        },
+        {
             name: "AttrAdd",
             path: "/attr-add",
             component: resolve => void (require(['./components/pages/goods/AttrAdd.vue'], resolve))

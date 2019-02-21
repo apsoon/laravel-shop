@@ -13,8 +13,10 @@ use App\Http\Dao\AttrDao;
 use App\Http\Dao\AttrGroupDao;
 use App\Http\Dao\SpuAttrValueDao;
 use App\Http\Dao\CategoryDao;
+use App\Http\Enum\StatusCode;
 use App\Http\Model\Attr;
 use App\Http\Model\AttrGroup;
+use App\Http\Util\JsonResult;
 
 /**
  * Class AttrService
@@ -99,22 +101,22 @@ class AttrService
      * SPU 获取
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getAttrListWithValueBySpu(array $req)
     {
         $result = $this->spuAttrValueDao->findBySpuId($req["spuId"]);
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      *
-     * @param int $categoryId
+     * @param array $req
      * @return mixed
      */
-    public function getAttrGroupOptionByCategory(int $categoryId)
+    public function getAttrGroupOptionByCategory(array $req)
     {
-        $result = $this->attrGroupDao->findByCategoryId($categoryId);
+        $result = $this->attrGroupDao->findByCategoryId($req["categoryId"]);
         foreach ($result as $group) {
             $attrs = $this->attrDao->findByGroupId($group->id);
             foreach ($attrs as $attr) {
@@ -123,7 +125,7 @@ class AttrService
             }
             $group->attrs = $attrs;
         }
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     // ===========================================================================  attr group  ===========================================================================
@@ -203,6 +205,17 @@ class AttrService
         $result = $this->spuAttrValueDao->findByAttrId($attrId);
         return $result;
     }
+
+//    /**
+//     * spu 获取
+//     * @param array $req
+//     * @return JsonResult
+//     */
+//    public function getOptionBySpu(array $req)
+//    {
+//        $result = $this->spuAttrValueDao->findBySpuId($req["spuId"]);
+//        return new JsonResult(StatusCode::SUCCESS, $result);
+//    }
 
     // ===========================================================================  constructor  ===========================================================================
 

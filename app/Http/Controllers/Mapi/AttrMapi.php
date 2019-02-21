@@ -65,8 +65,7 @@ class AttrMapi extends Controller
     public function listBySpu(Request $request)
     {
         $req = $request->all();
-        $result = $this->attrService->getAttrListWithValueBySpu($req);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->attrService->getAttrListWithValueBySpu($req);
     }
 
     /**
@@ -121,6 +120,12 @@ class AttrMapi extends Controller
         $req = $request->all();
         $result = $this->attrService->getPagedAttrGroupWithAttrList($req);
         return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    public function listByCategory(Request $request)
+    {
+       $req = $request->all();
+       return $this->attrService->getAttrGroupOptionByCategory($req);
     }
 
     // ===========================================================================  attr option  ===========================================================================

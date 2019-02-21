@@ -100122,7 +100122,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "SpuList",
     path: "/spu-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 16).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpuList.vue */ "./resources/js/components/pages/goods/SpuList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 17).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpuList.vue */ "./resources/js/components/pages/goods/SpuList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "SpuDetail",
@@ -100134,13 +100134,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "SpuAdd",
     path: "/spu-add",
     component: function component(resolve) {
-      return void Promise.all(/*! AMD require */[__webpack_require__.e(22), __webpack_require__.e(15)]).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpuAdd.vue */ "./resources/js/components/pages/goods/SpuAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void Promise.all(/*! AMD require */[__webpack_require__.e(23), __webpack_require__.e(15)]).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpuAdd.vue */ "./resources/js/components/pages/goods/SpuAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "SpuSpecAdd",
     path: "/spu-spec-add",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 17).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpuSpecAdd.vue */ "./resources/js/components/pages/goods/SpuSpecAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 18).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpuSpecAdd.vue */ "./resources/js/components/pages/goods/SpuSpecAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "SpuSpecOption",
@@ -100196,6 +100196,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
       return void __webpack_require__.e(/*! AMD require */ 11).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/AttrGroupAdd.vue */ "./resources/js/components/pages/goods/AttrGroupAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
+    name: "SpuAttrAdd",
+    path: "/spu-attr-add",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 16).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpuAttrAdd.vue */ "./resources/js/components/pages/goods/SpuAttrAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
     name: "AttrAdd",
     path: "/attr-add",
     component: function component(resolve) {
@@ -100212,20 +100218,20 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "OrderList",
     path: "/Order-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 20).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/trade/OrderList.vue */ "./resources/js/components/pages/trade/OrderList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 21).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/trade/OrderList.vue */ "./resources/js/components/pages/trade/OrderList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, // ================================================  营销管理  =================================================
   {
     name: "CouponList",
     path: "/coupon-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 19).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/market/CouponList.vue */ "./resources/js/components/pages/market/CouponList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 20).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/market/CouponList.vue */ "./resources/js/components/pages/market/CouponList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "CouponAdd",
     path: "/coupon-add",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 18).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/market/CouponAdd.vue */ "./resources/js/components/pages/market/CouponAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 19).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/market/CouponAdd.vue */ "./resources/js/components/pages/market/CouponAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, // ================================================  用户管理  =================================================
   {
@@ -100238,7 +100244,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "AddrList",
     path: "/addr-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 21).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/user/AddrList.vue */ "./resources/js/components/pages/user/AddrList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 22).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/user/AddrList.vue */ "./resources/js/components/pages/user/AddrList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, // =============================  广告  ===============================
   {
