@@ -140,7 +140,13 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     onUploadSuccess: function onUploadSuccess(response, file, fileList) {
-      console.info("========", response, file, fileList);
+      var that = this;
+
+      if (response.code === 2000) {
+        var adForm = that.adForm;
+        adForm.imageUrl = response.data.filePath;
+        that.adForm = adForm;
+      }
     },
     onUploadFailed: function onUploadFailed(err, file, fileList) {},
     onUploadFileRemoved: function onUploadFileRemoved(file, fileList) {

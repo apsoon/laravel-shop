@@ -128,7 +128,12 @@
                 });
             },
             onUploadSuccess: function (response, file, fileList) {
-                console.info("========", response, file, fileList)
+                let that = this;
+                if (response.code === 2000) {
+                    let adForm = that.adForm;
+                    adForm.imageUrl = response.data.filePath;
+                    that.adForm = adForm;
+                }
             },
             onUploadFailed: function (err, file, fileList) {
 

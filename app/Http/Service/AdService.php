@@ -46,6 +46,7 @@ class AdService
         $ad->name = $req["name"];
         $ad->content = $req["content"];
         $ad->sort_order = $req["sortOrder"];
+        $ad->image_url = $req["imageUrl"];
         $ad->state = $req["state"];
         $result = $this->adDao->insert($ad);
         if ($result) return new JsonResult();
@@ -86,8 +87,11 @@ class AdService
     public function getAdListByKeyEffect(array $req)
     {
         if (empty($req["key"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        $result = $this->adDao->findByKeyEffect($req["key"]);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        $adList = $this->adDao->findByKeyEffect($req["key"]);
+        foreach ($adList as $ad) {
+            $ad->image_url = empty($ad->image_url) ? "" : asset($ad->image_url);
+        }
+        return new JsonResult(StatusCode::SUCCESS, $adList);
     }
 
 
