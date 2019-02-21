@@ -21,6 +21,9 @@ use Illuminate\Http\Request;
  */
 class AdFapi extends Controller
 {
+    /**
+     * @var AdService
+     */
     private $adService;
 
     /**
@@ -32,7 +35,7 @@ class AdFapi extends Controller
     public function list(Request $request)
     {
         $req = $request->all();
-        return $this->adService->getAdListByKey($req);
+        return $this->adService->getAdListByKeyEffect($req);
     }
 
     /**

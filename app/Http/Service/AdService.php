@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Log;
 
 /**
  * Class AdService
- * 
+ *
  * @package App\Http\Service
  */
 class AdService
@@ -75,6 +75,21 @@ class AdService
         $result = $this->adDao->findByKey($req["key"]);
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
+
+
+    /**
+     * 根据key获取
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getAdListByKeyEffect(array $req)
+    {
+        if (empty($req["key"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $result = $this->adDao->findByKeyEffect($req["key"]);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
 
     /**
      * 修改状态

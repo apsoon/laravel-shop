@@ -93,11 +93,6 @@ __webpack_require__.r(__webpack_exports__);
           required: true,
           message: '请输入广告名称',
           trigger: 'blur'
-        }, {
-          min: 3,
-          max: 5,
-          message: '长度在 3 到 5 个字符',
-          trigger: 'blur'
         }],
         positionId: [{
           required: true,

@@ -67,6 +67,19 @@ class AdDao
     }
 
     /**
+     * 根据key获取
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function findByKeyEffect(string $key)
+    {
+        $result = $this->ad::where(["key" => $key, "state" => 1])
+            ->get();
+        return $result;
+    }
+
+    /**
      * 修改状态
      *
      * @param $id
