@@ -24,8 +24,8 @@
                         :limit="1"
                         :data="uploadData"
                         :file-list="imageList"
-                        list-type="picture">
-                    <el-button size="small" type="primary">点击上传</el-button>
+                        list-type="picture-card">
+                    <i class="el-icon-plus"></i>
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
             </el-form-item>

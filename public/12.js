@@ -275,15 +275,11 @@ var render = function() {
                     limit: 1,
                     data: _vm.uploadData,
                     "file-list": _vm.imageList,
-                    "list-type": "picture"
+                    "list-type": "picture-card"
                   }
                 },
                 [
-                  _c(
-                    "el-button",
-                    { attrs: { size: "small", type: "primary" } },
-                    [_vm._v("点击上传")]
-                  ),
+                  _c("i", { staticClass: "el-icon-plus" }),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -294,8 +290,7 @@ var render = function() {
                     },
                     [_vm._v("只能上传jpg/png文件，且不超过500kb")]
                   )
-                ],
-                1
+                ]
               )
             ],
             1
