@@ -10,6 +10,7 @@ namespace App\Http\Dao;
 
 
 use App\Http\Model\UserCoupon;
+use Illuminate\Support\Facades\Log;
 
 class UserCouponDao
 {
