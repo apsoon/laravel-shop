@@ -101,6 +101,19 @@ class CouponDao
     }
 
     /**
+     * 口令获取
+     *
+     * @param $password
+     * @return mixed
+     */
+    public function findByPasswordEffect($password)
+    {
+        $result = $this->coupon::where(["password" => $password, "state" => 1])
+            ->first();
+        return $result;
+    }
+
+    /**
      * 跟新用户优惠券状态
      *
      * @param $userId

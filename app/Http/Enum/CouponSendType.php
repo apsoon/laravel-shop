@@ -21,9 +21,9 @@ class CouponSendType
         "code" => 2,
         "key" => "system_send"
     ];
-    // 代码获取
-    const SN = [
+    // 口令获取
+    const PASSWORD = [
         "code" => 3,
-        "key" => "sn"
+        "key" => "password"
     ];
 }

@@ -143,9 +143,9 @@ class CouponService
             case CouponSendType::SYSTEM_SEND["key"]:
                 $coupon = $this->couponDao->findById($req["value"]);
                 break;
-            case CouponSendType::SN["key"]:
-                $coupon = $this->couponDao->findBySnEffect($req["value"]);
-                if (empty($coupon) || $coupon->send_type != CouponSendType::SN["code"]) {
+            case CouponSendType::PASSWORD["key"]:
+                $coupon = $this->couponDao->findByPasswordEffect($req["value"]);
+                if (empty($coupon) || $coupon->send_type != CouponSendType::PASSWORD["code"]) {
                     return new JsonResult(StatusCode::COUPON_NOT_EXIST);
                 }
                 break;
