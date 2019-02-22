@@ -16,5 +16,9 @@ namespace App\Http\Enum;
  */
 class AdPosition
 {
-    const BANNER = "banner"; // banner
+    // banner
+    const BANNER = [
+        "key" => "banner",
+        "code" => 1
+    ];
 }

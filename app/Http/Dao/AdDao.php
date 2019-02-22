@@ -10,6 +10,7 @@ namespace App\Http\Dao;
 
 
 use App\Http\Model\Ad;
+use Illuminate\Support\Facades\Log;
 
 class AdDao
 {
@@ -24,6 +25,31 @@ class AdDao
     public function insert(Ad $ad)
     {
         $result = $ad->save();
+        return $result;
+    }
+
+    /**
+     * 更新
+     *
+     * @param Ad $ad
+     * @return bool
+     */
+    public function update(Ad $ad)
+    {
+        $result = $ad->save();
+        return $result;
+    }
+
+    /**
+     * id获取
+     *
+     * @param $adId
+     * @return mixed
+     */
+    public function findById($adId)
+    {
+        $result = $this->ad::where("id", "=", $adId)
+            ->first();
         return $result;
     }
 

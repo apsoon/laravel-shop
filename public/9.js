@@ -66,6 +66,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -86,7 +90,8 @@ __webpack_require__.r(__webpack_exports__);
         sortOrder: 1,
         state: "0",
         positionId: "",
-        imageUrl: ""
+        imageUrl: "",
+        isJump: "0"
       },
       rules: {
         name: [{
@@ -108,7 +113,8 @@ __webpack_require__.r(__webpack_exports__);
       uploadData: {
         type: "ad",
         position: "banner"
-      }
+      },
+      type: "create"
     };
   },
   mounted: function mounted() {
@@ -116,6 +122,29 @@ __webpack_require__.r(__webpack_exports__);
     that.uploadHeader = {
       'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
     };
+    var type = that.$route.query.type;
+
+    if (type === "modify") {
+      console.info(type);
+      that.type = type;
+      var adId = that.$route.query.adId;
+      that.adId = adId;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/ad/detail?adId=" + adId).then(function (res) {
+        if (res.data.code === 2000) {
+          var data = res.data.data;
+          that.adForm = {
+            id: data.id,
+            name: data.name,
+            content: data.content,
+            sortOrder: data.sort_order,
+            state: "" + data.state,
+            positionId: data.position_id,
+            imageUrl: data.image_url
+          };
+        }
+      }).catch(function (err) {});
+    }
+
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("adPos/list").then(function (res) {
       that.positionList = res.data.data;
       console.info(that.positionList);
@@ -127,6 +156,21 @@ __webpack_require__.r(__webpack_exports__);
       that.$refs["adForm"].validate(function (valid) {
         if (valid) {
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/create", that.adForm).then(function (res) {
+            if (res.data.code === 2000) {
+              _router__WEBPACK_IMPORTED_MODULE_1__["default"].push("ad-list");
+            }
+          });
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    onUpdate: function onUpdate() {
+      var that = this;
+      that.$refs["adForm"].validate(function (valid) {
+        if (valid) {
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/update", that.adForm).then(function (res) {
             if (res.data.code === 2000) {
               _router__WEBPACK_IMPORTED_MODULE_1__["default"].push("ad-list");
             }
@@ -175,8 +219,14 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "el-card",
     [
+      _c(
+        "div",
+        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+        [_c("span", [_vm._v("编辑广告")])]
+      ),
+      _vm._v(" "),
       _c(
         "el-form",
         {
@@ -188,23 +238,16 @@ var render = function() {
             "el-form-item",
             { attrs: { label: "广告名称", prop: "name" } },
             [
-              _c(
-                "el-col",
-                { attrs: { span: 5 } },
-                [
-                  _c("el-input", {
-                    attrs: { span: 3, placeholder: "请输入广告名称" },
-                    model: {
-                      value: _vm.adForm.name,
-                      callback: function($$v) {
-                        _vm.$set(_vm.adForm, "name", $$v)
-                      },
-                      expression: "adForm.name"
-                    }
-                  })
-                ],
-                1
-              )
+              _c("el-input", {
+                attrs: { span: 3, placeholder: "请输入广告名称" },
+                model: {
+                  value: _vm.adForm.name,
+                  callback: function($$v) {
+                    _vm.$set(_vm.adForm, "name", $$v)
+                  },
+                  expression: "adForm.name"
+                }
+              })
             ],
             1
           ),
@@ -213,23 +256,16 @@ var render = function() {
             "el-form-item",
             { attrs: { label: "广告描述", prop: "content" } },
             [
-              _c(
-                "el-col",
-                { attrs: { span: 5 } },
-                [
-                  _c("el-input", {
-                    attrs: { placeholder: "请输入广告描述" },
-                    model: {
-                      value: _vm.adForm.content,
-                      callback: function($$v) {
-                        _vm.$set(_vm.adForm, "content", $$v)
-                      },
-                      expression: "adForm.content"
-                    }
-                  })
-                ],
-                1
-              )
+              _c("el-input", {
+                attrs: { placeholder: "请输入广告描述" },
+                model: {
+                  value: _vm.adForm.content,
+                  callback: function($$v) {
+                    _vm.$set(_vm.adForm, "content", $$v)
+                  },
+                  expression: "adForm.content"
+                }
+              })
             ],
             1
           ),
@@ -239,30 +275,23 @@ var render = function() {
             { attrs: { label: "广告位置", prop: "positionId" } },
             [
               _c(
-                "el-col",
-                { attrs: { span: 5 } },
-                [
-                  _c(
-                    "el-select",
-                    {
-                      attrs: { placeholder: "请选广告位置" },
-                      model: {
-                        value: _vm.adForm.positionId,
-                        callback: function($$v) {
-                          _vm.$set(_vm.adForm, "positionId", $$v)
-                        },
-                        expression: "adForm.positionId"
-                      }
+                "el-select",
+                {
+                  attrs: { placeholder: "请选广告位置" },
+                  model: {
+                    value: _vm.adForm.positionId,
+                    callback: function($$v) {
+                      _vm.$set(_vm.adForm, "positionId", $$v)
                     },
-                    _vm._l(_vm.positionList, function(item) {
-                      return _c("el-option", {
-                        key: item.id,
-                        attrs: { label: item.name, value: item.id }
-                      })
-                    }),
-                    1
-                  )
-                ],
+                    expression: "adForm.positionId"
+                  }
+                },
+                _vm._l(_vm.positionList, function(item) {
+                  return _c("el-option", {
+                    key: item.id,
+                    attrs: { label: item.name, value: item.id }
+                  })
+                }),
                 1
               )
             ],
@@ -271,24 +300,17 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "排序", prop: "sortOrder" } },
+            { attrs: { label: "排序优先级", prop: "sortOrder" } },
             [
-              _c(
-                "el-col",
-                { attrs: { span: 5 } },
-                [
-                  _c("el-input", {
-                    model: {
-                      value: _vm.adForm.sortOrder,
-                      callback: function($$v) {
-                        _vm.$set(_vm.adForm, "sortOrder", $$v)
-                      },
-                      expression: "adForm.sortOrder"
-                    }
-                  })
-                ],
-                1
-              )
+              _c("el-input", {
+                model: {
+                  value: _vm.adForm.sortOrder,
+                  callback: function($$v) {
+                    _vm.$set(_vm.adForm, "sortOrder", $$v)
+                  },
+                  expression: "adForm.sortOrder"
+                }
+              })
             ],
             1
           ),
@@ -310,15 +332,11 @@ var render = function() {
                     limit: 1,
                     data: _vm.uploadData,
                     "file-list": _vm.imageList,
-                    "list-type": "picture"
+                    "list-type": "picture-card"
                   }
                 },
                 [
-                  _c(
-                    "el-button",
-                    { attrs: { size: "small", type: "primary" } },
-                    [_vm._v("点击上传")]
-                  ),
+                  _c("i", { staticClass: "el-icon-plus" }),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -329,8 +347,7 @@ var render = function() {
                     },
                     [_vm._v("只能上传jpg/png文件，且不超过500kb")]
                   )
-                ],
-                1
+                ]
               )
             ],
             1
@@ -373,11 +390,17 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
-            [_vm._v("立即创建")]
-          )
+          _vm.type === "create"
+            ? _c(
+                "el-button",
+                { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
+                [_vm._v("立即创建")]
+              )
+            : _c(
+                "el-button",
+                { attrs: { type: "primary" }, on: { click: _vm.onUpdate } },
+                [_vm._v("立即修改")]
+              )
         ],
         1
       )

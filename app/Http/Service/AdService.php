@@ -54,6 +54,26 @@ class AdService
     }
 
     /**
+     * 更新广告
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function updateAd(array $req)
+    {
+        $ad = $this->adDao->findById($req["id"]);
+        $ad->position_id = $req["positionId"];
+        $ad->name = $req["name"];
+        $ad->content = $req["content"];
+        $ad->sort_order = $req["sortOrder"];
+        $ad->image_url = $req["imageUrl"];
+        $ad->state = $req["state"];
+        $result = $this->adDao->update($ad);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
      * 获取所有广告
      *
      * @return JsonResult
@@ -137,6 +157,19 @@ class AdService
         }
         if ($result) return new JsonResult();
         return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
+     * 广告详情
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getAdById(array $req)
+    {
+        if (empty($req["adId"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $result = $this->adDao->findById($req["adId"]);
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**

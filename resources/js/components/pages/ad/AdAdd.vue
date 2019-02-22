@@ -1,31 +1,26 @@
 <template>
-    <div>
+    <el-card>
+        <div slot="header" class="clearfix">
+            <span>编辑广告</span>
+        </div>
         <el-form ref="adForm" :rules="rules" :model="adForm" label-width="100px">
             <el-form-item label="广告名称" prop="name">
-                <el-col :span="5">
-                    <el-input v-model="adForm.name" :span="3" placeholder="请输入广告名称"></el-input>
-                </el-col>
+                <el-input v-model="adForm.name" :span="3" placeholder="请输入广告名称"></el-input>
             </el-form-item>
             <el-form-item label="广告描述" prop="content">
-                <el-col :span="5">
-                    <el-input v-model="adForm.content" placeholder="请输入广告描述"></el-input>
-                </el-col>
+                <el-input v-model="adForm.content" placeholder="请输入广告描述"></el-input>
             </el-form-item>
             <el-form-item label="广告位置" prop="positionId">
-                <el-col :span="5">
-                    <el-select v-model="adForm.positionId" placeholder="请选广告位置">
-                        <el-option v-for="item in positionList"
-                                   :key="item.id"
-                                   :label="item.name"
-                                   :value="item.id">
-                        </el-option>
-                    </el-select>
-                </el-col>
+                <el-select v-model="adForm.positionId" placeholder="请选广告位置">
+                    <el-option v-for="item in positionList"
+                               :key="item.id"
+                               :label="item.name"
+                               :value="item.id">
+                    </el-option>
+                </el-select>
             </el-form-item>
-            <el-form-item label="排序" prop="sortOrder">
-                <el-col :span="5">
-                    <el-input v-model="adForm.sortOrder"></el-input>
-                </el-col>
+            <el-form-item label="排序优先级" prop="sortOrder">
+                <el-input v-model="adForm.sortOrder"></el-input>
             </el-form-item>
             <el-form-item label="添加图片" prop="imageList">
                 <el-upload
@@ -38,18 +33,27 @@
                         :limit="1"
                         :data="uploadData"
                         :file-list="imageList"
-                        list-type="picture">
-                    <el-button size="small" type="primary">点击上传</el-button>
+                        list-type="picture-card">
+                    <i class="el-icon-plus"></i>
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
             </el-form-item>
+            <!--<el-form-item label="是否设置跳转" prop="state">-->
+            <!--<el-radio v-model="adForm.isJump" label="0">不设置跳转</el-radio>-->
+            <!--<el-radio v-model="adForm.isJump" label="1">设置跳转</el-radio>-->
+            <!--</el-form-item>-->
+            <!--<el-form-item label="跳转类型" prop="state">-->
+            <!--<el-radio v-model="adForm.isJump" label="0">不设置跳转</el-radio>-->
+            <!--<el-radio v-model="adForm.isJump" label="1">设置跳转</el-radio>-->
+            <!--</el-form-item>-->
             <el-form-item label="是否启用" prop="state">
                 <el-radio v-model="adForm.state" label="0">禁用</el-radio>
                 <el-radio v-model="adForm.state" label="1">启用</el-radio>
             </el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button type="primary" @click="onSubmit" v-if="type==='create'">立即创建</el-button>
+            <el-button type="primary" @click="onUpdate" v-else>立即修改</el-button>
         </el-form>
-    </div>
+    </el-card>
 </template>
 
 <script>
@@ -74,7 +78,8 @@
                     sortOrder: 1,
                     state: "0",
                     positionId: "",
-                    imageUrl: ""
+                    imageUrl: "",
+                    isJump: "0"
                 },
                 rules: {
                     name: [
@@ -94,7 +99,8 @@
                 uploadData: {
                     type: "ad",
                     position: "banner"
-                }
+                },
+                type: "create"
             }
         },
         mounted: function () {
@@ -102,6 +108,31 @@
             that.uploadHeader = {
                 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
             };
+            let type = that.$route.query.type;
+            if (type === "modify") {
+                console.info(type);
+                that.type = type;
+                let adId = that.$route.query.adId;
+                that.adId = adId;
+                axios.get("/ad/detail?adId=" + adId)
+                    .then(res => {
+                        if (res.data.code === 2000) {
+                            let data = res.data.data;
+                            that.adForm = {
+                                id: data.id,
+                                name: data.name,
+                                content: data.content,
+                                sortOrder: data.sort_order,
+                                state: "" + data.state,
+                                positionId: data.position_id,
+                                imageUrl: data.image_url,
+                            }
+                        }
+                    })
+                    .catch(err => {
+
+                    });
+            }
             axios.get("adPos/list").then(res => {
                 that.positionList = res.data.data;
                 console.info(that.positionList);
@@ -119,6 +150,22 @@
                                 }
                             });
 
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
+                });
+            },
+            onUpdate: function () {
+                let that = this;
+                that.$refs["adForm"].validate((valid) => {
+                    if (valid) {
+                        axios.post("ad/update", that.adForm)
+                            .then(res => {
+                                if (res.data.code === 2000) {
+                                    router.push("ad-list");
+                                }
+                            });
                     } else {
                         console.log('error submit!!');
                         return false;

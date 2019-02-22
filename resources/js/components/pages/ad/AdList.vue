@@ -1,7 +1,7 @@
 <template>
     <el-card>
         <div slot="header" class="clearfix">
-            <router-link to="/ad-add">
+            <router-link :to="{path: '/ad-add', query: {type: 'create'}}">
                 <el-button type="primary" size="medium">添加广告</el-button>
             </router-link>
             <el-button type="danger" size="medium" @click="deleteAds">批量删除</el-button>
@@ -39,11 +39,13 @@
                     prop=""
                     label="操作">
                 <template slot-scope="scope">
-                    <el-button
-                            size="mini"
-                            type="info"
-                            @click="">修改
-                    </el-button>
+                    <router-link :to="{path: '/ad-add', query: {type: 'modify', adId: scope.row.id}}">
+                        <el-button
+                                size="mini"
+                                type="info"
+                                @click="">修改
+                        </el-button>
+                    </router-link>
                     <el-button v-if="scope.row.state"
                                size="mini"
                                type="warning"

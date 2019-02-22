@@ -45,6 +45,18 @@ class AdMapi extends Controller
     }
 
     /**
+     * 修改广告
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function update(Request $request)
+    {
+        $req = $request->all();
+        return $this->adService->updateAd($req);
+    }
+
+    /**
      * 修改状态
      *
      * @param Request $request
@@ -66,6 +78,18 @@ class AdMapi extends Controller
     {
         $req = $request->all();
         return $this->adService->deleteAd($req);
+    }
+
+    /**
+     * 广告详情
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function detail(Request $request)
+    {
+        $req = $request->all();
+        return $this->adService->getAdById($req);
     }
 
     /**

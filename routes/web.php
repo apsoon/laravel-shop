@@ -86,8 +86,9 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     // ================================================  广告管理  =================================================
     // 广告
     Route::GET("ad/list", "AdMapi@list");
-    Route::GET("ad/add", "AdMapi@add");
+    Route::GET("ad/detail", "AdMapi@detail");
     Route::POST("ad/create", "AdMapi@create");
+    Route::POST("ad/update", "AdMapi@update");
     Route::POST("ad/modState", "AdMapi@modifyState");
     Route::POST("ad/delete", "AdMapi@delete");
     Route::GET("adPos/list", "AdMapi@listPosition");
