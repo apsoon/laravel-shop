@@ -12,6 +12,7 @@ use App\Http\Dao\BrandDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Brand;
 use App\Http\Util\JsonResult;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class UserService

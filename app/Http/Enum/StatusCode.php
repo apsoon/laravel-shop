@@ -61,6 +61,11 @@ class StatusCode
         "message" => "库存不足"
     ];
 
+    const SKU_NOT_EXIST = [
+        "code" => 10002,
+        "message" => "商品不存在"
+    ];
+
     // 110XX 文件上传
     const INVALID_FILE = [
         "code" => 11001,

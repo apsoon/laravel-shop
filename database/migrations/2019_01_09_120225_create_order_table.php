@@ -30,6 +30,7 @@ class CreateOrderTable extends Migration
             $table->integer("coupon_id")->nullable();
             $table->integer("address_id")->nullable();
             $table->tinyInteger("status")->comment("订单状态");
+            $table->timestamp("create_time")->comment("订单创建时间");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

@@ -19,6 +19,7 @@ use App\Http\Enum\UserCouponStatus;
 use App\Http\Model\Order;
 use App\Http\Util\JsonResult;
 use App\Http\Util\SNUtil;
+use DateTime;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -55,7 +56,6 @@ class OrderService
      */
     public function createOrder(array $req)
     {
-        // TODO : HALF
         // 事务
         // 创建订单
         DB::beginTransaction();
@@ -75,56 +75,76 @@ class OrderService
             $order->conty = $req["conty"];
             $order->address_detail = $req["addressDetail"];
             $order->state = OrderStatus::PAY_REQUIRED;
+            $order->create_time = new DateTime();
             // ===================  商品相关
             // ----- 关联sku
             $skuIds = json_decode($req["skuIds"]);
             $skuList = [];
             $originPrice = 0;
             $number = 0;
-            $price = 0;
             foreach ($skuIds as $skuId) {
                 // 判断SKU是否存在
                 $sku = $this->skuDao->findByIdEffect($skuId->id);
-                if ($sku && $sku->number) {
-                    $this->skuDao->updateNumber($sku->id, $sku->number - 1);
-                    $originPrice += $sku->price * $skuId->number;
-                    $number += $skuId->number;
-                    array_push($skuList, ["order_sn" => $order->sn, "sku_id" => $sku->id, "number" => $skuId->number, "name" => $sku->name, "price" => $sku->price]);
+                if (empty($sku)) {
+                    return new JsonResult(StatusCode::SKU_NOT_EXIST);
                 }
+                if ($sku->number <= 0) {
+                    return new JsonResult(StatusCode::STOCK_NOT_ENOUGH);
+                }
+                $this->skuDao->decreaseNumber($sku->id, $sku->number);
+                $originPrice += $sku->price * $skuId->number;
+                $number += $skuId->number;
+                array_push($skuList, ["order_sn" => $order->sn, "sku_id" => $sku->id, "number" => $skuId->number, "name" => $sku->name, "price" => $sku->price]);
             }
             $order->origin_price = $originPrice;
             // ===================  优惠券相关
             // ------ 优惠券
+            $price = $originPrice;
             $couponId = "";
             if ($req["useCoupon"]) {
                 $couponId = $req["couponId"];
-                $coupon = $this->couponDao->findByIdUser($userId, $couponId);
-                // 判断优惠券使用
-                if ($coupon) {
-                    $couponEffect = true;
-//            $order->price
+                // 用户优惠券校验
+                $userCoupon = $this->couponDao->findByIdUser($userId, $couponId);
+                if (empty($userCoupon)) {
+                    return new JsonResult(StatusCode::COUPON_NOT_EXIST);
                 }
-            }
-            $orderSave = $order->save();
-            $skuSave = false;
-            $couponUpdate = !$couponEffect;
-            if ($orderSave) {
-                foreach ($skuList as $sku) {
-                    $sku["order_id"] = $order->id;
+                if ($userCoupon->state != UserCouponStatus::NEW) {
+                    switch ($userCoupon->state) {
+                        case UserCouponStatus::USED:
+                            return new JsonResult(StatusCode::COUPON_BEEN_USED);
+                            break;
+                        case UserCouponStatus::EXPIRED:
+                            return new JsonResult(StatusCode::COUPON_EXPIRED);
+                            break;
+                    }
                 }
-                $skuSave = $this->orderSkuDao->insertList($skuList);
-                if ($couponEffect) {
-                    $couponUpdate = $this->couponDao->updateStateByIdUser($userId, $couponId, UserCouponStatus::USED);
+                // 优惠券校验
+                $coupon = $this->couponDao->findById($couponId);
+                if ($order->create_time < $coupon->effect_start || $order->create_time > $coupon->effect_end) {
+                    return new JsonResult(StatusCode::COUPON_EXPIRED);
                 }
+                $price = $originPrice - $coupon->value;
+                $couponEffect = true;
             }
-            $result = $orderSave && $skuSave && $couponUpdate;
-            if (!$result) {
-                DB::rollBack();
+            $order->price = $price;
+            // =================== 提交订单
+            $order->discount = $order->originPrice - $order->price;
+            $order->save();
+            // ===================
+            foreach ($skuList as $sku) {
+                $sku["order_id"] = $order->id;
             }
-            return $result;
+            $this->orderSkuDao->insertList($skuList);
+            if ($couponEffect) {
+                $this->couponDao->updateStateByIdUser($userId, $couponId, UserCouponStatus::USED);
+            }
+            DB::commit();
+            $result = new \stdClass();
+            $result->orderSn = $order->sn;
+            return new JsonResult(StatusCode::SUCCESS, $result);
         } catch (\Exception $e) {
             DB::rollBack();
-            return false;
+            return new JsonResult(StatusCode::SERVER_ERROR);
         }
     }
 
@@ -134,7 +154,8 @@ class OrderService
      * @param array $req
      * @return JsonResult
      */
-    public function getPagedOrderListByStatusUser(array $req)
+    public
+    function getPagedOrderListByStatusUser(array $req)
     {
         if (empty($req["userId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
@@ -153,7 +174,8 @@ class OrderService
      * @param array $req
      * @return JsonResult
      */
-    public function getOrderStatusNumberByUser(array $req)
+    public
+    function getOrderStatusNumberByUser(array $req)
     {
         $userId = $req["userId"];
         $statusList = [OrderStatus::PAY_REQUIRED, OrderStatus::DELIVERY_REQUIRED, OrderStatus::RECEIVE_REQUIRED, OrderStatus::COMMENT_REQUIRED];
@@ -167,7 +189,8 @@ class OrderService
      * @param array $req
      * @return JsonResult
      */
-    public function getOrderPagedList(array $req)
+    public
+    function getOrderPagedList(array $req)
     {
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $result = $this->orderDao->findPagedList($pageNo, 20);
@@ -180,7 +203,8 @@ class OrderService
      * @param int $orderId
      * @return JsonResult
      */
-    public function getOrderDetailByOrderId(int $orderId)
+    public
+    function getOrderDetailByOrderId(int $orderId)
     {
         if (empty($req) || empty($req["orderId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $order = $this->orderDao->findById($orderId);
@@ -199,7 +223,8 @@ class OrderService
      * @param OrderSkuDao $orderSkuDao
      * @param CouponDao $couponDao
      */
-    public function __construct(OrderDao $orderDao, SkuDao $skuDao, OrderSkuDao $orderSkuDao, CouponDao $couponDao)
+    public
+    function __construct(OrderDao $orderDao, SkuDao $skuDao, OrderSkuDao $orderSkuDao, CouponDao $couponDao)
     {
         $this->orderDao = $orderDao;
         $this->skuDao = $skuDao;

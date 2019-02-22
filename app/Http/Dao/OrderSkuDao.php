@@ -8,8 +8,8 @@
 
 namespace App\Http\Dao;
 
-
 use App\Http\Model\OrderSku;
+use Illuminate\Support\Facades\DB;
 
 class OrderSkuDao
 {
@@ -28,6 +28,18 @@ class OrderSkuDao
     {
         $result = $this->orderSku::where(["order_id" => $orderId])
             ->get();
+        return $result;
+    }
+
+    /**
+     * 批量增加
+     *
+     * @param array $skuList
+     * @return bool
+     */
+    public function insertList(array $skuList)
+    {
+        $result = DB::table($this->orderSku->getTable())->insert($skuList);
         return $result;
     }
 

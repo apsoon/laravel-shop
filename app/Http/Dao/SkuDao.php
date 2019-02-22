@@ -75,16 +75,16 @@ class SkuDao
     }
 
     /**
-     * 更新数量
+     * 减少数量
      *
      * @param int $id
      * @param int $number
      * @return bool|int
      */
-    public function updateNumber(int $id, int $number)
+    public function decreaseNumber(int $id, int $number)
     {
         $result = $this->sku::with(["id" => $id])
-            ->update(["number" => $number]);
+            ->decrement("number", $number);
         return $result;
     }
 
