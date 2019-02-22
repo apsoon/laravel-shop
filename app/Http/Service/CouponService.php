@@ -13,6 +13,7 @@ use App\Http\Dao\CouponDao;
 use App\Http\Dao\UserCouponDao;
 use App\Http\Enum\CouponSendType;
 use App\Http\Enum\StatusCode;
+use App\Http\Enum\UserCouponStatus;
 use App\Http\Model\Coupon;
 use App\Http\Model\UserCoupon;
 use App\Http\Util\JsonResult;
@@ -178,6 +179,7 @@ class CouponService
             $userCoupon = new UserCoupon();
             $userCoupon->user_id = $req["userId"];
             $userCoupon->coupon_id = $coupon->id;
+            $userCoupon->state = UserCouponStatus::NEW;
             $obtain = $userCoupon->save();
             Log::info($obtain);
             if (!$obtain) {
