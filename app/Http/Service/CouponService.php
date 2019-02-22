@@ -118,9 +118,10 @@ class CouponService
      */
     public function getPagedCouponListByStateUser(array $req)
     {
-        if (empty($req["state"]) || empty($req["pageNo"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        if (empty($req["pageNo"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $size = 20;
         $coupons = $this->userCouponDao->findByStateUser($req["userId"], $req["state"], $req["pageNo"], $size);
+        Log::info($coupons);
         foreach ($coupons as $coupon) {
             $detail = $this->couponDao->findById($coupon->id);
             $coupon->detail = $detail;
