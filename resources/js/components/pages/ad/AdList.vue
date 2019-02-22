@@ -21,7 +21,12 @@
                     width="120">
             </el-table-column>
             <el-table-column
-                    prop="position"
+                    prop="content"
+                    label="描述"
+                    min-width="1">
+            </el-table-column>
+            <el-table-column
+                    prop="position_id"
                     label="位置"
                     width="120">
             </el-table-column>
@@ -37,7 +42,8 @@
             </el-table-column>
             <el-table-column
                     prop=""
-                    label="操作">
+                    label="操作"
+                    width="300">
                 <template slot-scope="scope">
                     <router-link :to="{path: '/ad-add', query: {type: 'modify', adId: scope.row.id}}">
                         <el-button
@@ -85,15 +91,26 @@
         },
         methods: {
             modifyState: function (type, index, id) {
-                let state = 1;
+                let that = this,
+                    state = 1;
                 if (type === "disable") state = 0;
-                let that = this;
-                console.info("index = ", index, ", id = ", id);
-                axios.post("ad/modState", {
-                    state: state,
-                    id: id
-                }).then(res => {
-                    if (res.data.code === 2000) that.adList[index].state = state;
+                let message = state ? "启用" : "禁用";
+                that.$confirm("确认" + message + "广告?", '提示', {
+                    confirmButtonText: "确认",
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios.post("ad/modState", {
+                        state: state,
+                        id: id
+                    }).then(res => {
+                        if (res.data.code === 2000) that.adList[index].state = state;
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消' + message
+                    });
                 });
             },
             deleteAd: function (index, id) {

@@ -123,7 +123,7 @@ class AdService
      */
     public function modifyState(array $req)
     {
-        if (empty($req["id"]) || empty($reqp["state"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        if (empty($req["id"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $result = $this->adDao->updateStateById($req["id"], $req["state"]);
         if ($result) return new JsonResult();
         return new JsonResult(StatusCode::SERVER_ERROR);

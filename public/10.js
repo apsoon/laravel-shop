@@ -80,6 +80,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdList",
@@ -96,19 +102,32 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     modifyState: function modifyState(type, index, id) {
-      var state = 1;
+      var _this = this;
+
+      var that = this,
+          state = 1;
       if (type === "disable") state = 0;
-      var that = this;
-      console.info("index = ", index, ", id = ", id);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/modState", {
-        state: state,
-        id: id
-      }).then(function (res) {
-        if (res.data.code === 2000) that.adList[index].state = state;
+      var message = state ? "启用" : "禁用";
+      that.$confirm("确认" + message + "广告?", '提示', {
+        confirmButtonText: "确认",
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/modState", {
+          state: state,
+          id: id
+        }).then(function (res) {
+          if (res.data.code === 2000) that.adList[index].state = state;
+        });
+      }).catch(function () {
+        _this.$message({
+          type: 'info',
+          message: '已取消' + message
+        });
       });
     },
     deleteAd: function deleteAd(index, id) {
-      var _this = this;
+      var _this2 = this;
 
       var that = this;
       this.$confirm(' 确认删除当前广告?', '提示', {
@@ -130,14 +149,14 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }).catch(function () {
-        _this.$message({
+        _this2.$message({
           type: 'info',
           message: '已取消删除'
         });
       });
     },
     deleteAds: function deleteAds() {
-      var _this2 = this;
+      var _this3 = this;
 
       var that = this;
       var selections = that.$refs.multipleTable.selection;
@@ -185,7 +204,7 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
         }).catch(function () {
-          _this2.$message({
+          _this3.$message({
             type: 'info',
             message: '已取消删除'
           });
@@ -257,7 +276,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "position", label: "位置", width: "120" }
+            attrs: { prop: "content", label: "描述", "min-width": "1" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "position_id", label: "位置", width: "120" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -269,7 +292,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "", label: "操作" },
+            attrs: { prop: "", label: "操作", width: "300" },
             scopedSlots: _vm._u([
               {
                 key: "default",
