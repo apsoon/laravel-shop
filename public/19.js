@@ -56,6 +56,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CouponAdd",
@@ -64,12 +85,18 @@ __webpack_require__.r(__webpack_exports__);
       couponForm: {
         name: "",
         sn: "",
+        isNumberLimit: "0",
         number: "",
+        isUsageLimit: "0",
+        usageValue: "",
+        discountType: "1",
         value: "",
+        discount: "",
         effectStart: "",
         effectEnd: "",
         describe: "",
         sendType: "1",
+        password: "",
         state: "0"
       },
       rules: {
@@ -138,7 +165,7 @@ var render = function() {
       _c(
         "div",
         { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
-        [_c("span", [_vm._v("添加优惠券")])]
+        [_c("span", [_vm._v("优惠券编辑")])]
       ),
       _vm._v(" "),
       _c(
@@ -172,24 +199,6 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "优惠券编号", prop: "sn" } },
-            [
-              _c("el-input", {
-                attrs: { placeholder: "请输入优惠券编号" },
-                model: {
-                  value: _vm.couponForm.sn,
-                  callback: function($$v) {
-                    _vm.$set(_vm.couponForm, "sn", $$v)
-                  },
-                  expression: "couponForm.sn"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
             { attrs: { label: "使用说明", prop: "describe" } },
             [
               _c("el-input", {
@@ -212,21 +221,200 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "发放总量", prop: "number" } },
+            { attrs: { label: "数量限制", prop: "isNumberLimit" } },
             [
-              _c("el-input", {
-                attrs: { type: "number", placeholder: "请输入优惠券发放数量" },
-                model: {
-                  value: _vm.couponForm.number,
-                  callback: function($$v) {
-                    _vm.$set(_vm.couponForm, "number", $$v)
-                  },
-                  expression: "couponForm.number"
-                }
-              })
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "0" },
+                  model: {
+                    value: _vm.couponForm.isNumberLimit,
+                    callback: function($$v) {
+                      _vm.$set(_vm.couponForm, "isNumberLimit", $$v)
+                    },
+                    expression: "couponForm.isNumberLimit"
+                  }
+                },
+                [_vm._v("不限制")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "1" },
+                  model: {
+                    value: _vm.couponForm.isNumberLimit,
+                    callback: function($$v) {
+                      _vm.$set(_vm.couponForm, "isNumberLimit", $$v)
+                    },
+                    expression: "couponForm.isNumberLimit"
+                  }
+                },
+                [_vm._v("限制")]
+              )
             ],
             1
           ),
+          _vm._v(" "),
+          _vm.couponForm.isNumberLimit === "1"
+            ? _c(
+                "el-form-item",
+                { attrs: { label: "发放总量", prop: "number" } },
+                [
+                  _c("el-input", {
+                    attrs: {
+                      type: "number",
+                      placeholder: "请输入优惠券发放数量"
+                    },
+                    model: {
+                      value: _vm.couponForm.number,
+                      callback: function($$v) {
+                        _vm.$set(_vm.couponForm, "number", $$v)
+                      },
+                      expression: "couponForm.number"
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "使用条件限制", prop: "isUsageLimit" } },
+            [
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "0" },
+                  model: {
+                    value: _vm.couponForm.isUsageLimit,
+                    callback: function($$v) {
+                      _vm.$set(_vm.couponForm, "isUsageLimit", $$v)
+                    },
+                    expression: "couponForm.isUsageLimit"
+                  }
+                },
+                [_vm._v("不限制")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "1" },
+                  model: {
+                    value: _vm.couponForm.isUsageLimit,
+                    callback: function($$v) {
+                      _vm.$set(_vm.couponForm, "isUsageLimit", $$v)
+                    },
+                    expression: "couponForm.isUsageLimit"
+                  }
+                },
+                [_vm._v("设置最低消费金额")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.couponForm.isUsageLimit === "1"
+            ? _c(
+                "el-form-item",
+                { attrs: { label: "最低消费金额", prop: "usage.usageValue" } },
+                [
+                  _c("el-input", {
+                    attrs: {
+                      type: "number",
+                      placeholder: "请输入最低消费金额"
+                    },
+                    model: {
+                      value: _vm.couponForm.usageValue,
+                      callback: function($$v) {
+                        _vm.$set(_vm.couponForm, "usageValue", $$v)
+                      },
+                      expression: "couponForm.usageValue"
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "减免类型", prop: "isUsageLimit" } },
+            [
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "1" },
+                  model: {
+                    value: _vm.couponForm.discountType,
+                    callback: function($$v) {
+                      _vm.$set(_vm.couponForm, "discountType", $$v)
+                    },
+                    expression: "couponForm.discountType"
+                  }
+                },
+                [_vm._v("金额减免")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "2" },
+                  model: {
+                    value: _vm.couponForm.discountType,
+                    callback: function($$v) {
+                      _vm.$set(_vm.couponForm, "discountType", $$v)
+                    },
+                    expression: "couponForm.discountType"
+                  }
+                },
+                [_vm._v("设置折扣")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.couponForm.discountType === "1"
+            ? _c(
+                "el-form-item",
+                { attrs: { label: "减免金额", prop: "usage_number" } },
+                [
+                  _c("el-input", {
+                    attrs: { type: "number", placeholder: "请输入减免金额" },
+                    model: {
+                      value: _vm.couponForm.value,
+                      callback: function($$v) {
+                        _vm.$set(_vm.couponForm, "value", $$v)
+                      },
+                      expression: "couponForm.value"
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.couponForm.discountType === "2"
+            ? _c(
+                "el-form-item",
+                { attrs: { label: "折扣数", prop: "usage_number" } },
+                [
+                  _c("el-input", {
+                    attrs: { type: "number", placeholder: "请输入折扣数" },
+                    model: {
+                      value: _vm.couponForm.discount,
+                      callback: function($$v) {
+                        _vm.$set(_vm.couponForm, "discount", $$v)
+                      },
+                      expression: "couponForm.discount"
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "el-form-item",
@@ -246,24 +434,6 @@ var render = function() {
                     _vm.effectDate = $$v
                   },
                   expression: "effectDate"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "面值", prop: "value" } },
-            [
-              _c("el-input", {
-                attrs: { type: "number", placeholder: "请输入优惠券使用说明" },
-                model: {
-                  value: _vm.couponForm.value,
-                  callback: function($$v) {
-                    _vm.$set(_vm.couponForm, "value", $$v)
-                  },
-                  expression: "couponForm.value"
                 }
               })
             ],
@@ -316,11 +486,31 @@ var render = function() {
                     expression: "couponForm.sendType"
                   }
                 },
-                [_vm._v("优惠券号领取")]
+                [_vm._v("口令领取")]
               )
             ],
             1
           ),
+          _vm._v(" "),
+          _vm.couponForm.sendType === "3"
+            ? _c(
+                "el-form-item",
+                { attrs: { label: "口令", prop: "" } },
+                [
+                  _c("el-input", {
+                    attrs: { placeholder: "请输入领取口令" },
+                    model: {
+                      value: _vm.couponForm.password,
+                      callback: function($$v) {
+                        _vm.$set(_vm.couponForm, "password", $$v)
+                      },
+                      expression: "couponForm.password"
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "el-form-item",
