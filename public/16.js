@@ -31,6 +31,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuAttrAdd",
@@ -38,7 +40,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       attrList: [],
       categoryId: "",
-      spuId: ""
+      spuId: "",
+      attrForm: {}
     };
   },
   mounted: function mounted() {
@@ -92,24 +95,37 @@ var render = function() {
         "el-form",
         {
           ref: "attrForm",
-          attrs: { model: _vm.attrList, "label-width": "100px" }
+          attrs: { model: _vm.attrForm, "label-width": "100px" }
         },
         [
           _vm._l(_vm.attrList, function(group) {
-            return [
-              _c("span", [_vm._v(_vm._s(group.name))]),
-              _vm._v(" "),
-              _vm._l(group.attrs, function(attr) {
-                return [
-                  _c(
-                    "el-form-item",
-                    { attrs: { label: attr.name } },
-                    [_c("el-input", { attrs: { model: attr.value } })],
-                    1
-                  )
-                ]
-              })
-            ]
+            return _c(
+              "div",
+              [
+                _c("span", [_vm._v(_vm._s(group.name))]),
+                _vm._v(" "),
+                _c(
+                  "el-form",
+                  { attrs: { model: group } },
+                  _vm._l(group.attrs, function(attr) {
+                    return _c(
+                      "div",
+                      [
+                        _c(
+                          "el-form-item",
+                          { attrs: { label: attr.name } },
+                          [_c("el-input", { attrs: { model: attr.value } })],
+                          1
+                        )
+                      ],
+                      1
+                    )
+                  }),
+                  0
+                )
+              ],
+              1
+            )
           }),
           _vm._v(" "),
           _c("br"),

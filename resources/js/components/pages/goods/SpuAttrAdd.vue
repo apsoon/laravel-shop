@@ -3,15 +3,17 @@
         <div slot="header" class="clearfix">
             <span>商品属性</span>
         </div>
-        <el-form ref="attrForm" :model="attrList" label-width="100px">
-            <template v-for="group in attrList">
+        <el-form ref="attrForm" :model="attrForm" label-width="100px">
+            <div v-for="group in attrList">
                 <span>{{group.name}}</span>
-                <template v-for="attr in group.attrs">
-                    <el-form-item :label="attr.name">
-                        <el-input :model="attr.value"></el-input>
-                    </el-form-item>
-                </template>
-            </template>
+                <el-form :model="group">
+                    <div v-for="attr in group.attrs">
+                        <el-form-item :label="attr.name">
+                            <el-input :model="attr.value"></el-input>
+                        </el-form-item>
+                    </div>
+                </el-form>
+            </div>
             <br/>
             <el-button type="primary" @click="onSubmit">立即创建</el-button>
         </el-form>
@@ -27,7 +29,8 @@
             return {
                 attrList: [],
                 categoryId: "",
-                spuId: ""
+                spuId: "",
+                attrForm: {}
             }
         },
         mounted: function () {
