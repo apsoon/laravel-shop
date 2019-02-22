@@ -88,6 +88,19 @@ class CouponDao
     }
 
     /**
+     * SN获取有效的
+     *
+     * @param $sn
+     * @return mixed
+     */
+    public function findBySnEffect($sn)
+    {
+        $result = $this->coupon::where(["sn" => $sn, "state" => 1])
+            ->first();
+        return $result;
+    }
+
+    /**
      * 跟新用户优惠券状态
      *
      * @param $userId

@@ -141,16 +141,28 @@ class CouponService
      */
     public function addCouponToUser(array $req)
     {
-        if (empty($req["type"]) || empty($req["couponId"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        // 是否已领取
-        $exist = $this->userCouponDao->findByCouponUser($req["couponId"], $req["userId"]);
-        if (sizeof($exist) > 0) {
-            return new JsonResult(StatusCode::COUPON_ALREADY_OBTAIN);
+        if (empty($req["type"]) || empty($req["value"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $coupon = null;
+        switch ($req["type"]) {
+            case CouponSendType::USER_RECEIVE["key"]:
+            case CouponSendType::SYSTEM_SEND["key"]:
+                $coupon = $this->couponDao->findById($req["value"]);
+                break;
+            case CouponSendType::SN["key"]:
+                $coupon = $this->couponDao->findBySnEffect($req["value"]);
+                if (empty($coupon) || $coupon->send_type != CouponSendType::SN["code"]) {
+                    return new JsonResult(StatusCode::COUPON_NOT_EXIST);
+                }
+                break;
         }
         // 优惠券是否存在
-        $coupon = $this->couponDao->findById($req["couponId"]);
-        if ($req["type"] == CouponSendType::SN["key"] && ($coupon->sent_type != CouponSendType::SN["code"] || $coupon->sn != $req["sn"])) {
+        if (empty($coupon)) {
             return new JsonResult(StatusCode::COUPON_NOT_EXIST);
+        }
+        // 是否已领取
+        $exist = $this->userCouponDao->findByCouponUser($coupon->id, $req["userId"]);
+        if (sizeof($exist) > 0) {
+            return new JsonResult(StatusCode::COUPON_ALREADY_OBTAIN);
         }
         // 优惠券数量
         if ($coupon->number <= 0) {
@@ -167,7 +179,6 @@ class CouponService
             $userCoupon->user_id = $req["userId"];
             $userCoupon->coupon_id = $req["couponId"];
             $obtain = $userCoupon->save();
-//            Log::i
             if (!$obtain) {
                 DB::rollBack();
                 return new JsonResult(StatusCode::SERVER_ERROR);
@@ -175,7 +186,6 @@ class CouponService
             DB::commit();
             return new JsonResult(StatusCode::SUCCESS);
         } catch (\Exception $e) {
-            Log::info($e);
             DB::rollBack();
         }
         return new JsonResult(StatusCode::SERVER_ERROR);
