@@ -179,6 +179,7 @@ class CouponService
             $userCoupon->user_id = $req["userId"];
             $userCoupon->coupon_id = $req["couponId"];
             $obtain = $userCoupon->save();
+            Log::info($obtain);
             if (!$obtain) {
                 DB::rollBack();
                 return new JsonResult(StatusCode::SERVER_ERROR);
@@ -186,6 +187,7 @@ class CouponService
             DB::commit();
             return new JsonResult(StatusCode::SUCCESS);
         } catch (\Exception $e) {
+            Log::info(" [ CouponService ] ================== addCouponToUser >>>>> error happened error = " . json_encode($e));
             DB::rollBack();
         }
         return new JsonResult(StatusCode::SERVER_ERROR);
