@@ -188,6 +188,7 @@ class CouponService
             return new JsonResult(StatusCode::SUCCESS);
         } catch (\Exception $e) {
             Log::info(" [ CouponService ] ================== addCouponToUser >>>>> error happened error = " . json_encode($e));
+            Log::info($e);
             DB::rollBack();
         }
         return new JsonResult(StatusCode::SERVER_ERROR);
