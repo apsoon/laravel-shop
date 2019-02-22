@@ -14,16 +14,16 @@ class CouponSendType
     // 用户领取
     const USER_RECEIVE = [
         "code" => 1,
-        "key" => "USER_RECEIVE "
+        "key" => "user_receive"
     ];
     // 后台发放
     const SYSTEM_SEND = [
         "code" => 2,
-        "key" => "SYSTEM_SEND "
+        "key" => "system_send"
     ];
     // 代码获取
     const SN = [
         "code" => 3,
-        "key" => "SN "
+        "key" => "sn"
     ];
 }
