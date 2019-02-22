@@ -170,14 +170,14 @@ class CouponService
         }
         DB::beginTransaction();
         try {
-            $decrement = $this->couponDao->decreaseNumber($req["couponId"], 1);
+            $decrement = $this->couponDao->decreaseNumber($coupon->id, 1);
             if (!$decrement) {
                 DB::rollBack();
                 return new JsonResult(StatusCode::COUPON_NOT_REST);
             }
             $userCoupon = new UserCoupon();
             $userCoupon->user_id = $req["userId"];
-            $userCoupon->coupon_id = $req["couponId"];
+            $userCoupon->coupon_id = $coupon->id;
             $obtain = $userCoupon->save();
             Log::info($obtain);
             if (!$obtain) {
@@ -187,8 +187,6 @@ class CouponService
             DB::commit();
             return new JsonResult(StatusCode::SUCCESS);
         } catch (\Exception $e) {
-            Log::info(" [ CouponService ] ================== addCouponToUser >>>>> error happened error = " . json_encode($e));
-            Log::info($e);
             DB::rollBack();
         }
         return new JsonResult(StatusCode::SERVER_ERROR);
