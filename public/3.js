@@ -108,18 +108,32 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     modifyState: function modifyState(type, index, id) {
-      var state = 1;
+      var _this = this;
+
+      var that = this,
+          state = 1;
       if (type === "disable") state = 0;
-      var that = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/modState", {
-        state: state,
-        id: id
-      }).then(function (res) {
-        if (res.data.code === 2000) that.brandList[index].state = state;
+      var message = state ? "启用" : "禁用";
+      that.$confirm("确认" + message + "品牌?", '提示', {
+        confirmButtonText: "确认",
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/modState", {
+          state: state,
+          id: id
+        }).then(function (res) {
+          if (res.data.code === 2000) that.brandList[index].state = state;
+        });
+      }).catch(function () {
+        _this.$message({
+          type: 'info',
+          message: '已取消' + message
+        });
       });
     },
     deleteBrand: function deleteBrand(index, id) {
-      var _this = this;
+      var _this2 = this;
 
       var that = this;
       this.$confirm("删除品牌可能会导致严重的问题，是否确认删除！", '提示', {
@@ -141,14 +155,14 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }).catch(function () {
-        _this.$message({
+        _this2.$message({
           type: 'info',
           message: '已取消删除'
         });
       });
     },
     deleteBrands: function deleteBrands() {
-      var _this2 = this;
+      var _this3 = this;
 
       var that = this;
       var selections = that.$refs.multipleTable.selection;
@@ -196,7 +210,7 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
         }).catch(function () {
-          _this2.$message({
+          _this3.$message({
             type: 'info',
             message: '已取消删除'
           });

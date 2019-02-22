@@ -99,14 +99,26 @@
         },
         methods: {
             modifyState: function (type, index, id) {
-                let state = 1;
+                let that = this,
+                    state = 1;
                 if (type === "disable") state = 0;
-                let that = this;
-                axios.post("brand/modState", {
-                    state: state,
-                    id: id
-                }).then(res => {
-                    if (res.data.code === 2000) that.brandList[index].state = state;
+                let message = state ? "启用" : "禁用";
+                that.$confirm("确认" + message + "品牌?", '提示', {
+                    confirmButtonText: "确认",
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios.post("brand/modState", {
+                        state: state,
+                        id: id
+                    }).then(res => {
+                        if (res.data.code === 2000) that.brandList[index].state = state;
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消' + message
+                    });
                 });
             },
             deleteBrand: function (index, id) {
