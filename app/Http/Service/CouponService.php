@@ -48,6 +48,7 @@ class CouponService
             $coupon->sn = $req["sn"];
             $coupon->describe = $req["describe"];
             $coupon->is_number_limit = $req["isNumberLimit"];
+            $coupon->total = $req["isNumberLimit"] == 1 ? $req["number"] : "无数量限制";
             $coupon->number = $req["number"];
             $coupon->is_usage_limit = $req["isUsageLimit"];
             $coupon->usage_value = $req["usageValue"];

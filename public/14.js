@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[14],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/SkuAdd.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/goods/SkuAdd.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/CategoryAdd.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/goods/CategoryAdd.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -11,12 +11,7 @@
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../router */ "./resources/js/router.js");
 //
 //
 //
@@ -54,105 +49,92 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "SkuAdd",
+  name: "CategoryAdd",
   data: function data() {
     return {
-      skuId: "",
-      skuForm: {
-        spuId: "",
+      categoryForm: {
         name: "",
-        brief: "",
-        options: [],
-        originPrice: "",
-        price: "",
-        number: "",
-        state: "0"
+        parentId: 0,
+        sortOrder: 0,
+        imageUrl: ""
       },
       rules: {
         name: [{
           required: true,
-          message: '请输入产品名称',
-          trigger: 'blur'
-        }],
-        price: [{
-          required: true,
-          message: '请输入产品价格',
-          trigger: 'blur'
-        }],
-        number: [{
-          required: true,
-          message: '请输入产品数量',
+          message: '请输入商品名称',
           trigger: 'blur'
         }]
       },
-      specList: []
+      parentId: 0,
+      parentName: "",
+      uploadHeader: {},
+      imageList: [],
+      uploadData: {
+        type: "logo",
+        position: "category"
+      }
     };
   },
   mounted: function mounted() {
-    var that = this,
-        spuId = that.$route.query.spuId;
-    that.spuId = spuId;
-    that.skuForm.spuId = spuId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/specOptionList?spuId=" + spuId).then(function (res) {
-      if (res.data.code === 2000) {
-        that.specList = res.data.data;
-      }
-    }).catch(function (err) {});
+    var that = this;
+    that.parentId = that.$route.query.parentId;
+    that.parentName = that.$route.query.parentName;
+    that.uploadHeader = {
+      'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
+    };
   },
   methods: {
     onSubmit: function onSubmit() {
       var that = this;
-      that.$refs.skuForm.validate(function (valid) {
+      that.$refs.categoryForm.validate(function (valid) {
         if (valid) {
-          var options = [],
-              specList = that.specList;
-          var _iteratorNormalCompletion = true;
-          var _didIteratorError = false;
-          var _iteratorError = undefined;
-
-          try {
-            for (var _iterator = specList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              var spec = _step.value;
-              options.push(spec.option);
-            }
-          } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion && _iterator.return != null) {
-                _iterator.return();
-              }
-            } finally {
-              if (_didIteratorError) {
-                throw _iteratorError;
-              }
-            }
-          }
-
-          that.skuForm.options = options;
-          console.info(that.skuForm);
-          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/create", that.skuForm).then(function (res) {
+          that.categoryForm.parentId = that.parentId;
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("category/create", that.categoryForm).then(function (res) {
             if (res.data.code === 2000) {
-              // message
-              that.$router.push("/spu/detail?spuId=", that.spuId);
+              _router__WEBPACK_IMPORTED_MODULE_1__["default"].push("/category-list");
             }
           }).catch(function (err) {});
-        } else {
-          return false;
         }
       });
+    },
+    handleTreeClick: function handleTreeClick(data, checked, node) {
+      var that = this;
+      console.info("data = ", data, ", checked = ", checked, ", node = ", node);
+
+      if (checked) {
+        this.$refs.treeCategory.setCheckedNodes([]);
+        this.$refs.treeCategory.setCheckedNodes([data]);
+      }
+    },
+    onUploadSuccess: function onUploadSuccess(response, file, fileList) {
+      var that = this;
+
+      if (response.code === 2000) {
+        var categoryForm = that.categoryForm;
+        categoryForm.imageUrl = response.data.filePath;
+        that.categoryForm = categoryForm;
+      }
+    },
+    onUploadFailed: function onUploadFailed(err, file, fileList) {// TODO 上传失败
+    },
+    onUploadFileRemoved: function onUploadFileRemoved(file, fileList) {
+      var that = this; // TODO 删除文件
+
+      var categoryForm = that.categoryForm;
+      categoryForm.imageUrl = "";
+      that.categoryForm = categoryForm;
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/SkuAdd.vue?vue&type=template&id=5536359a&scoped=true&":
-/*!*********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/goods/SkuAdd.vue?vue&type=template&id=5536359a&scoped=true& ***!
-  \*********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/CategoryAdd.vue?vue&type=template&id=4e71e038&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/goods/CategoryAdd.vue?vue&type=template&id=4e71e038&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -167,33 +149,55 @@ var render = function() {
   return _c(
     "el-card",
     [
-      _c("div", { attrs: { slot: "header" }, slot: "header" }, [
-        _c("span", [_vm._v("创建产品")])
-      ]),
+      _c(
+        "div",
+        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+        [_c("span", [_vm._v("添加分类")])]
+      ),
       _vm._v(" "),
       _c(
         "el-form",
         {
-          ref: "skuForm",
+          ref: "categoryForm",
           attrs: {
             rules: _vm.rules,
-            model: _vm.skuForm,
-            "label-width": "100px"
+            model: _vm.categoryForm,
+            "label-width": "100px;"
           }
         },
         [
           _c(
             "el-form-item",
-            { attrs: { label: "产品名称", prop: "name" } },
+            { attrs: { label: "分类名称", prop: "name" } },
             [
               _c("el-input", {
-                attrs: { placeholder: "请输入产品名称" },
                 model: {
-                  value: _vm.skuForm.name,
+                  value: _vm.categoryForm.name,
                   callback: function($$v) {
-                    _vm.$set(_vm.skuForm, "name", $$v)
+                    _vm.$set(_vm.categoryForm, "name", $$v)
                   },
-                  expression: "skuForm.name"
+                  expression: "categoryForm.name"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("el-form-item", { attrs: { label: "上级分类" } }, [
+            _c("label", [_vm._v(_vm._s(_vm.parentName))])
+          ]),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "排序优先级", prop: "sortOrder" } },
+            [
+              _c("el-input", {
+                model: {
+                  value: _vm.categoryForm.sortOrder,
+                  callback: function($$v) {
+                    _vm.$set(_vm.categoryForm, "sortOrder", $$v)
+                  },
+                  expression: "categoryForm.sortOrder"
                 }
               })
             ],
@@ -202,140 +206,42 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "产品名称", prop: "brief" } },
+            { attrs: { label: "添加图片" } },
             [
-              _c("el-input", {
-                attrs: { placeholder: "请输入产品简述" },
-                model: {
-                  value: _vm.skuForm.brief,
-                  callback: function($$v) {
-                    _vm.$set(_vm.skuForm, "brief", $$v)
-                  },
-                  expression: "skuForm.brief"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "产品原价", prop: "originPrice" } },
-            [
-              _c("el-input", {
-                attrs: { type: "number", placeholder: "请输入产品原价" },
-                model: {
-                  value: _vm.skuForm.originPrice,
-                  callback: function($$v) {
-                    _vm.$set(_vm.skuForm, "originPrice", $$v)
-                  },
-                  expression: "skuForm.originPrice"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "产品价格", prop: "price" } },
-            [
-              _c("el-input", {
-                attrs: { type: "number", placeholder: "请输入产品价格" },
-                model: {
-                  value: _vm.skuForm.price,
-                  callback: function($$v) {
-                    _vm.$set(_vm.skuForm, "price", $$v)
-                  },
-                  expression: "skuForm.price"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "产品数量", prop: "number" } },
-            [
-              _c("el-input", {
-                attrs: { type: "number", placeholder: "请输入产品数量" },
-                model: {
-                  value: _vm.skuForm.number,
-                  callback: function($$v) {
-                    _vm.$set(_vm.skuForm, "number", $$v)
-                  },
-                  expression: "skuForm.number"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _vm._l(_vm.specList, function(spec) {
-            return [
               _c(
-                "el-form-item",
-                { attrs: { label: spec.name, prop: "specOption" } },
+                "el-upload",
+                {
+                  staticClass: "upload-demo",
+                  attrs: {
+                    action: "/upload/image",
+                    headers: _vm.uploadHeader,
+                    "on-success": _vm.onUploadSuccess,
+                    "on-error": _vm.onUploadFailed,
+                    "on-remove": _vm.onUploadFileRemoved,
+                    limit: 1,
+                    data: _vm.uploadData,
+                    "file-list": _vm.imageList,
+                    "list-type": "picture"
+                  }
+                },
                 [
                   _c(
-                    "el-select",
+                    "el-button",
+                    { attrs: { size: "small", type: "primary" } },
+                    [_vm._v("点击上传")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
                     {
-                      attrs: { placeholder: "请选择" },
-                      model: {
-                        value: spec.option,
-                        callback: function($$v) {
-                          _vm.$set(spec, "option", $$v)
-                        },
-                        expression: "spec.option"
-                      }
+                      staticClass: "el-upload__tip",
+                      attrs: { slot: "tip" },
+                      slot: "tip"
                     },
-                    _vm._l(spec.options, function(option) {
-                      return _c("el-option", {
-                        key: option.id,
-                        attrs: { label: option.name, value: option.id }
-                      })
-                    }),
-                    1
+                    [_vm._v("只能上传jpg/png文件，且不超过500kb")]
                   )
                 ],
                 1
-              )
-            ]
-          }),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { label: "是否上架", prop: "state" } },
-            [
-              _c(
-                "el-radio",
-                {
-                  attrs: { label: "0" },
-                  model: {
-                    value: _vm.skuForm.state,
-                    callback: function($$v) {
-                      _vm.$set(_vm.skuForm, "state", $$v)
-                    },
-                    expression: "skuForm.state"
-                  }
-                },
-                [_vm._v("暂不上架")]
-              ),
-              _vm._v(" "),
-              _c(
-                "el-radio",
-                {
-                  attrs: { label: "1" },
-                  model: {
-                    value: _vm.skuForm.state,
-                    callback: function($$v) {
-                      _vm.$set(_vm.skuForm, "state", $$v)
-                    },
-                    expression: "skuForm.state"
-                  }
-                },
-                [_vm._v("立即上架")]
               )
             ],
             1
@@ -347,7 +253,7 @@ var render = function() {
             [_vm._v("立即创建")]
           )
         ],
-        2
+        1
       )
     ],
     1
@@ -360,17 +266,17 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/goods/SkuAdd.vue":
-/*!********************************************************!*\
-  !*** ./resources/js/components/pages/goods/SkuAdd.vue ***!
-  \********************************************************/
+/***/ "./resources/js/components/pages/goods/CategoryAdd.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/pages/goods/CategoryAdd.vue ***!
+  \*************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SkuAdd_vue_vue_type_template_id_5536359a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SkuAdd.vue?vue&type=template&id=5536359a&scoped=true& */ "./resources/js/components/pages/goods/SkuAdd.vue?vue&type=template&id=5536359a&scoped=true&");
-/* harmony import */ var _SkuAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SkuAdd.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/goods/SkuAdd.vue?vue&type=script&lang=js&");
+/* harmony import */ var _CategoryAdd_vue_vue_type_template_id_4e71e038_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CategoryAdd.vue?vue&type=template&id=4e71e038&scoped=true& */ "./resources/js/components/pages/goods/CategoryAdd.vue?vue&type=template&id=4e71e038&scoped=true&");
+/* harmony import */ var _CategoryAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CategoryAdd.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/goods/CategoryAdd.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -380,50 +286,50 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _SkuAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _SkuAdd_vue_vue_type_template_id_5536359a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _SkuAdd_vue_vue_type_template_id_5536359a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _CategoryAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CategoryAdd_vue_vue_type_template_id_4e71e038_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CategoryAdd_vue_vue_type_template_id_4e71e038_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "5536359a",
+  "4e71e038",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/pages/goods/SkuAdd.vue"
+component.options.__file = "resources/js/components/pages/goods/CategoryAdd.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/goods/SkuAdd.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/components/pages/goods/SkuAdd.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************/
+/***/ "./resources/js/components/pages/goods/CategoryAdd.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/pages/goods/CategoryAdd.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SkuAdd.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/SkuAdd.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CategoryAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./CategoryAdd.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/CategoryAdd.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CategoryAdd_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/pages/goods/SkuAdd.vue?vue&type=template&id=5536359a&scoped=true&":
-/*!***************************************************************************************************!*\
-  !*** ./resources/js/components/pages/goods/SkuAdd.vue?vue&type=template&id=5536359a&scoped=true& ***!
-  \***************************************************************************************************/
+/***/ "./resources/js/components/pages/goods/CategoryAdd.vue?vue&type=template&id=4e71e038&scoped=true&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/pages/goods/CategoryAdd.vue?vue&type=template&id=4e71e038&scoped=true& ***!
+  \********************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuAdd_vue_vue_type_template_id_5536359a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SkuAdd.vue?vue&type=template&id=5536359a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/SkuAdd.vue?vue&type=template&id=5536359a&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuAdd_vue_vue_type_template_id_5536359a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CategoryAdd_vue_vue_type_template_id_4e71e038_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./CategoryAdd.vue?vue&type=template&id=4e71e038&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/goods/CategoryAdd.vue?vue&type=template&id=4e71e038&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CategoryAdd_vue_vue_type_template_id_4e71e038_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuAdd_vue_vue_type_template_id_5536359a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CategoryAdd_vue_vue_type_template_id_4e71e038_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

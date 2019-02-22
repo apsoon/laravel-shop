@@ -12,6 +12,12 @@
                         <el-form-item label="发放类型">
                             <span>{{ props.row.send_type}}</span>
                         </el-form-item>
+                        <el-form-item>
+
+                        </el-form-item>
+                        <el-form-item label="使用说明">
+                            <span>{{ props.row.describe}}</span>
+                        </el-form-item>
                     </el-form>
                 </template>
             </el-table-column>
@@ -77,5 +83,18 @@
 </script>
 
 <style scoped>
+    .demo-table-expand {
+        font-size: 0;
+    }
 
+    .demo-table-expand label {
+        width: 90px;
+        color: #99a9bf;
+    }
+
+    .demo-table-expand .el-form-item {
+        margin-right: 0;
+        margin-bottom: 0;
+        width: 50%;
+    }
 </style>

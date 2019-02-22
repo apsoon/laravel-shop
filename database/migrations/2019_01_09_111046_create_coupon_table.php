@@ -18,7 +18,8 @@ class CreateCouponTable extends Migration
             $table->string("name")->default("")->comment("优惠券名称");
             $table->string("sn")->default("")->comment("优惠券编号");
             $table->tinyInteger("is_number_limit")->default(0)->comment("是否限制数量");
-            $table->integer("number")->default(0)->comment("数量限制");
+            $table->string("total")->nullable()->default("")->comment("总量");
+            $table->integer("number")->nullable()->default(0)->comment("剩余数量");
             $table->tinyInteger("send_type")->default("0")->comment("优惠券发放类型");
             $table->timestamp("effect_start")->nullable()->comment("有效期开始");
             $table->timestamp("effect_end")->nullable()->comment("有效期结束");
