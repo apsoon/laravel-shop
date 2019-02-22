@@ -128,7 +128,7 @@ class CouponService
         $size = 20;
         $coupons = $this->userCouponDao->findByStateUser($req["userId"], $req["state"], $req["pageNo"], $size);
         foreach ($coupons as $coupon) {
-            $detail = $this->couponDao->findById($coupon->couponId);
+            $detail = $this->couponDao->findById($coupon->id);
             $coupon->detail = $detail;
         }
         return new JsonResult(StatusCode::SUCCESS, $coupons);
