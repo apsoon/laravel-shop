@@ -47,6 +47,8 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::GET("brand/list", "BrandMapi@list");
     Route::GET("brand/pagedList", "BrandMapi@listByPage");
     Route::POST("brand/create", "BrandMapi@create");
+    Route::POST("brand/update", "BrandMapi@update");
+    Route::GET("brand/detail", "BrandMapi@detail");
     Route::POST("brand/delete", "BrandMapi@delete");
     Route::POST("brand/modState", "BrandMapi@modifyState");
 

@@ -47,8 +47,31 @@ class BrandMapi extends Controller
     public function create(Request $request)
     {
         $req = $request->all();
-        $result = $this->brandService->createBrand($req);
-        if ($result) return new JsonResult();
+        return $this->brandService->createBrand($req);
+    }
+
+    /**
+     * 更新品牌
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function update(Request $request)
+    {
+        $req = $request->all();
+        return $this->brandService->updateBrand($req);
+    }
+
+    /**
+     * 品牌详情
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function detail(Request $request)
+    {
+        $req = $request->all();
+        return $this->brandService->getBrandById($req);
     }
 
     /**

@@ -51,6 +51,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BrandAdd",
@@ -75,7 +76,10 @@ __webpack_require__.r(__webpack_exports__);
       uploadData: {
         type: "logo",
         position: "brand"
-      }
+      },
+      brandId: "",
+      type: "create" // logoUrl:""
+
     };
   },
   mounted: function mounted() {
@@ -83,9 +87,29 @@ __webpack_require__.r(__webpack_exports__);
     that.uploadHeader = {
       'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
     };
+    var type = that.$route.query.type;
+
+    if (type === "modify") {
+      var brandId = that.$route.query.brandId;
+      that.brandId = brandId;
+      that.type = "modify";
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/brand/detail?brandId=" + brandId).then(function (res) {
+        if (res.data.code === 2000) {
+          var data = res.data.data;
+          that.brandForm = {
+            id: data.id,
+            name: data.name,
+            describe: data.describe,
+            region: data.region,
+            logo: data.logo,
+            state: "" + data.state
+          };
+        }
+      }).catch(function (err) {});
+    }
   },
   methods: {
-    onSubmit: function onSubmit() {
+    onCreate: function onCreate() {
       var that = this;
       that.$refs.brandForm.validate(function (valid) {
         if (valid) {
@@ -94,6 +118,26 @@ __webpack_require__.r(__webpack_exports__);
               that.$message({
                 type: 'success',
                 message: '添加成功!'
+              });
+              setTimeout(function () {
+                that.$router.push("brand-list");
+              }, 1000);
+            }
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+    onUpdate: function onUpdate() {
+      var that = this;
+      that.$refs.brandForm.validate(function (valid) {
+        if (valid) {
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/brand/update", that.brandForm).then(function (res) {
+            if (res.data.code === 2000) {
+              that.$message({
+                type: 'success',
+                message: '更新成功!'
               });
               setTimeout(function () {
                 that.$router.push("brand-list");
@@ -149,7 +193,7 @@ var render = function() {
       _c(
         "div",
         { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
-        [_c("span", [_vm._v("添加品牌")])]
+        [_c("span", [_vm._v("品牌")])]
       ),
       _vm._v(" "),
       _c(
@@ -294,11 +338,17 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
-            [_vm._v("立即创建")]
-          )
+          _vm.type === "create"
+            ? _c(
+                "el-button",
+                { attrs: { type: "primary" }, on: { click: _vm.onCreate } },
+                [_vm._v("立即创建")]
+              )
+            : _c(
+                "el-button",
+                { attrs: { type: "primary" }, on: { click: _vm.onUpdate } },
+                [_vm._v("修改")]
+              )
         ],
         1
       )

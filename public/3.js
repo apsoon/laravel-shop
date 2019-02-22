@@ -85,8 +85,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BrandList",
@@ -283,7 +281,9 @@ var render = function() {
         [
           _c(
             "router-link",
-            { attrs: { to: "/brand-add" } },
+            {
+              attrs: { to: { path: "/brand-add", query: { type: "create" } } }
+            },
             [
               _c("el-button", { attrs: { type: "primary", size: "medium" } }, [
                 _vm._v("添加品牌")
@@ -359,12 +359,23 @@ var render = function() {
                 fn: function(scope) {
                   return [
                     _c(
-                      "el-button",
+                      "router-link",
                       {
-                        attrs: { size: "mini", type: "info" },
-                        on: { click: function($event) {} }
+                        attrs: {
+                          to: {
+                            path: "/brand-add",
+                            query: { type: "modify", brandId: scope.row.id }
+                          }
+                        }
                       },
-                      [_vm._v("修改\n                ")]
+                      [
+                        _c(
+                          "el-button",
+                          { attrs: { size: "mini", type: "info" } },
+                          [_vm._v("修改")]
+                        )
+                      ],
+                      1
                     ),
                     _vm._v(" "),
                     scope.row.state

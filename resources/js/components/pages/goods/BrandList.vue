@@ -1,7 +1,7 @@
 <template>
     <el-card>
         <div slot="header" class="clearfix">
-            <router-link to="/brand-add">
+            <router-link :to="{path: '/brand-add',query :{type: 'create'}}">
                 <el-button type="primary" size="medium">添加品牌</el-button>
             </router-link>
             <el-button type="danger" size="medium" @click="deleteBrands()">批量删除</el-button>
@@ -48,11 +48,9 @@
                     width="300"
                     label="操作">
                 <template slot-scope="scope">
-                    <el-button
-                            size="mini"
-                            type="info"
-                            @click="">修改
-                    </el-button>
+                    <router-link :to="{path: '/brand-add',query :{type: 'modify', brandId:scope.row.id}}">
+                        <el-button size="mini" type="info">修改</el-button>
+                    </router-link>
                     <el-button v-if="scope.row.state"
                                size="mini"
                                type="warning"

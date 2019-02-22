@@ -43,6 +43,7 @@ class UploadMapi extends Controller
         $filePath = $savePath . "/" . $newFileName;
         if ($file->storePubliclyAs($savePath, $newFileName, ['disk' => 'public'])) {
             $result = new \stdClass();
+            $result->fileUrl = asset($filePath);
             $result->filePath = $filePath;
             $result->fileName = $newFileName;
             return new JsonResult(StatusCode::SUCCESS, $result);

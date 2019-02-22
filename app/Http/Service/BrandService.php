@@ -62,7 +62,7 @@ class BrandService
      * 创建商标
      *
      * @param $req
-     * @return bool
+     * @return JsonResult
      */
     public function createBrand($req)
     {
@@ -73,7 +73,27 @@ class BrandService
         $brand->describe = $req["describe"];
         $brand->state = $req["state"];
         $result = $this->brandDao->insert($brand);
-        return $result;
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR, $result);
+    }
+
+    /**
+     * 更新商标
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function updateBrand(array $req)
+    {
+        $brand = $this->brandDao->findById($req["id"]);
+        $brand->name = $req["name"];
+        $brand->region = $req["region"];
+        $brand->logo = $req["logo"];
+        $brand->describe = $req["describe"];
+        $brand->state = $req["state"];
+        $result = $this->brandDao->update($brand);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR, $result);
     }
 
     /**
@@ -114,7 +134,9 @@ class BrandService
     public function getBrandById(array $req)
     {
         $result = $this->brandDao->findById($req["brandId"]);
-        if (!empty($result->logo)) $result->logo = asset($result->logo);
+        if (!empty($result->logo)) {
+            $result->logoUrl = asset($result->logo);
+        }
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 

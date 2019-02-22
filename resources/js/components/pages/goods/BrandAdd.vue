@@ -1,7 +1,7 @@
 <template>
     <el-card>
         <div slot="header" class="clearfix">
-            <span>添加品牌</span>
+            <span>品牌</span>
         </div>
         <el-form ref="brandForm" :rules="rules" :model="brandForm" label-width="100px">
             <el-form-item label="品牌名称" prop="name">
@@ -33,7 +33,8 @@
                 <el-radio v-model="brandForm.state" label="0">禁用</el-radio>
                 <el-radio v-model="brandForm.state" label="1">启用</el-radio>
             </el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button type="primary" @click="onCreate" v-if="type === 'create'">立即创建</el-button>
+            <el-button type="primary" @click="onUpdate" v-else>修改</el-button>
         </el-form>
     </el-card>
 </template>
@@ -62,7 +63,10 @@
                 uploadData: {
                     type: "logo",
                     position: "brand"
-                }
+                },
+                brandId: "",
+                type: "create",
+                // logoUrl:""
             }
         },
         mounted: function () {
@@ -70,9 +74,31 @@
             that.uploadHeader = {
                 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
             };
+            let type = that.$route.query.type;
+            if (type === "modify") {
+                let brandId = that.$route.query.brandId;
+                that.brandId = brandId;
+                that.type = "modify";
+                axios.get("/brand/detail?brandId=" + brandId)
+                    .then(res => {
+                        if (res.data.code === 2000) {
+                            let data = res.data.data;
+                            that.brandForm = {
+                                id: data.id,
+                                name: data.name,
+                                describe: data.describe,
+                                region: data.region,
+                                logo: data.logo,
+                                state: "" + data.state
+                            };
+                        }
+                    })
+                    .catch(err => {
+                    });
+            }
         },
         methods: {
-            onSubmit: function () {
+            onCreate: function () {
                 let that = this;
                 that.$refs.brandForm.validate((valid) => {
                     if (valid) {
@@ -82,6 +108,28 @@
                                     that.$message({
                                         type: 'success',
                                         message: '添加成功!'
+                                    });
+                                    setTimeout(() => {
+                                        that.$router.push("brand-list");
+                                    }, 1000);
+                                }
+                            });
+
+                    } else {
+                        return false;
+                    }
+                });
+            },
+            onUpdate: function () {
+                let that = this;
+                that.$refs.brandForm.validate((valid) => {
+                    if (valid) {
+                        axios.post("/brand/update", that.brandForm)
+                            .then(res => {
+                                if (res.data.code === 2000) {
+                                    that.$message({
+                                        type: 'success',
+                                        message: '更新成功!'
                                     });
                                     setTimeout(() => {
                                         that.$router.push("brand-list");
