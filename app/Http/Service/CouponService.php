@@ -47,28 +47,22 @@ class CouponService
             $coupon->name = $req["name"];
             $coupon->sn = $req["sn"];
             $coupon->describe = $req["describe"];
+            $coupon->is_number_limit = $req["isNumberLimit"];
             $coupon->number = $req["number"];
-            if ($req["effectStart"]) {
-                Log::info("------------------");
-                Log::info($req["effectStart"]);
-                $time = $req["effectStart"] / 1000;
-                Log::info($time);
-                $coupon->effect_start = date('Y-m-d H:i:s', $time);
-                Log::info($coupon->effect_start);
-                Log::info("------------------");
-            }
-            if ($req["effectEnd"]) {
-                $time = $req["effectEnd"] / 1000;
-                $coupon->effect_end = date('Y-m-d H:i:s', $time);
-            }
+            $coupon->is_usage_limit = $req["isUsageLimit"];
+            $coupon->usage_value = $req["usageValue"];
+            $coupon->discount_type = $req["discountType"];
             $coupon->value = $req["value"];
+            $coupon->discount = $req["discount"];
+            $coupon->effect_start = date('Y-m-d H:i:s', $req["effectStart"] / 1000);
+            $coupon->effect_end = date('Y-m-d H:i:s', $req["effectEnd"] / 1000);
             $coupon->send_type = $req["sendType"];
+            $coupon->password = $req["password"];
             $coupon->state = $req["state"];
             $result = $coupon->save();
             if ($result) return new JsonResult(StatusCode::SUCCESS, $result);
         } catch (\Exception $e) {
-            Log::info("------------------");
-            Log::info($e);
+            Log::info(" [ CouponService.php ] ================== createCoupon >>>>>> error happened when create coupon e = " . $e);
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
         return new JsonResult(StatusCode::SERVER_ERROR);

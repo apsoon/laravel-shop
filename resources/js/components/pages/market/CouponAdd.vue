@@ -7,9 +7,9 @@
             <el-form-item label="优惠券名称" prop="name">
                 <el-input v-model="couponForm.name" placeholder="请输入优惠券名称"/>
             </el-form-item>
-            <!--<el-form-item label="优惠券编号" prop="sn">-->
-                <!--<el-input v-model="couponForm.sn" placeholder="请输入优惠券编号"/>-->
-            <!--</el-form-item>-->
+            <el-form-item label="优惠券编号" prop="sn">
+                <el-input v-model="couponForm.sn" placeholder="请输入优惠券编号"/>
+            </el-form-item>
             <el-form-item label="使用说明" prop="describe">
                 <el-input type="textarea" rows="4" v-model="couponForm.describe" placeholder="请输入优惠券使用说明"/>
             </el-form-item>
@@ -27,14 +27,14 @@
             <el-form-item label="最低消费金额" prop="usage.usageValue" v-if="couponForm.isUsageLimit === '1'">
                 <el-input type="number" v-model="couponForm.usageValue" placeholder="请输入最低消费金额"/>
             </el-form-item>
-            <el-form-item label="减免类型" prop="isUsageLimit">
+            <el-form-item label="减免类型" prop="discountType">
                 <el-radio v-model="couponForm.discountType" label="1">金额减免</el-radio>
                 <el-radio v-model="couponForm.discountType" label="2">设置折扣</el-radio>
             </el-form-item>
-            <el-form-item label="减免金额" prop="usage_number" v-if="couponForm.discountType === '1'">
+            <el-form-item label="减免金额" prop="value" v-if="couponForm.discountType === '1'">
                 <el-input type="number" v-model="couponForm.value" placeholder="请输入减免金额"/>
             </el-form-item>
-            <el-form-item label="折扣数" prop="usage_number" v-if="couponForm.discountType === '2'">
+            <el-form-item label="折扣数" prop="discount" v-if="couponForm.discountType === '2'">
                 <el-input type="number" v-model="couponForm.discount" placeholder="请输入折扣数"/>
             </el-form-item>
             <el-form-item label="有效期">
@@ -95,9 +95,9 @@
                     sn: [
                         {required: true, message: '请输入优惠券编号', trigger: 'blur'}
                     ],
-                    value: [
-                        {required: true, message: '请输入优惠券面值', trigger: 'blur'}
-                    ]
+                    // value: [
+                    //     {required: true, message: '请输入优惠券面值', trigger: 'blur'}
+                    // ]
                 },
                 effectDate: []
             }

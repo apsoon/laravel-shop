@@ -109,12 +109,10 @@ __webpack_require__.r(__webpack_exports__);
           required: true,
           message: '请输入优惠券编号',
           trigger: 'blur'
-        }],
-        value: [{
-          required: true,
-          message: '请输入优惠券面值',
-          trigger: 'blur'
-        }]
+        }] // value: [
+        //     {required: true, message: '请输入优惠券面值', trigger: 'blur'}
+        // ]
+
       },
       effectDate: []
     };
@@ -191,6 +189,24 @@ var render = function() {
                     _vm.$set(_vm.couponForm, "name", $$v)
                   },
                   expression: "couponForm.name"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "优惠券编号", prop: "sn" } },
+            [
+              _c("el-input", {
+                attrs: { placeholder: "请输入优惠券编号" },
+                model: {
+                  value: _vm.couponForm.sn,
+                  callback: function($$v) {
+                    _vm.$set(_vm.couponForm, "sn", $$v)
+                  },
+                  expression: "couponForm.sn"
                 }
               })
             ],
@@ -341,7 +357,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "减免类型", prop: "isUsageLimit" } },
+            { attrs: { label: "减免类型", prop: "discountType" } },
             [
               _c(
                 "el-radio",
@@ -379,7 +395,7 @@ var render = function() {
           _vm.couponForm.discountType === "1"
             ? _c(
                 "el-form-item",
-                { attrs: { label: "减免金额", prop: "usage_number" } },
+                { attrs: { label: "减免金额", prop: "value" } },
                 [
                   _c("el-input", {
                     attrs: { type: "number", placeholder: "请输入减免金额" },
@@ -399,7 +415,7 @@ var render = function() {
           _vm.couponForm.discountType === "2"
             ? _c(
                 "el-form-item",
-                { attrs: { label: "折扣数", prop: "usage_number" } },
+                { attrs: { label: "折扣数", prop: "discount" } },
                 [
                   _c("el-input", {
                     attrs: { type: "number", placeholder: "请输入折扣数" },
