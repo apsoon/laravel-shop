@@ -79,8 +79,8 @@ class OrderService
             $order->create_time = new DateTime();
             // ===================  商品相关
             // ----- 关联sku
-//            $skuIds = json_decode($req["skuIds"]);
-            $skuIds = $req["skuIds"];
+            $skuIds = json_decode($req["skuIds"]);
+//            $skuIds = $req["skuIds"];
             Log::info($skuIds);
             $skuList = [];
             $originPrice = 0;
