@@ -10,6 +10,7 @@ namespace App\Http\Dao;
 
 
 use App\Http\Model\Comment;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class CommentDao
@@ -22,6 +23,28 @@ class CommentDao
      * @var Comment
      */
     private $comment;
+
+    /**
+     * 添加评论
+     *
+     * @param Comment $comment
+     * @return bool
+     */
+    public function insert(Comment $comment)
+    {
+        return $comment->save();
+    }
+
+    /**
+     * 批量添加
+     *
+     * @param array $commentList
+     * @return bool
+     */
+    public function insertList(array $commentList)
+    {
+        return DB::table($this->comment->getTable())->insert($commentList);
+    }
 
     /**
      * SKU获取
