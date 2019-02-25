@@ -78,7 +78,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CouponList",
@@ -250,12 +249,7 @@ var render = function() {
                 key: "default",
                 fn: function(scope) {
                   return [
-                    _vm._v(
-                      "\n                " +
-                        _vm._s(scope.row.discount_type) +
-                        "\n                "
-                    ),
-                    scope.row.discount_type == 1
+                    scope.row.discount_type === 1
                       ? _c("span", [_vm._v(_vm._s(scope.row.value))])
                       : _c("span", [_vm._v(_vm._s(scope.row.discount))])
                   ]

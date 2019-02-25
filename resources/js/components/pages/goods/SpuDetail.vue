@@ -144,6 +144,16 @@
                     </el-table-column>
                 </el-table>
             </el-tab-pane>
+            <el-tab-pane label="Banner" name="banner">
+                <router-link :to="{path: '/spu-banner-add',query: {spuId: spuId}}">
+                    <el-button type="primary" size="medium">添加Banner</el-button>
+                </router-link>
+                <el-table>
+                    <el-table-column>
+
+                    </el-table-column>
+                </el-table>
+            </el-tab-pane>
         </el-tabs>
     </div>
 </template>

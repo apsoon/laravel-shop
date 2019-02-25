@@ -161,6 +161,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -630,6 +640,32 @@ var render = function() {
                 ],
                 1
               )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "Banner", name: "banner" } },
+            [
+              _c(
+                "router-link",
+                {
+                  attrs: {
+                    to: { path: "/spu-banner-add", query: { spuId: _vm.spuId } }
+                  }
+                },
+                [
+                  _c(
+                    "el-button",
+                    { attrs: { type: "primary", size: "medium" } },
+                    [_vm._v("添加Banner")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("el-table", [_c("el-table-column")], 1)
             ],
             1
           )

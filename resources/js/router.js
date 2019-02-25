@@ -38,6 +38,11 @@ export default new VueRouter({
             component: resolve => void (require(['./components/pages/goods/SpuSpecAdd.vue'], resolve))
         },
         {
+            name: "SpuBannerAdd",
+            path: "/spu-banner-add",
+            component: resolve => void (require(['./components/pages/goods/SpuBannerAdd.vue'], resolve))
+        },
+        {
             name: "SpuSpecOption",
             path: "/spu-spec-option",
             component: resolve => void (require(['./components/pages/goods/SpuSpecOption.vue'], resolve))
