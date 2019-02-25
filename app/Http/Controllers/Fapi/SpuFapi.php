@@ -21,29 +21,17 @@ class SpuFapi extends Controller
      */
     private $spuService;
 
-//    /**
-//     * @param Request $request
-//     * @return mixed
-//     */
-//    public function detail(Request $request)
-//    {
-//        $req = $request->all();
-//        $result = $this->spuService->getSpuById($req);
-//        return $result;
-//    }
-//
-//    /**
-//     * 分类获取
-//     *
-//     * @param Request $request
-//     * @return mixed
-//     */
-//    public function listByCategory(Request $request)
-//    {
-//        $req = $request->all();
-//        $result = $this->spuService->getPagedSpuByCategoryEffect($req);
-//        return $result;
-//    }
+    /**
+     * 获取Banner
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function bannerList(Request $request)
+    {
+        $req = $request->all();
+        return $this->spuService->getBannerEffectList($req);
+    }
 
     /**
      * spu获取规格列表

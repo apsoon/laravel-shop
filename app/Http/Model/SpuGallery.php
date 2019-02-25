@@ -4,8 +4,8 @@ namespace App\Http\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Gallery extends Model
+class SpuGallery extends Model
 {
     //
-    protected $table = "gallery";
+    protected $table = "spu_gallery";
 }

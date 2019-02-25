@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGalleryTable extends Migration
+class CreateSpuGalleryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateGalleryTable extends Migration
      */
     public function up()
     {
-        Schema::create('gallery', function (Blueprint $table) {
+        Schema::create('spu_gallery', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("goods_id")->index();
+            $table->integer("spu_id")->index();
             $table->string("image_url");
             $table->integer("sort_order")->default(0);
+            $table->tinyInteger("state")->default(0);
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -30,6 +31,6 @@ class CreateGalleryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gallery');
+        Schema::dropIfExists('spu_gallery');
     }
 }

@@ -15,12 +15,14 @@ use App\Http\Dao\SkuDao;
 use App\Http\Dao\SkuSpecOptionDao;
 use App\Http\Dao\SpecDao;
 use App\Http\Dao\SpecificationOptionDao;
+use App\Http\Dao\SpuGalleryDao;
 use App\Http\Dao\SpuSpecDao;
 use App\Http\Dao\SpuSpecOptionDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Spu;
 use App\Http\Model\SpuDetail;
 use App\Http\Model\Product;
+use App\Http\Model\SpuGallery;
 use App\Http\Model\SpuSpecOption;
 use App\Http\Util\JsonResult;
 use Illuminate\Support\Facades\Log;
@@ -52,6 +54,11 @@ class SpuService
      * @var SpuSpecOptionDao
      */
     private $spuSpecOptionDao;
+
+    /**
+     * @var SpuGalleryDao
+     */
+    private $spuGalleryDao;
 
     /**
      * @var SpecDao
@@ -268,19 +275,95 @@ class SpuService
     }
 
     /**
+     * 获取SPU Banner
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getBannerEffectList(array $req)
+    {
+        if (empty($req["spuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $result = $this->spuGalleryDao->findBySpuIdEffect($req["spuId"]);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
+     * 获取SPU Banner
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getBannerListBySpu(array $req)
+    {
+        if (empty($req["spuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $result = $this->spuGalleryDao->findBySpuId($req["spuId"]);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
+     * 创建SPU Banner
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function createSpuBanner(array $req)
+    {
+        $banner = new SpuGallery();
+        $banner->spu_id = $req["spuId"];
+        $banner->image_url = $req["imageUrl"];
+        $banner->state = $req["state"];
+        $result = $this->spuGalleryDao->insert($banner);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
+     * 修改状态
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function modifyBannerState(array $req)
+    {
+        $result = $this->spuGalleryDao->updateState($req["id"], $req["state"]);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
+     * 更新Banner
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function updateBanner(array $req)
+    {
+        $banner = $this->spuGalleryDao->findById($req["id"]);
+        $banner->spu_id = $req["spuId"];
+        $banner->image_url = $req["imageUrl"];
+        $banner->state = $req["state"];
+        $result = $this->spuGalleryDao->update($banner);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
      * SpuService constructor.
      *
+     * @param SpecDao $specDao
      * @param SpuDao $spuDao
      * @param SpuDetailDao $spuDetailDao
      * @param SpuSpecDao $spuSpecDao
      * @param SpuSpecOptionDao $spuSpecOptionDao
+     * @param SpuGalleryDao $spuGalleryDao
      */
-    public function __construct(SpecDao $specDao, SpuDao $spuDao, SpuDetailDao $spuDetailDao, SpuSpecDao $spuSpecDao, SpuSpecOptionDao $spuSpecOptionDao)
+    public function __construct(SpecDao $specDao, SpuDao $spuDao, SpuDetailDao $spuDetailDao, SpuSpecDao $spuSpecDao, SpuSpecOptionDao $spuSpecOptionDao, SpuGalleryDao $spuGalleryDao)
     {
         $this->specDao = $specDao;
         $this->spuDao = $spuDao;
         $this->spuDetailDao = $spuDetailDao;
         $this->spuSpecDao = $spuSpecDao;
+        $this->spuGalleryDao = $spuGalleryDao;
         $this->spuSpecOptionDao = $spuSpecOptionDao;
     }
 }

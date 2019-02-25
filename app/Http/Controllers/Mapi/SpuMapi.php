@@ -3,13 +3,9 @@
 namespace App\Http\Controllers\Mapi;
 
 use App\Http\Controllers\Controller;
-use App\Http\Enum\StatusCode;
-use App\Http\Service\SkuService;
 use App\Http\Service\SpuService;
 use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Psy\Util\Json;
 
 /**
  * Class SpuMapi
@@ -100,6 +96,54 @@ class SpuMapi extends Controller
     {
         $req = $request->all();
         return $this->spuService->createSpu($req);
+    }
+
+    /**
+     * 创建Banner
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function createBanner(Request $request)
+    {
+        $req = $request->all();
+        return $this->spuService->createSpuBanner($req);
+    }
+
+    /**
+     * 获取SPU 的 banner列表
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function bannerList(Request $request)
+    {
+        $req = $request->all();
+        return $this->spuService->getBannerListBySpu($req);
+    }
+
+    /**
+     * 修改banner状态
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function modifyBannerState(Request $request)
+    {
+        $req = $request->all();
+        return $this->spuService->modifyBannerState($req);
+    }
+
+    /**
+     * 跟新状态
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function updateBanner(Request $request)
+    {
+        $req = $request->all();
+        return $this->spuService->updateBanner($req);
     }
 
     /**
