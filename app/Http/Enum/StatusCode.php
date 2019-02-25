@@ -93,4 +93,8 @@ class StatusCode
         "code" => 12005,
         "message" => "优惠券已领完"
     ];
+    const COUPON_NOT_REACH = [
+        "code" => 12006,
+        "message" => "未达到优惠券使用条件"
+    ];
 }

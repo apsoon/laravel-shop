@@ -120,10 +120,20 @@ class OrderService
                 }
                 // 优惠券校验
                 $coupon = $this->couponDao->findById($couponId);
+                // 是否在有效期内
                 if ($order->create_time < $coupon->effect_start || $order->create_time > $coupon->effect_end) {
                     return new JsonResult(StatusCode::COUPON_EXPIRED);
                 }
-                $price = $originPrice - $coupon->value;
+                // 是否金额限制
+                if ($coupon->is_usage_limit && $originPrice < $coupon->usage_value) {
+                    return new JsonResult(StatusCode::COUPON_NOT_REACH);
+                }
+                // 折扣类型
+                if ($coupon->discount_type == 1) {
+                    $price = $originPrice - $coupon->value;
+                } else if ($coupon->discout_type == 2) {
+                    $price = $originPrice * $coupon->discount;
+                }
                 $couponEffect = true;
             }
             $order->price = $price;
