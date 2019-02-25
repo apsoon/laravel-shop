@@ -79,13 +79,14 @@ class OrderService
             $order->create_time = new DateTime();
             // ===================  商品相关
             // ----- 关联sku
-            $skuIds = json_decode($req["skuIds"]);
+//            $skuIds = json_decode($req["skuIds"]);
+            $skuIds = $req["skuIds"];
             $skuList = [];
             $originPrice = 0;
             $number = 0;
             foreach ($skuIds as $skuId) {
                 // 判断SKU是否存在
-                $sku = $this->skuDao->findByIdEffect($skuId);
+                $sku = $this->skuDao->findByIdEffect($skuId->id);
                 if (empty($sku)) {
                     return new JsonResult(StatusCode::SKU_NOT_EXIST);
                 }
