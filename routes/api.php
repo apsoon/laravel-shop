@@ -62,6 +62,10 @@ Route::group(["namespace" => "Fapi"], function () {
     Route::GET("order/number", "OrderFapi@number");
     Route::GET("order/list", "OrderFapi@list");
 
+    // 评论
+    Route::POST("comment/add","CommentFapi@create");
+    Route::GET("comment/list","CommentFapi@list");
+
     // 品牌
     Route::GET("brand/detail", "BrandFapi@detail");
 });

@@ -58,6 +58,23 @@ class CommentDao
     }
 
     /**
+     * sku分页获取有效
+     *
+     * @param $skuId
+     * @param $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findPagedBySkuEffect($skuId, $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        return $this->comment::where(["sku_id" => $skuId, "state" => 1])
+            ->offset($offset)
+            ->limit($size)
+            ->get();
+    }
+
+    /**
      * CommentDao constructor.
      *
      * @param Comment $comment

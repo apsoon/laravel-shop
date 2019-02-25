@@ -34,6 +34,18 @@ class CommentFapi extends Controller
     }
 
     /**
+     * 分页获取有效到评论
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function list(Request $request)
+    {
+        $req = $request->all();
+        return $this->commentService->getPagedEffectCommentBySku($req);
+    }
+
+    /**
      * CommentFapi constructor.
      *
      * @param CommentService $commentService

@@ -8,7 +8,6 @@
 
 namespace App\Http\Service;
 
-
 use App\Http\Dao\CommentDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Comment;
@@ -58,6 +57,19 @@ class CommentService
     public function getPagedCommentList(array $req)
     {
         return new JsonResult();
+    }
+
+    /**
+     * 分页获取有效到评论
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getPagedEffectCommentBySku(array $req)
+    {
+        $size = 20;
+        $result = $this->commentDao->findPagedBySkuEffect($req["skuId"], $req["pageNo"], $size);
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
