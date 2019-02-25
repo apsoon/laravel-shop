@@ -9,6 +9,7 @@
 namespace App\Http\Service;
 
 
+use App\Http\Config\Config;
 use App\Http\Dao\SpuDao;
 use App\Http\Dao\SpuDetailDao;
 use App\Http\Dao\SkuDao;
@@ -284,6 +285,11 @@ class SpuService
     {
         if (empty($req["spuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $bannerList = $this->spuGalleryDao->findBySpuIdEffect($req["spuId"]);
+        if (Config::UPLOAD_TO_PUBLIC) {
+            foreach ($bannerList as $banner) {
+                $banner->image_url = asset("storage/" . $banner->image_url);
+            }
+        }
         $result = array_values(array_sort($bannerList, function ($banner) {
             return $banner->sort_order;
         }));
@@ -300,6 +306,11 @@ class SpuService
     {
         if (empty($req["spuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $bannerList = $this->spuGalleryDao->findBySpuId($req["spuId"]);
+        if (Config::UPLOAD_TO_PUBLIC) {
+            foreach ($bannerList as $banner) {
+                $banner->image_url = asset("storage/" . $banner->image_url);
+            }
+        }
         $result = array_values(array_sort($bannerList, function ($banner) {
             return $banner->sort_order;
         }));
