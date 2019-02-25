@@ -36,7 +36,7 @@ class BrandService
     {
         $brandList = $this->brandDao->list();
         foreach ($brandList as $brand) {
-            if (!empty($brand->logo)) $brand->logo = asset($brand->logo);
+            if (!empty($brand->logo)) $brand->logo = asset("storage/" . $brand->logo);
         }
         return new JsonResult(StatusCode::SUCCESS, $brandList);
     }
@@ -53,7 +53,7 @@ class BrandService
         $size = empty($info["size"]) ? 20 : $info["size"];
         $brandList = $this->brandDao->findByPage($pageNo, $size);
         foreach ($brandList as $brand) {
-            if (!empty($brand->logo)) $brand->logo = asset($brand->logo);
+            if (!empty($brand->logo)) $brand->logo = asset("storage" . $brand->logo);
         }
         return new JsonResult(StatusCode::SUCCESS, $brandList);
     }
@@ -135,7 +135,7 @@ class BrandService
     {
         $result = $this->brandDao->findById($req["brandId"]);
         if (!empty($result->logo)) {
-            $result->logoUrl = asset($result->logo);
+            $result->logoUrl = asset("storage" . $result->logo);
         }
         return new JsonResult(StatusCode::SUCCESS, $result);
     }

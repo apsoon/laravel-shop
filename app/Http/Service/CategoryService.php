@@ -91,7 +91,7 @@ class CategoryService
     {
         $temp = [];
         foreach ($categories as $category) {
-            if (!empty($category->image_url) && !strpos($category->image_url, 'http')) $category->image_url = asset($category->image_url);
+            if (!empty($category->image_url) && !strpos($category->image_url, 'http')) $category->image_url = asset("storage" . $category->image_url);
             if ($category->level == 1) {
                 $res = $category;
                 array_push($temp, $res);
