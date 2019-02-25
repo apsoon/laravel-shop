@@ -283,7 +283,10 @@ class SpuService
     public function getBannerEffectList(array $req)
     {
         if (empty($req["spuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        $result = $this->spuGalleryDao->findBySpuIdEffect($req["spuId"]);
+        $bannerList = $this->spuGalleryDao->findBySpuIdEffect($req["spuId"]);
+        $result = array_values(array_sort($bannerList, function ($banner) {
+            return $banner->sort_order;
+        }));
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
@@ -296,7 +299,10 @@ class SpuService
     public function getBannerListBySpu(array $req)
     {
         if (empty($req["spuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        $result = $this->spuGalleryDao->findBySpuId($req["spuId"]);
+        $bannerList = $this->spuGalleryDao->findBySpuId($req["spuId"]);
+        $result = array_values(array_sort($bannerList, function ($banner) {
+            return $banner->sort_order;
+        }));
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
@@ -312,6 +318,7 @@ class SpuService
         $banner->spu_id = $req["spuId"];
         $banner->image_url = $req["imageUrl"];
         $banner->state = $req["state"];
+        $banner->sort_order = $req["sortOrder"];
         $result = $this->spuGalleryDao->insert($banner);
         if ($result) return new JsonResult();
         return new JsonResult(StatusCode::SERVER_ERROR);
