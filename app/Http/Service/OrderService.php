@@ -73,7 +73,7 @@ class OrderService
             $order->country = $req["country"];
             $order->province = $req["province"];
             $order->city = $req["city"];
-            $order->conty = $req["conty"];
+            $order->county = $req["county"];
             $order->address_detail = $req["addressDetail"];
             $order->state = OrderStatus::PAY_REQUIRED;
             $order->create_time = new DateTime();
