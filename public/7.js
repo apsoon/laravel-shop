@@ -67,6 +67,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CouponList",
@@ -205,6 +217,8 @@ var render = function() {
                           _c("span", [_vm._v(_vm._s(props.row.send_type))])
                         ]),
                         _vm._v(" "),
+                        _c("el-form-item"),
+                        _vm._v(" "),
                         _c("el-form-item", { attrs: { label: "使用说明" } }, [
                           _c("span", [_vm._v(_vm._s(props.row.describe))])
                         ])
@@ -223,6 +237,31 @@ var render = function() {
           _vm._v(" "),
           _c("el-table-column", {
             attrs: { label: "优惠券编号", prop: "sn", width: "150" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "折扣类型", prop: "discount_type", width: "150" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "减免金额", prop: "value", width: "150" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(scope.row.discount_type) +
+                        "\n                "
+                    ),
+                    scope.row.discount_type == 1
+                      ? _c("span", [_vm._v(_vm._s(scope.row.value))])
+                      : _c("span", [_vm._v(_vm._s(scope.row.discount))])
+                  ]
+                }
+              }
+            ])
           }),
           _vm._v(" "),
           _c("el-table-column", {
