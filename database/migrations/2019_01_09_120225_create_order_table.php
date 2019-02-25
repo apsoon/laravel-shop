@@ -16,7 +16,7 @@ class CreateOrderTable extends Migration
         Schema::create('order', function (Blueprint $table) {
             $table->increments('id');
             $table->string("user_id");
-            $table->string("order_sn");
+            $table->string("sn");
             $table->decimal("price")->comment("总价格");
             $table->decimal("discount")->comment("折扣");
             $table->string("consignee")->default("")->comment("收件人姓名");

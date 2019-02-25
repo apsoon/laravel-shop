@@ -70,7 +70,7 @@ class OrderService
             $order->consignee = $req["consignee"];
             $order->phone = $req["phone"];
             $order->post_code = $req["postCode"];
-            $order->coutry = $req["coutry"];
+            $order->country = $req["country"];
             $order->province = $req["province"];
             $order->city = $req["city"];
             $order->conty = $req["conty"];
