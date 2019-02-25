@@ -81,6 +81,7 @@ class OrderService
             // ----- 关联sku
 //            $skuIds = json_decode($req["skuIds"]);
             $skuIds = $req["skuIds"];
+            Log::info($skuIds);
             $skuList = [];
             $originPrice = 0;
             $number = 0;
