@@ -148,9 +148,45 @@
                 <router-link :to="{path: '/spu-banner-add',query: {spuId: spuId}}">
                     <el-button type="primary" size="medium">添加Banner</el-button>
                 </router-link>
-                <el-table>
-                    <el-table-column>
-
+                <el-button type="danger" size="medium" @click="deleteBanners()">批量删除</el-button>
+                <el-table ref="multipleTable"
+                          :data="bannerList"
+                          tooltip-effect="dark"
+                          style="width: 100%">
+                    <el-table-column
+                            type="selection"
+                            width="55">
+                    </el-table-column>
+                    <el-table-column label="图片" prop="imageUrl" width="150">
+                        <template slot-scope="scope">
+                            <img class="image" :src="scope.row.image_url"/>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="排序" prop="sort_order" width="150">
+                    </el-table-column>
+                    <el-table-column label="状态" prop="state" width="150">
+                    </el-table-column>
+                    <el-table-column
+                            prop=""
+                            width="300"
+                            label="操作">
+                        <template slot-scope="scope">
+                            <el-button v-if="scope.row.state"
+                                       size="mini"
+                                       type="warning"
+                                       @click="modifyBannerState('disable', scope.$index, scope.row.id)">禁用
+                            </el-button>
+                            <el-button v-else
+                                       size="mini"
+                                       type="success"
+                                       @click="modifyBannerState('enable', scope.$index, scope.row.id)">启用
+                            </el-button>
+                            <el-button
+                                    size="mini"
+                                    type="danger"
+                                    @click="deleteBanner(scope.$index, scope.row.id)">删除
+                            </el-button>
+                        </template>
                     </el-table-column>
                 </el-table>
             </el-tab-pane>
@@ -170,7 +206,8 @@
                 spu: {},
                 skuList: [],
                 specList: [],
-                attrList: []
+                attrList: [],
+                bannerList: []
             }
         },
         mounted: function () {
@@ -203,10 +240,79 @@
             axios.get("/attr/list-spu?spuId=" + that.spuId + "&categoryId=" + that.spu.category_id)
                 .then(res => {
                     if (res.data.code === 2000) {
-                        console.info(res.data.data);
                         that.attrList = res.data.data;
                     }
                 });
+            axios.get("/spu/banner-list?spuId=" + that.spuId)
+                .then(res => {
+                    if (res.data.code === 2000) {
+                        that.bannerList = res.data.data;
+                    }
+                });
+        },
+        methods: {
+            modifyBannerState: function (type, index, id) {
+                let that = this,
+                    state = 1;
+                if (type === "disable") state = 0;
+                let message = state ? "启用" : "禁用";
+                that.$confirm("确认" + message + "Banner?", '提示', {
+                    confirmButtonText: "确认",
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios.post("spu/modify-banner-state", {
+                        state: state,
+                        id: id
+                    }).then(res => {
+                        if (res.data.code === 2000) that.bannerList[index].state = state;
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消' + message
+                    });
+                });
+            },
+            deleteBanner: function (index, id) {
+                let that = this,
+                    ids = [];
+                ids.push(id);
+                axios.post("brand/delete", {
+                    ids: ids
+                })
+                    .then(res => {
+                        if (res.data.code === 2000) {
+                            that.brandList.splice(index, 1);
+                            that.$message({
+                                type: 'success',
+                                message: '删除成功!'
+                            });
+                        }
+                    });
+            },
+            deleteBanners: function () {
+                let that = this,
+                    selections = that.$refs.multipleTable.selection;
+                if (selections.length) {
+                    let ids = [];
+                    for (let section of selections) {
+                        ids.push(section.id);
+                    }
+                    axios.post("brand/delete", {
+                        ids: ids
+                    })
+                        .then(res => {
+                            if (res.data.code === 2000) {
+                                that.$message({
+                                    type: 'success',
+                                    message: '删除成功!'
+                                });
+                                that.$router.reload();
+                            }
+                        });
+                }
+            }
         }
     }
 </script>
@@ -214,5 +320,10 @@
 <style scoped>
     .el-tag + .el-tag {
         margin-left: 10px;
+    }
+
+    .image {
+        width: 48px;
+        height: 48px;
     }
 </style>

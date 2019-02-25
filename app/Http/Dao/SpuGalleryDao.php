@@ -40,7 +40,7 @@ class SpuGalleryDao
      */
     public function findBySpuId($spuId)
     {
-        return $this->spuGallery::where("spu_id", "=", $spuId);
+        return $this->spuGallery::where("spu_id", "=", $spuId)->get();
     }
 
     /**
@@ -51,7 +51,7 @@ class SpuGalleryDao
      */
     public function findBySpuIdEffect($spuId)
     {
-        return $this->spuGallery::where(["spu_id" => $spuId, "state" => 1]);
+        return $this->spuGallery::where(["spu_id" => $spuId, "state" => 1])->get();
     }
 
     /**
@@ -63,7 +63,7 @@ class SpuGalleryDao
      */
     public function updateState($id, $state)
     {
-        return $this->spuGallery::where("id", "=", $id)->update("state", $state);
+        return $this->spuGallery::where(["id" => $id])->update(["state" => $state]);
     }
 
     /**
