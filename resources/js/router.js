@@ -106,8 +106,13 @@ export default new VueRouter({
         // =============================  交易管理  ===============================
         {
             name: "OrderList",
-            path: "/Order-list",
+            path: "/order-list",
             component: resolve => void (require(['./components/pages/trade/OrderList.vue'], resolve))
+        },
+        {
+            name: "CommentList",
+            path: "/comment-list",
+            component: resolve => void (require(['./components/pages/trade/CommentList.vue'], resolve))
         },
 
         // ================================================  营销管理  =================================================

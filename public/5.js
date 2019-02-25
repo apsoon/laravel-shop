@@ -207,7 +207,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -805,8 +804,6 @@ var render = function() {
                 },
                 [_vm._v("批量删除")]
               ),
-              _vm._v(" "),
-              _c("line"),
               _vm._v(" "),
               _c(
                 "el-table",

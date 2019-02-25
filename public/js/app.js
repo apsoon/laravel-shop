@@ -3615,6 +3615,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Sidebar"
 });
@@ -85781,6 +85782,10 @@ var render = function() {
               _vm._v(" "),
               _c("el-menu-item", { attrs: { index: "order-list" } }, [
                 _vm._v("订单管理")
+              ]),
+              _vm._v(" "),
+              _c("el-menu-item", { attrs: { index: "comment-list" } }, [
+                _vm._v("评论管理")
               ])
             ],
             2
@@ -85813,10 +85818,6 @@ var render = function() {
               _vm._v(" "),
               _c("el-menu-item", { attrs: { index: "user-list" } }, [
                 _vm._v("用户列表")
-              ]),
-              _vm._v(" "),
-              _c("el-menu-item", { attrs: { index: "addr-list" } }, [
-                _vm._v("用户地址")
               ])
             ],
             2
@@ -100134,7 +100135,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "SpuAdd",
     path: "/spu-add",
     component: function component(resolve) {
-      return void Promise.all(/*! AMD require */[__webpack_require__.e(24), __webpack_require__.e(16)]).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpuAdd.vue */ "./resources/js/components/pages/goods/SpuAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void Promise.all(/*! AMD require */[__webpack_require__.e(25), __webpack_require__.e(16)]).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/goods/SpuAdd.vue */ "./resources/js/components/pages/goods/SpuAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "SpuSpecAdd",
@@ -100222,9 +100223,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
   }, // =============================  交易管理  ===============================
   {
     name: "OrderList",
-    path: "/Order-list",
+    path: "/order-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 22).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/trade/OrderList.vue */ "./resources/js/components/pages/trade/OrderList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 23).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/trade/OrderList.vue */ "./resources/js/components/pages/trade/OrderList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
+    name: "CommentList",
+    path: "/comment-list",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 22).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/trade/CommentList.vue */ "./resources/js/components/pages/trade/CommentList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, // ================================================  营销管理  =================================================
   {
@@ -100250,7 +100257,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "AddrList",
     path: "/addr-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 23).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/user/AddrList.vue */ "./resources/js/components/pages/user/AddrList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 24).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./components/pages/user/AddrList.vue */ "./resources/js/components/pages/user/AddrList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, // =============================  广告  ===============================
   {

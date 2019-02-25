@@ -15,11 +15,11 @@ class CreateCommentTable extends Migration
     {
         Schema::create('comment', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("user_id");
-            $table->integer("goods_id")->index();
+            $table->string("user_id");
+            $table->integer("sku_id")->index();
+            $table->integer("order_sn")->comment("订单号");
             $table->text("content");
             $table->string("images")->nullable();
-            $table->timestamp("time")->useCurrent();
             $table->integer("sort_order")->default(0)->comment("排序");
             $table->tinyInteger("state")->default(0)->comment("状态");
             $table->timestamp("created_at")->useCurrent();
