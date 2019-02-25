@@ -161,7 +161,7 @@ class CouponService
             return new JsonResult(StatusCode::COUPON_ALREADY_OBTAIN);
         }
         // 优惠券数量
-        if ($coupon->number <= 0) {
+        if ($coupon->is_number_limit || $coupon->number <= 0) {
             return new JsonResult(StatusCode::COUPON_NOT_REST);
         }
         DB::beginTransaction();
@@ -176,7 +176,6 @@ class CouponService
             $userCoupon->coupon_id = $coupon->id;
             $userCoupon->state = UserCouponStatus::NEW;
             $obtain = $userCoupon->save();
-            Log::info($obtain);
             if (!$obtain) {
                 DB::rollBack();
                 return new JsonResult(StatusCode::SERVER_ERROR);
