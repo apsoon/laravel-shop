@@ -21,6 +21,7 @@ use App\Http\Util\JsonResult;
 use App\Http\Util\SNUtil;
 use DateTime;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class OrderService
@@ -153,6 +154,8 @@ class OrderService
             $result->orderSn = $order->sn;
             return new JsonResult(StatusCode::SUCCESS, $result);
         } catch (\Exception $e) {
+            Log::info("=====================");
+            Log::info($e);
             DB::rollBack();
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
