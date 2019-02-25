@@ -16,9 +16,10 @@ class CreateOrderSkuTable extends Migration
     {
         Schema::create('order_sku', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer("order_id")->comment("订单id");
             $table->integer("sku_id")->comment("产品id");
+            $table->string("name")->comment("sku Name");
             $table->string("order_sn")->comment("订单编号");
+            $table->decimal("price")->comment("价格");
             $table->integer("number")->default(0)->comment("商品数量");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

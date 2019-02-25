@@ -17,6 +17,7 @@ class CreateOrderTable extends Migration
             $table->increments('id');
             $table->string("user_id");
             $table->string("sn");
+            $table->decimal("origin_price")->comment("原价格");
             $table->decimal("price")->comment("总价格");
             $table->decimal("discount")->comment("折扣");
             $table->string("consignee")->default("")->comment("收件人姓名");
@@ -29,7 +30,7 @@ class CreateOrderTable extends Migration
             $table->string("address_detail")->default("");
             $table->integer("coupon_id")->nullable();
             $table->integer("address_id")->nullable();
-            $table->tinyInteger("status")->comment("订单状态");
+            $table->tinyInteger("state")->comment("订单状态");
             $table->timestamp("create_time")->comment("订单创建时间");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

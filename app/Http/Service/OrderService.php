@@ -144,9 +144,6 @@ class OrderService
             $order->discount = $order->originPrice - $order->price;
             $order->save();
             // ===================
-            foreach ($skuList as $sku) {
-                $sku["order_id"] = $order->id;
-            }
             $this->orderSkuDao->insertList($skuList);
             if ($couponEffect) {
                 $this->couponDao->updateStateByIdUser($userId, $couponId, UserCouponStatus::USED);
