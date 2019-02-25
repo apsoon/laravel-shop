@@ -85,7 +85,7 @@ class OrderService
             $number = 0;
             foreach ($skuIds as $skuId) {
                 // 判断SKU是否存在
-                $sku = $this->skuDao->findByIdEffect($skuId->id);
+                $sku = $this->skuDao->findByIdEffect($skuId);
                 if (empty($sku)) {
                     return new JsonResult(StatusCode::SKU_NOT_EXIST);
                 }
