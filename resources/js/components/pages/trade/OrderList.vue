@@ -11,6 +11,9 @@
             <el-table-column label="订单状态" prop="state" width="150"/>
             <el-table-column label="操作" min-width="1">
                 <template slot-scope="scope">
+                    <router-link :to="{path: '', query: { sn: scope.row.sn}}">
+                        <el-button size="mini" type="warning">发货</el-button>
+                    </router-link>
                     <el-button v-if="scope.row.state === 0"
                                size="mini"
                                type="warning"
