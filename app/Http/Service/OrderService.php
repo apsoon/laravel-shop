@@ -150,9 +150,12 @@ class OrderService
                 }
                 $couponEffect = true;
             }
+            Log::info("originPrice = " . $order->originPrice);
             $order->price = $price;
             // =================== 提交订单
+            Log::info("price = " . $order->price);
             $order->discount = $order->originPrice - $order->price;
+            Log::info("discount = " . $order->discount);
             $order->save();
             // ===================
             $this->orderSkuDao->insertList($skuList);
