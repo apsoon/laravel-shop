@@ -340,11 +340,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     onTabClicked: function onTabClicked(tab, event) {
-      console.log(tab, event);
       var that = this;
-      console.info(that.name);
       that.active = tab.name;
-      console.info(that.name);
     }
   }
 });

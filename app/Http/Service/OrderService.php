@@ -209,8 +209,7 @@ class OrderService
      * @param array $req
      * @return JsonResult
      */
-    public
-    function getOrderPagedList(array $req)
+    public function getOrderPagedList(array $req)
     {
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $result = $this->orderDao->findPagedList($pageNo, 20);

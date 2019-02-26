@@ -9,6 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -33,12 +35,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "OrderList"
+  name: "OrderList",
+  data: function data() {
+    return {
+      pageNo: 1,
+      orderList: []
+    };
+  },
+  mounted: function mounted() {
+    var that = this;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/order/list?pageNo=" + that.pageNo).then(function (res) {
+      if (res.data.code === 2000) {
+        that.orderList = res.data.data;
+      }
+    }).catch(function (err) {});
+  },
+  methods: {}
 });
 
 /***/ }),
@@ -69,18 +83,65 @@ var render = function() {
       _vm._v(" "),
       _c(
         "el-table",
+        {
+          ref: "couponList",
+          attrs: {
+            "tooltip-effect": "dark",
+            width: "100%",
+            data: _vm.orderList
+          }
+        },
         [
-          _c("el-table-column", { attrs: { label: "订单号" } }),
+          _c("el-table-column", {
+            attrs: { label: "订单号", prop: "sn", width: "250" }
+          }),
           _vm._v(" "),
-          _c("el-table-column", { attrs: { label: "下单时间" } }),
+          _c("el-table-column", {
+            attrs: { label: "下单时间", prop: "create_time", width: "250" }
+          }),
           _vm._v(" "),
-          _c("el-table-column", { attrs: { label: "订单总额" } }),
+          _c("el-table-column", {
+            attrs: { label: "订单总额", prop: "price", width: "150" }
+          }),
           _vm._v(" "),
-          _c("el-table-column", { attrs: { label: "收货人" } }),
+          _c("el-table-column", {
+            attrs: { label: "收货人", prop: "consignee", width: "150" }
+          }),
           _vm._v(" "),
-          _c("el-table-column", { attrs: { label: "订单状态" } }),
+          _c("el-table-column", {
+            attrs: { label: "订单状态", prop: "state", width: "150" }
+          }),
           _vm._v(" "),
-          _c("el-table-column", { attrs: { label: "操作" } })
+          _c("el-table-column", {
+            attrs: { label: "操作", "min-width": "1" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    scope.row.state === 0
+                      ? _c(
+                          "el-button",
+                          {
+                            attrs: { size: "mini", type: "warning" },
+                            on: {
+                              click: function($event) {
+                                _vm.modifyState(
+                                  "disable",
+                                  scope.$index,
+                                  scope.row.id
+                                )
+                              }
+                            }
+                          },
+                          [_vm._v("发货\n                ")]
+                        )
+                      : _vm._e()
+                  ]
+                }
+              }
+            ])
+          })
         ],
         1
       )

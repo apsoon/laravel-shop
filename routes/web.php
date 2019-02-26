@@ -75,6 +75,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::POST("specOption/create", "SpecMapi@createOption");
 
     // ================================================  交易管理  =================================================
+    Route::GET("order/list", "OrderMapi@list");
 
     // ================================================  营销管理 =================================================
     // 优惠券

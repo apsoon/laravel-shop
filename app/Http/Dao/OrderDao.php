@@ -19,6 +19,13 @@ class OrderDao
      */
     private $order;
 
+    /**
+     * 订单分页
+     *
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
     public function findPagedList(int $pageNo, int $size)
     {
         $offset = ($pageNo - 1) * $size;
