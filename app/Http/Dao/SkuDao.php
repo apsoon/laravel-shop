@@ -83,7 +83,7 @@ class SkuDao
      */
     public function decreaseNumber(int $id, int $number)
     {
-        $result = $this->sku::with(["id" => $id])
+        $result = $this->sku::where(["id" => $id])
             ->decrement("number", $number);
         return $result;
     }
