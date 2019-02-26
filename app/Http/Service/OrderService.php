@@ -86,6 +86,7 @@ class OrderService
 //            $skuDecreaseList = [];
             $originPrice = 0;
             $number = 0;
+            Log::info(" ================================  BEGIN  ================================ ");
             foreach ($requestSkus as $requestSku) {
                 // 请求数量判断
                 if ($requestSku->number <= 0) {
@@ -100,12 +101,15 @@ class OrderService
                 if ($sku->number < $requestSku->number) {
                     return new JsonResult(StatusCode::STOCK_NOT_ENOUGH);
                 }
+                Log::info($sku);
 //                array_push($skuDecreaseList, $sku);
                 $this->skuDao->decreaseNumber($sku->id, $requestSku->number); // TODO ? position
                 $originPrice += $sku->price * $requestSku->number;
                 $number += $requestSku->number;
                 array_push($skuList, ["order_sn" => $order->sn, "sku_id" => $sku->id, "number" => $requestSku->number, "name" => $sku->name, "price" => $sku->price]);
             }
+            Log::info($skuList);
+            Log::info(" ================================  END  ================================ ");
             $order->origin_price = $originPrice;
             // ===================  优惠券相关
             // ------ 优惠券
