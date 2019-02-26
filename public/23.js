@@ -35,6 +35,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "OrderList",
@@ -109,7 +122,33 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "订单状态", prop: "state", width: "150" }
+            attrs: { label: "联系电话", prop: "phone", width: "150" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "订单状态", prop: "state", width: "150" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    scope.row.state === 0
+                      ? _c("span", [_vm._v("待付款")])
+                      : scope.row.state === 1
+                        ? _c("span", [_vm._v("待发货")])
+                        : scope.row.state === 2
+                          ? _c("span", [_vm._v("待收货")])
+                          : scope.row.state === 3
+                            ? _c("span", [_vm._v("待评论")])
+                            : scope.row.state === 4
+                              ? _c("span", [_vm._v("已完成")])
+                              : scope.row.state === 7
+                                ? _c("span", [_vm._v("已取消")])
+                                : _vm._e()
+                  ]
+                }
+              }
+            ])
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -119,11 +158,26 @@ var render = function() {
                 key: "default",
                 fn: function(scope) {
                   return [
-                    scope.row.state === 0
+                    _c(
+                      "router-link",
+                      {
+                        attrs: { to: { path: "", query: { sn: scope.row.sn } } }
+                      },
+                      [
+                        _c(
+                          "el-button",
+                          { attrs: { size: "mini", type: "info" } },
+                          [_vm._v("详情")]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    scope.row.state === 1
                       ? _c(
                           "el-button",
                           {
-                            attrs: { size: "mini", type: "warning" },
+                            attrs: { size: "mini", type: "primary" },
                             on: {
                               click: function($event) {
                                 _vm.modifyState(

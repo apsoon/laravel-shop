@@ -49,6 +49,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CommentList",
@@ -106,7 +120,37 @@ var render = function() {
           }
         },
         [
-          _c("el-table-column"),
+          _c("el-table-column", { attrs: { label: "skuId", prop: "sku_id" } }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "订单编号", prop: "order_sn" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", { attrs: { label: "用户", prop: "user_id" } }),
+          _vm._v(" "),
+          _c("el-table-column", { attrs: { label: "内容", prop: "content" } }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "评论时间", prop: "create_at" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "状态", prop: "state" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    scope.row.state === 0
+                      ? _c("span", [_vm._v("待审核")])
+                      : scope.row.state === 1
+                        ? _c("span", [_vm._v("前台显示")])
+                        : _c("span", [_vm._v("前台不显示")])
+                  ]
+                }
+              }
+            ])
+          }),
           _vm._v(" "),
           _c("el-table-column", {
             attrs: { prop: "", width: "300", label: "操作" },
@@ -135,7 +179,7 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    scope.row.state
+                    scope.row.state === 1
                       ? _c(
                           "el-button",
                           {
