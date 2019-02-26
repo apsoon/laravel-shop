@@ -51,7 +51,7 @@ class OrderSkuDao
      */
     public function findByOrderSn(string $orderSn)
     {
-        $result = $this->orderSku::where(["order_dn" => $orderSn])
+        $result = $this->orderSku::where(["order_sn" => $orderSn])
             ->get();
         return $result;
     }
