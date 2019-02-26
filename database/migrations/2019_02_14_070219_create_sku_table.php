@@ -21,7 +21,7 @@ class CreateSkuTable extends Migration
             $table->string("brief")->comment("简述");
             $table->decimal("origin_price")->default(0);
             $table->decimal("price")->default(0);
-            $table->integer("number")->default(0);
+            $table->unsignedInteger("number")->default(0)->comment("sku数量");
             $table->tinyInteger("state")->default(0);
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

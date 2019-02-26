@@ -28,6 +28,11 @@ class StatusCode
         "message" => "缺少必要参数"
     ];
 
+    const PARAM_ERROR = [
+        "code" => 4002,
+        "message" => "参数错误"
+    ];
+
     // 50XX 服务端错误
     const SERVER_ERROR = [
         "code" => 5001,

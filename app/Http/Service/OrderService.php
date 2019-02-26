@@ -79,25 +79,32 @@ class OrderService
             $order->create_time = new DateTime();
             // ===================  商品相关
             // ----- 关联sku
-            $skuIds = json_decode($req["skuIds"]);
+            $requestSkus = json_decode($req["skuIds"]);
 //            $skuIds = $req["skuIds"];
-            Log::info($skuIds);
+            Log::info($requestSkus);
             $skuList = [];
+//            $skuDecreaseList = [];
             $originPrice = 0;
             $number = 0;
-            foreach ($skuIds as $skuId) {
+            foreach ($requestSkus as $requestSku) {
+                // 请求数量判断
+                if ($requestSku->number <= 0) {
+                    return new JsonResult(StatusCode::PARAM_ERROR);
+                }
                 // 判断SKU是否存在
-                $sku = $this->skuDao->findByIdEffect($skuId->id);
+                $sku = $this->skuDao->findByIdEffect($requestSku->id);
                 if (empty($sku)) {
                     return new JsonResult(StatusCode::SKU_NOT_EXIST);
                 }
-                if ($sku->number <= 0) {
+                // 库存数量判断
+                if ($sku->number < $requestSku->number) {
                     return new JsonResult(StatusCode::STOCK_NOT_ENOUGH);
                 }
-                $this->skuDao->decreaseNumber($sku->id, $sku->number);
-                $originPrice += $sku->price * $skuId->number;
-                $number += $skuId->number;
-                array_push($skuList, ["order_sn" => $order->sn, "sku_id" => $sku->id, "number" => $skuId->number, "name" => $sku->name, "price" => $sku->price]);
+//                array_push($skuDecreaseList, $sku);
+                $this->skuDao->decreaseNumber($sku->id, $requestSku->number); // TODO ? position
+                $originPrice += $sku->price * $requestSku->number;
+                $number += $requestSku->number;
+                array_push($skuList, ["order_sn" => $order->sn, "sku_id" => $sku->id, "number" => $requestSku->number, "name" => $sku->name, "price" => $sku->price]);
             }
             $order->origin_price = $originPrice;
             // ===================  优惠券相关
