@@ -102,7 +102,8 @@ var render = function() {
           attrs: {
             "tooltip-effect": "dark",
             width: "100%",
-            data: _vm.orderList
+            data: _vm.orderList,
+            stripe: ""
           }
         },
         [

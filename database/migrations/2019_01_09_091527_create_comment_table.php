@@ -17,7 +17,7 @@ class CreateCommentTable extends Migration
             $table->increments('id');
             $table->string("user_id");
             $table->integer("sku_id")->index();
-            $table->integer("order_sn")->comment("订单号");
+            $table->string("order_sn")->comment("订单号");
             $table->text("content");
             $table->string("images")->nullable();
             $table->integer("sort_order")->default(0)->comment("排序");
