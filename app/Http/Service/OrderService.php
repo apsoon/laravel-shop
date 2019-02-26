@@ -86,7 +86,6 @@ class OrderService
 //            $skuDecreaseList = [];
             $originPrice = 0;
             $number = 0;
-            Log::info(" ================================  BEGIN  ================================ ");
             foreach ($requestSkus as $requestSku) {
                 // 请求数量判断
                 if ($requestSku->number <= 0) {
@@ -108,8 +107,6 @@ class OrderService
                 $number += $requestSku->number;
                 array_push($skuList, ["order_sn" => $order->sn, "sku_id" => $sku->id, "number" => $requestSku->number, "name" => $sku->name, "price" => $sku->price]);
             }
-            Log::info($skuList);
-            Log::info(" ================================  END  ================================ ");
             $order->origin_price = $originPrice;
             // ===================  优惠券相关
             // ------ 优惠券
@@ -150,12 +147,9 @@ class OrderService
                 }
                 $couponEffect = true;
             }
-            Log::info("originPrice = " . $order->originPrice);
             $order->price = $price;
             // =================== 提交订单
-            Log::info("price = " . $order->price);
-            $order->discount = $order->originPrice - $order->price;
-            Log::info("discount = " . $order->discount);
+            $order->discount = $order->origin_price - $order->price;
             $order->save();
             // ===================
             $this->orderSkuDao->insertList($skuList);
@@ -167,7 +161,7 @@ class OrderService
             $result->orderSn = $order->sn;
             return new JsonResult(StatusCode::SUCCESS, $result);
         } catch (\Exception $e) {
-            Log::info("=====================");
+            Log::info(" [ OrderService.php ] =================== createOrder >>>>> create order failed [ e ] =  ");
             Log::info($e);
             DB::rollBack();
             return new JsonResult(StatusCode::SERVER_ERROR);
