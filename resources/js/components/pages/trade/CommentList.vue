@@ -4,8 +4,22 @@
 
         </div>
         <el-table ref="commentList" :data="commentList" tooltip-effect="dart" width="100%">
-            <el-table-column>
-
+            <el-table-column label="skuId" prop="sku_id">
+            </el-table-column>
+            <el-table-column label="订单编号" prop="order_sn">
+            </el-table-column>
+            <el-table-column label="用户" prop="user_id">
+            </el-table-column>
+            <el-table-column label="内容" prop="content">
+            </el-table-column>
+            <el-table-column label="评论时间" prop="create_at">
+            </el-table-column>
+            <el-table-column label="状态" prop="state">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.state === 0">待审核</span>
+                    <span v-else-if="scope.row.state === 1">前台显示</span>
+                    <span v-else>前台不显示</span>
+                </template>
             </el-table-column>
             <el-table-column
                     prop=""
@@ -15,7 +29,7 @@
                     <router-link :to="{path: '/brand-add',query :{type: 'modify', brandId:scope.row.id}}">
                         <el-button size="mini" type="info">修改</el-button>
                     </router-link>
-                    <el-button v-if="scope.row.state"
+                    <el-button v-if="scope.row.state === 1"
                                size="mini"
                                type="warning"
                                @click="modifyState('disable', scope.$index, scope.row.id)">禁用
