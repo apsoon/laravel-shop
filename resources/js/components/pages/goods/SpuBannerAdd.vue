@@ -77,7 +77,7 @@
                                         message: '添加成功!'
                                     });
                                     setTimeout(() => {
-                                        that.$router.push("spu-list?spuId=" + that.spuId);
+                                        that.$router.push("/spu/detail?spuId=" + that.spuId + "&active=" + "banner");
                                     }, 1000);
                                 }
                             });

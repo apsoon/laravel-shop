@@ -103,7 +103,7 @@
                             .then(res => {
                                 if (res.data.code === 2000) {
                                     // message
-                                    that.$router.push("/spu/detail?spuId=", that.spuId);
+                                    that.$router.push("/spu/detail?spuId=", that.spuId+ "&active=" + "sku");
                                 }
                             })
                             .catch(err => {

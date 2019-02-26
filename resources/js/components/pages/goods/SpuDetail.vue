@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-tabs v-model="activeName" type="border-card">
+        <el-tabs v-model="active" type="border-card" @tab-click="onTabClicked">
             <el-tab-pane label="商品信息" name="info">
                 <el-row>
                     商品名称: {{spu.name}}
@@ -202,7 +202,7 @@
         data: function () {
             return {
                 spuId: 0,
-                activeName: "info",
+                active: "info",
                 spu: {},
                 skuList: [],
                 specList: [],
@@ -213,6 +213,9 @@
         mounted: function () {
             let that = this,
                 spuId = that.$route.query.spuId;
+            let active = that.$route.query.active;
+            console.info(active);
+            if (active) that.active = active;
             that.spuId = spuId;
             axios.get("spu/detail?spuId=" + spuId)
                 .then(res => {
@@ -312,6 +315,10 @@
                             }
                         });
                 }
+            },
+            onTabClicked: function (tab, event) {
+                let that = this;
+                that.active = tab.name;
             }
         }
     }

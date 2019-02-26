@@ -9,6 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -47,8 +49,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "CommentList"
+  name: "CommentList",
+  data: function data() {
+    return {
+      commentList: [],
+      pageNo: 1
+    };
+  },
+  mounted: function mounted() {
+    var that = this;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/comment/list?pageNo=" + that.pageNo).then(function (res) {
+      if (res.code === 2000) {
+        that.commentList = res.data.data;
+      }
+    }).catch(function (err) {});
+  },
+  methods: {}
 });
 
 /***/ }),
@@ -79,6 +97,14 @@ var render = function() {
       _vm._v(" "),
       _c(
         "el-table",
+        {
+          ref: "commentList",
+          attrs: {
+            data: _vm.commentList,
+            "tooltip-effect": "dart",
+            width: "100%"
+          }
+        },
         [
           _c("el-table-column"),
           _vm._v(" "),

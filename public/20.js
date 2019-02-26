@@ -63,7 +63,7 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/spu/relateSpec", that.spuSForm).then(function (res) {
         if (res.data.code === 2000) {
-          that.$router.push("spu/detail?spuId=" + that.spuId);
+          that.$router.push("spu/detail?spuId=" + that.spuId + "&active=" + "spec");
         } else {
           that.$message({
             type: 'error',

@@ -213,7 +213,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       spuId: 0,
-      activeName: "info",
+      active: "info",
       spu: {},
       skuList: [],
       specList: [],
@@ -224,6 +224,9 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var that = this,
         spuId = that.$route.query.spuId;
+    var active = that.$route.query.active;
+    console.info(active);
+    if (active) that.active = active;
     that.spuId = spuId;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/detail?spuId=" + spuId).then(function (res) {
       if (res.data.code === 2000) {
@@ -335,6 +338,13 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }
+    },
+    onTabClicked: function onTabClicked(tab, event) {
+      console.log(tab, event);
+      var that = this;
+      console.info(that.name);
+      that.active = tab.name;
+      console.info(that.name);
     }
   }
 });
@@ -412,12 +422,13 @@ var render = function() {
         "el-tabs",
         {
           attrs: { type: "border-card" },
+          on: { "tab-click": _vm.onTabClicked },
           model: {
-            value: _vm.activeName,
+            value: _vm.active,
             callback: function($$v) {
-              _vm.activeName = $$v
+              _vm.active = $$v
             },
-            expression: "activeName"
+            expression: "active"
           }
         },
         [
