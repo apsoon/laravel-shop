@@ -20,6 +20,7 @@ class CreateOrderSkuTable extends Migration
             $table->string("name")->comment("sku Name");
             $table->string("order_sn")->comment("订单编号");
             $table->decimal("price")->comment("价格");
+            $table->decimal("total")->comment("总价");
             $table->integer("number")->default(0)->comment("商品数量");
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

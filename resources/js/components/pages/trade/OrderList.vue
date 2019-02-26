@@ -6,8 +6,9 @@
         <el-table ref="couponList" tooltip-effect="dark" width="100%" :data="orderList">
             <el-table-column label="订单号" prop="sn" width="250"/>
             <el-table-column label="下单时间" prop="create_time" width="250"/>
-            <el-table-column label="订单总额" prop="price" width="150"/>
-            <el-table-column label="收货人" prop="consignee" width="150"/>
+            <el-table-column label="订单总额" prop="price" width="100"/>
+            <el-table-column label="产品数量" prop="number" width="100"/>
+            <el-table-column label="收货人" prop="consignee" width="100"/>
             <el-table-column label="联系电话" prop="phone" width="150"/>
             <el-table-column label="订单状态" prop="state" width="150">
                 <template slot-scope="scope">
@@ -21,7 +22,7 @@
             </el-table-column>
             <el-table-column label="操作" min-width="1">
                 <template slot-scope="scope">
-                    <router-link :to="{path: '', query: { sn: scope.row.sn}}">
+                    <router-link :to="{path: '/order-detail', query: { sn: scope.row.sn}}">
                         <el-button size="mini" type="info">详情</el-button>
                     </router-link>
                     <el-button v-if="scope.row.state === 1"

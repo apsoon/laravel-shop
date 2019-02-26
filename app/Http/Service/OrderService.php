@@ -105,7 +105,7 @@ class OrderService
                 $this->skuDao->decreaseNumber($sku->id, $requestSku->number); // TODO ? position
                 $originPrice += $sku->price * $requestSku->number;
                 $number += $requestSku->number;
-                array_push($skuList, ["order_sn" => $order->sn, "sku_id" => $sku->id, "number" => $requestSku->number, "name" => $sku->name, "price" => $sku->price]);
+                array_push($skuList, ["order_sn" => $order->sn, "sku_id" => $sku->id, "number" => $requestSku->number, "name" => $sku->name, "price" => $sku->price, "total" => $sku->price * $requestSku->number]);
             }
             $order->origin_price = $originPrice;
             // ===================  优惠券相关
@@ -222,18 +222,17 @@ class OrderService
     /**
      * 获取订单详情
      *
-     * @param int $orderId
+     * @param array $req
      * @return JsonResult
      */
-    public
-    function getOrderDetailByOrderId(int $orderId)
+    public function getOrderDetailByOrderSn(array $req)
     {
-        if (empty($req) || empty($req["orderId"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        $order = $this->orderDao->findById($orderId);
-        $productList = $this->orderSkuDao->findByOrderId($orderId);
+        if (empty($req["orderSn"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $order = $this->orderDao->findBySn($req["orderSn"]);
+        $skuList = $this->orderSkuDao->findByOrderSn($req["orderSn"]);
         $result = new \stdClass();
         $result->order = $order;
-        $result->productList = $productList;
+        $result->skuList = $skuList;
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 

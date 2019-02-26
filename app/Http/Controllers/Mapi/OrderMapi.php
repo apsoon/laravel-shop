@@ -41,7 +41,7 @@ class OrderMapi extends Controller
     public function detail(Request $request)
     {
         $req = $request->all();
-        return $this->orderService->getOrderDetailByOrderId($req["orderId"]);
+        return $this->orderService->getOrderDetailByOrderSn($req);
     }
 
     /**

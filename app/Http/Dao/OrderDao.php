@@ -11,6 +11,11 @@ namespace App\Http\Dao;
 
 use App\Http\Model\Order;
 
+/**
+ * Class OrderDao
+ *
+ * @package App\Http\Dao
+ */
 class OrderDao
 {
 
@@ -32,6 +37,19 @@ class OrderDao
         $result = $this->order::offset($offset)
             ->limit($size)
             ->get();
+        return $result;
+    }
+
+    /**
+     * 通过SN获取
+     *
+     * @param $orderSn
+     * @return mixed
+     */
+    public function findBySn($orderSn)
+    {
+        $result = $this->order::where(["sn" => $orderSn])
+            ->first();
         return $result;
     }
 

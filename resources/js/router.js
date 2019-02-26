@@ -110,6 +110,11 @@ export default new VueRouter({
             component: resolve => void (require(['./components/pages/trade/OrderList.vue'], resolve))
         },
         {
+            name: "OrderDetail",
+            path: "/order-detail",
+            component: resolve => void (require(['./components/pages/trade/OrderDetail.vue'], resolve))
+        },
+        {
             name: "CommentList",
             path: "/comment-list",
             component: resolve => void (require(['./components/pages/trade/CommentList.vue'], resolve))
