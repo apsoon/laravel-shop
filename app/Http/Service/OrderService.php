@@ -181,11 +181,14 @@ class OrderService
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = 20;
         if (empty($req["status"])) {
-            $result = $this->orderDao->findByUserPaged($req["userId"], $pageNo, $size);
+            $orders = $this->orderDao->findByUserPaged($req["userId"], $pageNo, $size);
         } else {
-            $result = $this->orderDao->findByStatusUserPaged($req["userId"], $req["status"], $pageNo, $size);
+            $orders = $this->orderDao->findByStatusUserPaged($req["userId"], $req["status"], $pageNo, $size);
         }
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        foreach ($orders as $order) {
+            $order->skus = $this->orderSkuDao->findByOrderSn($order->sn);
+        }
+        return new JsonResult(StatusCode::SUCCESS, $orders);
     }
 
     /**

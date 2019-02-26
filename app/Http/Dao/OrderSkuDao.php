@@ -49,10 +49,10 @@ class OrderSkuDao
      * @param string $orderSn
      * @return mixed
      */
-    private function findByOrderSn(string $orderSn)
+    public function findByOrderSn(string $orderSn)
     {
         $result = $this->orderSku::where(["order_dn" => $orderSn])
-            ->first();
+            ->get();
         return $result;
     }
 
