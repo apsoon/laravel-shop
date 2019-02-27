@@ -113,6 +113,16 @@ class CategoryDao
     }
 
     /**
+     * 获取热推
+     *
+     * @return mixed
+     */
+    public function findRecomList()
+    {
+        return $this->category::where("is_recom", "=", 1)->get();
+    }
+
+    /**
      * CategoryDao constructor.
      *
      * @param Category $category

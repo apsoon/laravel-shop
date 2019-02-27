@@ -53,6 +53,17 @@ class CategoryService
     }
 
     /**
+     * 获取首页热推
+     *
+     * @return JsonResult
+     */
+    public function getRecomCategoryList()
+    {
+        $result = $this->categoryDao->findRecomList();
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
      * 删除分类
      *
      * @param array $req

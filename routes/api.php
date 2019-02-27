@@ -27,6 +27,7 @@ Route::group(["namespace" => "Fapi"], function () {
 
     // category 分类
     Route::GET("category/list", "CategoryFapi@treeList");
+    Route::GET("category/recom", "CategoryFapi@recom");
 
     // spu 商品
     Route::GET("spu/list-category", "SpuFapi@listByCategory");
@@ -63,8 +64,8 @@ Route::group(["namespace" => "Fapi"], function () {
     Route::GET("order/list", "OrderFapi@list");
 
     // 评论
-    Route::POST("comment/add","CommentFapi@create");
-    Route::GET("comment/list","CommentFapi@list");
+    Route::POST("comment/add", "CommentFapi@create");
+    Route::GET("comment/list", "CommentFapi@list");
 
     // 品牌
     Route::GET("brand/detail", "BrandFapi@detail");

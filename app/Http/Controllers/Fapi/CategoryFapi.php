@@ -26,6 +26,16 @@ class CategoryFapi extends Controller
     }
 
     /**
+     * 首页热推
+     *
+     * @return JsonResult
+     */
+    public function recom()
+    {
+        return $this->categoryService->getRecomCategoryList();
+    }
+
+    /**
      * CategoryFapi constructor.
      *
      * @param CategoryService $categoryService
