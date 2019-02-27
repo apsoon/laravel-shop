@@ -4,6 +4,7 @@
             <span>订单列表</span>
         </div>
         <el-table ref="couponList" tooltip-effect="dark" width="100%" :data="orderList" stripe>
+            <el-table-column type="selection" width="55"/>
             <el-table-column label="订单号" prop="sn" width="250"/>
             <el-table-column label="下单时间" prop="create_time" width="250"/>
             <el-table-column label="订单总额" prop="price" width="100"/>

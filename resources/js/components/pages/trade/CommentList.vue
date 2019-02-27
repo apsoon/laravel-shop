@@ -4,6 +4,7 @@
 
         </div>
         <el-table ref="commentList" :data="commentList" tooltip-effect="dart" width="100%">
+            <el-table-column type="selection" width="55"/>
             <el-table-column label="商品" prop="sku_id" width="150"/>
             <el-table-column label="订单编号" prop="order_sn" width="150"/>
             <el-table-column label="用户" prop="user_id" width="150"/>

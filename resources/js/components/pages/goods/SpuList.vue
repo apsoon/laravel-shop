@@ -5,35 +5,13 @@
                 <el-button type="primary" size="medium">添加商品</el-button>
             </router-link>
         </div>
-        <el-table
-                ref="spuList"
-                :data="spuList"
-                tooltip-effect="dark"
-                width="100%">
-            <el-table-column
-                    prop="name"
-                    label="名称"
-                    width="150">
-            </el-table-column>
-            <el-table-column
-                    prop="category_id"
-                    label="分类"
-                    width="150">
-            </el-table-column>
-            <el-table-column
-                    prop="brand_id"
-                    label="排序"
-                    width="150">
-            </el-table-column>
-            <el-table-column
-                    prop="state"
-                    label="状态"
-                    width="150">
-            </el-table-column>
-            <el-table-column
-                    prop=""
-                    min-width="1"
-                    label="操作">
+        <el-table ref="spuList" :data="spuList" tooltip-effect="dark" width="100%">
+            <el-table-column type="selection" width="55"/>
+            <el-table-column prop="name" label="名称" width="150"/>
+            <el-table-column prop="category_id" label="分类" width="150"/>
+            <el-table-column prop="brand_id" label="排序" width="150"/>
+            <el-table-column prop="state" label="状态" width="150"/>
+            <el-table-column min-width="1" label="操作">
                 <template slot-scope="scope">
                     <router-link :to="{path:'/spu-detail', query: {spuId: scope.row.id}}">
                         <el-button

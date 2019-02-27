@@ -49,6 +49,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "OrderList",
@@ -107,6 +108,8 @@ var render = function() {
           }
         },
         [
+          _c("el-table-column", { attrs: { type: "selection", width: "55" } }),
+          _vm._v(" "),
           _c("el-table-column", {
             attrs: { label: "订单号", prop: "sn", width: "250" }
           }),

@@ -38,28 +38,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuList",
@@ -126,6 +104,8 @@ var render = function() {
           attrs: { data: _vm.spuList, "tooltip-effect": "dark", width: "100%" }
         },
         [
+          _c("el-table-column", { attrs: { type: "selection", width: "55" } }),
+          _vm._v(" "),
           _c("el-table-column", {
             attrs: { prop: "name", label: "名称", width: "150" }
           }),
@@ -143,7 +123,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "", "min-width": "1", label: "操作" },
+            attrs: { "min-width": "1", label: "操作" },
             scopedSlots: _vm._u([
               {
                 key: "default",
