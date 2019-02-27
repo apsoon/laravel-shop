@@ -43,6 +43,18 @@ class CategoryMapi extends Controller
     }
 
     /**
+     * 设置分类热推
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function modifyRecom(Request $request)
+    {
+        $req = $request->all();
+        return $this->categoryService->modifyCategoryRecom($req);
+    }
+
+    /**
      * 删除分类
      *
      * @param Request $request

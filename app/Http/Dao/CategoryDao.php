@@ -99,6 +99,20 @@ class CategoryDao
     }
 
     /**
+     * 设置热推
+     *
+     * @param $id
+     * @param $isRecom
+     * @return mixed
+     */
+    public function modifyRecomById($id, $isRecom)
+    {
+        $result = $this->category::where("id", "=", $id)
+            ->update(["is_recom" => $isRecom]);
+        return $result;
+    }
+
+    /**
      * CategoryDao constructor.
      *
      * @param Category $category

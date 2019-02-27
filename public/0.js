@@ -44,6 +44,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -97,6 +100,35 @@ __webpack_require__.r(__webpack_exports__);
         _this.$message({
           type: 'info',
           message: '已取消删除'
+        });
+      });
+    },
+    modifyRecom: function modifyRecom(type, node, data) {
+      var that = this,
+          message = "设置为";
+      if (type === 0) message = "取消";
+      that.$confirm("是否" + message + "首页热推分类", '警告', {
+        confirmButtonText: "确认",
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function (e) {
+        var isRecom = type === 'add' ? 1 : 0,
+            param = {
+          id: data.id,
+          isRecom: isRecom
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/category/recom", param).then(function (res) {
+          if (res.data.code === 2000) {
+            console.info(node);
+            node.data.is_recom = isRecom;
+          }
+        });
+      }).catch(function (e) {
+        console.info("-----------------");
+        console.info(e);
+        that.$message({
+          type: 'info',
+          message: '已取消设置'
         });
       });
     }
@@ -263,7 +295,14 @@ var render = function() {
               var node = ref.node
               var data = ref.data
               return _c("span", { staticClass: "custom-tree-node" }, [
-                _c("span", [_vm._v(_vm._s(data.name))]),
+                _c("span", [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(data.name) +
+                      "\n                "
+                  ),
+                  data.is_recom === 1 ? _c("span", [_vm._v("热推")]) : _vm._e()
+                ]),
                 _vm._v(" "),
                 _c(
                   "span",
@@ -303,12 +342,36 @@ var render = function() {
                           }
                         }
                       },
-                      [
-                        _vm._v(
-                          "\n                    删除分类\n                "
+                      [_vm._v("删除分类")]
+                    ),
+                    _vm._v(" "),
+                    data.level === 1 && data.is_recom === 0
+                      ? _c(
+                          "el-button",
+                          {
+                            attrs: { type: "text", size: "mini" },
+                            on: {
+                              click: function($event) {
+                                _vm.modifyRecom("add", node, data)
+                              }
+                            }
+                          },
+                          [_vm._v("设置首页热推")]
                         )
-                      ]
-                    )
+                      : data.level === 1 && data.is_recom === 1
+                        ? _c(
+                            "el-button",
+                            {
+                              attrs: { type: "text", size: "mini" },
+                              on: {
+                                click: function($event) {
+                                  _vm.modifyRecom("remove", node, data)
+                                }
+                              }
+                            },
+                            [_vm._v("取消首页热推")]
+                          )
+                        : _vm._e()
                   ],
                   1
                 )

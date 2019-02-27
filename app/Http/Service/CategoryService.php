@@ -67,6 +67,19 @@ class CategoryService
     }
 
     /**
+     * 设置分类热推
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function modifyCategoryRecom(array $req)
+    {
+        $result = $this->categoryDao->modifyRecomById($req["id"], $req["isRecom"]);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
      * 获取树形分类
      *
      * @return JsonResult
