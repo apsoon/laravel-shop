@@ -12,6 +12,7 @@ use App\Http\Dao\CommentDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Comment;
 use App\Http\Util\JsonResult;
+use Illuminate\Support\Facades\Log;
 
 class CommentService
 {
@@ -28,7 +29,9 @@ class CommentService
      */
     public function createComment(array $req)
     {
+        Log::info($req);
         $comments = $req["comments"];
+        Log::info($comments);
         $commentList = [];
         foreach ($comments as $comment) {
             array_push($commentList, ["user_id" => $req["userId"], "order_sn" => $req["orderSn"], "sku_id" => $comment->skuId, "content" => $comment->content, "sort_order" => 0, "state" => 0]);
