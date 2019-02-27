@@ -60,7 +60,8 @@ __webpack_require__.r(__webpack_exports__);
       },
       categoryProps: {
         value: 'id',
-        children: 'children'
+        children: 'children',
+        label: 'name'
       },
       categoryList: [],
       category: []

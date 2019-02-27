@@ -45,7 +45,8 @@
                 },
                 categoryProps: {
                     value: 'id',
-                    children: 'children'
+                    children: 'children',
+                    label: 'name'
                 },
                 categoryList: [],
                 category: []
