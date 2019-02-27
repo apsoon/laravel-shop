@@ -3,7 +3,7 @@
         <div slot="header" class="clearfix">
             <span>添加分类</span>
         </div>
-        <el-form ref="categoryForm" :rules="rules" :model="categoryForm" label-width="100px;">
+        <el-form ref="categoryForm" :rules="rules" :model="categoryForm" label-width="100px">
             <el-form-item label="分类名称" prop="name">
                 <el-input v-model="categoryForm.name"></el-input>
             </el-form-item>
@@ -12,6 +12,10 @@
             </el-form-item>
             <el-form-item label="排序优先级" prop="sortOrder">
                 <el-input v-model="categoryForm.sortOrder"></el-input>
+            </el-form-item>
+            <el-form-item label="首页热推" prop="isRecom" v-if="parentId === '0'">
+                <el-radio v-model="categoryForm.isRecom" label="0">否</el-radio>
+                <el-radio v-model="categoryForm.isRecom" label="1">是</el-radio>
             </el-form-item>
             <el-form-item label="添加图片">
                 <el-upload
@@ -24,8 +28,8 @@
                         :limit="1"
                         :data="uploadData"
                         :file-list="imageList"
-                        list-type="picture">
-                    <el-button size="small" type="primary">点击上传</el-button>
+                        list-type="picture-card">
+                    <i class="el-icon-plus"></i>
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
             </el-form-item>
@@ -46,7 +50,8 @@
                     name: "",
                     parentId: 0,
                     sortOrder: 0,
-                    imageUrl: ""
+                    imageUrl: "",
+                    isRecom: "0"
                 },
                 rules: {
                     name: [

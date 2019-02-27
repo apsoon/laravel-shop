@@ -48,6 +48,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -58,7 +62,8 @@ __webpack_require__.r(__webpack_exports__);
         name: "",
         parentId: 0,
         sortOrder: 0,
-        imageUrl: ""
+        imageUrl: "",
+        isRecom: "0"
       },
       rules: {
         name: [{
@@ -162,7 +167,7 @@ var render = function() {
           attrs: {
             rules: _vm.rules,
             model: _vm.categoryForm,
-            "label-width": "100px;"
+            "label-width": "100px"
           }
         },
         [
@@ -204,6 +209,45 @@ var render = function() {
             1
           ),
           _vm._v(" "),
+          _vm.parentId === "0"
+            ? _c(
+                "el-form-item",
+                { attrs: { label: "首页热推", prop: "isRecom" } },
+                [
+                  _c(
+                    "el-radio",
+                    {
+                      attrs: { label: "0" },
+                      model: {
+                        value: _vm.categoryForm.isRecom,
+                        callback: function($$v) {
+                          _vm.$set(_vm.categoryForm, "isRecom", $$v)
+                        },
+                        expression: "categoryForm.isRecom"
+                      }
+                    },
+                    [_vm._v("否")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "el-radio",
+                    {
+                      attrs: { label: "1" },
+                      model: {
+                        value: _vm.categoryForm.isRecom,
+                        callback: function($$v) {
+                          _vm.$set(_vm.categoryForm, "isRecom", $$v)
+                        },
+                        expression: "categoryForm.isRecom"
+                      }
+                    },
+                    [_vm._v("是")]
+                  )
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
           _c(
             "el-form-item",
             { attrs: { label: "添加图片" } },
@@ -221,15 +265,11 @@ var render = function() {
                     limit: 1,
                     data: _vm.uploadData,
                     "file-list": _vm.imageList,
-                    "list-type": "picture"
+                    "list-type": "picture-card"
                   }
                 },
                 [
-                  _c(
-                    "el-button",
-                    { attrs: { size: "small", type: "primary" } },
-                    [_vm._v("点击上传")]
-                  ),
+                  _c("i", { staticClass: "el-icon-plus" }),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -240,8 +280,7 @@ var render = function() {
                     },
                     [_vm._v("只能上传jpg/png文件，且不超过500kb")]
                   )
-                ],
-                1
+                ]
               )
             ],
             1

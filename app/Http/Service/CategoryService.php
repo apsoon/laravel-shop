@@ -40,6 +40,7 @@ class CategoryService
         if (empty($req["parentId"])) {
             $category->level = 1;
             $category->parent_id = 0;
+            $category->is_recom = $req["isRecom"];
         } else {
             $cat = $this->categoryDao->findById($req["parentId"]);
             $category->parent_id = $req["parentId"];
