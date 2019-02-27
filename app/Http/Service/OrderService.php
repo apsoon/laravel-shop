@@ -180,10 +180,10 @@ class OrderService
         if (empty($req["userId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = 20;
-        if (empty($req["status"])) {
+        if ($req["type"] == "all") {
             $orders = $this->orderDao->findByUserPaged($req["userId"], $pageNo, $size);
         } else {
-            $orders = $this->orderDao->findByStatusUserPaged($req["userId"], $req["status"], $pageNo, $size);
+            $orders = $this->orderDao->findByStatusUserPaged($req["userId"], $req["state"], $pageNo, $size);
         }
         foreach ($orders as $order) {
             $order->skus = $this->orderSkuDao->findByOrderSn($order->sn);
