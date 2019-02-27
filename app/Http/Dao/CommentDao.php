@@ -75,6 +75,34 @@ class CommentDao
     }
 
     /**
+     * 分页获取所有
+     *
+     * @param $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findByPage($pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        return $this->comment::offset($offset)
+            ->limit($size)
+            ->get();
+    }
+
+    /**
+     * 更新状态
+     *
+     * @param $id
+     * @param $state
+     * @return mixed
+     */
+    public function updateStateById($id, $state)
+    {
+        return $this->comment::where("id", "=", $id)
+            ->update(["state" => $state]);
+    }
+
+    /**
      * CommentDao constructor.
      *
      * @param Comment $comment

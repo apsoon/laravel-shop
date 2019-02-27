@@ -47,16 +47,22 @@ class CommentService
      */
     public function updateCommentState(array $req)
     {
-        return new JsonResult();
+        $result = $this->commentDao->updateStateById($req["id"], $req["state"]);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
+     * 分页获取列表
+     *
      * @param array $req
      * @return JsonResult
      */
     public function getPagedCommentList(array $req)
     {
-        return new JsonResult();
+        $size = 20;
+        $result = $this->commentDao->findByPage($req["pageNo"], $size);
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**

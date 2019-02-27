@@ -6,11 +6,11 @@
         <el-table ref="commentList" :data="commentList" tooltip-effect="dart" width="100%">
             <el-table-column type="selection" width="55"/>
             <el-table-column label="商品" prop="sku_id" width="150"/>
-            <el-table-column label="订单编号" prop="order_sn" width="150"/>
+            <el-table-column label="订单编号" prop="order_sn" width="250"/>
             <el-table-column label="用户" prop="user_id" width="150"/>
             <el-table-column label="内容" prop="content" min-width="1"/>
             <el-table-column label="评论时间" prop="create_at" width="150"/>
-            <el-table-column label="排序" prop="sort_order" width="100"/>
+            <el-table-column label="排序" prop="sort_order" width="50"/>
             <el-table-column label="状态" prop="state" width="100">
                 <template slot-scope="scope">
                     <span v-if="scope.row.state === 0">待审核</span>
@@ -59,7 +59,7 @@
             let that = this;
             axios.get("/comment/list?pageNo=" + that.pageNo)
                 .then(res => {
-                    if (res.code === 2000) {
+                    if (res.data.code === 2000) {
                         that.commentList = res.data.data;
                     }
                 })

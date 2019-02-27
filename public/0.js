@@ -111,7 +111,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "确认",
         cancelButtonText: '取消',
         type: 'warning'
-      }).then(function (e) {
+      }).then(function () {
         var isRecom = type === 'add' ? 1 : 0,
             param = {
           id: data.id,
@@ -123,9 +123,7 @@ __webpack_require__.r(__webpack_exports__);
             node.data.is_recom = isRecom;
           }
         });
-      }).catch(function (e) {
-        console.info("-----------------");
-        console.info(e);
+      }).catch(function () {
         that.$message({
           type: 'info',
           message: '已取消设置'

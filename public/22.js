@@ -69,7 +69,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var that = this;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/comment/list?pageNo=" + that.pageNo).then(function (res) {
-      if (res.code === 2000) {
+      if (res.data.code === 2000) {
         that.commentList = res.data.data;
       }
     }).catch(function (err) {});
@@ -121,7 +121,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "订单编号", prop: "order_sn", width: "150" }
+            attrs: { label: "订单编号", prop: "order_sn", width: "250" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -137,7 +137,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "排序", prop: "sort_order", width: "100" }
+            attrs: { label: "排序", prop: "sort_order", width: "50" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
