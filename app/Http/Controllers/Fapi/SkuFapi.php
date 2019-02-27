@@ -58,6 +58,15 @@ class SkuFapi extends Controller
         return $this->skuService->getPagedSkuByCategoryEffect($req);
     }
 
+    /**
+     * 获取热推商品
+     *
+     * @return JsonResult
+     */
+    public function recom()
+    {
+        return $this->skuService->getRecomSkuList();
+    }
 //    /**
 //     * 规格列表
 //     *

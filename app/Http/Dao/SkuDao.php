@@ -107,6 +107,16 @@ class SkuDao
     }
 
     /**
+     * 获取热推
+     *
+     * @return mixed
+     */
+    public function findByRecomEffect()
+    {
+        return $this->sku::where(["is_recom" => 1, "state" => 1])->get();
+    }
+
+    /**
      * SkuDao constructor.
      *
      * @param Sku $sku

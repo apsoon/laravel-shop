@@ -172,41 +172,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -706,7 +671,27 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "", label: "操作", width: "300px" },
+                    attrs: {
+                      prop: "is_recom",
+                      label: "是否热销",
+                      width: "150px"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            scope.row.is_recom === 1
+                              ? _c("span", [_vm._v("是")])
+                              : _c("span", [_vm._v("否")])
+                          ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { label: "操作", width: "300px" },
                     scopedSlots: _vm._u([
                       {
                         key: "default",
@@ -718,7 +703,7 @@ var render = function() {
                                 attrs: { size: "mini", type: "info" },
                                 on: { click: function($event) {} }
                               },
-                              [_vm._v("修改\n                        ")]
+                              [_vm._v("修改")]
                             ),
                             _vm._v(" "),
                             scope.row.state

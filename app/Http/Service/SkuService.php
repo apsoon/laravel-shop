@@ -136,6 +136,17 @@ class SkuService
     }
 
     /**
+     * 获取热推商品
+     *
+     * @return JsonResult
+     */
+    public function getRecomSkuList()
+    {
+        $result = $this->skuDao->findByRecomEffect();
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
      * SkuService constructor.
      *
      * @param SkuDao $skuDao
