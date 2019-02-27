@@ -28,7 +28,7 @@ class CommentService
      */
     public function createComment(array $req)
     {
-        $comments = json_decode($req["comments"]);
+        $comments = $req["comments"];
         $commentList = [];
         foreach ($comments as $comment) {
             array_push($commentList, ["user_id" => $req["userId"], "order_sn" => $req["orderSn"], "sku_id" => $comment->skuId, "content" => $comment->content, "sort_order" => 0, "state" => 0]);
