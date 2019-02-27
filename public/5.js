@@ -172,6 +172,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -307,6 +313,33 @@ __webpack_require__.r(__webpack_exports__);
     onTabClicked: function onTabClicked(tab, event) {
       var that = this;
       that.active = tab.name;
+    },
+    modifySkuRecom: function modifySkuRecom(type, node) {
+      var that = this,
+          message = "设置为";
+      if (type === 0) message = "取消";
+      that.$confirm("是否" + message + "首页推荐商品", '警告', {
+        confirmButtonText: "确认",
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        var isRecom = type === 'add' ? 1 : 0,
+            param = {
+          id: node.row.id,
+          isRecom: isRecom
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/recom", param).then(function (res) {
+          if (res.data.code === 2000) {
+            console.info(node);
+            node.row.is_recom = isRecom;
+          }
+        });
+      }).catch(function () {
+        that.$message({
+          type: 'info',
+          message: '已取消设置'
+        });
+      });
     }
   }
 });
@@ -691,7 +724,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { label: "操作", width: "300px" },
+                    attrs: { label: "操作", width: "350px" },
                     scopedSlots: _vm._u([
                       {
                         key: "default",
@@ -751,7 +784,33 @@ var render = function() {
                                 }
                               },
                               [_vm._v("删除\n                        ")]
-                            )
+                            ),
+                            _vm._v(" "),
+                            scope.row.is_recom === 0
+                              ? _c(
+                                  "el-button",
+                                  {
+                                    attrs: { type: "primary", size: "mini" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.modifySkuRecom("add", scope)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("设置推荐\n                        ")]
+                                )
+                              : _c(
+                                  "el-button",
+                                  {
+                                    attrs: { type: "primary", size: "mini" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.modifySkuRecom("remove", scope)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("取消热推\n                        ")]
+                                )
                           ]
                         }
                       }

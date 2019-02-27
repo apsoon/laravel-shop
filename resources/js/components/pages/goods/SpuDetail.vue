@@ -94,7 +94,7 @@
                             <span v-else>否</span>
                         </template>
                     </el-table-column>
-                    <el-table-column label="操作" width="300px">
+                    <el-table-column label="操作" width="350px">
                         <template slot-scope="scope">
                             <el-button size="mini" type="info" @click="">修改</el-button>
                             <el-button v-if="scope.row.state" size="mini" type="warning"
@@ -104,6 +104,12 @@
                                        @click="modifyState('enable', scope.$index, scope.row.id)">启用
                             </el-button>
                             <el-button size="mini" type="danger" @click="deleteAd(scope.$index, scope.row.id)">删除
+                            </el-button>
+                            <el-button type="primary" size="mini" @click="modifySkuRecom('add', scope)"
+                                       v-if="scope.row.is_recom === 0">设置推荐
+                            </el-button>
+                            <el-button type="primary" size="mini" @click="modifySkuRecom('remove', scope)"
+                                       v-else>取消热推
                             </el-button>
                         </template>
                     </el-table-column>
@@ -284,6 +290,34 @@
             onTabClicked: function (tab, event) {
                 let that = this;
                 that.active = tab.name;
+            },
+            modifySkuRecom: function (type, node) {
+                let that = this,
+                    message = "设置为";
+                if (type === 0) message = "取消";
+                that.$confirm("是否" + message + "首页推荐商品", '警告', {
+                    confirmButtonText: "确认",
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let isRecom = type === 'add' ? 1 : 0,
+                        param = {
+                            id: node.row.id,
+                            isRecom: isRecom
+                        };
+                    axios.post("/sku/recom", param)
+                        .then(res => {
+                            if (res.data.code === 2000) {
+                                console.info(node);
+                                node.row.is_recom = isRecom
+                            }
+                        })
+                }).catch(() => {
+                    that.$message({
+                        type: 'info',
+                        message: '已取消设置'
+                    });
+                });
             }
         }
     }

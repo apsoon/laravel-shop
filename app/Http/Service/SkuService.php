@@ -48,6 +48,7 @@ class SkuService
             $sku->price = $req["price"];
             $sku->number = $req["number"];
             $sku->state = $req["state"];
+            $sku->is_recom = 0;
             $options = $req["options"];
             $optionList = [];
             if ($sku->save()) {
@@ -144,6 +145,19 @@ class SkuService
     {
         $result = $this->skuDao->findByRecomEffect();
         return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
+     * 设置SKU是否热推
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function modifySkuRecom(array $req)
+    {
+        $result = $this->skuDao->modifyRecomById($req["id"], $req["isRecom"]);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**

@@ -117,6 +117,18 @@ class SkuDao
     }
 
     /**
+     * 设置热推
+     *
+     * @param $id
+     * @param $isRecom
+     * @return mixed
+     */
+    public function modifyRecomById($id, $isRecom)
+    {
+        return $this->sku::where("id", "=", $id)->update(["is_recom" => $isRecom]);
+    }
+
+    /**
      * SkuDao constructor.
      *
      * @param Sku $sku

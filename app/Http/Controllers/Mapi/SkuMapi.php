@@ -51,6 +51,17 @@ class SkuMapi extends Controller
     {
     }
 
+    /**
+     * 设置SKU是否热推
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function modifyRecom(Request $request)
+    {
+        $req = $request->all();
+        return $this->skuService->modifySkuRecom($req);
+    }
 
     /**
      * SkuMapi constructor.
