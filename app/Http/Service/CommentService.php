@@ -30,7 +30,7 @@ class CommentService
     public function createComment(array $req)
     {
         Log::info($req);
-        $comments = $req["comments"];
+        $comments = json_decode($req["comments"]);
         Log::info($comments);
         $commentList = [];
         foreach ($comments as $comment) {
