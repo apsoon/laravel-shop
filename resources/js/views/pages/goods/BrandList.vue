@@ -11,15 +11,11 @@
             <el-table-column prop="name" label="名称" width="120"/>
             <el-table-column prop="cover" label="品牌图片" width="120">
                 <template slot-scope="scope">
-                    <el-popover
-                            placement="right"
-                            title=""
-                            trigger="hover">
+                    <el-popover placement="right" title="图片预览" trigger="hover">
                         <img :src="scope.row.logo"/>
                         <img slot="reference" :src="scope.row.logo" :alt="scope.row.logo"
                              style="max-height: 50px;max-width: 130px"/>
                     </el-popover>
-                    <!--<img class="logo" :src="scope.row.logo"/>-->
                 </template>
             </el-table-column>
             <el-table-column prop="region" label="地区" width="120"/>
@@ -63,15 +59,11 @@
         },
         mounted: function () {
             let that = this;
-            console.info("---------");
             axios.get('brand/list')
                 .then(res => {
                     if (res.data.code === 2000) {
-                        // if (res.data.data) {
-                        // that.pageNo++;
                         that.brandList = res.data.data;
                         console.info(res.data.data);
-                        // }
                     }
                 });
         },

@@ -146,9 +146,9 @@ export default new VueRouter({
             component: resolve => void(require(['./views/pages/ad/AdList.vue'], resolve))
         },
         {
-            name: "AdAdd",
-            path: '/ad-add',
-            component: resolve => void(require(['./views/pages/ad/AdAdd.vue'], resolve))
+            name: "AdEdit",
+            path: '/ad-edit',
+            component: resolve => void(require(['./views/pages/ad/AdEdit.vue'], resolve))
         }
     ]
 })

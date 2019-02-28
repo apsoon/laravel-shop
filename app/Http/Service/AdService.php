@@ -9,6 +9,7 @@
 namespace App\Http\Service;
 
 
+use App\Http\Config\Config;
 use App\Http\Dao\AdDao;
 use App\Http\Dao\AdPositionDao;
 use App\Http\Enum\StatusCode;
@@ -80,8 +81,13 @@ class AdService
      */
     public function getAdList()
     {
-        $result = $this->adDao->findAll();
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        $adList = $this->adDao->findAll();
+        if (Config::UPLOAD_TO_PUBLIC) {
+            foreach ($adList as $ad) {
+                $ad->image_url = asset("storage/" . $ad->image_url);
+            }
+        }
+        return new JsonResult(StatusCode::SUCCESS, $adList);
     }
 
     /**

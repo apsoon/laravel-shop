@@ -60,32 +60,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdList",
@@ -240,7 +214,7 @@ var render = function() {
         [
           _c(
             "router-link",
-            { attrs: { to: { path: "/ad-add", query: { type: "create" } } } },
+            { attrs: { to: { path: "/ad-edit", query: { type: "create" } } } },
             [
               _c("el-button", { attrs: { type: "primary", size: "medium" } }, [
                 _vm._v("添加广告")
@@ -264,7 +238,7 @@ var render = function() {
       _c(
         "el-table",
         {
-          ref: "multipleTable",
+          ref: "adList",
           staticStyle: { width: "100%" },
           attrs: { data: _vm.adList, "tooltip-effect": "dark" }
         },
@@ -273,6 +247,45 @@ var render = function() {
           _vm._v(" "),
           _c("el-table-column", {
             attrs: { prop: "name", label: "名称", width: "120" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "image_url", label: "广告图片", width: "120" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _c(
+                      "el-popover",
+                      {
+                        attrs: {
+                          placement: "right",
+                          title: "图片预览",
+                          trigger: "hover"
+                        }
+                      },
+                      [
+                        _c("img", { attrs: { src: scope.row.image_url } }),
+                        _vm._v(" "),
+                        _c("img", {
+                          staticStyle: {
+                            "max-height": "50px",
+                            "max-width": "130px"
+                          },
+                          attrs: {
+                            slot: "reference",
+                            src: scope.row.image_url,
+                            alt: scope.row.image_url
+                          },
+                          slot: "reference"
+                        })
+                      ]
+                    )
+                  ]
+                }
+              }
+            ])
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -288,11 +301,23 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "state", label: "状态", width: "120" }
+            attrs: { prop: "state", label: "状态", width: "120" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    scope.row.state === 0
+                      ? _c("span", [_vm._v("已禁用")])
+                      : _c("span", [_vm._v("已启用")])
+                  ]
+                }
+              }
+            ])
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "", label: "操作", width: "300" },
+            attrs: { label: "操作", width: "300" },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -303,7 +328,7 @@ var render = function() {
                       {
                         attrs: {
                           to: {
-                            path: "/ad-add",
+                            path: "/ad-edit",
                             query: { type: "modify", adId: scope.row.id }
                           }
                         }
@@ -311,11 +336,8 @@ var render = function() {
                       [
                         _c(
                           "el-button",
-                          {
-                            attrs: { size: "mini", type: "info" },
-                            on: { click: function($event) {} }
-                          },
-                          [_vm._v("修改\n                    ")]
+                          { attrs: { size: "mini", type: "info" } },
+                          [_vm._v("修改")]
                         )
                       ],
                       1

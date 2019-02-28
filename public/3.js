@@ -59,10 +59,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BrandList",
@@ -74,13 +70,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var that = this;
-    console.info("---------");
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('brand/list').then(function (res) {
       if (res.data.code === 2000) {
-        // if (res.data.data) {
-        // that.pageNo++;
         that.brandList = res.data.data;
-        console.info(res.data.data); // }
+        console.info(res.data.data);
       }
     });
   },
@@ -326,7 +319,7 @@ var render = function() {
                       {
                         attrs: {
                           placement: "right",
-                          title: "",
+                          title: "图片预览",
                           trigger: "hover"
                         }
                       },

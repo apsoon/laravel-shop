@@ -61,16 +61,8 @@
     import router from "../../../router";
 
     export default {
-        name: "AdAdd",
+        name: "AdEdit",
         data: function () {
-            // let uploadValidator = function (rule, value, callback) {
-            //     let adForm = this.adForm;
-            //     console.info(adForm);
-            //     if (adForm.imageUrl.length <= 0) {
-            //         callback(new Error('请上传广告图片'));
-            //     }
-            //     callback();
-            // };
             return {
                 adForm: {
                     name: '',

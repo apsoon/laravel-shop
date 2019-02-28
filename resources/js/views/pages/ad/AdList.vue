@@ -1,71 +1,45 @@
 <template>
     <el-card>
         <div slot="header" class="clearfix">
-            <router-link :to="{path: '/ad-add', query: {type: 'create'}}">
+            <router-link :to="{path: '/ad-edit', query: {type: 'create'}}">
                 <el-button type="primary" size="medium">添加广告</el-button>
             </router-link>
             <el-button type="danger" size="medium" @click="deleteAds">批量删除</el-button>
         </div>
-        <el-table
-                ref="multipleTable"
-                :data="adList"
-                tooltip-effect="dark"
-                style="width: 100%">
-            <el-table-column
-                    type="selection"
-                    width="55">
-            </el-table-column>
-            <el-table-column
-                    prop="name"
-                    label="名称"
-                    width="120">
-            </el-table-column>
-            <el-table-column
-                    prop="content"
-                    label="描述"
-                    min-width="1">
-            </el-table-column>
-            <el-table-column
-                    prop="position_id"
-                    label="位置"
-                    width="120">
-            </el-table-column>
-            <el-table-column
-                    prop="sort_order"
-                    label="排序"
-                    width="120">
-            </el-table-column>
-            <el-table-column
-                    prop="state"
-                    label="状态"
-                    width="120">
-            </el-table-column>
-            <el-table-column
-                    prop=""
-                    label="操作"
-                    width="300">
+        <el-table ref="adList" :data="adList" tooltip-effect="dark" style="width: 100%">
+            <el-table-column type="selection" width="55"/>
+            <el-table-column prop="name" label="名称" width="120"/>
+            <el-table-column prop="image_url" label="广告图片" width="120">
                 <template slot-scope="scope">
-                    <router-link :to="{path: '/ad-add', query: {type: 'modify', adId: scope.row.id}}">
-                        <el-button
-                                size="mini"
-                                type="info"
-                                @click="">修改
-                        </el-button>
+                    <el-popover placement="right" title="图片预览" trigger="hover">
+                        <img :src="scope.row.image_url"/>
+                        <img slot="reference" :src="scope.row.image_url" :alt="scope.row.image_url"
+                             style="max-height: 50px;max-width: 130px"/>
+                    </el-popover>
+                </template>
+            </el-table-column>
+            <el-table-column prop="content" label="描述" min-width="1"/>
+            <el-table-column prop="position_id" label="位置" width="120"/>
+            <el-table-column prop="sort_order" label="排序" width="120"/>
+            <el-table-column prop="state" label="状态" width="120">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.state === 0">已禁用</span>
+                    <span v-else>已启用</span>
+                </template>
+            </el-table-column>
+            <el-table-column label="操作" width="300">
+                <template slot-scope="scope">
+                    <router-link :to="{path: '/ad-edit', query: {type: 'modify', adId: scope.row.id}}">
+                        <el-button size="mini" type="info">修改</el-button>
                     </router-link>
-                    <el-button v-if="scope.row.state"
-                               size="mini"
-                               type="warning"
+                    <el-button v-if="scope.row.state" size="mini" type="warning"
                                @click="modifyState('disable', scope.$index, scope.row.id)">禁用
                     </el-button>
-                    <el-button v-else
-                               size="mini"
-                               type="success"
+                    <el-button v-else size="mini" type="success"
                                @click="modifyState('enable', scope.$index, scope.row.id)">启用
                     </el-button>
-                    <el-button
-                            size="mini"
-                            type="danger"
-                            @click="deleteAd(scope.$index, scope.row.id)">删除
+                    <el-button size="mini" type="danger"
+                               @click="deleteAd(scope.$index, scope.row.id)">删除
                     </el-button>
                 </template>
             </el-table-column>
