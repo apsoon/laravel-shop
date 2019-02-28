@@ -55,6 +55,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BrandList",
@@ -313,10 +321,32 @@ var render = function() {
                 key: "default",
                 fn: function(scope) {
                   return [
-                    _c("img", {
-                      staticClass: "logo",
-                      attrs: { src: scope.row.logo }
-                    })
+                    _c(
+                      "el-popover",
+                      {
+                        attrs: {
+                          placement: "right",
+                          title: "",
+                          trigger: "hover"
+                        }
+                      },
+                      [
+                        _c("img", { attrs: { src: scope.row.logo } }),
+                        _vm._v(" "),
+                        _c("img", {
+                          staticStyle: {
+                            "max-height": "50px",
+                            "max-width": "130px"
+                          },
+                          attrs: {
+                            slot: "reference",
+                            src: scope.row.logo,
+                            alt: scope.row.logo
+                          },
+                          slot: "reference"
+                        })
+                      ]
+                    )
                   ]
                 }
               }
