@@ -154,14 +154,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -913,10 +905,34 @@ var render = function() {
                         key: "default",
                         fn: function(scope) {
                           return [
-                            _c("img", {
-                              staticClass: "image",
-                              attrs: { src: scope.row.image_url }
-                            })
+                            _c(
+                              "el-popover",
+                              {
+                                attrs: {
+                                  placement: "right",
+                                  title: "图片预览",
+                                  trigger: "hover"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: { src: scope.row.image_url }
+                                }),
+                                _vm._v(" "),
+                                _c("img", {
+                                  staticStyle: {
+                                    "max-height": "50px",
+                                    "max-width": "130px"
+                                  },
+                                  attrs: {
+                                    slot: "reference",
+                                    src: scope.row.image_url,
+                                    alt: scope.row.image_url
+                                  },
+                                  slot: "reference"
+                                })
+                              ]
+                            )
                           ]
                         }
                       }
@@ -928,11 +944,23 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { label: "状态", prop: "state", width: "150" }
+                    attrs: { label: "状态", prop: "state", width: "150" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            scope.row.state === 0
+                              ? _c("span", [_vm._v("已禁用")])
+                              : _c("span", [_vm._v("已启用")])
+                          ]
+                        }
+                      }
+                    ])
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "", width: "300", label: "操作" },
+                    attrs: { width: "300", label: "操作" },
                     scopedSlots: _vm._u([
                       {
                         key: "default",

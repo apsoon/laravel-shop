@@ -104,42 +104,34 @@
                     <el-button type="primary" size="medium">添加Banner</el-button>
                 </router-link>
                 <el-button type="danger" size="medium" @click="deleteBanners()">批量删除</el-button>
-                <el-table ref="multipleTable"
-                          :data="bannerList"
-                          tooltip-effect="dark"
-                          style="width: 100%">
-                    <el-table-column
-                            type="selection"
-                            width="55">
-                    </el-table-column>
+                <el-table ref="multipleTable" :data="bannerList" tooltip-effect="dark" style="width: 100%">
+                    <el-table-column type="selection" width="55"/>
                     <el-table-column label="图片" prop="imageUrl" width="150">
                         <template slot-scope="scope">
-                            <img class="image" :src="scope.row.image_url"/>
+                            <el-popover placement="right" title="图片预览" trigger="hover">
+                                <img :src="scope.row.image_url"/>
+                                <img slot="reference" :src="scope.row.image_url" :alt="scope.row.image_url"
+                                     style="max-height: 50px;max-width: 130px"/>
+                            </el-popover>
                         </template>
                     </el-table-column>
-                    <el-table-column label="排序" prop="sort_order" width="150">
-                    </el-table-column>
+                    <el-table-column label="排序" prop="sort_order" width="150"/>
                     <el-table-column label="状态" prop="state" width="150">
-                    </el-table-column>
-                    <el-table-column
-                            prop=""
-                            width="300"
-                            label="操作">
                         <template slot-scope="scope">
-                            <el-button v-if="scope.row.state"
-                                       size="mini"
-                                       type="warning"
+                            <span v-if="scope.row.state===0">已禁用</span>
+                            <span v-else>已启用</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column width="300" label="操作">
+                        <template slot-scope="scope">
+                            <el-button v-if="scope.row.state" size="mini" type="warning"
                                        @click="modifyBannerState('disable', scope.$index, scope.row.id)">禁用
                             </el-button>
-                            <el-button v-else
-                                       size="mini"
-                                       type="success"
+                            <el-button v-else size="mini" type="success"
                                        @click="modifyBannerState('enable', scope.$index, scope.row.id)">启用
                             </el-button>
-                            <el-button
-                                    size="mini"
-                                    type="danger"
-                                    @click="deleteBanner(scope.$index, scope.row.id)">删除
+                            <el-button size="mini" type="danger"
+                                       @click="deleteBanner(scope.$index, scope.row.id)">删除
                             </el-button>
                         </template>
                     </el-table-column>
