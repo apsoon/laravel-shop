@@ -50,6 +50,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "OrderList",
@@ -94,6 +111,36 @@ var render = function() {
         "div",
         { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
         [_c("span", [_vm._v("订单列表")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "el-tabs",
+        {
+          on: { "tab-click": _vm.handleClick },
+          model: {
+            value: _vm.activeName,
+            callback: function($$v) {
+              _vm.activeName = $$v
+            },
+            expression: "activeName"
+          }
+        },
+        [
+          _c("el-tab-pane", { attrs: { label: "全部", name: "all" } }),
+          _vm._v(" "),
+          _c("el-tab-pane", { attrs: { label: "待支付", name: "pay" } }),
+          _vm._v(" "),
+          _c("el-tab-pane", { attrs: { label: "待发货", name: "send" } }),
+          _vm._v(" "),
+          _c("el-tab-pane", { attrs: { label: "待收货", name: "receive" } }),
+          _vm._v(" "),
+          _c("el-tab-pane", { attrs: { label: "待评论", name: "comment" } }),
+          _vm._v(" "),
+          _c("el-tab-pane", { attrs: { label: "已完成", name: "complete" } }),
+          _vm._v(" "),
+          _c("el-tab-pane", { attrs: { label: "已取消", name: "cancel" } })
+        ],
+        1
       ),
       _vm._v(" "),
       _c(
@@ -212,7 +259,30 @@ var render = function() {
           })
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("el-pagination", {
+        staticStyle: {
+          "margin-top": "20px",
+          "margin-bottom": "20px",
+          float: "right"
+        },
+        attrs: {
+          background: "",
+          layout: "total, sizes, prev, pager, next, jumper",
+          total: 1000,
+          "page-sizes": [20, 50, 100],
+          "page-size": 20,
+          "current-page": _vm.currentPage3
+        },
+        on: {
+          "current-change": _vm.handleCurrentChange,
+          "update:currentPage": function($event) {
+            _vm.currentPage3 = $event
+          },
+          "size-change": _vm.handleSizeChange
+        }
+      })
     ],
     1
   )

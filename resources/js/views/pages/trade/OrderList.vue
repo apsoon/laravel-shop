@@ -3,6 +3,15 @@
         <div slot="header" class="clearfix">
             <span>订单列表</span>
         </div>
+        <el-tabs v-model="active" @tab-click="handleClick">
+            <el-tab-pane label="全部" name="all"/>
+            <el-tab-pane label="待支付" name="pay"/>
+            <el-tab-pane label="待发货" name="send"/>
+            <el-tab-pane label="待收货" name="receive"/>
+            <el-tab-pane label="待评论" name="comment"/>
+            <el-tab-pane label="已完成" name="complete"/>
+            <el-tab-pane label="已取消" name="cancel"/>
+        </el-tabs>
         <el-table ref="couponList" tooltip-effect="dark" width="100%" :data="orderList" stripe>
             <el-table-column type="selection" width="55"/>
             <el-table-column label="订单号" prop="sn" width="250"/>
@@ -34,6 +43,14 @@
                 </template>
             </el-table-column>
         </el-table>
+        <el-pagination background layout="total, sizes, prev, pager, next, jumper"
+                       :total="1000"
+                       :page-sizes="[20, 50, 100]"
+                       :page-size="20"
+                       @current-change="handleCurrentChange"
+                       :current-page.sync="currentPage3"
+                       @size-change="handleSizeChange"
+                       style="margin-top: 20px; margin-bottom: 20px; float: right;"/>
     </el-card>
 </template>
 
@@ -44,6 +61,7 @@
         name: "OrderList",
         data: function () {
             return {
+                active: "all",
                 pageNo: 1,
                 orderList: []
             }
