@@ -47,15 +47,10 @@ export default new VueRouter({
             path: "/spu-spec-option",
             component: resolve => void (require(['./views/pages/goods/SpuSpecOption.vue'], resolve))
         },
-        // {
-        //     name: "SkuDetail",
-        //     path: "/sku-detail",
-        //     component: resolve => void (require(['./components/pages/goods/SkuDetail.vue'], resolve))
-        // },
         {
-            name: "SkuAdd",
-            path: "/sku-add",
-            component: resolve => void (require(['./views/pages/goods/SkuAdd.vue'], resolve))
+            name: "SkuEdit",
+            path: "/sku-edit",
+            component: resolve => void (require(['./views/pages/goods/SkuEdit.vue'], resolve))
         },
         {
             name: "CategoryList",

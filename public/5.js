@@ -175,6 +175,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -209,7 +212,6 @@ __webpack_require__.r(__webpack_exports__);
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("sku/listBySpu?spuId=" + that.spuId).then(function (res) {
       if (res.data.code === 2000) {
         that.skuList = res.data.data;
-        console.info(that.skuList);
       }
     }).catch(function (err) {});
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-spu?spuId=" + that.spuId + "&categoryId=" + that.spu.category_id).then(function (res) {
@@ -650,7 +652,10 @@ var render = function() {
                 "router-link",
                 {
                   attrs: {
-                    to: { path: "/sku-add", query: { spuId: _vm.spuId } }
+                    to: {
+                      path: "/sku-edit",
+                      query: { type: "create", spuId: _vm.spuId }
+                    }
                   }
                 },
                 [
@@ -764,12 +769,27 @@ var render = function() {
                         fn: function(scope) {
                           return [
                             _c(
-                              "el-button",
+                              "router-link",
                               {
-                                attrs: { size: "mini", type: "info" },
-                                on: { click: function($event) {} }
+                                attrs: {
+                                  to: {
+                                    path: "/sku-edit",
+                                    query: {
+                                      type: "modify",
+                                      spuId: _vm.spuId,
+                                      skuId: scope.row.id
+                                    }
+                                  }
+                                }
                               },
-                              [_vm._v("修改")]
+                              [
+                                _c(
+                                  "el-button",
+                                  { attrs: { size: "mini", type: "info" } },
+                                  [_vm._v("修改")]
+                                )
+                              ],
+                              1
                             ),
                             _vm._v(" "),
                             scope.row.state

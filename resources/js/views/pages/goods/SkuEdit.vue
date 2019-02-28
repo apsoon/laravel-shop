@@ -20,7 +20,7 @@
                 <el-input type="number" v-model="skuForm.number" placeholder="请输入产品数量"></el-input>
             </el-form-item>
             <template slot-slop="scope" v-for="spec in specList">
-                <el-form-item :label="spec.name" prop="specOption">
+                <el-form-item :label="spec.name" prop="specOption" :rules="{validator: ruleSelect, trigger: 'blur'}">
                     <el-select placeholder="请选择" v-model="spec.option">
                         <el-option
                                 v-for="option in spec.options"
@@ -44,7 +44,7 @@
     import axios from "axios";
 
     export default {
-        name: "SkuAdd",
+        name: "SkuEdit",
         data: function () {
             return {
                 skuId: "",
@@ -67,6 +67,9 @@
                     ],
                     number: [
                         {required: true, message: '请输入产品数量', trigger: 'blur'},
+                    ],
+                    specOption: [
+                        {}
                     ]
                 },
                 specList: []
@@ -74,7 +77,8 @@
         },
         mounted: function () {
             let that = this,
-                spuId = that.$route.query.spuId;
+                spuId = that.$route.query.spuId,
+                type = that.$route.query.type;
             that.spuId = spuId;
             that.skuForm.spuId = spuId;
             axios.get("/spu/specOptionList?spuId=" + spuId)
@@ -82,10 +86,27 @@
                     if (res.data.code === 2000) {
                         that.specList = res.data.data;
                     }
-                })
-                .catch(err => {
-
+                }).catch(err => {
+            });
+            if (type === 'modify') {
+                let skuId = that.$route.query.skuId;
+                axios.get("/sku/detail?skuId=" + skuId)
+                    .then(res => {
+                        if (res.data.code === 2000) {
+                            let data = res.data.data;
+                            that.skuForm = {
+                                spuId: data.sku_id,
+                                name: data.name,
+                                brief: data.brief,
+                                originPrice: data.origin_price,
+                                price: data.price,
+                                number: data.number,
+                                state: "" + data.state
+                            }
+                        }
+                    }).catch(err => {
                 });
+            }
         },
         methods: {
             onSubmit: function () {
@@ -103,7 +124,7 @@
                             .then(res => {
                                 if (res.data.code === 2000) {
                                     // message
-                                    that.$router.push("/spu/detail?spuId=", that.spuId+ "&active=" + "sku");
+                                    that.$router.push("/spu/detail?spuId=", that.spuId + "&active=" + "sku");
                                 }
                             })
                             .catch(err => {
@@ -113,6 +134,12 @@
                         return false;
                     }
                 });
+            },
+            ruleSelect: function (rule, value, callback) {
+                if (!value) {
+                    return callback(new Error('请选择'));
+                }
+                callback();
             }
         }
     }

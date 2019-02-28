@@ -70,7 +70,7 @@
                 </el-table>
             </el-tab-pane>
             <el-tab-pane label="产品列表" name="sku">
-                <router-link :to="{path: '/sku-add',query: {spuId: spuId}}">
+                <router-link :to="{path: '/sku-edit',query: {type:'create', spuId: spuId}}">
                     <el-button type="primary" size="medium">添加产品</el-button>
                 </router-link>
                 <el-table ref="skuList" :data="skuList" tooltip-effect="dark" width="100%">
@@ -93,7 +93,10 @@
                     </el-table-column>
                     <el-table-column label="操作" width="350px">
                         <template slot-scope="scope">
-                            <el-button size="mini" type="info" @click="">修改</el-button>
+                            <router-link
+                                    :to="{path: '/sku-edit', query: {type: 'modify', spuId: spuId, skuId: scope.row.id}}">
+                                <el-button size="mini" type="info">修改</el-button>
+                            </router-link>
                             <el-button v-if="scope.row.state" size="mini" type="warning"
                                        @click="modifySkuState('disable', scope.$index, scope.row.id)">下架
                             </el-button>

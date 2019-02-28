@@ -47,8 +47,16 @@ class SkuMapi extends Controller
         return $this->skuService->createSku($req);
     }
 
+    /**
+     * 获取sku详情
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function detail(Request $request)
     {
+        $req = $request->all();
+        return $this->skuService->getSkuById($req);
     }
 
     /**

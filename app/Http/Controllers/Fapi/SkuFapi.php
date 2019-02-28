@@ -67,18 +67,6 @@ class SkuFapi extends Controller
     {
         return $this->skuService->getRecomSkuList();
     }
-//    /**
-//     * 规格列表
-//     *
-//     * @param Request $request
-//     * @return JsonResult
-//     */
-//    public function specList(Request $request)
-//    {
-//        $req = $request->all();
-//        $result = $this->skuService->getSkuSpecListWithOption($req);
-//        return new JsonResult(StatusCode::SUCCESS, $result);
-//    }
 
     /**
      * SkuFapi constructor.

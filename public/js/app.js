@@ -99999,16 +99999,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     component: function component(resolve) {
       return void __webpack_require__.e(/*! AMD require */ 6).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/goods/SpuSpecOption.vue */ "./resources/js/views/pages/goods/SpuSpecOption.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
-  }, // {
-  //     name: "SkuDetail",
-  //     path: "/sku-detail",
-  //     component: resolve => void (require(['./components/pages/goods/SkuDetail.vue'], resolve))
-  // },
-  {
-    name: "SkuAdd",
-    path: "/sku-add",
+  }, {
+    name: "SkuEdit",
+    path: "/sku-edit",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 15).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/goods/SkuAdd.vue */ "./resources/js/views/pages/goods/SkuAdd.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 15).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/goods/SkuEdit.vue */ "./resources/js/views/pages/goods/SkuEdit.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "CategoryList",
