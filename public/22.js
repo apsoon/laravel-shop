@@ -74,7 +74,33 @@ __webpack_require__.r(__webpack_exports__);
       }
     }).catch(function (err) {});
   },
-  methods: {}
+  methods: {
+    modifyState: function modifyState(type, index, id) {
+      var _this = this;
+
+      var that = this,
+          state = 1;
+      if (type === "disable") state = 2;
+      var message = state ? "展示" : "不展示";
+      that.$confirm("确认前台" + message + "该评论?", '提示', {
+        confirmButtonText: "确认",
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("comment/modify-state", {
+          state: state,
+          id: id
+        }).then(function (res) {
+          if (res.data.code === 2000) that.commentList[index].state = state;
+        });
+      }).catch(function () {
+        _this.$message({
+          type: 'info',
+          message: '已取消' + message
+        });
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -117,15 +143,30 @@ var render = function() {
           _c("el-table-column", { attrs: { type: "selection", width: "55" } }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "商品", prop: "sku_id", width: "150" }
+            attrs: {
+              label: "商品",
+              prop: "sku_id",
+              width: "150",
+              align: "center"
+            }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "订单编号", prop: "order_sn", width: "250" }
+            attrs: {
+              label: "订单编号",
+              prop: "order_sn",
+              width: "200",
+              align: "center"
+            }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "用户", prop: "user_id", width: "150" }
+            attrs: {
+              label: "用户",
+              prop: "nickname",
+              width: "150",
+              align: "center"
+            }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -133,15 +174,30 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "评论时间", prop: "create_at", width: "150" }
+            attrs: {
+              label: "评论时间",
+              prop: "created_at",
+              width: "200",
+              align: "center"
+            }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "排序", prop: "sort_order", width: "50" }
+            attrs: {
+              label: "排序",
+              prop: "sort_order",
+              width: "50",
+              align: "center"
+            }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "状态", prop: "state", width: "100" },
+            attrs: {
+              label: "状态",
+              prop: "state",
+              width: "100",
+              align: "center"
+            },
             scopedSlots: _vm._u([
               {
                 key: "default",
@@ -225,7 +281,7 @@ var render = function() {
                         attrs: { size: "mini", type: "danger" },
                         on: {
                           click: function($event) {
-                            _vm.deleteBrand(scope.$index, scope.row.id)
+                            _vm.deleteComment(scope.$index, scope.row.id)
                           }
                         }
                       },

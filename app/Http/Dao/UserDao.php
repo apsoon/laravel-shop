@@ -105,6 +105,17 @@ class UserDao
     }
 
     /**
+     * ID查找
+     *
+     * @param $userId
+     * @return mixed
+     */
+    public function findByUserId($userId)
+    {
+        return $this->user::where(["user_id" => $userId])->first();
+    }
+
+    /**
      * UserDao constructor.
      *
      * @param User $user

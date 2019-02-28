@@ -9,6 +9,7 @@
 namespace App\Http\Service;
 
 use App\Http\Dao\CommentDao;
+use App\Http\Dao\UserDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Comment;
 use App\Http\Util\JsonResult;
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Log;
 
 class CommentService
 {
+    private $userDao;
+
     /**
      * @var CommentDao
      */
@@ -61,8 +64,12 @@ class CommentService
     public function getPagedCommentList(array $req)
     {
         $size = 20;
-        $result = $this->commentDao->findByPage($req["pageNo"], $size);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        $comments = $this->commentDao->findByPage($req["pageNo"], $size);
+        foreach ($comments as $comment) {
+            $user = $this->userDao->findByUserId($comment->user_id);
+            $comment->nickname = $user->nickname;
+        }
+        return new JsonResult(StatusCode::SUCCESS, $comments);
     }
 
     /**
@@ -82,9 +89,11 @@ class CommentService
      * CommentService constructor.
      *
      * @param CommentDao $commentDao
+     * @param UserDao $userDao
      */
-    public function __construct(CommentDao $commentDao)
+    public function __construct(CommentDao $commentDao, UserDao $userDao)
     {
         $this->commentDao = $commentDao;
+        $this->userDao = $userDao;
     }
 }
