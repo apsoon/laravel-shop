@@ -63,6 +63,12 @@ class SkuMapi extends Controller
         return $this->skuService->modifySkuRecom($req);
     }
 
+    public function modifySkuState(Request $request)
+    {
+        $req = $request->all();
+        return $this->skuService->modifySkuState($req);
+    }
+
     /**
      * SkuMapi constructor.
      *

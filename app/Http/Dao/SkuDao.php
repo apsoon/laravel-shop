@@ -129,6 +129,18 @@ class SkuDao
     }
 
     /**
+     * 设置状态
+     *
+     * @param $id
+     * @param $state
+     * @return mixed
+     */
+    public function modifyState($id, $state)
+    {
+        return $this->sku::where("id", "=", $id)->update(["state" => $state]);
+    }
+
+    /**
      * SkuDao constructor.
      *
      * @param Sku $sku

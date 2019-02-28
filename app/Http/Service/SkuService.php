@@ -161,6 +161,19 @@ class SkuService
     }
 
     /**
+     * 设置SKU状态
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function modifySkuState(array $req)
+    {
+        $result = $this->skuDao->modifyState($req["id"], $req["state"]);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
      * SkuService constructor.
      *
      * @param SkuDao $skuDao

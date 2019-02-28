@@ -175,9 +175,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -212,6 +209,7 @@ __webpack_require__.r(__webpack_exports__);
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("sku/listBySpu?spuId=" + that.spuId).then(function (res) {
       if (res.data.code === 2000) {
         that.skuList = res.data.data;
+        console.info(that.skuList);
       }
     }).catch(function (err) {});
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-spu?spuId=" + that.spuId + "&categoryId=" + that.spu.category_id).then(function (res) {
@@ -340,6 +338,31 @@ __webpack_require__.r(__webpack_exports__);
           message: '已取消设置'
         });
       });
+    },
+    modifySkuState: function modifySkuState(type, index, id) {
+      var _this2 = this;
+
+      var that = this,
+          state = 1;
+      if (type === "disable") state = 0;
+      var message = state ? "上架" : "下架";
+      that.$confirm("确认" + message + "该产品?", '提示', {
+        confirmButtonText: "确认",
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("sku/modify-state", {
+          state: state,
+          id: id
+        }).then(function (res) {
+          if (res.data.code === 2000) that.skuList[index].state = state;
+        });
+      }).catch(function () {
+        _this2.$message({
+          type: 'info',
+          message: '已取消' + message
+        });
+      });
     }
   }
 });
@@ -431,37 +454,13 @@ var render = function() {
             "el-tab-pane",
             { attrs: { label: "商品信息", name: "info" } },
             [
-              _c("el-row", [
-                _vm._v(
-                  "\n                商品名称: " +
-                    _vm._s(_vm.spu.name) +
-                    "\n            "
-                )
-              ]),
+              _c("el-row", [_vm._v("商品名称: " + _vm._s(_vm.spu.name))]),
               _vm._v(" "),
-              _c("el-row", [
-                _vm._v(
-                  "\n                品牌: " +
-                    _vm._s(_vm.spu.brand_id) +
-                    "\n            "
-                )
-              ]),
+              _c("el-row", [_vm._v("品牌: " + _vm._s(_vm.spu.brand_id))]),
               _vm._v(" "),
-              _c("el-row", [
-                _vm._v(
-                  "\n                分类: " +
-                    _vm._s(_vm.spu.category_id) +
-                    "\n            "
-                )
-              ]),
+              _c("el-row", [_vm._v("分类: " + _vm._s(_vm.spu.category_id))]),
               _vm._v(" "),
-              _c("el-row", [
-                _vm._v(
-                  "\n                状态: " +
-                    _vm._s(_vm.spu.state) +
-                    "\n            "
-                )
-              ])
+              _c("el-row", [_vm._v("状态: " + _vm._s(_vm.spu.state))])
             ],
             1
           ),
@@ -676,23 +675,39 @@ var render = function() {
                 },
                 [
                   _c("el-table-column", {
-                    attrs: { prop: "name", label: "名称", width: "150px" }
+                    attrs: {
+                      prop: "name",
+                      label: "名称",
+                      width: "150px",
+                      align: "center"
+                    }
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
                     attrs: {
                       prop: "origin_price",
                       label: "原价",
-                      width: "150px"
+                      width: "150px",
+                      align: "center"
                     }
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "price", label: "价格", width: "150px" }
+                    attrs: {
+                      prop: "price",
+                      label: "价格",
+                      width: "150px",
+                      align: "center"
+                    }
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "number", label: "数量", width: "150px" }
+                    attrs: {
+                      prop: "number",
+                      label: "数量",
+                      width: "150px",
+                      align: "center"
+                    }
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
@@ -700,14 +715,32 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "state", label: "状态", width: "150px" }
+                    attrs: {
+                      prop: "state",
+                      label: "状态",
+                      width: "100px",
+                      align: "center"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            scope.row.state === 1
+                              ? _c("span", [_vm._v("已上架")])
+                              : _c("span", [_vm._v("已下架")])
+                          ]
+                        }
+                      }
+                    ])
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
                     attrs: {
                       prop: "is_recom",
                       label: "是否热销",
-                      width: "150px"
+                      width: "100px",
+                      align: "center"
                     },
                     scopedSlots: _vm._u([
                       {
@@ -746,7 +779,7 @@ var render = function() {
                                     attrs: { size: "mini", type: "warning" },
                                     on: {
                                       click: function($event) {
-                                        _vm.modifyState(
+                                        _vm.modifySkuState(
                                           "disable",
                                           scope.$index,
                                           scope.row.id
@@ -754,7 +787,7 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_vm._v("禁用\n                        ")]
+                                  [_vm._v("下架\n                        ")]
                                 )
                               : _c(
                                   "el-button",
@@ -762,7 +795,7 @@ var render = function() {
                                     attrs: { size: "mini", type: "success" },
                                     on: {
                                       click: function($event) {
-                                        _vm.modifyState(
+                                        _vm.modifySkuState(
                                           "enable",
                                           scope.$index,
                                           scope.row.id
@@ -770,7 +803,7 @@ var render = function() {
                                       }
                                     }
                                   },
-                                  [_vm._v("启用\n                        ")]
+                                  [_vm._v("上架\n                        ")]
                                 ),
                             _vm._v(" "),
                             _c(

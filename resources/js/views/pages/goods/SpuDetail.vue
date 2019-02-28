@@ -2,18 +2,10 @@
     <div>
         <el-tabs v-model="active" type="border-card" @tab-click="onTabClicked">
             <el-tab-pane label="商品信息" name="info">
-                <el-row>
-                    商品名称: {{spu.name}}
-                </el-row>
-                <el-row>
-                    品牌: {{spu.brand_id}}
-                </el-row>
-                <el-row>
-                    分类: {{spu.category_id}}
-                </el-row>
-                <el-row>
-                    状态: {{spu.state}}
-                </el-row>
+                <el-row>商品名称: {{spu.name}}</el-row>
+                <el-row>品牌: {{spu.brand_id}}</el-row>
+                <el-row>分类: {{spu.category_id}}</el-row>
+                <el-row>状态: {{spu.state}}</el-row>
             </el-tab-pane>
             <el-tab-pane label="商品属性" name="attr">
                 <router-link :to="{path: '/spu-attr-add', query:{spuId:spuId,categoryId:spu.category_id}}">
@@ -82,13 +74,18 @@
                     <el-button type="primary" size="medium">添加产品</el-button>
                 </router-link>
                 <el-table ref="skuList" :data="skuList" tooltip-effect="dark" width="100%">
-                    <el-table-column prop="name" label="名称" width="150px"/>
-                    <el-table-column prop="origin_price" label="原价" width="150px"/>
-                    <el-table-column prop="price" label="价格" width="150px"/>
-                    <el-table-column prop="number" label="数量" width="150px"/>
+                    <el-table-column prop="name" label="名称" width="150px" align="center"/>
+                    <el-table-column prop="origin_price" label="原价" width="150px" align="center"/>
+                    <el-table-column prop="price" label="价格" width="150px" align="center"/>
+                    <el-table-column prop="number" label="数量" width="150px" align="center"/>
                     <el-table-column prop="value" label="规格" min-width="1"/>
-                    <el-table-column prop="state" label="状态" width="150px"/>
-                    <el-table-column prop="is_recom" label="是否热销" width="150px">
+                    <el-table-column prop="state" label="状态" width="100px" align="center">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.state===1">已上架</span>
+                            <span v-else>已下架</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="is_recom" label="是否热销" width="100px" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.is_recom === 1">是</span>
                             <span v-else>否</span>
@@ -98,10 +95,10 @@
                         <template slot-scope="scope">
                             <el-button size="mini" type="info" @click="">修改</el-button>
                             <el-button v-if="scope.row.state" size="mini" type="warning"
-                                       @click="modifyState('disable', scope.$index, scope.row.id)">禁用
+                                       @click="modifySkuState('disable', scope.$index, scope.row.id)">下架
                             </el-button>
                             <el-button v-else size="mini" type="success"
-                                       @click="modifyState('enable', scope.$index, scope.row.id)">启用
+                                       @click="modifySkuState('enable', scope.$index, scope.row.id)">上架
                             </el-button>
                             <el-button size="mini" type="danger" @click="deleteAd(scope.$index, scope.row.id)">删除
                             </el-button>
@@ -316,6 +313,29 @@
                     that.$message({
                         type: 'info',
                         message: '已取消设置'
+                    });
+                });
+            },
+            modifySkuState: function (type, index, id) {
+                let that = this,
+                    state = 1;
+                if (type === "disable") state = 0;
+                let message = state ? "上架" : "下架";
+                that.$confirm("确认" + message + "该产品?", '提示', {
+                    confirmButtonText: "确认",
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios.post("sku/modify-state", {
+                        state: state,
+                        id: id
+                    }).then(res => {
+                        if (res.data.code === 2000) that.skuList[index].state = state;
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消' + message
                     });
                 });
             }
