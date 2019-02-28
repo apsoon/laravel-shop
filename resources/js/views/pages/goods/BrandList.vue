@@ -6,65 +6,35 @@
             </router-link>
             <el-button type="danger" size="medium" @click="deleteBrands()">批量删除</el-button>
         </div>
-        <el-table
-                ref="multipleTable"
-                :data="brandList"
-                tooltip-effect="dark"
-                style="width: 100%">
-            <el-table-column
-                    type="selection"
-                    width="55">
-            </el-table-column>
-            <el-table-column
-                    prop="name"
-                    label="名称"
-                    width="120">
-            </el-table-column>
-            <el-table-column
-                    prop="cover"
-                    label="品牌图片"
-                    width="120">
+        <el-table ref="multipleTable" :data="brandList" tooltip-effect="dark" style="width: 100%">
+            <el-table-column type="selection" width="55"/>
+            <el-table-column prop="name" label="名称" width="120"/>
+            <el-table-column prop="cover" label="品牌图片" width="120">
                 <template slot-scope="scope">
                     <img class="logo" :src="scope.row.logo"/>
                 </template>
             </el-table-column>
-            <el-table-column
-                    prop="region"
-                    label="地区"
-                    width="120">
+            <el-table-column prop="region" label="地区" width="120"/>
+            <el-table-column prop="describe" label="描述" min-width="1"/>
+            <el-table-column prop="state" label="状态" width="120">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.state===0">已禁用</span>
+                    <span v-else>已启用</span>
+                </template>
             </el-table-column>
-            <el-table-column
-                    prop="describe"
-                    label="描述"
-                    min-width="1">
-            </el-table-column>
-            <el-table-column
-                    prop="state"
-                    label="状态"
-                    width="120">
-            </el-table-column>
-            <el-table-column
-                    prop=""
-                    width="300"
-                    label="操作">
+            <el-table-column width="300" label="操作">
                 <template slot-scope="scope">
                     <router-link :to="{path: '/brand-add',query :{type: 'modify', brandId:scope.row.id}}">
                         <el-button size="mini" type="info">修改</el-button>
                     </router-link>
-                    <el-button v-if="scope.row.state"
-                               size="mini"
-                               type="warning"
+                    <el-button v-if="scope.row.state" size="mini" type="warning"
                                @click="modifyState('disable', scope.$index, scope.row.id)">禁用
                     </el-button>
-                    <el-button v-else
-                               size="mini"
-                               type="success"
+                    <el-button v-else size="mini" type="success"
                                @click="modifyState('enable', scope.$index, scope.row.id)">启用
                     </el-button>
-                    <el-button
-                            size="mini"
-                            type="danger"
-                            @click="deleteBrand(scope.$index, scope.row.id)">删除
+                    <el-button size="mini" type="danger"
+                               @click="deleteBrand(scope.$index, scope.row.id)">删除
                     </el-button>
                 </template>
             </el-table-column>
