@@ -1,7 +1,7 @@
 <template>
     <el-card>
         <div slot="header" class="clearfix">
-            <router-link :to="{path:'/category-add', query: {parentId: 0, parentName:'一级分类'}}">
+            <router-link :to="{path:'/category-edit', query: {type: 'create', parentId: 0, parentName:'一级分类'}}">
                 <el-button type="primary" size="medium">添加一级分类</el-button>
             </router-link>
         </div>
@@ -18,15 +18,20 @@
                     <span v-if="data.is_recom === 1">热推</span>
                 </span>
                 <span>
-                    <router-link :to="{path:'/category-add', query: {parentId: data.id, parentName: data.name}}"
-                                 v-if="data.level &lt; 3">
-                        <el-button type="text" size="mini">添加子分类</el-button>
-                    </router-link>
-                    <el-button type="text" size="mini" @click="removeCategory(node, data)">删除分类</el-button>
                     <el-button type="text" size="mini" @click="modifyRecom('add', node, data)"
                                v-if="data.level === 1 && data.is_recom === 0">设置首页热推</el-button>
                     <el-button type="text" size="mini" @click="modifyRecom('remove', node, data)"
                                v-else-if="data.level === 1 && data.is_recom === 1">取消首页热推</el-button>
+                    <router-link
+                            :to="{path:'/category-edit', query: {type: 'create', parentId: data.id, parentName: data.name}}"
+                            v-if="data.level &lt; 3">
+                        <el-button type="text" size="mini">添加子分类</el-button>
+                    </router-link>
+                    <router-link
+                            :to="{path:'/category-edit', query: {type:'modify', categoryId: data.id}}">
+                        <el-button type="text" size="mini">修改</el-button>
+                    </router-link>
+                    <el-button type="text" size="mini" @click="removeCategory(node, data)">删除分类</el-button>
                 </span>
             </span>
         </el-tree>

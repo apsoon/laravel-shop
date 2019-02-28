@@ -63,9 +63,9 @@ export default new VueRouter({
             component: resolve => void (require(['./components/pages/goods/CategoryList.vue'], resolve))
         },
         {
-            name: "CategoryAdd",
-            path: "/category-add",
-            component: resolve => void (require(['./components/pages/goods/CategoryAdd.vue'], resolve))
+            name: "CategoryEdit",
+            path: "/category-edit",
+            component: resolve => void (require(['./components/pages/goods/CategoryEdit.vue'], resolve))
         },
         {
             name: "BrandList",

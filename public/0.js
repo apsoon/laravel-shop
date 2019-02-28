@@ -47,6 +47,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -260,8 +265,8 @@ var render = function() {
             {
               attrs: {
                 to: {
-                  path: "/category-add",
-                  query: { parentId: 0, parentName: "一级分类" }
+                  path: "/category-edit",
+                  query: { type: "create", parentId: 0, parentName: "一级分类" }
                 }
               }
             },
@@ -305,44 +310,6 @@ var render = function() {
                 _c(
                   "span",
                   [
-                    data.level < 3
-                      ? _c(
-                          "router-link",
-                          {
-                            attrs: {
-                              to: {
-                                path: "/category-add",
-                                query: {
-                                  parentId: data.id,
-                                  parentName: data.name
-                                }
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "el-button",
-                              { attrs: { type: "text", size: "mini" } },
-                              [_vm._v("添加子分类")]
-                            )
-                          ],
-                          1
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { type: "text", size: "mini" },
-                        on: {
-                          click: function($event) {
-                            _vm.removeCategory(node, data)
-                          }
-                        }
-                      },
-                      [_vm._v("删除分类")]
-                    ),
-                    _vm._v(" "),
                     data.level === 1 && data.is_recom === 0
                       ? _c(
                           "el-button",
@@ -369,7 +336,66 @@ var render = function() {
                             },
                             [_vm._v("取消首页热推")]
                           )
-                        : _vm._e()
+                        : _vm._e(),
+                    _vm._v(" "),
+                    data.level < 3
+                      ? _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to: {
+                                path: "/category-edit",
+                                query: {
+                                  type: "create",
+                                  parentId: data.id,
+                                  parentName: data.name
+                                }
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "el-button",
+                              { attrs: { type: "text", size: "mini" } },
+                              [_vm._v("添加子分类")]
+                            )
+                          ],
+                          1
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            path: "/category-edit",
+                            query: { type: "modify", categoryId: data.id }
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "el-button",
+                          { attrs: { type: "text", size: "mini" } },
+                          [_vm._v("修改")]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { type: "text", size: "mini" },
+                        on: {
+                          click: function($event) {
+                            _vm.removeCategory(node, data)
+                          }
+                        }
+                      },
+                      [_vm._v("删除分类")]
+                    )
                   ],
                   1
                 )

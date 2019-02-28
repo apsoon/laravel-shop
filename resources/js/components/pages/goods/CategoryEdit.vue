@@ -1,7 +1,7 @@
 <template>
     <el-card>
         <div slot="header" class="clearfix">
-            <span>添加分类</span>
+            <span>分类编辑</span>
         </div>
         <el-form ref="categoryForm" :rules="rules" :model="categoryForm" label-width="100px">
             <el-form-item label="分类名称" prop="name">
@@ -33,7 +33,8 @@
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
             </el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button type="primary" @click="onSubmit('create')" v-if="type==='create'">立即创建</el-button>
+            <el-button type="primary" @click="onSubmit('update')" v-else>立即创建</el-button>
         </el-form>
     </el-card>
 </template>
@@ -43,10 +44,11 @@
     import router from "../../../router";
 
     export default {
-        name: "CategoryAdd",
+        name: "CategoryEdit",
         data: function () {
             return {
                 categoryForm: {
+                    id: "",
                     name: "",
                     parentId: 0,
                     sortOrder: 0,
@@ -65,13 +67,36 @@
                 uploadData: {
                     type: "logo",
                     position: "category"
-                }
+                },
+                type: "crate",
+                categoryId: "",
             }
         },
         mounted: function () {
-            let that = this;
-            that.parentId = that.$route.query.parentId;
-            that.parentName = that.$route.query.parentName;
+            let that = this,
+                type = that.$route.query.type;
+            that.type = type;
+            if (type === "create") {
+                that.parentId = that.$route.query.parentId;
+                that.parentName = that.$route.query.parentName;
+            } else {
+                let categoryId = that.$route.query.categoryId;
+                that.categoryId = categoryId;
+                axios.get("/category/detail?id=" + categoryId)
+                    .then(res => {
+                        if (res.data.code === 2000) {
+                            let data = res.data.data;
+                            that.categoryForm = {
+                                id: data.id,
+                                name: data.name,
+                                parentId: data.parent_id,
+                                sortOrder: data.sort_order,
+                                imageUrl: data.image_url,
+                            };
+                        }
+                    }).catch(err => {
+                });
+            }
             that.uploadHeader = {
                 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
             };
@@ -81,17 +106,24 @@
                 let that = this;
                 that.$refs.categoryForm.validate((valid) => {
                     if (valid) {
-                        that.categoryForm.parentId = that.parentId;
-                        axios.post("category/create", that.categoryForm)
-                            .then(res => {
-                                if (res.data.code === 2000) {
-                                    router.push("/category-list");
-                                }
-                            })
-                            .catch(err => {
-
-                            })
-
+                        if (that.type === "create") {
+                            that.categoryForm.parentId = that.parentId;
+                            axios.post("category/create", that.categoryForm)
+                                .then(res => {
+                                    if (res.data.code === 2000) {
+                                        router.push("/category-list");
+                                    }
+                                }).catch(err => {
+                            });
+                        } else {
+                            axios.post("/category/update", that.categoryForm)
+                                .then(res => {
+                                    if (res.data.code === 2000) {
+                                        router.push("/category-list");
+                                    }
+                                }).catch(err => {
+                            });
+                        }
                     }
                 });
             },

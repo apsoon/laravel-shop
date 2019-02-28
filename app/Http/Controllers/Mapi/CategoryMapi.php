@@ -55,6 +55,30 @@ class CategoryMapi extends Controller
     }
 
     /**
+     * 获取分类详情
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function detail(Request $request)
+    {
+        $req = $request->all();
+        return $this->categoryService->getCategoryById($req);
+    }
+
+    /**
+     * 更新分类
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function update(Request $request)
+    {
+        $req = $request->all();
+        return $this->categoryService->updateCategory($req);
+    }
+
+    /**
      * 删除分类
      *
      * @param Request $request

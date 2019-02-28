@@ -53,6 +53,35 @@ class CategoryService
     }
 
     /**
+     * 更新分类
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function updateCategory(array $req)
+    {
+        $category = $this->categoryDao->findById($req["id"]);
+        $category->name = $req["name"];
+        $category->sort_order = $req["sortOrder"];
+        $category->image_url = $req["imageUrl"];
+        $result = $this->categoryDao->update($category);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
+     * ID获取
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getCategoryById(array $req)
+    {
+        $category = $this->categoryDao->findById($req["id"]);
+        return new JsonResult(StatusCode::SUCCESS, $category);
+    }
+
+    /**
      * 获取首页热推
      *
      * @return JsonResult
