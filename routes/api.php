@@ -61,6 +61,7 @@ Route::group(["namespace" => "Fapi"], function () {
 
     // 订单
     Route::POST("order/create", "OrderFapi@create");
+    Route::POST("order/cancel", "OrderFapi@cancel");
     Route::GET("order/number", "OrderFapi@number");
     Route::GET("order/list", "OrderFapi@list");
 

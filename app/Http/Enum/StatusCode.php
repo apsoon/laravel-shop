@@ -102,4 +102,10 @@ class StatusCode
         "code" => 12006,
         "message" => "未达到优惠券使用条件"
     ];
+
+    // 130xx 订单
+    const ORDER_NOT_EXIST = [
+        "code" => 13001,
+        "message" => "订单不存在"
+    ];
 }

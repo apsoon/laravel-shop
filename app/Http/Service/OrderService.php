@@ -170,6 +170,36 @@ class OrderService
     }
 
     /**
+     * 取消订单
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function cancelOrder(array $req)
+    {
+        $orderSn = $req["orderSn"];
+        if (empty($orderSn)) return new JsonResult(StatusCode::PARAM_LACKED);
+        $order = $this->orderDao->findBySn($orderSn);
+        if (empty($order)) return new JsonResult(StatusCode::ORDER_NOT_EXIST);
+        DB::beginTransaction();
+        try {
+            // 释放SKU
+            $orderSkus = $this->orderSkuDao->findByOrderSn($orderSn);
+            foreach ($orderSkus as $orderSku) {
+
+            }
+            // 如果使用了优惠券，返还优惠券
+            if ($order->use_coupon) {
+                $coupon = $this->couponDao->findById($order->coupon_id);
+                // 判断是否失效
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
      * 用户分页状态获取
      *
      * @param array $req
