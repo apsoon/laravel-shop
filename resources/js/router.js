@@ -30,7 +30,7 @@ export default new VueRouter({
         {
             name: "SpuAdd",
             path: "/spu-add",
-            component: resolve => void (require(['./views/pages/goods/SpuAdd.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/SpuEdit.vue'], resolve))
         },
         {
             name: "SpuSpecAdd",

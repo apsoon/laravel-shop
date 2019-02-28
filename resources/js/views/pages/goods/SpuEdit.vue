@@ -7,9 +7,6 @@
             <el-form-item label="商品名称" prop="name">
                 <el-input v-model="spuForm.name" placeholder="请输入商品名称"/>
             </el-form-item>
-            <!--<el-form-item label="简要描述" prop="brief">-->
-            <!--<el-input v-model="spuForm.brief" placeholder="请输入简要描述"/>-->
-            <!--</el-form-item>-->
             <el-form-item label="选择分类" prop="categoryId">
                 <el-cascader
                         :show-all-levels="false"
@@ -32,19 +29,12 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <!--<el-form-item label="商品列表价" prop="listPrice">-->
-            <!--<el-col :span="5">-->
-            <!--<el-input v-model="spuForm.listPrice" placeholder="请输入商品列表价"/>-->
-            <!--</el-col>-->
-            <!--</el-form-item>-->
-            <!--<el-form-item label="添加图片">-->
-            <!--</el-form-item>-->
             <el-form-item label="商品描述" prop="detailHtml">
                 <div ref="editor" style="text-align:left; width: 100%"></div>
             </el-form-item>
-            <el-form-item label="是否上架" prop="state">
-                <el-radio v-model="spuForm.state" label="0">暂不上架</el-radio>
-                <el-radio v-model="spuForm.state" label="1">立即上架</el-radio>
+            <el-form-item label="是否生效" prop="state">
+                <el-radio v-model="spuForm.state" label="0">暂不生效</el-radio>
+                <el-radio v-model="spuForm.state" label="1">立即生效</el-radio>
             </el-form-item>
             <el-button type="primary" @click="onSubmit">添加商品</el-button>
         </el-form>
@@ -56,7 +46,7 @@
     import axios from "axios";
 
     export default {
-        name: "SpuAdd",
+        name: "SpuEdit",
         data: function () {
             return {
                 spuForm: {
@@ -72,13 +62,10 @@
                 },
                 rules: {
                     name: [
-                        {required: true, message: '请输入广告名称', trigger: 'blur'}
-                    ],
-                    brief: [
-                        {required: true, message: '请输入广告名称', trigger: 'blur'}
+                        {required: true, message: '请输入商品名称', trigger: 'blur'}
                     ],
                     categoryId: [
-                        {required: true, message: '请输入广告名称', trigger: 'blur'}
+                        {required: true, message: '请选择分类', trigger: 'blur'}
                     ],
                 },
                 categoryList: [],
@@ -90,7 +77,6 @@
                 },
                 brandList: [],
             }
-
         },
         mounted: function () {
             let that = this;
@@ -111,6 +97,7 @@
                 that.spuForm.detailHtml = html;
                 that.spuForm.detailText = editor.txt.text();
             };
+            editor.customConfig.zIndex = 100; // 设置 z-index
             editor.create();    // 生成编辑器
         },
         methods: {
