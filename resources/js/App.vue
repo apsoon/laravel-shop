@@ -14,8 +14,8 @@
     </el-container>
 </template>
 <script scoped>
-    import Sidebar from "./components/layouts/Sidebar";
-    import Header from "./components/layouts/Header";
+    import Sidebar from "./views/layouts/Sidebar";
+    import Header from "./views/layouts/Header";
 
     export default {
         data() {

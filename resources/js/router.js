@@ -13,39 +13,39 @@ export default new VueRouter({
         {
             name: "index",
             path: '/',
-            component: resolve => void(require(['./components/pages/Index.vue'], resolve))
+            component: resolve => void(require(['./views/pages/Index.vue'], resolve))
         },
 
         // =============================  商品管理  ===============================
         {
             name: "SpuList",
             path: "/spu-list",
-            component: resolve => void (require(['./components/pages/goods/SpuList.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/SpuList.vue'], resolve))
         },
         {
             name: "SpuDetail",
             path: "/spu-detail",
-            component: resolve => void (require(['./components/pages/goods/SpuDetail.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/SpuDetail.vue'], resolve))
         },
         {
             name: "SpuAdd",
             path: "/spu-add",
-            component: resolve => void (require(['./components/pages/goods/SpuAdd.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/SpuAdd.vue'], resolve))
         },
         {
             name: "SpuSpecAdd",
             path: "/spu-spec-add",
-            component: resolve => void (require(['./components/pages/goods/SpuSpecAdd.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/SpuSpecAdd.vue'], resolve))
         },
         {
             name: "SpuBannerAdd",
             path: "/spu-banner-add",
-            component: resolve => void (require(['./components/pages/goods/SpuBannerAdd.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/SpuBannerAdd.vue'], resolve))
         },
         {
             name: "SpuSpecOption",
             path: "/spu-spec-option",
-            component: resolve => void (require(['./components/pages/goods/SpuSpecOption.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/SpuSpecOption.vue'], resolve))
         },
         // {
         //     name: "SkuDetail",
@@ -55,105 +55,105 @@ export default new VueRouter({
         {
             name: "SkuAdd",
             path: "/sku-add",
-            component: resolve => void (require(['./components/pages/goods/SkuAdd.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/SkuAdd.vue'], resolve))
         },
         {
             name: "CategoryList",
             path: "/category-list",
-            component: resolve => void (require(['./components/pages/goods/CategoryList.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/CategoryList.vue'], resolve))
         },
         {
             name: "CategoryEdit",
             path: "/category-edit",
-            component: resolve => void (require(['./components/pages/goods/CategoryEdit.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/CategoryEdit.vue'], resolve))
         },
         {
             name: "BrandList",
             path: "/brand-list",
-            component: resolve => void (require(['./components/pages/goods/BrandList.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/BrandList.vue'], resolve))
         },
         {
             name: "BrandAdd",
             path: "/brand-add",
-            component: resolve => void (require(['./components/pages/goods/BrandAdd.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/BrandAdd.vue'], resolve))
         },
         {
             name: "AttrList",
             path: "/attr-list",
-            component: resolve => void (require(['./components/pages/goods/AttrList.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/AttrList.vue'], resolve))
         },
         {
             name: "AttrGroupAdd",
             path: "/attr-group-add",
-            component: resolve => void (require(['./components/pages/goods/AttrGroupAdd.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/AttrGroupAdd.vue'], resolve))
         },
         {
             name: "SpuAttrAdd",
             path: "/spu-attr-add",
-            component: resolve => void (require(['./components/pages/goods/SpuAttrAdd.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/SpuAttrAdd.vue'], resolve))
         },
         {
             name: "AttrAdd",
             path: "/attr-add",
-            component: resolve => void (require(['./components/pages/goods/AttrAdd.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/AttrAdd.vue'], resolve))
         },
         {
             name: "SpecList",
             path: "/spec-list",
-            component: resolve => void (require(['./components/pages/goods/SpecList.vue'], resolve))
+            component: resolve => void (require(['./views/pages/goods/SpecList.vue'], resolve))
         },
 
         // =============================  交易管理  ===============================
         {
             name: "OrderList",
             path: "/order-list",
-            component: resolve => void (require(['./components/pages/trade/OrderList.vue'], resolve))
+            component: resolve => void (require(['./views/pages/trade/OrderList.vue'], resolve))
         },
         {
             name: "OrderDetail",
             path: "/order-detail",
-            component: resolve => void (require(['./components/pages/trade/OrderDetail.vue'], resolve))
+            component: resolve => void (require(['./views/pages/trade/OrderDetail.vue'], resolve))
         },
         {
             name: "CommentList",
             path: "/comment-list",
-            component: resolve => void (require(['./components/pages/trade/CommentList.vue'], resolve))
+            component: resolve => void (require(['./views/pages/trade/CommentList.vue'], resolve))
         },
 
         // ================================================  营销管理  =================================================
         {
             name: "CouponList",
             path: "/coupon-list",
-            component: resolve => void (require(['./components/pages/market/CouponList.vue'], resolve))
+            component: resolve => void (require(['./views/pages/market/CouponList.vue'], resolve))
         },
         {
             name: "CouponAdd",
             path: "/coupon-add",
-            component: resolve => void (require(['./components/pages/market/CouponAdd.vue'], resolve))
+            component: resolve => void (require(['./views/pages/market/CouponAdd.vue'], resolve))
         },
 
         // ================================================  用户管理  =================================================
         {
             name: "UserList",
             path: "/user-list",
-            component: resolve => void (require(['./components/pages/user/UserList.vue'], resolve))
+            component: resolve => void (require(['./views/pages/user/UserList.vue'], resolve))
         },
         {
             name: "AddrList",
             path: "/addr-list",
-            component: resolve => void (require(['./components/pages/user/AddrList.vue'], resolve))
+            component: resolve => void (require(['./views/pages/user/AddrList.vue'], resolve))
         },
 
         // =============================  广告  ===============================
         {
             name: "AdList",
             path: '/ad-list',
-            component: resolve => void(require(['./components/pages/ad/AdList.vue'], resolve))
+            component: resolve => void(require(['./views/pages/ad/AdList.vue'], resolve))
         },
         {
             name: "AdAdd",
             path: '/ad-add',
-            component: resolve => void(require(['./components/pages/ad/AdAdd.vue'], resolve))
+            component: resolve => void(require(['./views/pages/ad/AdAdd.vue'], resolve))
         }
     ]
 })
