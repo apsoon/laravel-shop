@@ -9,20 +9,34 @@
 namespace App\Http\Service;
 
 use App\Http\Dao\CommentDao;
+use App\Http\Dao\SkuDao;
 use App\Http\Dao\UserDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Comment;
 use App\Http\Util\JsonResult;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Class CommentService
+ *
+ * @package App\Http\Service
+ */
 class CommentService
 {
+    /**
+     * @var UserDao
+     */
     private $userDao;
 
     /**
      * @var CommentDao
      */
     private $commentDao;
+
+    /**
+     * @var SkuDao
+     */
+    private $skuDao;
 
     /**
      * 创建评论
@@ -68,6 +82,8 @@ class CommentService
         foreach ($comments as $comment) {
             $user = $this->userDao->findByUserId($comment->user_id);
             $comment->nickname = $user->nickname;
+            $sku = $this->skuDao->findById($comment->sku_id);
+            $comment->sku_name = $sku->name;
         }
         return new JsonResult(StatusCode::SUCCESS, $comments);
     }
@@ -90,10 +106,12 @@ class CommentService
      *
      * @param CommentDao $commentDao
      * @param UserDao $userDao
+     * @param SkuDao $skuDao
      */
-    public function __construct(CommentDao $commentDao, UserDao $userDao)
+    public function __construct(CommentDao $commentDao, UserDao $userDao, SkuDao $skuDao)
     {
         $this->commentDao = $commentDao;
         $this->userDao = $userDao;
+        $this->skuDao = $skuDao;
     }
 }

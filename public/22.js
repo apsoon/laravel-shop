@@ -145,7 +145,7 @@ var render = function() {
           _c("el-table-column", {
             attrs: {
               label: "商品",
-              prop: "sku_id",
+              prop: "sku_name",
               width: "150",
               align: "center"
             }
@@ -155,7 +155,7 @@ var render = function() {
             attrs: {
               label: "订单编号",
               prop: "order_sn",
-              width: "200",
+              width: "220",
               align: "center"
             }
           }),
