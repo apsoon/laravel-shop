@@ -3,7 +3,7 @@
         <div slot="header" class="clearfix">
             <span>订单列表</span>
         </div>
-        <el-tabs v-model="active" @tab-click="handleClick">
+        <el-tabs v-model="active" @tab-click="changeActive">
             <el-tab-pane label="全部" name="all"/>
             <el-tab-pane label="待支付" name="pay"/>
             <el-tab-pane label="待发货" name="send"/>
@@ -47,7 +47,7 @@
                        :total="1000"
                        :page-sizes="[20, 50, 100]"
                        :page-size="20"
-                       @current-change="handleCurrentChange"
+                       @current-change="onPageNoChanged"
                        :current-page.sync="currentPage3"
                        @size-change="handleSizeChange"
                        style="margin-top: 20px; margin-bottom: 20px; float: right;"/>
@@ -68,17 +68,29 @@
         },
         mounted: function () {
             let that = this;
-            axios.get("/order/list?pageNo=" + that.pageNo)
-                .then(res => {
-                    if (res.data.code === 2000) {
-                        that.orderList = res.data.data;
-                    }
-                })
-                .catch(err => {
-
-                });
+            that.getOrderList();
         },
-        methods: {}
+        methods: {
+            changeActive: function (tab, event) {
+                let that = this;
+                that.getOrderList(tab.name);
+            },
+            getOrderList: function (type = 'all', pageNo = 1) {
+                let that = this;
+                axios.get("/order/list?type=" + type + "&pageNo=" + pageNo)
+                    .then(res => {
+                        if (res.data.code === 2000) {
+                            that.orderList = res.data.data;
+                        }
+                    }).catch(err => {
+                });
+            },
+            onPageNoChanged: function (pageNo) {
+                let that = this;
+                that.pageNo = pageNo;
+                that.getOrderList(that.active, pageNo);
+            }
+        }
     }
 </script>
 

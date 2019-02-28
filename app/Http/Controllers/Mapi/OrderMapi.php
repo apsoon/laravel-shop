@@ -29,7 +29,7 @@ class OrderMapi extends Controller
     public function list(Request $request)
     {
         $req = $request->all();
-        return $this->orderService->getOrderPagedList($req);
+        return $this->orderService->getOrderPagedListByType($req);
     }
 
     /**

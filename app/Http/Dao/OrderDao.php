@@ -121,6 +121,24 @@ class OrderDao
     }
 
     /**
+     * 分状态分页获取
+     *
+     * @param $state
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findPagedListByState($state, int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->order::where(["state" => $state])
+            ->offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * OrderDao constructor.
      *
      * @param Order $order

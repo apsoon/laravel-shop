@@ -72,19 +72,36 @@ __webpack_require__.r(__webpack_exports__);
   name: "OrderList",
   data: function data() {
     return {
+      active: "all",
       pageNo: 1,
       orderList: []
     };
   },
   mounted: function mounted() {
     var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/order/list?pageNo=" + that.pageNo).then(function (res) {
-      if (res.data.code === 2000) {
-        that.orderList = res.data.data;
-      }
-    }).catch(function (err) {});
+    that.getOrderList();
   },
-  methods: {}
+  methods: {
+    changeActive: function changeActive(tab, event) {
+      var that = this;
+      that.getOrderList(tab.name);
+    },
+    getOrderList: function getOrderList() {
+      var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'all';
+      var pageNo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var that = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/order/list?type=" + type + "&pageNo=" + pageNo).then(function (res) {
+        if (res.data.code === 2000) {
+          that.orderList = res.data.data;
+        }
+      }).catch(function (err) {});
+    },
+    onPageNoChanged: function onPageNoChanged(pageNo) {
+      var that = this;
+      that.pageNo = pageNo;
+      that.getOrderList(that.active, pageNo);
+    }
+  }
 });
 
 /***/ }),
@@ -116,13 +133,13 @@ var render = function() {
       _c(
         "el-tabs",
         {
-          on: { "tab-click": _vm.handleClick },
+          on: { "tab-click": _vm.changeActive },
           model: {
-            value: _vm.activeName,
+            value: _vm.active,
             callback: function($$v) {
-              _vm.activeName = $$v
+              _vm.active = $$v
             },
-            expression: "activeName"
+            expression: "active"
           }
         },
         [
@@ -276,7 +293,7 @@ var render = function() {
           "current-page": _vm.currentPage3
         },
         on: {
-          "current-change": _vm.handleCurrentChange,
+          "current-change": _vm.onPageNoChanged,
           "update:currentPage": function($event) {
             _vm.currentPage3 = $event
           },

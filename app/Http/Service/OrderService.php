@@ -20,6 +20,7 @@ use App\Http\Model\Order;
 use App\Http\Util\JsonResult;
 use App\Http\Util\SNUtil;
 use DateTime;
+use function GuzzleHttp\Promise\all;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -174,8 +175,7 @@ class OrderService
      * @param array $req
      * @return JsonResult
      */
-    public
-    function getPagedOrderListByStatusUser(array $req)
+    public function getPagedOrderListByStatusUser(array $req)
     {
         if (empty($req["userId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
@@ -207,15 +207,18 @@ class OrderService
     }
 
     /**
-     * 分页获取订单
+     * 分页分状态获取订单
      *
      * @param array $req
      * @return JsonResult
      */
-    public function getOrderPagedList(array $req)
+    public function getOrderPagedListByType(array $req)
     {
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
-        $result = $this->orderDao->findPagedList($pageNo, 20);
+        $size = empty($req["size"]) ? 20 : $req["size"];
+        $type = $req["type"];
+        if ($type === "all") $result = $this->orderDao->findPagedList($pageNo, $size);
+        else $result = $this->orderDao->findPagedListByState(OrderStatus::findByKey($type)["code"], $pageNo, $size);
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
