@@ -23,20 +23,13 @@
                 </el-table>
             </el-tab-pane>
             <el-tab-pane label="商品规格" name="spec">
-                <router-link :to="{path: '/spu-spec-add', query: {spuId: spuId}}">
-                    <el-button type="primary" size="medium">添加规格</el-button>
+                <router-link :to="{path: '/spu-spec-edit', query: {spuId: spuId}}">
+                    <el-button type="primary" size="medium">编辑规格</el-button>
                 </router-link>
-                <el-table width="100%"
-                          ref="specList"
-                          tooltip-effect="dark"
-                          :data="specList">
-                    <el-table-column prop="name"
-                                     label="名称"
-                                     width="150px">
+                <el-table ref="specList" tooltip-effect="dark" :data="specList" width="100%">
+                    <el-table-column prop="name" label="名称" width="150px">
                     </el-table-column>
-                    <el-table-column
-                            label="选项"
-                            min-width="1">
+                    <el-table-column label="选项" min-width="1">
                         <template slot-scope="scope">
                             <el-tag
                                     v-for="option in scope.row.options"
@@ -47,23 +40,14 @@
                             </el-tag>
                         </template>
                     </el-table-column>
-                    <el-table-column
-                            prop=""
-                            label="操作"
-                            width="200px">
+                    <el-table-column label="操作" width="200px">
                         <template slot-scope="scope">
                             <router-link
                                     :to="{path: '/spu-spec-option', query: {spuId: spuId, specId: scope.row.id}}">
-                                <el-button
-                                        size="mini"
-                                        type="info"
-                                        @click="">修改选项
+                                <el-button size="mini" type="info" @click="">修改选项
                                 </el-button>
                             </router-link>
-                            <el-button
-                                    size="mini"
-                                    type="danger"
-                                    @click="deleteSpec(scope.$index, scope.row.id)">删除
+                            <el-button size="mini" type="danger" @click="deleteSpec(scope.$index, scope.row.id)">删除
                             </el-button>
                         </template>
                     </el-table-column>

@@ -162,22 +162,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -525,14 +509,14 @@ var render = function() {
                 "router-link",
                 {
                   attrs: {
-                    to: { path: "/spu-spec-add", query: { spuId: _vm.spuId } }
+                    to: { path: "/spu-spec-edit", query: { spuId: _vm.spuId } }
                   }
                 },
                 [
                   _c(
                     "el-button",
                     { attrs: { type: "primary", size: "medium" } },
-                    [_vm._v("添加规格")]
+                    [_vm._v("编辑规格")]
                   )
                 ],
                 1
@@ -543,9 +527,9 @@ var render = function() {
                 {
                   ref: "specList",
                   attrs: {
-                    width: "100%",
                     "tooltip-effect": "dark",
-                    data: _vm.specList
+                    data: _vm.specList,
+                    width: "100%"
                   }
                 },
                 [
@@ -584,7 +568,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { prop: "", label: "操作", width: "200px" },
+                    attrs: { label: "操作", width: "200px" },
                     scopedSlots: _vm._u([
                       {
                         key: "default",

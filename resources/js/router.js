@@ -33,9 +33,9 @@ export default new VueRouter({
             component: resolve => void (require(['./views/pages/goods/SpuEdit.vue'], resolve))
         },
         {
-            name: "SpuSpecAdd",
-            path: "/spu-spec-add",
-            component: resolve => void (require(['./views/pages/goods/SpuSpecAdd.vue'], resolve))
+            name: "SpuSpecEdit",
+            path: "/spu-spec-Edit",
+            component: resolve => void (require(['./views/pages/goods/SpuSpecEdit.vue'], resolve))
         },
         {
             name: "SpuBannerAdd",

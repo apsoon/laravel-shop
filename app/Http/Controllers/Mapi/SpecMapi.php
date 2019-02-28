@@ -34,8 +34,19 @@ class SpecMapi extends Controller
      */
     public function list()
     {
-        $result = $this->specService->getSpecList();
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        return $this->specService->getSpecList();
+    }
+
+    /**
+     * 获取SPU到规格
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function listBySpu(Request $request)
+    {
+        $req = $request->all();
+        return $this->specService->getSpecListBySpu($req);
     }
 
     /**

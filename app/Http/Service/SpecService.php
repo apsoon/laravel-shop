@@ -11,8 +11,11 @@ namespace App\Http\Service;
 
 use App\Http\Dao\SkuSpecOptionDao;
 use App\Http\Dao\SpecDao;
+use App\Http\Dao\SpuSpecDao;
 use App\Http\Dao\SpuSpecOptionDao;
+use App\Http\Enum\StatusCode;
 use App\Http\Model\Spec;
+use App\Http\Util\JsonResult;
 
 /**
  * Class SpecService
@@ -36,6 +39,8 @@ class SpecService
      */
     private $skuSpecOptionDao;
 
+    private $spuSpecDao;
+
     /**
      * 创建
      *
@@ -58,7 +63,24 @@ class SpecService
     public function getSpecList()
     {
         $result = $this->specDao->list();
-        return $result;
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
+     * 获取SPU规格列表
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getSpecListBySpu(array $req)
+    {
+        $spuSpecList = $this->spuSpecDao->findBySpuId($req["spuId"]);
+        $specIds = [];
+        foreach ($spuSpecList as $spuSpec) {
+            array_push($specIds, $spuSpec->spec_id);
+        }
+        $result = $this->specDao->findByIds($specIds);
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
@@ -95,12 +117,14 @@ class SpecService
      * SpecService constructor.
      *
      * @param SpecDao $specDao
+     * @param SpuSpecDao $spuSpecDao
      * @param SkuSpecOptionDao $skuSpecOptionDao
      * @param SpuSpecOptionDao $spuSpecOptionDao
      */
-    public function __construct(SpecDao $specDao, SkuSpecOptionDao $skuSpecOptionDao, SpuSpecOptionDao $spuSpecOptionDao)
+    public function __construct(SpecDao $specDao, SpuSpecDao $spuSpecDao, SkuSpecOptionDao $skuSpecOptionDao, SpuSpecOptionDao $spuSpecOptionDao)
     {
         $this->specDao = $specDao;
+        $this->spuSpecDao = $spuSpecDao;
         $this->skuSpecOptionDao = $skuSpecOptionDao;
         $this->spuSpecOptionDao = $spuSpecOptionDao;
     }
