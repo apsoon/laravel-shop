@@ -115,14 +115,14 @@ export default new VueRouter({
             component: resolve => void (require(['./views/pages/trade/CommentList.vue'], resolve))
         },
         {
-            name: "PostTacticList",
-            path: "/post-tactic-list",
-            component: resolve => void (require(['./views/pages/trade/PostTacticList.vue'], resolve))
+            name: "PostModelList",
+            path: "/post-model-list",
+            component: resolve => void (require(['./views/pages/trade/PostModelList.vue'], resolve))
         },
         {
-            name: "PostTacticEdit",
-            path: "/post-tactic-edit",
-            component: resolve => void (require(['./views/pages/trade/PostTacticEdit.vue'], resolve))
+            name: "PostModelEdit",
+            path: "/post-model-edit",
+            component: resolve => void (require(['./views/pages/trade/PostModelEdit.vue'], resolve))
         },
 
         // ================================================  营销管理  =================================================

@@ -3623,6 +3623,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Sidebar"
 });
@@ -85793,6 +85794,10 @@ var render = function() {
               _vm._v(" "),
               _c("el-menu-item", { attrs: { index: "comment-list" } }, [
                 _vm._v("评论管理")
+              ]),
+              _vm._v(" "),
+              _c("el-menu-item", { attrs: { index: "post-model-list" } }, [
+                _vm._v("运费策略")
               ])
             ],
             2
@@ -100018,7 +100023,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "SpuAdd",
     path: "/spu-add",
     component: function component(resolve) {
-      return void Promise.all(/*! AMD require */[__webpack_require__.e(28), __webpack_require__.e(18)]).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/goods/SpuEdit.vue */ "./resources/js/views/pages/goods/SpuEdit.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void Promise.all(/*! AMD require */[__webpack_require__.e(30), __webpack_require__.e(18)]).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/goods/SpuEdit.vue */ "./resources/js/views/pages/goods/SpuEdit.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "SpuSpecEdit",
@@ -100117,6 +100122,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     component: function component(resolve) {
       return void __webpack_require__.e(/*! AMD require */ 24).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/CommentList.vue */ "./resources/js/views/pages/trade/CommentList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
+  }, {
+    name: "PostModelList",
+    path: "/post-model-list",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 28).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/PostModelList.vue */ "./resources/js/views/pages/trade/PostModelList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
+    name: "PostModelEdit",
+    path: "/post-model-edit",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 27).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/PostModelEdit.vue */ "./resources/js/views/pages/trade/PostModelEdit.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
   }, // ================================================  营销管理  =================================================
   {
     name: "CouponList",
@@ -100141,7 +100158,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "AddrList",
     path: "/addr-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 27).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/user/AddrList.vue */ "./resources/js/views/pages/user/AddrList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 29).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/user/AddrList.vue */ "./resources/js/views/pages/user/AddrList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, // =============================  广告管理  ===============================
   {
