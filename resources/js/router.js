@@ -139,7 +139,7 @@ export default new VueRouter({
             component: resolve => void (require(['./views/pages/user/AddrList.vue'], resolve))
         },
 
-        // =============================  广告  ===============================
+        // =============================  广告管理  ===============================
         {
             name: "AdList",
             path: '/ad-list',
@@ -149,6 +149,20 @@ export default new VueRouter({
             name: "AdEdit",
             path: '/ad-edit',
             component: resolve => void(require(['./views/pages/ad/AdEdit.vue'], resolve))
-        }
+        },
+
+        // =================================================  权限管理  ==================================================
+        {
+            name: "AdminList",
+            path: "/admin-list",
+            component: resolve => void(require(['./views/pages/permit/AdminList.vue'], resolve))
+        },
+
+        // =================================================== 设置  ====================================================
+        {
+            name: "ShopSet",
+            path: "/shop-set",
+            component: resolve => void (require(['./views/pages/settings/ShopSet.vue'], resolve))
+        },
     ]
 })

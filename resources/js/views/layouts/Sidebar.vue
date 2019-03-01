@@ -29,11 +29,18 @@
             <el-submenu index="user">
                 <template slot="title"><i class="el-icon-setting"></i>用户管理</template>
                 <el-menu-item index="user-list">用户列表</el-menu-item>
-                <!--<el-menu-item index="addr-list">用户地址</el-menu-item>-->
             </el-submenu>
             <el-submenu index="ad">
                 <template slot="title"><i class="el-icon-setting"></i>广告管理</template>
                 <el-menu-item index="ad-list">广告列表</el-menu-item>
+            </el-submenu>
+            <el-submenu index="permit">
+                <template slot="title"><i class="el-icon-setting"></i>权限管理</template>
+                <el-menu-item index="admin-list">管理员列表</el-menu-item>
+            </el-submenu>
+            <el-submenu index="settings">
+                <template slot="title"><i class="el-icon-setting"></i>设置</template>
+                <el-menu-item index="shop-set">店铺设置</el-menu-item>
             </el-submenu>
         </el-menu>
     </div>
