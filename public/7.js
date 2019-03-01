@@ -80,12 +80,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CouponList",
@@ -247,7 +241,21 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "折扣类型", prop: "discount_type", width: "150" }
+            attrs: { label: "折扣类型", prop: "discount_type", width: "150" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    scope.row.discount_type === 1
+                      ? _c("span", [_vm._v("金额减免")])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("span", [_vm._v("折扣")])
+                  ]
+                }
+              }
+            ])
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -271,7 +279,19 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "状态", prop: "state", width: "150" }
+            attrs: { label: "状态", prop: "state", width: "150" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    scope.row.state === 1
+                      ? _c("span", [_vm._v("已启用")])
+                      : _c("span", [_vm._v("已禁用")])
+                  ]
+                }
+              }
+            ])
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -287,7 +307,7 @@ var render = function() {
                         attrs: { size: "mini", type: "info" },
                         on: { click: function($event) {} }
                       },
-                      [_vm._v("修改\n                ")]
+                      [_vm._v("修改")]
                     ),
                     _vm._v(" "),
                     scope.row.state
