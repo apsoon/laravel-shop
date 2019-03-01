@@ -114,6 +114,16 @@ export default new VueRouter({
             path: "/comment-list",
             component: resolve => void (require(['./views/pages/trade/CommentList.vue'], resolve))
         },
+        {
+            name: "PostTacticList",
+            path: "/post-tactic-list",
+            component: resolve => void (require(['./views/pages/trade/PostTacticList.vue'], resolve))
+        },
+        {
+            name: "PostTacticEdit",
+            path: "/post-tactic-edit",
+            component: resolve => void (require(['./views/pages/trade/PostTacticEdit.vue'], resolve))
+        },
 
         // ================================================  营销管理  =================================================
         {
