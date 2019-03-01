@@ -11,6 +11,7 @@ namespace App\Http\Service;
 use App\Http\Dao\CommentDao;
 use App\Http\Dao\SkuDao;
 use App\Http\Dao\UserDao;
+use App\Http\Enum\CommentStatus;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Comment;
 use App\Http\Util\JsonResult;
@@ -70,15 +71,18 @@ class CommentService
     }
 
     /**
-     * 分页获取列表
+     * 分页获取列表分状态获取
      *
      * @param array $req
      * @return JsonResult
      */
-    public function getPagedCommentList(array $req)
+    public function getPagedCommentListByType(array $req)
     {
-        $size = 20;
-        $comments = $this->commentDao->findByPage($req["pageNo"], $size);
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $size = empty($req["size"]) ? 20 : $req["size"];
+        $type = $req["type"];
+        if ($type === "all") $comments = $this->commentDao->findByPage($req["pageNo"], $size);
+        else $comments = $this->commentDao->findPagedListByState(CommentStatus::findByKey($type)["code"], $req["pageNo"], $size);
         foreach ($comments as $comment) {
             $user = $this->userDao->findByUserId($comment->user_id);
             $comment->nickname = $user->nickname;

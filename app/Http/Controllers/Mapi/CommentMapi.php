@@ -30,7 +30,7 @@ class CommentMapi extends Controller
     public function list(Request $request)
     {
         $req = $request->all();
-        return $this->commentService->getPagedCommentList($req);
+        return $this->commentService->getPagedCommentListByType($req);
     }
 
     /**

@@ -90,6 +90,23 @@ class CommentDao
     }
 
     /**
+     * 分状态分页获取
+     *
+     * @param $state
+     * @param $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findPagedListByState($state, $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        return $this->comment::where("state", "=", $state)
+            ->offset($offset)
+            ->limit($size)
+            ->get();
+    }
+
+    /**
      * 更新状态
      *
      * @param $id

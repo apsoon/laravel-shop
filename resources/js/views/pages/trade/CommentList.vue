@@ -1,8 +1,14 @@
 <template>
     <el-card>
         <div slot="header" class="clearfix">
-
+            <span>评论列表</span>
         </div>
+        <el-tabs v-model="active" @tab-click="changeActive">
+            <el-tab-pane label="全部" name="all"/>
+            <el-tab-pane label="待审核" name="audit"/>
+            <el-tab-pane label="审核通过" name="valid"/>
+            <el-tab-pane label="审核不通过" name="invalid"/>
+        </el-tabs>
         <el-table ref="commentList" :data="commentList" tooltip-effect="dart" width="100%">
             <el-table-column type="selection" width="55"/>
             <el-table-column label="商品" prop="sku_name" width="150" align="center"/>
@@ -14,8 +20,8 @@
             <el-table-column label="状态" prop="state" width="100" align="center">
                 <template slot-scope="scope">
                     <span v-if="scope.row.state === 0">待审核</span>
-                    <span v-else-if="scope.row.state === 1">前台显示</span>
-                    <span v-else>前台不显示</span>
+                    <span v-else-if="scope.row.state === 1">审核通过</span>
+                    <span v-else>审核不通过</span>
                 </template>
             </el-table-column>
             <el-table-column width="300" label="操作">
@@ -46,8 +52,8 @@
                        :page-sizes="[20, 50, 100]"
                        :page-size="20"
                        @current-change="onPageNoChanged"
-                       :current-page.sync="currentPage3"
-                       @size-change="handleSizeChange"
+                       :current-page.sync="pageNo"
+                       @size-change="onPageSizeChanged"
                        style="margin-top: 20px; margin-bottom: 20px; float: right;"/>
     </el-card>
 </template>
@@ -60,26 +66,19 @@
         data: function () {
             return {
                 commentList: [],
-                pageNo: 1
+                pageNo: 1,
+                active: "all",
             }
         },
         mounted: function () {
             let that = this;
-            axios.get("/comment/list?pageNo=" + that.pageNo)
-                .then(res => {
-                    if (res.data.code === 2000) {
-                        that.commentList = res.data.data;
-                    }
-                })
-                .catch(err => {
-
-                });
+            that.getCommentList();
         },
         methods: {
             modifyState: function (type, index, id) {
                 let that = this,
                     state = 1;
-                if (type === "disable") state = 2;
+                if (type === "disable") state = 4;
                 let message = state ? "展示" : "不展示";
                 that.$confirm("确认前台" + message + "该评论?", '提示', {
                     confirmButtonText: "确认",
@@ -99,6 +98,26 @@
                     });
                 });
             },
+            getCommentList: function (type = 'all', pageNo = 1) {
+                let that = this;
+                axios.get("/comment/list?type=" + type + "&pageNo=" + pageNo)
+                    .then(res => {
+                        if (res.data.code === 2000) {
+                            that.commentList = res.data.data;
+                        }
+                    }).catch(err => {
+                });
+            },
+            changeActive: function (tab, event) {
+                let that = this;
+                that.getCommentList(tab.name);
+            },
+            onPageNoChanged: function () {
+
+            },
+            onPageSizeChanged: function () {
+
+            }
         }
     }
 </script>

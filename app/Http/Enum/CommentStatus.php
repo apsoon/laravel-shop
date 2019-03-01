@@ -16,7 +16,28 @@ namespace App\Http\Enum;
  */
 class CommentStatus
 {
-    const AUDIT_REQUIRED = 0; // 待审核
-    const DISPLAY = 1; // 展示
-    const NULLIFY = 2; // 无效
+    const AUDIT_REQUIRED = ["code" => 0, "key" => "audit"]; // 待审核
+    const VALID = ["code" => 1, "key" => "valid"]; // 展示
+    const INVALID = ["code" => 4, "key" => "invalid"]; // 无效
+
+    private const CommentStatusArray = [
+        CommentStatus::AUDIT_REQUIRED,
+        CommentStatus::VALID,
+        CommentStatus::INVALID,
+    ];
+
+    /**
+     * key 获取
+     *
+     * @param $key
+     * @return mixed
+     */
+    public static function findByKey($key)
+    {
+        foreach (CommentStatus::CommentStatusArray as $status) {
+            if ($status["key"] === $key) {
+                return $status;
+            }
+        }
+    }
 }

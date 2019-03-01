@@ -65,22 +65,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CommentList",
   data: function data() {
     return {
       commentList: [],
-      pageNo: 1
+      pageNo: 1,
+      active: "all"
     };
   },
   mounted: function mounted() {
     var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/comment/list?pageNo=" + that.pageNo).then(function (res) {
-      if (res.data.code === 2000) {
-        that.commentList = res.data.data;
-      }
-    }).catch(function (err) {});
+    that.getCommentList();
   },
   methods: {
     modifyState: function modifyState(type, index, id) {
@@ -88,7 +91,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var that = this,
           state = 1;
-      if (type === "disable") state = 2;
+      if (type === "disable") state = 4;
       var message = state ? "展示" : "不展示";
       that.$confirm("确认前台" + message + "该评论?", '提示', {
         confirmButtonText: "确认",
@@ -107,7 +110,23 @@ __webpack_require__.r(__webpack_exports__);
           message: '已取消' + message
         });
       });
-    }
+    },
+    getCommentList: function getCommentList() {
+      var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'all';
+      var pageNo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var that = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/comment/list?type=" + type + "&pageNo=" + pageNo).then(function (res) {
+        if (res.data.code === 2000) {
+          that.commentList = res.data.data;
+        }
+      }).catch(function (err) {});
+    },
+    changeActive: function changeActive(tab, event) {
+      var that = this;
+      that.getCommentList(tab.name);
+    },
+    onPageNoChanged: function onPageNoChanged() {},
+    onPageSizeChanged: function onPageSizeChanged() {}
   }
 });
 
@@ -131,11 +150,35 @@ var render = function() {
   return _c(
     "el-card",
     [
-      _c("div", {
-        staticClass: "clearfix",
-        attrs: { slot: "header" },
-        slot: "header"
-      }),
+      _c(
+        "div",
+        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+        [_c("span", [_vm._v("评论列表")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "el-tabs",
+        {
+          on: { "tab-click": _vm.changeActive },
+          model: {
+            value: _vm.active,
+            callback: function($$v) {
+              _vm.active = $$v
+            },
+            expression: "active"
+          }
+        },
+        [
+          _c("el-tab-pane", { attrs: { label: "全部", name: "all" } }),
+          _vm._v(" "),
+          _c("el-tab-pane", { attrs: { label: "待审核", name: "audit" } }),
+          _vm._v(" "),
+          _c("el-tab-pane", { attrs: { label: "审核通过", name: "valid" } }),
+          _vm._v(" "),
+          _c("el-tab-pane", { attrs: { label: "审核不通过", name: "invalid" } })
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "el-table",
@@ -214,8 +257,8 @@ var render = function() {
                     scope.row.state === 0
                       ? _c("span", [_vm._v("待审核")])
                       : scope.row.state === 1
-                        ? _c("span", [_vm._v("前台显示")])
-                        : _c("span", [_vm._v("前台不显示")])
+                        ? _c("span", [_vm._v("审核通过")])
+                        : _c("span", [_vm._v("审核不通过")])
                   ]
                 }
               }
@@ -316,14 +359,14 @@ var render = function() {
           total: 1000,
           "page-sizes": [20, 50, 100],
           "page-size": 20,
-          "current-page": _vm.currentPage3
+          "current-page": _vm.pageNo
         },
         on: {
           "current-change": _vm.onPageNoChanged,
           "update:currentPage": function($event) {
-            _vm.currentPage3 = $event
+            _vm.pageNo = $event
           },
-          "size-change": _vm.handleSizeChange
+          "size-change": _vm.onPageSizeChanged
         }
       })
     ],
