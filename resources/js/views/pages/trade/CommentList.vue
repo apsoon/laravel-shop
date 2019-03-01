@@ -41,6 +41,14 @@
                 </template>
             </el-table-column>
         </el-table>
+        <el-pagination background layout="total, sizes, prev, pager, next, jumper"
+                       :total="1000"
+                       :page-sizes="[20, 50, 100]"
+                       :page-size="20"
+                       @current-change="onPageNoChanged"
+                       :current-page.sync="currentPage3"
+                       @size-change="handleSizeChange"
+                       style="margin-top: 20px; margin-bottom: 20px; float: right;"/>
     </el-card>
 </template>
 

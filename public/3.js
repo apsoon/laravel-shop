@@ -59,6 +59,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BrandList",
@@ -450,7 +458,30 @@ var render = function() {
           })
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("el-pagination", {
+        staticStyle: {
+          "margin-top": "20px",
+          "margin-bottom": "20px",
+          float: "right"
+        },
+        attrs: {
+          background: "",
+          layout: "total, sizes, prev, pager, next, jumper",
+          total: 1000,
+          "page-sizes": [20, 50, 100],
+          "page-size": 20,
+          "current-page": _vm.currentPage3
+        },
+        on: {
+          "current-change": _vm.onPageNoChanged,
+          "update:currentPage": function($event) {
+            _vm.currentPage3 = $event
+          },
+          "size-change": _vm.handleSizeChange
+        }
+      })
     ],
     1
   )
