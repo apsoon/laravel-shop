@@ -182,9 +182,9 @@ class SkuService
     public function searchSkuByName(array $req)
     {
         $size = 20;
-        $pageNo = 1;
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $result = $this->skuDao->findByNameLike($req["name"], $pageNo, $size);
-        return new JsonResult($result);
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**

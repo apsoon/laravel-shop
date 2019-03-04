@@ -3,6 +3,7 @@
 namespace App\Http\Dao;
 
 use App\Http\Model\Sku;
+use Illuminate\Support\Facades\Log;
 
 class SkuDao
 {
@@ -151,7 +152,7 @@ class SkuDao
     public function findByNameLike($name, int $pageNo, int $size)
     {
         $offset = ($pageNo - 1) * $size;
-        $result = $this->sku::where("category_id", "like", "%" . $name . "%")
+        $result = $this->sku::where("name", "like", "%" . $name . "%")
             ->offset($offset)
             ->limit($size)
             ->get();
