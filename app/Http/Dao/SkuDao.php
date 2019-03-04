@@ -141,6 +141,24 @@ class SkuDao
     }
 
     /**
+     * name 模糊查找
+     *
+     * @param $name
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findByNameLike($name, int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->sku::where("category_id", "like", "%" . $name . "%")
+            ->offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * SkuDao constructor.
      *
      * @param Sku $sku

@@ -69,6 +69,18 @@ class SkuFapi extends Controller
     }
 
     /**
+     * 搜索
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function search(Request $request)
+    {
+        $req = $request->all();
+        return $this->skuService->searchSkuByName($req);
+    }
+
+    /**
      * SkuFapi constructor.
      *
      * @param SkuService $skuService

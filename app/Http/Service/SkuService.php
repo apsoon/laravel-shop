@@ -174,6 +174,20 @@ class SkuService
     }
 
     /**
+     * 搜索sku
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function searchSkuByName(array $req)
+    {
+        $size = 20;
+        $pageNo = 1;
+        $result = $this->skuDao->findByNameLike($req["name"], $pageNo, $size);
+        return new JsonResult($result);
+    }
+
+    /**
      * SkuService constructor.
      *
      * @param SkuDao $skuDao
