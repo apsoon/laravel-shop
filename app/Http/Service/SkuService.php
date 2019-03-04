@@ -183,7 +183,7 @@ class SkuService
     {
         $size = 20;
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
-        $result = $this->skuDao->findByNameLike($req["name"], $pageNo, $size);
+        $result = $this->skuDao->findByNameLikeEffect($req["name"], $pageNo, $size);
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 

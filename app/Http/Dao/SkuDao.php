@@ -149,10 +149,11 @@ class SkuDao
      * @param int $size
      * @return mixed
      */
-    public function findByNameLike($name, int $pageNo, int $size)
+    public function findByNameLikeEffect($name, int $pageNo, int $size)
     {
         $offset = ($pageNo - 1) * $size;
-        $result = $this->sku::where("name", "like", "%" . $name . "%")
+        $result = $this->sku::where("state", '=', 1)
+            ->where("name", "like", "%" . $name . "%")
             ->offset($offset)
             ->limit($size)
             ->get();
