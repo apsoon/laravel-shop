@@ -188,6 +188,20 @@ class SkuService
     }
 
     /**
+     * 分页获取所有有效的
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getPagedSkuEffect(array $req)
+    {
+        $size = 20;
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $result = $this->skuDao->findByPageEffect($pageNo, $size);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
      * SkuService constructor.
      *
      * @param SkuDao $skuDao

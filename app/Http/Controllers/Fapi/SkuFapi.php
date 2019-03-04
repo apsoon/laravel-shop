@@ -35,6 +35,18 @@ class SkuFapi extends Controller
     }
 
     /**
+     * 分页获取
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function list(Request $request)
+    {
+        $req = $request->all();
+        return $this->skuService->getPagedSkuEffect($req);
+    }
+
+    /**
      * 通过SPU获取
      *
      * @param Request $request

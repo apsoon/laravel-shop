@@ -161,6 +161,23 @@ class SkuDao
     }
 
     /**
+     * 分页获取有效的
+     *
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findByPageEffect(int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->sku::where("state", '=', 1)
+            ->offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * SkuDao constructor.
      *
      * @param Sku $sku
