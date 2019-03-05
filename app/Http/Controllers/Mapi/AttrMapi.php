@@ -129,31 +129,11 @@ class AttrMapi extends Controller
     }
 
     // ===========================================================================  attr value ===========================================================================
-
-    /**
-     * 添加属性选项
-     *
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|View
-     */
-    public function addOption(Request $request)
-    {
-        $attrId = $request->all()["attrId"];
-        return view("admin.pages.goods.attrOption_add", ["attrId" => $attrId]);
-    }
-
-    public function createOption(Request $request)
-    {
-        $req = $request->all();
-        $result = $this->attrService->createAttrOption($req);
-        if ($result) return url("attr/list");
-    }
-
     /**
      * 创建spu attr value
      *
      * @param Request $request
-     * @return bool
+     * @return JsonResult
      */
     public function createValue(Request $request)
     {
