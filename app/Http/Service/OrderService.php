@@ -200,6 +200,21 @@ class OrderService
     }
 
     /**
+     * 删除订单
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function deleteOrder(array $req)
+    {
+        $orderSn = $req["orderSn"];
+        if (empty($orderSn)) return new JsonResult(StatusCode::PARAM_LACKED);
+        $result = $this->orderDao->delete($orderSn);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
      * 用户分页状态获取
      *
      * @param array $req

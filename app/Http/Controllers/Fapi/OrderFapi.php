@@ -32,10 +32,28 @@ class OrderFapi extends Controller
         return $this->orderService->createOrder($req);
     }
 
+    /**
+     * 取消订单
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function cancel(Request $request)
     {
         $req = $request->all();
         return $this->orderService->cancelOrder($req);
+    }
+
+    /**
+     * 删除订单
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function delete(Request $request)
+    {
+        $req = $request->all();
+        return $this->orderService->deleteOrder($req);
     }
 
     /**

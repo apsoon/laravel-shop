@@ -22,6 +22,7 @@ class OrderStatus
     const COMMENT_REQUIRED = ["code" => 3, "key" => "comment"]; // 待评论
     const COMPLETE = ["code" => 4, "key" => "complete"]; // 订单完成
     const CANCEL = ["code" => 7, "key" => "cancel"]; // 订单取消
+    const DELETED = ["code" => 8, "key" => "deleted"]; // 订单删除
 
     private const OrderStatusArray = [
         OrderStatus::PAY_REQUIRED,

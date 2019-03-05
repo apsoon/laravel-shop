@@ -9,6 +9,7 @@
 namespace App\Http\Dao;
 
 
+use App\Http\Enum\OrderStatus;
 use App\Http\Model\Order;
 
 /**
@@ -134,6 +135,20 @@ class OrderDao
         $result = $this->order::where(["state" => $state])
             ->offset($offset)
             ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
+     * 假删除订单
+     *
+     * @param $orderSn
+     * @return mixed
+     */
+    public function delete($orderSn)
+    {
+        $result = $this->order::where(["sn" => $orderSn])
+            ->update("status", OrderStatus::DELETED["code"])
             ->get();
         return $result;
     }
