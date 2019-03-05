@@ -25,6 +25,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PostTacticEdit",
   data: function data() {
@@ -113,6 +117,43 @@ var render = function() {
                   expression: "postModelForm.remark"
                 }
               })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "计费类型", prop: "feeType" } },
+            [
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "1" },
+                  model: {
+                    value: _vm.postModelForm.feeType,
+                    callback: function($$v) {
+                      _vm.$set(_vm.postModelForm, "feeType", $$v)
+                    },
+                    expression: "postModelForm.feeType"
+                  }
+                },
+                [_vm._v("按件计费")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "2" },
+                  model: {
+                    value: _vm.postModelForm.feeType,
+                    callback: function($$v) {
+                      _vm.$set(_vm.postModelForm, "feeType", $$v)
+                    },
+                    expression: "postModelForm.feeType"
+                  }
+                },
+                [_vm._v("按重量计费")]
+              )
             ],
             1
           )

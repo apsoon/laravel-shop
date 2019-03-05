@@ -69,7 +69,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -83,7 +82,8 @@ __webpack_require__.r(__webpack_exports__);
         state: "0",
         positionId: "",
         imageUrl: "",
-        isJump: "0"
+        linkType: "0",
+        skuId: "0"
       },
       rules: {
         name: [{
@@ -131,7 +131,9 @@ __webpack_require__.r(__webpack_exports__);
             sortOrder: data.sort_order,
             state: "" + data.state,
             positionId: data.position_id,
-            imageUrl: data.image_url
+            imageUrl: data.image_url,
+            linkType: "" + data.link_type,
+            skuId: data.sku_id
           };
         }
       }).catch(function (err) {});
@@ -295,6 +297,7 @@ var render = function() {
             { attrs: { label: "排序优先级", prop: "sortOrder" } },
             [
               _c("el-input", {
+                attrs: { placeholder: "请输入广告排序优先级" },
                 model: {
                   value: _vm.adForm.sortOrder,
                   callback: function($$v) {
@@ -344,6 +347,63 @@ var render = function() {
             ],
             1
           ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "跳转类型", prop: "linkType" } },
+            [
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "0" },
+                  model: {
+                    value: _vm.adForm.linkType,
+                    callback: function($$v) {
+                      _vm.$set(_vm.adForm, "linkType", $$v)
+                    },
+                    expression: "adForm.linkType"
+                  }
+                },
+                [_vm._v("不设置跳转")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "1" },
+                  model: {
+                    value: _vm.adForm.linkType,
+                    callback: function($$v) {
+                      _vm.$set(_vm.adForm, "linkType", $$v)
+                    },
+                    expression: "adForm.linkType"
+                  }
+                },
+                [_vm._v("跳转商品页")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.adForm.linkType === "1"
+            ? _c(
+                "el-form-item",
+                { attrs: { label: "商品编号", prop: "skuId" } },
+                [
+                  _c("el-input", {
+                    attrs: { placeholder: "请输入商品编号" },
+                    model: {
+                      value: _vm.adForm.skuId,
+                      callback: function($$v) {
+                        _vm.$set(_vm.adForm, "skuId", $$v)
+                      },
+                      expression: "adForm.skuId"
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "el-form-item",

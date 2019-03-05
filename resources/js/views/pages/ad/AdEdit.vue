@@ -5,10 +5,10 @@
         </div>
         <el-form ref="adForm" :rules="rules" :model="adForm" label-width="100px">
             <el-form-item label="广告名称" prop="name">
-                <el-input v-model="adForm.name" :span="3" placeholder="请输入广告名称"></el-input>
+                <el-input v-model="adForm.name" :span="3" placeholder="请输入广告名称"/>
             </el-form-item>
             <el-form-item label="广告描述" prop="content">
-                <el-input v-model="adForm.content" placeholder="请输入广告描述"></el-input>
+                <el-input v-model="adForm.content" placeholder="请输入广告描述"/>
             </el-form-item>
             <el-form-item label="广告位置" prop="positionId">
                 <el-select v-model="adForm.positionId" placeholder="请选广告位置">
@@ -20,7 +20,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="排序优先级" prop="sortOrder">
-                <el-input v-model="adForm.sortOrder"></el-input>
+                <el-input v-model="adForm.sortOrder" placeholder="请输入广告排序优先级"/>
             </el-form-item>
             <el-form-item label="添加图片" prop="imageList">
                 <el-upload
@@ -38,14 +38,13 @@
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
             </el-form-item>
-            <!--<el-form-item label="是否设置跳转" prop="state">-->
-            <!--<el-radio v-model="adForm.isJump" label="0">不设置跳转</el-radio>-->
-            <!--<el-radio v-model="adForm.isJump" label="1">设置跳转</el-radio>-->
-            <!--</el-form-item>-->
-            <!--<el-form-item label="跳转类型" prop="state">-->
-            <!--<el-radio v-model="adForm.isJump" label="0">不设置跳转</el-radio>-->
-            <!--<el-radio v-model="adForm.isJump" label="1">设置跳转</el-radio>-->
-            <!--</el-form-item>-->
+            <el-form-item label="跳转类型" prop="linkType">
+                <el-radio v-model="adForm.linkType" label="0">不设置跳转</el-radio>
+                <el-radio v-model="adForm.linkType" label="1">跳转商品页</el-radio>
+            </el-form-item>
+            <el-form-item label="商品编号" prop="skuId" v-if="adForm.linkType === '1'">
+                <el-input v-model="adForm.skuId" placeholder="请输入商品编号"/>
+            </el-form-item>
             <el-form-item label="是否启用" prop="state">
                 <el-radio v-model="adForm.state" label="0">禁用</el-radio>
                 <el-radio v-model="adForm.state" label="1">启用</el-radio>
@@ -71,7 +70,8 @@
                     state: "0",
                     positionId: "",
                     imageUrl: "",
-                    isJump: "0"
+                    linkType: "0",
+                    skuId: "0"
                 },
                 rules: {
                     name: [
@@ -118,6 +118,8 @@
                                 state: "" + data.state,
                                 positionId: data.position_id,
                                 imageUrl: data.image_url,
+                                linkType: "" + data.link_type,
+                                skuId: data.sku_id
                             }
                         }
                     })
@@ -141,7 +143,6 @@
                                     router.push("ad-list");
                                 }
                             });
-
                     } else {
                         console.log('error submit!!');
                         return false;

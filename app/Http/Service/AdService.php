@@ -48,6 +48,8 @@ class AdService
         $ad->content = $req["content"];
         $ad->sort_order = $req["sortOrder"];
         $ad->image_url = $req["imageUrl"];
+        $ad->link_type = $req["linkType"];
+        $ad->sku_id = $req["skuId"];
         $ad->state = $req["state"];
         $result = $this->adDao->insert($ad);
         if ($result) return new JsonResult();
@@ -68,6 +70,8 @@ class AdService
         $ad->content = $req["content"];
         $ad->sort_order = $req["sortOrder"];
         $ad->image_url = $req["imageUrl"];
+        $ad->link_type = $req["linkType"];
+        $ad->sku_id = $req["skuId"];
         $ad->state = $req["state"];
         $result = $this->adDao->update($ad);
         if ($result) return new JsonResult();

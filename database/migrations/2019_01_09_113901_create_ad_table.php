@@ -21,7 +21,7 @@ class CreateAdTable extends Migration
             $table->string("content")->nullable()->default("");
             $table->string("image_url")->default("");
             $table->tinyInteger("link_type")->default(0);
-            $table->string("link")->nullable();
+            $table->integer("skuId")->nullable()->default(0)->comment("SKU ID");
             $table->integer("sort_order")->default(0);
             $table->tinyInteger("state")->nullable(0);
             $table->timestamp("created_at")->useCurrent();
