@@ -122,6 +122,12 @@ class AttrMapi extends Controller
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
+    /**
+     * 分类获取
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function listByCategory(Request $request)
     {
         $req = $request->all();
@@ -129,6 +135,7 @@ class AttrMapi extends Controller
     }
 
     // ===========================================================================  attr value ===========================================================================
+
     /**
      * 创建spu attr value
      *
@@ -139,6 +146,18 @@ class AttrMapi extends Controller
     {
         $req = $request->all();
         return $this->attrService->createSpuAttrValue($req);
+    }
+
+    /**
+     * spu value list
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function valueList(Request $request)
+    {
+        $req = $request->all();
+        return $this->attrService->getSpuAttrValueList($req);
     }
 
     // ===========================================================================  constructor  ===========================================================================

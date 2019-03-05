@@ -208,16 +208,52 @@ class AttrService
         return $result;
     }
 
-//    /**
-//     * spu 获取
-//     * @param array $req
-//     * @return JsonResult
-//     */
-//    public function getOptionBySpu(array $req)
-//    {
-//        $result = $this->spuAttrValueDao->findBySpuId($req["spuId"]);
-//        return new JsonResult(StatusCode::SUCCESS, $result);
-//    }
+    /**
+     * 获取spu attr value List 分组
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getSpuGroupedAttrValueList(array $req)
+    {
+        $attrValues = $this->spuAttrValueDao->findBySpuId($req["spuId"]);
+        if (empty($attrValues)) return new JsonResult();
+        $groupIds = [];
+        foreach ($attrValues as $attrValue) {
+            $attr = $this->attrDao->findById($attrValue->attr_id);
+            $attrValue->attrName = $attr->name;
+            if (!in_array($attrValue->attr_group_id, $groupIds)) array_push($groupIds, $attrValue->attr_group_id);
+        }
+        $groups = [];
+        foreach ($groupIds as $groupId) {
+            $group = $this->attrGroupDao->findById($groupId);
+            $group->values = [];
+            array_push($groups, $group);
+        }
+        foreach ($attrValues as $attrValue) {
+            foreach ($groups as $group) {
+                if ($attrValue->attr_group_id == $group->id) {
+                    $values = $group->values;
+                    array_push($values, $attrValue);
+                    $group->values = $values;
+                    break;
+                }
+            }
+        }
+        return new JsonResult(StatusCode::SUCCESS, $groups);
+    }
+
+    /**
+     * 获取spu attr value List 非分组
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getSpuAttrValueList(array $req)
+    {
+        $result = $this->spuAttrValueDao->findBySpuId($req["spuId"]);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
 
     // ===========================================================================  constructor  ===========================================================================
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Fapi;
 
 use App\Http\Controllers\Controller;
 use App\Http\Enum\StatusCode;
+use App\Http\Service\AttrService;
 use App\Http\Service\SpuService;
 use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
@@ -20,6 +21,8 @@ class SpuFapi extends Controller
      * @var SpuService
      */
     private $spuService;
+
+    private $attrService;
 
     /**
      * 获取Banner
@@ -46,11 +49,26 @@ class SpuFapi extends Controller
     }
 
     /**
-     * SpuFapi constructor.
-     * @param SpuService $spuService
+     * 获取属性
+     *
+     * @param Request $request
+     * @return JsonResult
      */
-    public function __construct(SpuService $spuService)
+    public function attrList(Request $request)
+    {
+        $req = $request->all();
+        return $this->attrService->getSpuGroupedAttrValueList($req);
+    }
+
+    /**
+     * SpuFapi constructor.
+     *
+     * @param SpuService $spuService
+     * @param AttrService $attrService
+     */
+    public function __construct(SpuService $spuService, AttrService $attrService)
     {
         $this->spuService = $spuService;
+        $this->attrService = $attrService;
     }
 }
