@@ -161,6 +161,22 @@ class SkuDao
     }
 
     /**
+     * 分页获取的
+     *
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findByPage(int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->sku::offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * 分页获取有效的
      *
      * @param int $pageNo

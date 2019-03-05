@@ -188,6 +188,20 @@ class SkuService
     }
 
     /**
+     * 分页获取所有的
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getPagedSku(array $req)
+    {
+        $size = 20;
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $result = $this->skuDao->findByPage($pageNo, $size);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
      * 分页获取所有有效的
      *
      * @param array $req

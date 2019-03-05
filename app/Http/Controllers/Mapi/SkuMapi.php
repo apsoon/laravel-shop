@@ -19,8 +19,16 @@ class SkuMapi extends Controller
      */
     private $skuService;
 
+    /**
+     * 分页获取所有的
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function list(Request $request)
     {
+        $req = $request->all();
+       return $this->skuService->getPagedSku($req);
     }
 
     /**
