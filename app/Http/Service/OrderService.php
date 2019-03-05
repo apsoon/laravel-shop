@@ -14,6 +14,7 @@ use App\Http\Dao\OrderDao;
 use App\Http\Dao\OrderSkuDao;
 use App\Http\Dao\SkuDao;
 use App\Http\Dao\UserCouponDao;
+use App\Http\Enum\CouponSendType;
 use App\Http\Enum\OrderStatus;
 use App\Http\Enum\StatusCode;
 use App\Http\Enum\UserCouponStatus;
@@ -299,6 +300,18 @@ class OrderService
     }
 
     /**
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getUserGetCouponList(array $req)
+    {
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $size = 20;
+        $result = $this->couponDao->findPageByTypeEffect(CouponSendType::USER_RECEIVE["code"], $pageNo, $size);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
      * OrderService constructor.
      *
      * @param OrderDao $orderDao
@@ -306,8 +319,7 @@ class OrderService
      * @param OrderSkuDao $orderSkuDao
      * @param CouponDao $couponDao
      */
-    public
-    function __construct(OrderDao $orderDao, SkuDao $skuDao, OrderSkuDao $orderSkuDao, CouponDao $couponDao, UserCouponDao $userCouponDao)
+    public function __construct(OrderDao $orderDao, SkuDao $skuDao, OrderSkuDao $orderSkuDao, CouponDao $couponDao, UserCouponDao $userCouponDao)
     {
         $this->orderDao = $orderDao;
         $this->skuDao = $skuDao;

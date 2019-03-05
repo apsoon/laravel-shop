@@ -51,6 +51,7 @@ Route::group(["namespace" => "Fapi"], function () {
     // collection 收藏
     Route::POST("collection/create", "CollectionFapi@create");
     Route::GET("collection/list", "CollectionFapi@list");
+    Route::GET("collection/list-user", "CollectionFapi@listByUser");
     Route::POST("collection/delete", "CollectionFapi@remove");
     Route::GET("collection/check", "CollectionFapi@check");
 

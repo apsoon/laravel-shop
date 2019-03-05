@@ -143,6 +143,22 @@ class CouponDao
     }
 
     /**
+     * @param $sendType
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findPageByTypeEffect($sendType, int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->coupon::where("send_type", "=", $sendType)
+            ->offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * CouponDao constructor.
      *
      * @param Coupon $coupon

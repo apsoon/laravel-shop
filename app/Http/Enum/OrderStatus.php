@@ -16,7 +16,7 @@ namespace App\Http\Enum;
  */
 class OrderStatus
 {
-    const  PAY_REQUIRED = ["code" => 0, "key" => "pay"]; // 待付款
+    const PAY_REQUIRED = ["code" => 0, "key" => "pay"]; // 待付款
     const DELIVERY_REQUIRED = ["code" => 1, "key" => "send"]; // 待发货
     const RECEIVE_REQUIRED = ["code" => 2, "key" => "receive"]; // 待收货
     const COMMENT_REQUIRED = ["code" => 3, "key" => "comment"]; // 待评论
