@@ -54,6 +54,17 @@ class UserCouponDao
     }
 
     /**
+     * 更新
+     *
+     * @param UserCoupon $userCoupon
+     * @return bool
+     */
+    public function update(UserCoupon $userCoupon)
+    {
+        return $userCoupon->save();
+    }
+
+    /**
      * UserCouponDao constructor.
      *
      * @param UserCoupon $userCoupon

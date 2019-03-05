@@ -13,6 +13,7 @@ use App\Http\Dao\CouponDao;
 use App\Http\Dao\OrderDao;
 use App\Http\Dao\OrderSkuDao;
 use App\Http\Dao\SkuDao;
+use App\Http\Dao\UserCouponDao;
 use App\Http\Enum\OrderStatus;
 use App\Http\Enum\StatusCode;
 use App\Http\Enum\UserCouponStatus;
@@ -49,6 +50,11 @@ class OrderService
      * @var CouponDao
      */
     private $couponDao;
+
+    /**
+     * @var UserCouponDao
+     */
+    private $userCouponDao;
 
     /**
      * 创建订单
@@ -101,7 +107,6 @@ class OrderService
                 if ($sku->number < $requestSku->number) {
                     return new JsonResult(StatusCode::STOCK_NOT_ENOUGH);
                 }
-                Log::info($sku);
 //                array_push($skuDecreaseList, $sku);
                 $this->skuDao->decreaseNumber($sku->id, $requestSku->number); // TODO ? position
                 $originPrice += $sku->price * $requestSku->number;
@@ -116,7 +121,7 @@ class OrderService
             if ($req["useCoupon"]) {
                 $couponId = $req["couponId"];
                 // 用户优惠券校验
-                $userCoupon = $this->couponDao->findByIdUser($userId, $couponId);
+                $userCoupon = $this->userCouponDao->findByCouponUser($userId, $couponId);
                 if (empty($userCoupon)) {
                     return new JsonResult(StatusCode::COUPON_NOT_EXIST);
                 }
@@ -186,12 +191,21 @@ class OrderService
             // 释放SKU
             $orderSkus = $this->orderSkuDao->findByOrderSn($orderSn);
             foreach ($orderSkus as $orderSku) {
-
+                $this->skuDao->increaseNumber($orderSku->sku_id, $orderSku->number);
             }
             // 如果使用了优惠券，返还优惠券
             if ($order->use_coupon) {
                 $coupon = $this->couponDao->findById($order->coupon_id);
+                $userCoupon = $this->userCouponDao->findByCouponUser($req["userId"], $coupon->id);
                 // 判断是否失效
+                $date = new DateTime();
+                if ($date->getTimestamp() > $coupon->effect_end) {
+                    $userCoupon->state = UserCouponStatus::EXPIRED;
+                } else {
+                    $userCoupon->state = UserCouponStatus::NEW;
+                }
+                $this->userCouponDao->update($userCoupon);
+                DB::commit();
             }
         } catch (\Exception $e) {
             DB::rollBack();
@@ -293,11 +307,12 @@ class OrderService
      * @param CouponDao $couponDao
      */
     public
-    function __construct(OrderDao $orderDao, SkuDao $skuDao, OrderSkuDao $orderSkuDao, CouponDao $couponDao)
+    function __construct(OrderDao $orderDao, SkuDao $skuDao, OrderSkuDao $orderSkuDao, CouponDao $couponDao, UserCouponDao $userCouponDao)
     {
         $this->orderDao = $orderDao;
         $this->skuDao = $skuDao;
         $this->orderSkuDao = $orderSkuDao;
         $this->couponDao = $couponDao;
+        $this->userCouponDao = $userCouponDao;
     }
 }

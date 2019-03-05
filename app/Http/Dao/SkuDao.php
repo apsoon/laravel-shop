@@ -90,6 +90,20 @@ class SkuDao
     }
 
     /**
+     * 增加数量
+     *
+     * @param $id
+     * @param $number
+     * @return mixed
+     */
+    public function increaseNumber($id, $number)
+    {
+        $result = $this->sku::where(["id" => $id])
+            ->increment("number", $number);
+        return $result;
+    }
+
+    /**
      * 分类分页获取
      *
      * @param $categoryId
