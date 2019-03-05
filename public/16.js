@@ -52,12 +52,19 @@ __webpack_require__.r(__webpack_exports__);
     that.categoryId = categoryId;
     that.spuId = spuId;
     that.attrForm.spuId = spuId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-category?categoryId=" + categoryId).then(function (res) {
-      if (res.data.code === 2000) {
-        that.attrList = res.data.data;
-        console.info(that.attrList);
-      }
-    }).catch(function (err) {});
+    var cateAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-category?categoryId=" + categoryId);
+    var spuAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrValue/list?spuId=" + spuId);
+    Promise.all([cateAttr, spuAttr]).then(function (values) {
+      console.info(values);
+    }); // .then(res => {
+    //     if (res.data.code === 2000) {
+    //         that.attrList = res.data.data;
+    //         console.info(that.attrList);
+    //     }
+    // })
+    // .catch(err => {
+    //
+    // });
   },
   methods: {
     onSubmit: function onSubmit() {
@@ -116,7 +123,11 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       that.attrForm.spuAttrList = spuAttrList;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/attrValue/create", that.attrForm).then(function (err) {}).catch(function (err) {});
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/attrValue/create", that.attrForm).then(function (res) {
+        if (res.data.code === 2000) {
+          that.$router.push("/spu/detail?spuId=", that.spuId + "&active=" + "attr");
+        }
+      }).catch(function (err) {});
     }
   }
 });

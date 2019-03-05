@@ -1,7 +1,7 @@
 <template>
     <el-card>
         <div slot="header" class="clearfix">
-            <span>商品属性</span>
+            <span>商品属性编辑</span>
         </div>
         <el-form ref="attrForm" :rules="rules" :model="attrForm" label-width="100px">
             <div v-for="group in attrList">
@@ -41,16 +41,34 @@
             that.categoryId = categoryId;
             that.spuId = spuId;
             that.attrForm.spuId = spuId;
-            axios.get("/attr/list-category?categoryId=" + categoryId)
-                .then(res => {
-                    if (res.data.code === 2000) {
-                        that.attrList = res.data.data;
-                        console.info(that.attrList);
+            let cateAttr = axios.get("/attr/list-category?categoryId=" + categoryId);
+            let spuAttr = axios.get("/attrValue/list?spuId=" + spuId);
+            Promise.all([cateAttr, spuAttr])
+                .then(values => {
+                        let careAttrList = values[0].data.data,
+                            spuAttrList = values[1].data.data;
+                        for (let spu of spuAttrList) {
+                            for (let cate of careAttrList) {
+                                if (cate.id === spu.attr_group_id) {
+                                    for (let option of cate.options) {
+                                        // if (option->attr_id)
+                                    }
+                                }
+                            }
+                        }
                     }
-                })
-                .catch(err => {
+                ).catch(err => {
 
-                });
+            })
+            // .then(res => {
+            //     if (res.data.code === 2000) {
+            //         that.attrList = res.data.data;
+            //         console.info(that.attrList);
+            //     }
+            // })
+            // .catch(err => {
+            //
+            // });
         },
         methods: {
             onSubmit: function () {
