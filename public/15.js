@@ -194,9 +194,11 @@ var render = function() {
   return _c(
     "el-card",
     [
-      _c("div", { attrs: { slot: "header" }, slot: "header" }, [
-        _c("span", [_vm._v("创建产品")])
-      ]),
+      _c(
+        "div",
+        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+        [_c("span", [_vm._v("创建产品")])]
+      ),
       _vm._v(" "),
       _c(
         "el-form",

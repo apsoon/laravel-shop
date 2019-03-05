@@ -70,8 +70,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::POST("attr/create", "AttrMapi@create");
     Route::GET("attrGroup/list", "AttrMapi@groupList");
     Route::POST("attrGroup/create", "AttrMapi@createGroup");
-    Route::GET("attrOption/add", "AttrMapi@addOption");
-    Route::POST("attrOption/create", "AttrMapi@createOption");
+    Route::POST("attrValue/create", "AttrMapi@createValue");
 
     // 规格
     Route::GET("spec/list", "SpecMapi@list");

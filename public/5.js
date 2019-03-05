@@ -452,7 +452,7 @@ var render = function() {
                 {
                   attrs: {
                     to: {
-                      path: "/spu-attr-add",
+                      path: "/spu-attr-edit",
                       query: {
                         spuId: _vm.spuId,
                         categoryId: _vm.spu.category_id

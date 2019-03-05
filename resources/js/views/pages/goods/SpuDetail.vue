@@ -8,7 +8,7 @@
                 <el-row>状态: {{spu.state}}</el-row>
             </el-tab-pane>
             <el-tab-pane label="商品属性" name="attr">
-                <router-link :to="{path: '/spu-attr-add', query:{spuId:spuId,categoryId:spu.category_id}}">
+                <router-link :to="{path: '/spu-attr-edit', query:{spuId:spuId,categoryId:spu.category_id}}">
                     <el-button type="primary" size="medium">
                         添加属性
                     </el-button>

@@ -124,11 +124,11 @@ class AttrMapi extends Controller
 
     public function listByCategory(Request $request)
     {
-       $req = $request->all();
-       return $this->attrService->getAttrGroupOptionByCategory($req);
+        $req = $request->all();
+        return $this->attrService->getAttrGroupOptionByCategory($req);
     }
 
-    // ===========================================================================  attr option  ===========================================================================
+    // ===========================================================================  attr value ===========================================================================
 
     /**
      * 添加属性选项
@@ -147,6 +147,18 @@ class AttrMapi extends Controller
         $req = $request->all();
         $result = $this->attrService->createAttrOption($req);
         if ($result) return url("attr/list");
+    }
+
+    /**
+     * 创建spu attr value
+     *
+     * @param Request $request
+     * @return bool
+     */
+    public function createValue(Request $request)
+    {
+        $req = $request->all();
+        return $this->attrService->createSpuAttrValue($req);
     }
 
     // ===========================================================================  constructor  ===========================================================================

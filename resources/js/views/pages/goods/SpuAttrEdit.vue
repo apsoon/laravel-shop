@@ -3,13 +3,13 @@
         <div slot="header" class="clearfix">
             <span>商品属性</span>
         </div>
-        <el-form ref="attrForm" :model="attrForm" label-width="100px">
+        <el-form ref="attrForm" :rules="rules" :model="attrForm" label-width="100px">
             <div v-for="group in attrList">
                 <span>{{group.name}}</span>
-                <el-form :model="group">
+                <el-form :model="group" label-width="100px">
                     <div v-for="attr in group.attrs">
                         <el-form-item :label="attr.name">
-                            <el-input :model="attr.value"></el-input>
+                            <el-input v-model="attr.value"/>
                         </el-form-item>
                     </div>
                 </el-form>
@@ -24,13 +24,14 @@
     import axios from "axios";
 
     export default {
-        name: "SpuAttrAdd",
+        name: "SpuAttrEdit",
         data: function () {
             return {
                 attrList: [],
                 categoryId: "",
                 spuId: "",
-                attrForm: {}
+                attrForm: {},
+                rules: {}
             }
         },
         mounted: function () {
@@ -39,6 +40,7 @@
                 spuId = that.$route.query.spuId;
             that.categoryId = categoryId;
             that.spuId = spuId;
+            that.attrForm.spuId = spuId;
             axios.get("/attr/list-category?categoryId=" + categoryId)
                 .then(res => {
                     if (res.data.code === 2000) {
@@ -52,8 +54,27 @@
         },
         methods: {
             onSubmit: function () {
-                let that = this;
-                console.info(that.attrList);
+                let that = this,
+                    attrList = that.attrList,
+                    spuAttrList = [];
+                for (let group of attrList) {
+                    for (let attr of group.attrs) {
+                        let spuAttr = {
+                            attrGroupId: group.id,
+                            attrId: attr.id,
+                            value: attr.value
+                        };
+                        spuAttrList.push(spuAttr);
+                    }
+                }
+                that.attrForm.spuAttrList = spuAttrList;
+                axios.post("/attrValue/create", that.attrForm)
+                    .then(res => {
+                        if (res.data.code === 2000) {
+                            that.$router.push("/spu/detail?spuId=", that.spuId + "&active=" + "attr");
+                        }
+                    }).catch(err => {
+                });
             }
         }
     }

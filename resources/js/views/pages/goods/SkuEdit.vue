@@ -1,6 +1,6 @@
 <template>
     <el-card>
-        <div slot="header">
+        <div slot="header" class="clearfix">
             <span>创建产品</span>
         </div>
         <el-form ref="skuForm" :rules="rules" :model="skuForm" label-width="100px">

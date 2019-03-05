@@ -17,6 +17,7 @@ use App\Http\Enum\StatusCode;
 use App\Http\Model\Attr;
 use App\Http\Model\AttrGroup;
 use App\Http\Util\JsonResult;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AttrService
@@ -176,22 +177,23 @@ class AttrService
     // ===========================================================================  attr option  ===========================================================================
 
     /**
-     * 创建属性选项
+     * 创建SPU属性值
      *
      * @param array $req
-     * @return bool
+     * @return JsonResult
      */
     public function createSpuAttrValue(array $req)
     {
-        $attrId = $req["attrId"];
-        $groupId = $this->attrDao->findById($attrId)->attr_group_id;
-        $options = $req["options"];
+        $spuAttrList = $req["spuAttrList"];
+        $spuId = $req["spuId"];
         $arr = [];
-        foreach ($options as $option) {
-            array_push($arr, ["attr_id" => $attrId, "attr_group_id" => $groupId, "name" => $option]);
+        foreach ($spuAttrList as $spuAttr) {
+            Log::info($spuAttr);
+            array_push($arr, ["spu_id" => $spuId, "attr_id" => $spuAttr["attrId"], "attr_group_id" => $spuAttr["attrGroupId"], "value" => $spuAttr["value"]]);
         }
         $result = $this->spuAttrValueDao->insertList($arr);
-        return $result;
+        if ($result) return new JsonResult(StatusCode::SUCCESS, $result);
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
