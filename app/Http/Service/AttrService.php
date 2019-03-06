@@ -251,8 +251,14 @@ class AttrService
      */
     public function getSpuAttrValueList(array $req)
     {
-        $result = $this->spuAttrValueDao->findBySpuId($req["spuId"]);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        $attrValues = $this->spuAttrValueDao->findBySpuId($req["spuId"]);
+        foreach ($attrValues as $attrValue) {
+            $attr = $this->attrDao->findById($attrValue->attr_id);
+            $group = $this->attrGroupDao->findById($attrValue->attr_group_id);
+            $attrValue->attrName = $attr->name;
+            $attrValue->attrGroupName = $group->name;
+        }
+        return new JsonResult(StatusCode::SUCCESS, $attrValues);
     }
 
     // ===========================================================================  constructor  ===========================================================================

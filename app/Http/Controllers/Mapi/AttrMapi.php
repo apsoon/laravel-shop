@@ -62,10 +62,10 @@ class AttrMapi extends Controller
      * @param Request $request
      * @return JsonResult
      */
-    public function listBySpu(Request $request)
+    public function valueListBySpu(Request $request)
     {
         $req = $request->all();
-        return $this->attrService->getAttrListWithValueBySpu($req);
+        return $this->attrService->getSpuAttrValueList($req);
     }
 
     /**
@@ -147,18 +147,18 @@ class AttrMapi extends Controller
         $req = $request->all();
         return $this->attrService->createSpuAttrValue($req);
     }
-
-    /**
-     * spu value list
-     *
-     * @param Request $request
-     * @return JsonResult
-     */
-    public function valueList(Request $request)
-    {
-        $req = $request->all();
-        return $this->attrService->getSpuAttrValueList($req);
-    }
+//
+//    /**
+//     * spu value list
+//     *
+//     * @param Request $request
+//     * @return JsonResult
+//     */
+//    public function valueList(Request $request)
+//    {
+//        $req = $request->all();
+//        return $this->attrService->getSpuAttrValueList($req);
+//    }
 
     // ===========================================================================  constructor  ===========================================================================
 

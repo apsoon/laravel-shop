@@ -153,7 +153,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -190,7 +189,7 @@ __webpack_require__.r(__webpack_exports__);
         that.skuList = res.data.data;
       }
     }).catch(function (err) {});
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-spu?spuId=" + that.spuId + "&categoryId=" + that.spu.category_id).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/value-list-spu?spuId=" + that.spuId).then(function (res) {
       if (res.data.code === 2000) {
         that.attrList = res.data.data;
       }
@@ -464,7 +463,7 @@ var render = function() {
                   _c(
                     "el-button",
                     { attrs: { type: "primary", size: "medium" } },
-                    [_vm._v("\n                    添加属性\n                ")]
+                    [_vm._v("\n                    编辑属性\n                ")]
                   )
                 ],
                 1
@@ -481,9 +480,17 @@ var render = function() {
                   }
                 },
                 [
-                  _c("el-table-column", { attrs: { label: "属性名称" } }),
+                  _c("el-table-column", {
+                    attrs: { label: "属性名称", prop: "attrName" }
+                  }),
                   _vm._v(" "),
-                  _c("el-table-column", { attrs: { label: "值" } }),
+                  _c("el-table-column", {
+                    attrs: { label: "属性值", prop: "value" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { label: "属性组", prop: "attrGroupName" }
+                  }),
                   _vm._v(" "),
                   _c("el-table-column", { attrs: { label: "操作" } })
                 ],

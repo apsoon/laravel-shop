@@ -10,14 +10,13 @@
             <el-tab-pane label="商品属性" name="attr">
                 <router-link :to="{path: '/spu-attr-edit', query:{spuId:spuId,categoryId:spu.category_id}}">
                     <el-button type="primary" size="medium">
-                        添加属性
+                        编辑属性
                     </el-button>
                 </router-link>
                 <el-table ref="attrList" :data="attrList" tooltip-effect="dark" width="100%">
-                    <el-table-column label="属性名称">
-                    </el-table-column>
-                    <el-table-column label="值">
-                    </el-table-column>
+                    <el-table-column label="属性名称" prop="attrName"/>
+                    <el-table-column label="属性值" prop="value"/>
+                    <el-table-column label="属性组" prop="attrGroupName"/>
                     <el-table-column label="操作">
                     </el-table-column>
                 </el-table>
@@ -187,7 +186,7 @@
                 .catch(err => {
 
                 });
-            axios.get("/attr/list-spu?spuId=" + that.spuId + "&categoryId=" + that.spu.category_id)
+            axios.get("/attr/value-list-spu?spuId=" + that.spuId)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.attrList = res.data.data;

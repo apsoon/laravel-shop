@@ -66,12 +66,12 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::GET("attr/list", "AttrMapi@list");
     Route::GET("attr/list-group", "AttrMapi@listByGroup");
     Route::GET("attr/list-category", "AttrMapi@listByCategory");
-    Route::GET("attr/list-spu", "AttrMapi@listBySpu");
+    Route::GET("attr/value-list-spu", "AttrMapi@valueListBySpu");
     Route::POST("attr/create", "AttrMapi@create");
     Route::GET("attrGroup/list", "AttrMapi@groupList");
     Route::POST("attrGroup/create", "AttrMapi@createGroup");
     Route::POST("attrValue/create", "AttrMapi@createValue");
-    Route::GET("attrValue/list", "AttrMapi@valueList");
+//    Route::GET("attrValue/list", "AttrMapi@valueList");
 
     // 规格
     Route::GET("spec/list", "SpecMapi@list");
