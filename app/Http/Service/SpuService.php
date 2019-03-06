@@ -10,23 +10,20 @@ namespace App\Http\Service;
 
 
 use App\Http\Config\Config;
+use App\Http\Dao\BrandDao;
+use App\Http\Dao\CategoryDao;
 use App\Http\Dao\SpuDao;
 use App\Http\Dao\SpuDetailDao;
-use App\Http\Dao\SkuDao;
-use App\Http\Dao\SkuSpecOptionDao;
 use App\Http\Dao\SpecDao;
-use App\Http\Dao\SpecificationOptionDao;
 use App\Http\Dao\SpuGalleryDao;
 use App\Http\Dao\SpuSpecDao;
 use App\Http\Dao\SpuSpecOptionDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Spu;
 use App\Http\Model\SpuDetail;
-use App\Http\Model\Product;
 use App\Http\Model\SpuGallery;
 use App\Http\Model\SpuSpecOption;
 use App\Http\Util\JsonResult;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class SpuService
@@ -65,6 +62,16 @@ class SpuService
      * @var SpecDao
      */
     private $specDao;
+
+    /**
+     * @var BrandDao
+     */
+    private $brandDao;
+
+    /**
+     * @var CategoryDao
+     */
+    private $categoryDao;
 
     /**
      * @param $req
@@ -144,6 +151,10 @@ class SpuService
     {
         if (empty($req["spuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $spu = $this->spuDao->findById($req["spuId"]);
+        $cate = $this->categoryDao->findById($spu->category_id);
+        $spu->category_name = $cate->name;
+        $brand = $this->brandDao->findById($spu->brand_id);
+        $spu->brand_name = $brand->name;
         $detail = $this->spuDetailDao->findBySpuId($req["spuId"]);
         $result = new \stdClass();
         $result->spu = $spu;
@@ -374,8 +385,10 @@ class SpuService
      * @param SpuSpecDao $spuSpecDao
      * @param SpuSpecOptionDao $spuSpecOptionDao
      * @param SpuGalleryDao $spuGalleryDao
+     * @param BrandDao $brandDao
+     * @param CategoryDao $categoryDao
      */
-    public function __construct(SpecDao $specDao, SpuDao $spuDao, SpuDetailDao $spuDetailDao, SpuSpecDao $spuSpecDao, SpuSpecOptionDao $spuSpecOptionDao, SpuGalleryDao $spuGalleryDao)
+    public function __construct(SpecDao $specDao, SpuDao $spuDao, SpuDetailDao $spuDetailDao, SpuSpecDao $spuSpecDao, SpuSpecOptionDao $spuSpecOptionDao, SpuGalleryDao $spuGalleryDao, BrandDao $brandDao, CategoryDao $categoryDao)
     {
         $this->specDao = $specDao;
         $this->spuDao = $spuDao;
@@ -383,5 +396,7 @@ class SpuService
         $this->spuSpecDao = $spuSpecDao;
         $this->spuGalleryDao = $spuGalleryDao;
         $this->spuSpecOptionDao = $spuSpecOptionDao;
+        $this->brandDao = $brandDao;
+        $this->categoryDao = $categoryDao;
     }
 }

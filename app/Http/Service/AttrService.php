@@ -255,8 +255,8 @@ class AttrService
         foreach ($attrValues as $attrValue) {
             $attr = $this->attrDao->findById($attrValue->attr_id);
             $group = $this->attrGroupDao->findById($attrValue->attr_group_id);
-            $attrValue->attrName = $attr->name;
-            $attrValue->attrGroupName = $group->name;
+            $attrValue->attr_name = $attr->name;
+            $attrValue->attr_group_name = $group->name;
         }
         return new JsonResult(StatusCode::SUCCESS, $attrValues);
     }
