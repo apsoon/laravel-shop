@@ -460,11 +460,7 @@ var render = function() {
               attrs: {
                 to: {
                   path: "/spu-edit",
-                  query: {
-                    type: "modify",
-                    spuId: _vm.spuId,
-                    categoryId: _vm.spu.category_id
-                  }
+                  query: { type: "modify", spuId: _vm.spuId }
                 }
               }
             },

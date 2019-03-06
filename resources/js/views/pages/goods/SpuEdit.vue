@@ -1,7 +1,7 @@
 <template>
     <el-card>
         <div slot="header" class="clearfix">
-            <span>添加商品</span>
+            <span>编辑商品</span>
         </div>
         <el-form ref="spuForm" :rules="rules" :model="spuForm" label-width="100px">
             <el-form-item label="商品名称" prop="name">
@@ -50,12 +50,10 @@
         data: function () {
             return {
                 spuForm: {
+                    spuId: "",
                     name: "",
-                    brief: "",
                     categoryId: "",
-                    listPrice: "",
                     brandId: "",
-                    cover: "",
                     detailHtml: "",
                     detailText: "",
                     state: "0"
@@ -76,22 +74,13 @@
                     label: 'name'
                 },
                 brandList: [],
+                spuId: "",
+                type: "create"
             }
         },
         mounted: function () {
             let that = this;
-            axios.get("category/treeList").then(res => {
-                if (res.data.code === 2000) {
-                    that.categoryList = res.data.data;
-                }
-            }).catch(err => {
-            });
-            axios.get("brand/list").then(res => {
-                if (res.data.code === 2000) {
-                    that.brandList = res.data.data;
-                }
-            }).catch(err => {
-            });
+            // wangEditor
             let editor = new WangEditor(that.$refs.editor); //这个地方传入div元素的id 需要加#号
             editor.customConfig.onchange = (html) => {
                 that.spuForm.detailHtml = html;
@@ -99,24 +88,79 @@
             };
             editor.customConfig.zIndex = 100; // 设置 z-index
             editor.create();    // 生成编辑器
+            //
+            let type = that.$route.query.type;
+            that.type = type;
+            if (type === 'modify') {
+                let spuId = that.$route.query.spuId;
+                that.spuId = spuId;
+                axios.get("/spu/detail?spuId=" + spuId)
+                    .then(res => {
+                        if (res.data.code === 2000) {
+                            let data = res.data.data;
+                            that.spuForm = {
+                                spuId: data.spu.id,
+                                name: data.spu.name,
+                                categoryId: data.spu.category_id,
+                                brandId: data.spu.brand_id,
+                                detailHtml: data.detail.html,
+                                detailText: data.detail.text,
+                                state: "" + data.spu.state
+                            };
+                            editor.txt.html(data.detail.html);
+                        }
+                    }).catch(err => {
+                });
+            }
+            axios.get("category/treeList")
+                .then(res => {
+                    if (res.data.code === 2000) {
+                        that.categoryList = res.data.data;
+                    }
+                }).catch(err => {
+            });
+            axios.get("brand/list")
+                .then(res => {
+                    if (res.data.code === 2000) {
+                        that.brandList = res.data.data;
+                    }
+                }).catch(err => {
+            });
         },
         methods: {
             onSubmit: function () {
                 let that = this;
                 that.$refs.spuForm.validate((valid) => {
                     if (valid) {
-                        axios.post("spu/create", that.spuForm).then(res => {
-                            if (res.data.code === 2000) {
-                                that.$message({
-                                    type: 'success',
-                                    message: '添加成功!'
-                                });
-                                setTimeout(() => {
-                                    that.$router.push("/spu-list");
-                                }, 1000);
-                            }
-                        }).catch(err => {
-                        });
+                        if (that.type === 'modify') {
+                            axios.post("/spu/update", that.spuForm)
+                                .then(res => {
+                                    if (res.data.code === 2000) {
+                                        that.$message({
+                                            type: 'success',
+                                            message: '修改成功'
+                                        });
+                                        setTimeout(() => {
+                                            that.$router.push("/spu-list");
+                                        }, 1000);
+                                    }
+                                }).catch(err => {
+                            });
+                        } else {
+                            axios.post("spu/create", that.spuForm)
+                                .then(res => {
+                                    if (res.data.code === 2000) {
+                                        that.$message({
+                                            type: 'success',
+                                            message: '添加成功!'
+                                        });
+                                        setTimeout(() => {
+                                            that.$router.push("/spu-list");
+                                        }, 1000);
+                                    }
+                                }).catch(err => {
+                            });
+                        }
                     } else {
                         return false;
                     }

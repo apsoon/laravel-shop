@@ -24,6 +24,7 @@ use App\Http\Model\SpuDetail;
 use App\Http\Model\SpuGallery;
 use App\Http\Model\SpuSpecOption;
 use App\Http\Util\JsonResult;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class SpuService
@@ -99,6 +100,34 @@ class SpuService
         return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
+    /**
+     * 更新SPU
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function updateSpu(array $req)
+    {
+        if (empty($req["spuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $spu = $this->spuDao->findById($req["spuId"]);
+        $detail = $this->spuDetailDao->findBySpuId($req["spuId"]);
+        $spu->name = $req["name"];
+        $spu->category_id = $req["categoryId"];
+        $spu->brand_id = $req["brandId"];
+        $spu->state = $req["state"];
+        $detail->html = $req["detailHtml"];
+        $detail->text = $req["detailText"];
+        DB::beginTransaction();
+        try {
+            $spu->save();
+            $detail->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return new JsonResult(StatusCode::SERVER_ERROR);
+        }
+        return new JsonResult();
+    }
 
     /**
      * 获取商品列表

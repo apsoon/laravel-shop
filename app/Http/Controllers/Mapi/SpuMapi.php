@@ -99,6 +99,18 @@ class SpuMapi extends Controller
     }
 
     /**
+     * 更新SPU
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function update(Request $request)
+    {
+        $req = $request->all();
+        return $this->spuService->updateSpu($req);
+    }
+
+    /**
      * 创建Banner
      *
      * @param Request $request

@@ -63,12 +63,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       spuForm: {
+        spuId: "",
         name: "",
-        brief: "",
         categoryId: "",
-        listPrice: "",
         brandId: "",
-        cover: "",
         detailHtml: "",
         detailText: "",
         state: "0"
@@ -92,21 +90,14 @@ __webpack_require__.r(__webpack_exports__);
         children: 'children',
         label: 'name'
       },
-      brandList: []
+      brandList: [],
+      spuId: "",
+      type: "create"
     };
   },
   mounted: function mounted() {
-    var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("category/treeList").then(function (res) {
-      if (res.data.code === 2000) {
-        that.categoryList = res.data.data;
-      }
-    }).catch(function (err) {});
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("brand/list").then(function (res) {
-      if (res.data.code === 2000) {
-        that.brandList = res.data.data;
-      }
-    }).catch(function (err) {});
+    var that = this; // wangEditor
+
     var editor = new wangeditor__WEBPACK_IMPORTED_MODULE_0___default.a(that.$refs.editor); //这个地方传入div元素的id 需要加#号
 
     editor.customConfig.onchange = function (html) {
@@ -117,23 +108,72 @@ __webpack_require__.r(__webpack_exports__);
     editor.customConfig.zIndex = 100; // 设置 z-index
 
     editor.create(); // 生成编辑器
+    //
+
+    var type = that.$route.query.type;
+    that.type = type;
+
+    if (type === 'modify') {
+      var spuId = that.$route.query.spuId;
+      that.spuId = spuId;
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/spu/detail?spuId=" + spuId).then(function (res) {
+        if (res.data.code === 2000) {
+          var data = res.data.data;
+          that.spuForm = {
+            spuId: data.spu.id,
+            name: data.spu.name,
+            categoryId: data.spu.category_id,
+            brandId: data.spu.brand_id,
+            detailHtml: data.detail.html,
+            detailText: data.detail.text,
+            state: "" + data.spu.state
+          };
+          editor.txt.html(data.detail.html);
+        }
+      }).catch(function (err) {});
+    }
+
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("category/treeList").then(function (res) {
+      if (res.data.code === 2000) {
+        that.categoryList = res.data.data;
+      }
+    }).catch(function (err) {});
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("brand/list").then(function (res) {
+      if (res.data.code === 2000) {
+        that.brandList = res.data.data;
+      }
+    }).catch(function (err) {});
   },
   methods: {
     onSubmit: function onSubmit() {
       var that = this;
       that.$refs.spuForm.validate(function (valid) {
         if (valid) {
-          axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("spu/create", that.spuForm).then(function (res) {
-            if (res.data.code === 2000) {
-              that.$message({
-                type: 'success',
-                message: '添加成功!'
-              });
-              setTimeout(function () {
-                that.$router.push("/spu-list");
-              }, 1000);
-            }
-          }).catch(function (err) {});
+          if (that.type === 'modify') {
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/spu/update", that.spuForm).then(function (res) {
+              if (res.data.code === 2000) {
+                that.$message({
+                  type: 'success',
+                  message: '修改成功'
+                });
+                setTimeout(function () {
+                  that.$router.push("/spu-list");
+                }, 1000);
+              }
+            }).catch(function (err) {});
+          } else {
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("spu/create", that.spuForm).then(function (res) {
+              if (res.data.code === 2000) {
+                that.$message({
+                  type: 'success',
+                  message: '添加成功!'
+                });
+                setTimeout(function () {
+                  that.$router.push("/spu-list");
+                }, 1000);
+              }
+            }).catch(function (err) {});
+          }
         } else {
           return false;
         }
@@ -169,7 +209,7 @@ var render = function() {
       _c(
         "div",
         { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
-        [_c("span", [_vm._v("添加商品")])]
+        [_c("span", [_vm._v("编辑商品")])]
       ),
       _vm._v(" "),
       _c(

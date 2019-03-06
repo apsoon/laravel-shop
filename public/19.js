@@ -94,7 +94,7 @@ var render = function() {
         [
           _c(
             "router-link",
-            { attrs: { to: "/spu-add" } },
+            { attrs: { to: { path: "/spu-edit", query: { type: "create" } } } },
             [
               _c("el-button", { attrs: { type: "primary", size: "medium" } }, [
                 _vm._v("添加商品")

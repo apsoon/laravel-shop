@@ -28,8 +28,8 @@ export default new VueRouter({
             component: resolve => void (require(['./views/pages/goods/SpuDetail.vue'], resolve))
         },
         {
-            name: "SpuAdd",
-            path: "/spu-add",
+            name: "SpuEdit",
+            path: "/spu-Edit",
             component: resolve => void (require(['./views/pages/goods/SpuEdit.vue'], resolve))
         },
         {

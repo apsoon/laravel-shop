@@ -100020,8 +100020,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
       return void __webpack_require__.e(/*! AMD require */ 5).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/goods/SpuDetail.vue */ "./resources/js/views/pages/goods/SpuDetail.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
-    name: "SpuAdd",
-    path: "/spu-add",
+    name: "SpuEdit",
+    path: "/spu-Edit",
     component: function component(resolve) {
       return void Promise.all(/*! AMD require */[__webpack_require__.e(30), __webpack_require__.e(18)]).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/goods/SpuEdit.vue */ "./resources/js/views/pages/goods/SpuEdit.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }

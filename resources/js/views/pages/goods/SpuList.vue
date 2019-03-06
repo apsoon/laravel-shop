@@ -1,7 +1,7 @@
 <template>
     <el-card>
         <div slot="header" class="clearfix">
-            <router-link to="/spu-add">
+            <router-link :to="{path: '/spu-edit', query: {type: 'create'}}">
                 <el-button type="primary" size="medium">添加商品</el-button>
             </router-link>
         </div>

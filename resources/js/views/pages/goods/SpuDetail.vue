@@ -1,7 +1,7 @@
 <template>
     <el-tabs v-model="active" type="border-card" @tab-click="onTabClicked">
         <el-tab-pane label="商品信息" name="info">
-            <router-link :to="{path: '/spu-edit', query:{type:'modify', spuId:spuId, categoryId:spu.category_id}}">
+            <router-link :to="{path: '/spu-edit', query:{type: 'modify', spuId: spuId}}">
                 <el-button type="primary" size="medium">
                     商品编辑
                 </el-button>
