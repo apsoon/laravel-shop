@@ -22,7 +22,22 @@ class SpuFapi extends Controller
      */
     private $spuService;
 
+    /**
+     * @var AttrService
+     */
     private $attrService;
+
+    /**
+     * 获取SPU详情
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function detail(Request $request)
+    {
+        $req = $request->all();
+        return $this->spuService->getSpuDetail($req);
+    }
 
     /**
      * 获取Banner

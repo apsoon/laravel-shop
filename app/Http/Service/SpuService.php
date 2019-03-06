@@ -101,6 +101,19 @@ class SpuService
     }
 
     /**
+     * 获取SPU详情
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getSpuDetail(array $req)
+    {
+        if (empty($req["spuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $detail = $this->spuDetailDao->findBySpuId($req["spuId"]);
+        return new JsonResult(StatusCode::SUCCESS, $detail);
+    }
+
+    /**
      * 更新SPU
      *
      * @param array $req

@@ -34,6 +34,7 @@ Route::group(["namespace" => "Fapi"], function () {
     Route::GET("spu/spec-list", "SpuFapi@specList");
     Route::GET("spu/attr-list", "SpuFapi@attrList");
     Route::GET("spu/banner-list", "SpuFapi@bannerList");
+    Route::GET("spu/detail", "SpuFapi@detail");
 
     // sku 产品
     Route::GET("sku/list-spu", "SkuFapi@listBySpu");
