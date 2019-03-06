@@ -139,8 +139,14 @@ class SpuService
     {
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = empty($req["size"]) ? 20 : $req["size"];
-        $result = $this->spuDao->getByPage($pageNo, $size);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        $spuList = $this->spuDao->getByPage($pageNo, $size);
+        foreach ($spuList as $spu) {
+            $cate = $this->categoryDao->findById($spu->category_id);
+            $spu->category_name = $cate->name;
+            $brand = $this->brandDao->findById($spu->brand_id);
+            $spu->brand_name = $brand->name;
+        }
+        return new JsonResult(StatusCode::SUCCESS, $spuList);
     }
 
     /**

@@ -24,7 +24,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     // ================================================  商品管理  =================================================
     // SPU
     Route::GET("spu/list", "SpuMapi@list");
-    Route::GET("spu/pagedList", "SpuMapi@listByPage");
+    Route::GET("spu/page-list", "SpuMapi@listByPage");
     Route::POST("spu/create", "SpuMapi@create");
     Route::POST("spu/update", "SpuMapi@update");
     Route::GET("spu/detail", "SpuMapi@detail");

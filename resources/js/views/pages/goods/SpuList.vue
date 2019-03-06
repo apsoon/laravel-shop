@@ -8,8 +8,8 @@
         <el-table ref="spuList" :data="spuList" tooltip-effect="dark" width="100%">
             <el-table-column type="selection" width="55"/>
             <el-table-column prop="name" label="名称" width="150"/>
-            <el-table-column prop="category_id" label="分类" width="150"/>
-            <el-table-column prop="brand_id" label="品牌" width="150"/>
+            <el-table-column prop="category_name" label="分类" width="150"/>
+            <el-table-column prop="brand_name" label="品牌" width="150"/>
             <el-table-column prop="created_at" label="创建日期" width="200"/>
             <el-table-column prop="state" label="状态" width="150"/>
             <el-table-column min-width="1" label="操作">
@@ -47,7 +47,7 @@
         },
         mounted: function () {
             let that = this;
-            axios.get("spu/pagedList?pageNo=1")
+            axios.get("spu/page-list?pageNo=1")
                 .then(res => {
                     if (res.data.code && res.data.data) {
                         that.spuList = that.spuList.concat(res.data.data);

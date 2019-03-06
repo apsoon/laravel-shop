@@ -58,7 +58,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/pagedList?pageNo=1").then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/page-list?pageNo=1").then(function (res) {
       if (res.data.code && res.data.data) {
         that.spuList = that.spuList.concat(res.data.data);
         that.pageNo++;
@@ -120,11 +120,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "category_id", label: "分类", width: "150" }
+            attrs: { prop: "category_name", label: "分类", width: "150" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "brand_id", label: "品牌", width: "150" }
+            attrs: { prop: "brand_name", label: "品牌", width: "150" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
