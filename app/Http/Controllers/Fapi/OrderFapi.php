@@ -62,7 +62,7 @@ class OrderFapi extends Controller
      * @param Request $request
      * @return JsonResult
      */
-    public function listByUser(Request $request)
+    public function list(Request $request)
     {
         $req = $request->all();
         return $this->orderService->getPagedOrderListByStatusUser($req);
