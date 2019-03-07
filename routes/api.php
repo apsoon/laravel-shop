@@ -58,6 +58,7 @@ Route::group(["namespace" => "Fapi"], function () {
     Route::GET("collection/check", "CollectionFapi@check");
 
     // 优惠券
+    Route::GET("coupon/list-user", "CouponFapi@listByUser");
     Route::GET("coupon/list", "CouponFapi@list");
     Route::POST("coupon/add", "CouponFapi@add");
 

@@ -70,18 +70,6 @@ class OrderFapi extends Controller
 
 
     /**
-     * 手动获取的优惠券列表
-     *
-     * @param Request $request
-     * @return JsonResult
-     */
-    public function list(Request $request)
-    {
-        $req = $request->all();
-        return $this->orderService->getUserGetCouponList($req);
-    }
-
-    /**
      * 获取每种状态的订单数量
      *
      * @param Request $request

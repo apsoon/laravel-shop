@@ -26,10 +26,22 @@ class CouponFapi extends Controller
      * @param Request $request
      * @return JsonResult
      */
-    public function list(Request $request)
+    public function listByUser(Request $request)
     {
         $req = $request->all();
         return $this->couponService->getPagedCouponListByStateUser($req);
+    }
+
+    /**
+     * 手动获取的优惠券列表
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function list(Request $request)
+    {
+        $req = $request->all();
+        return $this->couponService->getUserGetCouponList($req);
     }
 
     /**

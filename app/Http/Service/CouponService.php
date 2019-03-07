@@ -130,6 +130,18 @@ class CouponService
     }
 
     /**
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getUserGetCouponList(array $req)
+    {
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $size = 20;
+        $result = $this->couponDao->findPageByTypeEffect(CouponSendType::USER_RECEIVE["code"], $pageNo, $size);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
      * 用户获取优惠券
      *
      * @param array $req
