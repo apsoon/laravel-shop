@@ -83,7 +83,7 @@ class OrderService
             $order->city = $req["city"];
             $order->county = $req["county"];
             $order->address_detail = $req["addressDetail"];
-            $order->state = OrderStatus::PAY_REQUIRED;
+            $order->state = OrderStatus::PAY_REQUIRED["code"];
             $order->create_time = new DateTime();
             // ===================  商品相关
             // ----- 关联sku
@@ -115,6 +115,7 @@ class OrderService
                 array_push($skuList, ["order_sn" => $order->sn, "sku_id" => $sku->id, "number" => $requestSku->number, "name" => $sku->name, "price" => $sku->price, "total" => $sku->price * $requestSku->number]);
             }
             $order->origin_price = $originPrice;
+            $order->number = $number;
             // ===================  优惠券相关
             // ------ 优惠券
             $price = $originPrice;
@@ -157,6 +158,9 @@ class OrderService
             $order->price = $price;
             // =================== 提交订单
             $order->discount = $order->origin_price - $order->price;
+            Log::info(" ================== DEBUG START ================== ");
+            Log::info($order);
+            Log::info(" ================== DEBUG END ================== ");
             $order->save();
             // ===================
             $this->orderSkuDao->insertList($skuList);

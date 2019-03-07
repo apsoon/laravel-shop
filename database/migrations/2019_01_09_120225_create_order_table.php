@@ -18,7 +18,7 @@ class CreateOrderTable extends Migration
             $table->string("user_id");
             $table->string("sn");
             $table->decimal("origin_price")->comment("原价格");
-            $table->unsignedInteger("number")->comment("商品数量");
+            $table->unsignedInteger("number")->default(0)->comment("商品数量");
             $table->decimal("price")->comment("总价格");
             $table->decimal("discount")->comment("折扣");
             $table->string("consignee")->default("")->comment("收件人姓名");
