@@ -78,7 +78,7 @@ class CollectionService
      */
     public function removeCollection(string $userId, array $skuIds)
     {
-        if (empty($req["userId"]) || empty($req["skuIds"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        if (empty($userId) || empty($skuIds)) return new JsonResult(StatusCode::PARAM_LACKED);
         if (sizeof($skuIds) == 1)
             $result = $this->collectionDao->deleteByUserSkuId($userId, $skuIds[0]);
         else {

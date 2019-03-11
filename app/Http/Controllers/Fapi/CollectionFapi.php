@@ -48,11 +48,8 @@ class CollectionFapi extends Controller
      */
     public function remove(Request $request)
     {
-        Log::info(" ------------------ ");
-        Log::info($request);
         $req = $request->all();
         $skuIds = json_decode($req["skuIds"]);
-        Log::info($skuIds);
         return $this->collectionService->removeCollection($req["userId"], $skuIds);
     }
 
