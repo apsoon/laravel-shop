@@ -14,6 +14,7 @@ use App\Http\Enum\StatusCode;
 use App\Http\Service\CollectionService;
 use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class CollectionFapi
@@ -47,8 +48,11 @@ class CollectionFapi extends Controller
      */
     public function remove(Request $request)
     {
+        Log::info(" ------------------ ");
+        Log::info($request);
         $req = $request->all();
         $skuIds = json_decode($req["skuIds"]);
+        Log::info($skuIds);
         return $this->collectionService->removeCollection($req["userId"], $skuIds);
     }
 
