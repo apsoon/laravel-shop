@@ -108,7 +108,7 @@ class AfterSaleService
         $size = empty($req["size"]) ? 20 : $req["size"];
         $type = $req["type"];
         if ($type === "all") $result = $this->afterSaleDao->findPagedList($pageNo, $size);
-        else $result = $this->afterSaleDao->findPagedListByState(OrderStatus::findByKey($type)["code"], $pageNo, $size);
+        else $result = $this->afterSaleDao->findPagedListByState(AfterSaleStatus::findByKey($type)["code"], $pageNo, $size);
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 

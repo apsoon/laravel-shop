@@ -16,11 +16,13 @@ namespace App\Http\Enum;
 class AfterSaleStatus
 {
     const ACCEPT_REQUIRED = ["code" => 0, "key" => "accept"]; // 待受理
+    const ING = ["code" => 1, "key" => "ing"]; // 处理中
     const COMPLETE = ["code" => 4, "key" => "complete"]; // 已完成
     const CANCEL = ["code" => 7, "key" => "cancel"]; // 订单取消
 
     private const AfterSaleStatus = [
         AfterSaleStatus::ACCEPT_REQUIRED,
+        AfterSaleStatus::ING,
         AfterSaleStatus::COMPLETE,
         AfterSaleStatus::CANCEL,
     ];

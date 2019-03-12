@@ -49,6 +49,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AfterSaleList",
@@ -122,7 +128,9 @@ var render = function() {
         [
           _c("el-tab-pane", { attrs: { label: "全部", name: "all" } }),
           _vm._v(" "),
-          _c("el-tab-pane", { attrs: { label: "待处理", name: "accept" } }),
+          _c("el-tab-pane", { attrs: { label: "待确认", name: "accept" } }),
+          _vm._v(" "),
+          _c("el-tab-pane", { attrs: { label: "处理中", name: "ing" } }),
           _vm._v(" "),
           _c("el-tab-pane", { attrs: { label: "已完成", name: "complete" } }),
           _vm._v(" "),
@@ -173,7 +181,7 @@ var render = function() {
                 fn: function(scope) {
                   return [
                     scope.row.state === 0
-                      ? _c("span", [_vm._v("确定")])
+                      ? _c("span", [_vm._v("待确定")])
                       : scope.row.state === 4
                         ? _c("span", [_vm._v("已完成")])
                         : scope.row.state === 7
@@ -192,7 +200,7 @@ var render = function() {
                 key: "default",
                 fn: function(scope) {
                   return [
-                    scope.row.state === 1
+                    scope.row.state === 0
                       ? _c(
                           "el-button",
                           {
@@ -208,6 +216,25 @@ var render = function() {
                             }
                           },
                           [_vm._v("确认\n                ")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    scope.row.state === 1
+                      ? _c(
+                          "el-button",
+                          {
+                            attrs: { size: "mini", type: "primary" },
+                            on: {
+                              click: function($event) {
+                                _vm.modifyState(
+                                  "disable",
+                                  scope.$index,
+                                  scope.row.id
+                                )
+                              }
+                            }
+                          },
+                          [_vm._v("完成\n                ")]
                         )
                       : _vm._e()
                   ]
