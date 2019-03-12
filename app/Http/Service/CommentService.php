@@ -47,12 +47,11 @@ class CommentService
      */
     public function createComment(array $req)
     {
-        Log::info($req);
         $comments = json_decode($req["comments"]);
-        Log::info($comments);
         $commentList = [];
         foreach ($comments as $comment) {
-            array_push($commentList, ["user_id" => $req["userId"], "order_sn" => $req["orderSn"], "sku_id" => $comment->skuId, "content" => $comment->content, "sort_order" => 0, "state" => 0]);
+            array_push($commentList, ["user_id" => $req["userId"], "order_sn" => $req["orderSn"],
+                "sku_id" => $comment->skuId, "content" => $comment->content, "sort_order" => 0, "rating" => $comment->rating, "state" => 0]);
         }
         $result = $this->commentDao->insertList($commentList);
         if ($result) return new JsonResult();
