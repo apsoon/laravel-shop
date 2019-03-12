@@ -85753,7 +85753,7 @@ var render = function() {
             { attrs: { index: "goods" } },
             [
               _c("template", { slot: "title" }, [
-                _c("i", { staticClass: "el-icon-message" }),
+                _c("i", { staticClass: "el-icon-goods" }),
                 _vm._v("商品管理")
               ]),
               _vm._v(" "),
@@ -85785,7 +85785,7 @@ var render = function() {
             { attrs: { index: "order" } },
             [
               _c("template", { slot: "title" }, [
-                _c("i", { staticClass: "el-icon-menu" }),
+                _c("i", { staticClass: "el-icon-sold-out" }),
                 _vm._v("交易管理")
               ]),
               _vm._v(" "),
@@ -85813,7 +85813,7 @@ var render = function() {
             { attrs: { index: "market" } },
             [
               _c("template", { slot: "title" }, [
-                _c("i", { staticClass: "el-icon-setting" }),
+                _c("i", { staticClass: "el-icon-share" }),
                 _vm._v("营销管理")
               ]),
               _vm._v(" "),
@@ -85829,7 +85829,7 @@ var render = function() {
             { attrs: { index: "user" } },
             [
               _c("template", { slot: "title" }, [
-                _c("i", { staticClass: "el-icon-setting" }),
+                _c("i", { staticClass: "el-icon-tickets" }),
                 _vm._v("用户管理")
               ]),
               _vm._v(" "),
@@ -85845,7 +85845,7 @@ var render = function() {
             { attrs: { index: "ad" } },
             [
               _c("template", { slot: "title" }, [
-                _c("i", { staticClass: "el-icon-setting" }),
+                _c("i", { staticClass: "el-icon-picture-outline" }),
                 _vm._v("广告管理")
               ]),
               _vm._v(" "),
@@ -85861,7 +85861,7 @@ var render = function() {
             { attrs: { index: "permit" } },
             [
               _c("template", { slot: "title" }, [
-                _c("i", { staticClass: "el-icon-setting" }),
+                _c("i", { staticClass: "el-icon-circle-check-outline" }),
                 _vm._v("权限管理")
               ]),
               _vm._v(" "),
