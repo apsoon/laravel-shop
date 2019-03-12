@@ -21,6 +21,7 @@
                 <template slot="title"><i class="el-icon-menu"></i>交易管理</template>
                 <el-menu-item index="order-list">订单管理</el-menu-item>
                 <el-menu-item index="comment-list">评论管理</el-menu-item>
+                <el-menu-item index="after-sale-list">售后管理</el-menu-item>
                 <el-menu-item index="post-model-list">运费策略</el-menu-item>
             </el-submenu>
             <el-submenu index="market">

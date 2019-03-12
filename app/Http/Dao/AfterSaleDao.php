@@ -85,6 +85,36 @@ class AfterSaleDao
     }
 
     /**
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findPagedList(int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->afterSale::offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
+     * @param $state
+     * @param int $pageNo
+     * @param int $size
+     * @return mixed
+     */
+    public function findPagedListByState($state, int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->afterSale::where("state", "=", $state)
+            ->offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * AfterSaleDao constructor.
      *
      * @param AfterSale $afterSale

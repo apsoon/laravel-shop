@@ -12,7 +12,7 @@
             <el-tab-pane label="已完成" name="complete"/>
             <el-tab-pane label="已取消" name="cancel"/>
         </el-tabs>
-        <el-table ref="couponList" tooltip-effect="dark" width="100%" :data="orderList" stripe>
+        <el-table ref="orderList" tooltip-effect="dark" width="100%" :data="orderList" stripe>
             <el-table-column type="selection" width="55"/>
             <el-table-column label="订单号" prop="sn" width="250"/>
             <el-table-column label="下单时间" prop="create_time" width="250"/>

@@ -29,6 +29,9 @@ class AfterSaleService
      */
     private $afterSaleDao;
 
+    /**
+     * @var OrderDao
+     */
     private $orderDao;
 
     /**
@@ -83,7 +86,23 @@ class AfterSaleService
         $size = 20;
         $type = $req["type"];
         if ($type === "all") $result = $this->afterSaleDao->findPagedListByUser($req["userId"], $pageNo, $size);
-        else $result = $this->afterSaleDao->findPagedListByStateUser($req["userId"], AfterSaleStatus::findByKey($type)["code"], $pageNo, $size);
+        else $result = $this->afterSaleDao->findPagedListByStateUser($req["userId"], $req["state"], $pageNo, $size);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
+     * 分页分状态获取
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getAsPagedListByType(array $req)
+    {
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $size = empty($req["size"]) ? 20 : $req["size"];
+        $type = $req["type"];
+        if ($type === "all") $result = $this->afterSaleDao->findPagedList($pageNo, $size);
+        else $result = $this->afterSaleDao->findPagedListByState(OrderStatus::findByKey($type)["code"], $pageNo, $size);
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 

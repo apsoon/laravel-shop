@@ -3624,6 +3624,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Sidebar"
 });
@@ -85796,6 +85797,10 @@ var render = function() {
                 _vm._v("评论管理")
               ]),
               _vm._v(" "),
+              _c("el-menu-item", { attrs: { index: "after-sale-list" } }, [
+                _vm._v("售后管理")
+              ]),
+              _vm._v(" "),
               _c("el-menu-item", { attrs: { index: "post-model-list" } }, [
                 _vm._v("运费策略")
               ])
@@ -100023,7 +100028,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "SpuEdit",
     path: "/spu-Edit",
     component: function component(resolve) {
-      return void Promise.all(/*! AMD require */[__webpack_require__.e(30), __webpack_require__.e(18)]).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/goods/SpuEdit.vue */ "./resources/js/views/pages/goods/SpuEdit.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void Promise.all(/*! AMD require */[__webpack_require__.e(31), __webpack_require__.e(18)]).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/goods/SpuEdit.vue */ "./resources/js/views/pages/goods/SpuEdit.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "SpuSpecEdit",
@@ -100108,31 +100113,37 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "OrderList",
     path: "/order-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 26).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/OrderList.vue */ "./resources/js/views/pages/trade/OrderList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 27).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/OrderList.vue */ "./resources/js/views/pages/trade/OrderList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "OrderDetail",
     path: "/order-detail",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 25).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/OrderDetail.vue */ "./resources/js/views/pages/trade/OrderDetail.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 26).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/OrderDetail.vue */ "./resources/js/views/pages/trade/OrderDetail.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "CommentList",
     path: "/comment-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 24).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/CommentList.vue */ "./resources/js/views/pages/trade/CommentList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 25).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/CommentList.vue */ "./resources/js/views/pages/trade/CommentList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "PostModelList",
     path: "/post-model-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 28).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/PostModelList.vue */ "./resources/js/views/pages/trade/PostModelList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 29).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/PostModelList.vue */ "./resources/js/views/pages/trade/PostModelList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, {
     name: "PostModelEdit",
     path: "/post-model-edit",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 27).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/PostModelEdit.vue */ "./resources/js/views/pages/trade/PostModelEdit.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 28).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/PostModelEdit.vue */ "./resources/js/views/pages/trade/PostModelEdit.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+    }
+  }, {
+    name: "AfterSaleList",
+    path: "/after-sale-list",
+    component: function component(resolve) {
+      return void __webpack_require__.e(/*! AMD require */ 24).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/trade/AfterSaleList.vue */ "./resources/js/views/pages/trade/AfterSaleList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, // ================================================  营销管理  =================================================
   {
@@ -100158,7 +100169,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
     name: "AddrList",
     path: "/addr-list",
     component: function component(resolve) {
-      return void __webpack_require__.e(/*! AMD require */ 29).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/user/AddrList.vue */ "./resources/js/views/pages/user/AddrList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
+      return void __webpack_require__.e(/*! AMD require */ 30).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(/*! ./views/pages/user/AddrList.vue */ "./resources/js/views/pages/user/AddrList.vue")]; (resolve).apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__);}.bind(this)).catch(__webpack_require__.oe);
     }
   }, // =============================  广告管理  ===============================
   {

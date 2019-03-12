@@ -18,6 +18,20 @@ class AfterSaleMapi extends Controller
      */
     private $afterSaleService;
 
+
+    /**
+     * 分页分状态获取
+     *
+     * @param Request $request
+     * @return \App\Http\Util\JsonResult
+     */
+    public function list(Request $request)
+    {
+        $req = $request->all();
+        return $this->afterSaleService->getAsPagedListByType($req);
+    }
+
+
     /**
      * AfterSaleFapi constructor.
      *
