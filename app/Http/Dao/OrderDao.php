@@ -148,8 +148,7 @@ class OrderDao
     public function delete($orderSn)
     {
         $result = $this->order::where(["sn" => $orderSn])
-            ->update("status", OrderStatus::DELETED["code"])
-            ->get();
+            ->update(["state" => OrderStatus::DELETED["code"]]);
         return $result;
     }
 

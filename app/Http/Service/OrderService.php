@@ -21,6 +21,7 @@ use App\Http\Enum\UserCouponStatus;
 use App\Http\Model\Order;
 use App\Http\Util\JsonResult;
 use App\Http\Util\SNUtil;
+use function Composer\Autoload\includeFile;
 use DateTime;
 use function GuzzleHttp\Promise\all;
 use Illuminate\Support\Facades\DB;
@@ -228,6 +229,12 @@ class OrderService
     {
         $orderSn = $req["orderSn"];
         if (empty($orderSn)) return new JsonResult(StatusCode::PARAM_LACKED);
+        $order = $this->orderDao->findBySn($orderSn);
+        Log::info("-=-=====================---------------");
+        Log::info(empty($order));
+        Log::info($order->user_id != $req["userId"] );
+        Log::info($order->state < OrderStatus::COMPLETE["code"]);
+        if (empty($order) || $order->user_id != $req["userId"] || $order->state < OrderStatus::COMPLETE["code"]) return new JsonResult(StatusCode::PARAM_ERROR);
         $result = $this->orderDao->delete($orderSn);
         if ($result) return new JsonResult();
         return new JsonResult(StatusCode::SERVER_ERROR);
