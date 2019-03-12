@@ -9,12 +9,15 @@
 namespace App\Http\Service;
 
 use App\Http\Dao\CommentDao;
+use App\Http\Dao\OrderDao;
 use App\Http\Dao\SkuDao;
 use App\Http\Dao\UserDao;
 use App\Http\Enum\CommentStatus;
+use App\Http\Enum\OrderStatus;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Comment;
 use App\Http\Util\JsonResult;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -40,6 +43,11 @@ class CommentService
     private $skuDao;
 
     /**
+     * @var OrderDao
+     */
+    private $orderDao;
+
+    /**
      * 创建评论
      *
      * @param array $req
@@ -47,15 +55,28 @@ class CommentService
      */
     public function createComment(array $req)
     {
+        if (empty($req["orderSn"]) || empty($req["comments"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $order = $this->orderDao->findBySn($req["orderSn"]);
+        if (empty($order) || $order->user_id != $req["userId"] || $order->state != OrderStatus::COMMENT_REQUIRED["code"]) return new JsonResult(StatusCode::PARAM_ERROR);
         $comments = json_decode($req["comments"]);
         $commentList = [];
         foreach ($comments as $comment) {
             array_push($commentList, ["user_id" => $req["userId"], "order_sn" => $req["orderSn"],
                 "sku_id" => $comment->skuId, "content" => $comment->content, "sort_order" => 0, "rating" => $comment->rating, "state" => 0]);
         }
-        $result = $this->commentDao->insertList($commentList);
-        if ($result) return new JsonResult();
-        return new JsonResult(StatusCode::SERVER_ERROR);
+        DB::beginTransaction();
+        try {
+            $this->commentDao->insertList($commentList);
+            $order->state = OrderStatus::COMPLETE["code"];
+            $order->save();
+            DB::commit();
+        } catch (\Exception $e) {
+            Log::info(" [ CommentService.php ] ================== createComment >>>>> error happened when create comment ");
+            Log::info($e);
+            DB::rollBack();
+            return new JsonResult(StatusCode::SERVER_ERROR);
+        }
+        return new JsonResult();
     }
 
     /**
@@ -110,11 +131,13 @@ class CommentService
      * @param CommentDao $commentDao
      * @param UserDao $userDao
      * @param SkuDao $skuDao
+     * @param OrderDao $orderDao
      */
-    public function __construct(CommentDao $commentDao, UserDao $userDao, SkuDao $skuDao)
+    public function __construct(CommentDao $commentDao, UserDao $userDao, SkuDao $skuDao, OrderDao $orderDao)
     {
         $this->commentDao = $commentDao;
         $this->userDao = $userDao;
         $this->skuDao = $skuDao;
+        $this->orderDao = $orderDao;
     }
 }
