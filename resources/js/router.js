@@ -124,6 +124,11 @@ export default new VueRouter({
             path: "/post-model-edit",
             component: resolve => void (require(['./views/pages/trade/PostModelEdit.vue'], resolve))
         },
+        {
+            name: "AfterSaleList",
+            path: "/after-sale-list",
+            component: resolve => void (require(['./views/pages/trade/AfterSaleList.vue'], resolve))
+        },
 
         // ================================================  营销管理  =================================================
         {

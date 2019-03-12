@@ -4,8 +4,7 @@ namespace App\Http\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AdPosition extends Model
+class AfterSale extends Model
 {
     //
-    protected $table = 'ad_position';
 }
