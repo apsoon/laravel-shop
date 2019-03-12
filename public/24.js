@@ -162,7 +162,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "描述", prop: "state", "min-width": "1" }
+            attrs: { label: "描述", prop: "describe", "min-width": "1" }
           }),
           _vm._v(" "),
           _c("el-table-column", {

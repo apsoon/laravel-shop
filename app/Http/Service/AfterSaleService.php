@@ -16,6 +16,7 @@ use App\Http\Enum\OrderStatus;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\AfterSale;
 use App\Http\Util\JsonResult;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AfterSaleService
@@ -44,7 +45,12 @@ class AfterSaleService
     {
         if (empty($req["userId"]) || empty($req["orderSn"]) || empty($req["skuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $order = $this->orderDao->findBySn($req["orderSn"]);
-        if (empty($order) || $order->user_id != $req["userId"] || ($order->state < OrderStatus::COMMENT_REQUIRED))
+        Log::info("=======================");
+        Log::info($order);
+        Log::info(empty($order));
+        Log::info($order->user_id != $req["userId"]);
+        Log::info(($order->state < OrderStatus::COMMENT_REQUIRED));
+        if (empty($order) || $order->user_id != $req["userId"] || ($order->state < OrderStatus::COMMENT_REQUIRED["code"]))
             return new JsonResult(StatusCode::PARAM_ERROR);
         $afterSale = new AfterSale();
         $afterSale->user_id = $req["userId"];

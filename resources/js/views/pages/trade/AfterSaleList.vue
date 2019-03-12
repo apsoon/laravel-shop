@@ -15,7 +15,7 @@
             <el-table-column label="用户" prop="user_id" width="150"/>
             <el-table-column label="商品" prop="sku_id" width="100"/>
             <el-table-column label="售后原因" prop="reason" width="150"/>
-            <el-table-column label="描述" prop="state" min-width="1"/>
+            <el-table-column label="描述" prop="describe" min-width="1"/>
             <el-table-column label="售后状态" prop="state" width="100">
                 <template slot-scope="scope">
                     <span v-if="scope.row.state === 0">确定</span>
@@ -25,7 +25,7 @@
             </el-table-column>
             <el-table-column label="操作" width="150">
                 <template slot-scope="scope">
-                    <el-button v-if="scope.row.state === 1"
+                    <el-button v-if="scope.row.state === 0"
                                size="mini"
                                type="primary"
                                @click="modifyState('disable', scope.$index, scope.row.id)">确认

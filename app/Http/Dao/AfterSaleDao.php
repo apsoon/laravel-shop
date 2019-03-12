@@ -25,20 +25,20 @@ class AfterSaleDao
 
     /**
      * @param AfterSale $afterSale
-     * @return AfterSale
+     * @return bool
      */
     public function insert(AfterSale $afterSale)
     {
-        return $afterSale - save();
+        return $afterSale->save();
     }
 
     /**
      * @param AfterSale $afterSale
-     * @return AfterSale
+     * @return bool
      */
     public function update(AfterSale $afterSale)
     {
-        return $afterSale - save();
+        return $afterSale->save();
     }
 
     /**
