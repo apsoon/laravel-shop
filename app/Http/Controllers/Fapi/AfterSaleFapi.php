@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Fapi;
 
 use App\Http\Controllers\Controller;
+use App\Http\Enum\AfterSaleStatus;
+use App\Http\Model\AfterSale;
 use App\Http\Service\AfterSaleService;
 use Illuminate\Http\Request;
 

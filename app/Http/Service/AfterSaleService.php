@@ -10,6 +10,11 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\AfterSaleDao;
+use App\Http\Dao\OrderDao;
+use App\Http\Enum\AfterSaleStatus;
+use App\Http\Enum\OrderStatus;
+use App\Http\Enum\StatusCode;
+use App\Http\Model\AfterSale;
 use App\Http\Util\JsonResult;
 
 /**
@@ -24,6 +29,8 @@ class AfterSaleService
      */
     private $afterSaleDao;
 
+    private $orderDao;
+
     /**
      * 创建售后
      *
@@ -32,7 +39,20 @@ class AfterSaleService
      */
     public function createAfterSale(array $req)
     {
-        return new JsonResult();
+        if (empty($req["userId"]) || empty($req["orderSn"]) || empty($req["skuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $order = $this->orderDao->findBySn($req["orderSn"]);
+        if (empty($order) || $order->user_id != $req["userId"] || ($order->state < OrderStatus::COMMENT_REQUIRED))
+            return new JsonResult(StatusCode::PARAM_ERROR);
+        $afterSale = new AfterSale();
+        $afterSale->user_id = $req["userId"];
+        $afterSale->order_sn = $req["orderSn"];
+        $afterSale->sku_id = $req["skuId"];
+        $afterSale->reason = $req["reason"];
+        $afterSale->describe = $req["describe"];
+        $afterSale->state = AfterSaleStatus::ACCEPT_REQUIRED["code"];
+        $result = $this->afterSaleDao->insert($afterSale);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
@@ -43,6 +63,12 @@ class AfterSaleService
      */
     public function cancelAfterSale(array $req)
     {
+        if (empty($req["userId"]) || empty($req["afterSn"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $afterSale = $this->afterSaleDao->findById($req["id"]);
+        if (empty($afterSale) || $afterSale->user_id != $req["userId"]) return new JsonResult(StatusCode::PARAM_ERROR);
+        $afterSale->state = AfterSaleStatus::CANCEL["code"];
+        $result = $this->afterSaleDao->update($afterSale);
+        if ($result) return new JsonResult();
         return new JsonResult();
     }
 
@@ -53,16 +79,23 @@ class AfterSaleService
      */
     public function getPagedASListByUserState($req)
     {
-        return new JsonResult();
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $size = 20;
+        $type = $req["type"];
+        if ($type === "all") $result = $this->afterSaleDao->findPagedListByUser($req["userId"], $pageNo, $size);
+        else $result = $this->afterSaleDao->findPagedListByStateUser($req["userId"], AfterSaleStatus::findByKey($type)["code"], $pageNo, $size);
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
      * AfterSaleService constructor.
      *
      * @param AfterSaleDao $afterSaleDao
+     * @param OrderDao $orderDao
      */
-    public function __construct(AfterSaleDao $afterSaleDao)
+    public function __construct(AfterSaleDao $afterSaleDao, OrderDao $orderDao)
     {
         $this->afterSaleDao = $afterSaleDao;
+        $this->orderDao = $orderDao;
     }
 }
