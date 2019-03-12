@@ -72,7 +72,7 @@ class AfterSaleService
      */
     public function cancelAfterSale(array $req)
     {
-        if (empty($req["userId"]) || empty($req["afterSn"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        if (empty($req["userId"]) || empty($req["id"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $afterSale = $this->afterSaleDao->findById($req["id"]);
         if (empty($afterSale) || $afterSale->user_id != $req["userId"]) return new JsonResult(StatusCode::PARAM_ERROR);
         $afterSale->state = AfterSaleStatus::CANCEL["code"];
