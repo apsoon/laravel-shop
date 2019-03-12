@@ -191,7 +191,7 @@ class OrderService
         $orderSn = $req["orderSn"];
         if (empty($orderSn)) return new JsonResult(StatusCode::PARAM_LACKED);
         $order = $this->orderDao->findBySn($orderSn);
-        if (empty($order)) return new JsonResult(StatusCode::ORDER_NOT_EXIST);
+        if (empty($order) || $order->user_id != $req["userId"] || $order->state != OrderStatus::PAY_REQUIRED["code"]) return new JsonResult(StatusCode::PARAM_ERROR);
         DB::beginTransaction();
         try {
             // 释放SKU
@@ -211,12 +211,17 @@ class OrderService
                     $userCoupon->state = UserCouponStatus::NEW;
                 }
                 $this->userCouponDao->update($userCoupon);
-                DB::commit();
             }
+            $order->state = OrderStatus::CANCEL["code"];
+            $order->save();
+            DB::commit();
         } catch (\Exception $e) {
+            Log::info(" [ OrderService ] ===================== cancelOrder >>>>>> error happened when cancel a order ");
+            Log::info($e);
             DB::rollBack();
+            return new JsonResult(StatusCode::SERVER_ERROR);
         }
-        return new JsonResult(StatusCode::SERVER_ERROR);
+        return new JsonResult();
     }
 
     /**
@@ -230,10 +235,6 @@ class OrderService
         $orderSn = $req["orderSn"];
         if (empty($orderSn)) return new JsonResult(StatusCode::PARAM_LACKED);
         $order = $this->orderDao->findBySn($orderSn);
-        Log::info("-=-=====================---------------");
-        Log::info(empty($order));
-        Log::info($order->user_id != $req["userId"] );
-        Log::info($order->state < OrderStatus::COMPLETE["code"]);
         if (empty($order) || $order->user_id != $req["userId"] || $order->state < OrderStatus::COMPLETE["code"]) return new JsonResult(StatusCode::PARAM_ERROR);
         $result = $this->orderDao->delete($orderSn);
         if ($result) return new JsonResult();
