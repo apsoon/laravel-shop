@@ -80,8 +80,8 @@ class CommentService
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = empty($req["size"]) ? 20 : $req["size"];
         $type = $req["type"];
-        if ($type === "all") $comments = $this->commentDao->findByPage($req["pageNo"], $size);
-        else $comments = $this->commentDao->findPagedListByState(CommentStatus::findByKey($type)["code"], $req["pageNo"], $size);
+        if ($type === "all") $comments = $this->commentDao->findByPage($pageNo, $size);
+        else $comments = $this->commentDao->findPagedListByState(CommentStatus::findByKey($type)["code"], $pageNo, $size);
         foreach ($comments as $comment) {
             $user = $this->userDao->findByUserId($comment->user_id);
             $comment->nickname = $user->nickname;

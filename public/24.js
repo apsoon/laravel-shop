@@ -71,6 +71,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CommentList",
@@ -218,6 +224,34 @@ var render = function() {
               width: "150",
               align: "center"
             }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: {
+              label: "评分",
+              prop: "rating",
+              width: "150",
+              align: "center"
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _c("el-rate", {
+                      attrs: { disabled: "" },
+                      model: {
+                        value: scope.row.rating,
+                        callback: function($$v) {
+                          _vm.$set(scope.row, "rating", $$v)
+                        },
+                        expression: "scope.row.rating"
+                      }
+                    })
+                  ]
+                }
+              }
+            ])
           }),
           _vm._v(" "),
           _c("el-table-column", {
