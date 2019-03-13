@@ -68,9 +68,9 @@ export default new VueRouter({
             component: resolve => void (require(['./views/pages/goods/BrandList.vue'], resolve))
         },
         {
-            name: "BrandAdd",
-            path: "/brand-add",
-            component: resolve => void (require(['./views/pages/goods/BrandAdd.vue'], resolve))
+            name: "BrandEdit",
+            path: "/brand-edit",
+            component: resolve => void (require(['./views/pages/goods/BrandEdit.vue'], resolve))
         },
         {
             name: "AttrList",

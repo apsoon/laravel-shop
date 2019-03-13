@@ -43,7 +43,7 @@
     import axios from "axios";
 
     export default {
-        name: "BrandAdd",
+        name: "BrandEdit",
         data: function () {
             return {
                 brandForm: {

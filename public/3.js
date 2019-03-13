@@ -275,7 +275,7 @@ var render = function() {
           _c(
             "router-link",
             {
-              attrs: { to: { path: "/brand-add", query: { type: "create" } } }
+              attrs: { to: { path: "/brand-edit", query: { type: "create" } } }
             },
             [
               _c("el-button", { attrs: { type: "primary", size: "medium" } }, [
@@ -390,7 +390,7 @@ var render = function() {
                       {
                         attrs: {
                           to: {
-                            path: "/brand-add",
+                            path: "/brand-edit",
                             query: { type: "modify", brandId: scope.row.id }
                           }
                         }
