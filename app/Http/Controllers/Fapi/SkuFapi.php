@@ -70,6 +70,12 @@ class SkuFapi extends Controller
         return $this->skuService->getPagedSkuByCategoryEffect($req);
     }
 
+    public function listByCategoryBrand(Request $request)
+    {
+        $req = $request->all();
+        return $this->skuService->getPagedSkuByCategoryBrandEffect($req);
+    }
+
     /**
      * 获取热推商品
      *

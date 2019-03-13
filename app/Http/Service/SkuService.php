@@ -165,6 +165,15 @@ class SkuService
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
+    public function getPagedSkuByCategoryBrandEffect(array $req)
+    {
+        if (empty($req["categoryId"]) || empty($req["brandId"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $size = 20;
+        $result = $this->skuDao->findByCategoryBrandEffectPaged($req["categoryId"], $req["brandId"], $pageNo, $size);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
     /**
      * skuId 获取规格
      *

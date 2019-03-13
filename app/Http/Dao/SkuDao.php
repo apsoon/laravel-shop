@@ -126,6 +126,28 @@ class SkuDao
     }
 
     /**
+     * 分类品牌分页获取
+     *
+     * @param $categoryId
+     * @param $brandId
+     * @param int $pageNo
+     * @param int $size
+     * @return \Illuminate\Support\Collection
+     */
+    public function findByCategoryBrandEffectPaged($categoryId, $brandId, int $pageNo, int $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = DB::table("sku")
+            ->join("spu", "sku.spu_id", "=", "spu.id")
+            ->select("sku.id", "sku.spu_id", "spu.category_id", "sku.name", "sku.origin_price", "sku.price", "sku.number", "sku.brief", "sku.is_recom", "spu.brand_id")
+            ->where(["spu.category_id" => $categoryId, "spu.brand_id" => $brandId, "sku.state" => 1])
+            ->offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * 获取热推
      *
      * @return mixed
