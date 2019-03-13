@@ -12,6 +12,7 @@ namespace App\Http\Service;
 use App\Http\Config\Config;
 use App\Http\Dao\AdDao;
 use App\Http\Dao\AdPositionDao;
+use App\Http\Enum\AdPosition;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Ad;
 use App\Http\Util\JsonResult;
@@ -44,6 +45,7 @@ class AdService
     {
         $ad = new Ad();
         $ad->position_id = $req["positionId"];
+        $ad->key = AdPosition::findByCode($req["positionId"])["key"];
         $ad->name = $req["name"];
         $ad->content = $req["content"];
         $ad->sort_order = $req["sortOrder"];
@@ -66,6 +68,7 @@ class AdService
     {
         $ad = $this->adDao->findById($req["id"]);
         $ad->position_id = $req["positionId"];
+        $ad->key = AdPosition::findByCode($req["positionId"])["code"];
         $ad->name = $req["name"];
         $ad->content = $req["content"];
         $ad->sort_order = $req["sortOrder"];

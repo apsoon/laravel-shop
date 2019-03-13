@@ -21,4 +21,38 @@ class AdPosition
         "key" => "banner",
         "code" => 1
     ];
+
+    private const AdPositionArray = [
+        AdPosition::BANNER,
+    ];
+
+    /**
+     * key 获取
+     *
+     * @param $key
+     * @return mixed
+     */
+    public static function findByKey($key)
+    {
+        foreach (AdPosition::AdPositionArray as $status) {
+            if ($status["key"] === $key) {
+                return $status;
+            }
+        }
+    }
+
+    /**
+     * code 获取
+     *
+     * @param $code
+     * @return mixed
+     */
+    public static function findByCode($code)
+    {
+        foreach (AdPosition::AdPositionArray as $status) {
+            if ($status["code"] === $code) {
+                return $status;
+            }
+        }
+    }
 }
