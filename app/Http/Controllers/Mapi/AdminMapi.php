@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
  */
 class AdminMapi extends Controller
 {
+    public function create(Request $request)
+    {
+
+    }
 
     public function login(Request $request)
     {

@@ -1,7 +1,9 @@
 <template>
     <el-card>
         <div slot="header" class="clearfix">
-            <span>管理员列表</span>
+            <router-link :to="{path: '/admin-edit', query: {type: 'create'}}">
+                <el-button type="primary" size="medium">添加管理员</el-button>
+            </router-link>
         </div>
         <el-table ref="adminList" :data="adminList" tooltip-effect="dark" width="100%">
             <el-table-column label="编号" prop="id"/>
@@ -10,7 +12,6 @@
             <el-table-column label="邮箱" prop="email"/>
             <el-table-column label="注册时间" prop="created_at"/>
             <el-table-column label="操作">
-
             </el-table-column>
         </el-table>
     </el-card>

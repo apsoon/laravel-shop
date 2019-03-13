@@ -172,6 +172,11 @@ export default new VueRouter({
             path: "/admin-list",
             component: resolve => void(require(['./views/pages/permit/AdminList.vue'], resolve))
         },
+        {
+            name: "AdminEdit",
+            path: "/admin-edit",
+            component: resolve => void (require(['./views/pages/permit/AdminEdit.vue'], resolve))
+        },
 
         // =================================================== 设置  ====================================================
         {

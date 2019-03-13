@@ -114,6 +114,9 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     // ================================================  广告管理  =================================================
     Route::POST("upload/image", "UploadMapi@image");
 
+    // ================================================  管理员  =================================================
+    Route::POST("admin/create", "AdminMapi@create");
+
     // 帮助
     Route::GET("help", function () {
         return view("admin.pages.help");
