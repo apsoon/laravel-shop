@@ -62,7 +62,7 @@ class UserFapi extends Controller
     public function createAddrs(Request $request)
     {
         $req = $request->all();
-        $result = $this->addrService->insertAddrList();
+        $result = $this->addrService->insertAddrList($req);
         if ($result) return new JsonResult();
         return new JsonResult(StatusCode::SERVER_ERROR);
     }

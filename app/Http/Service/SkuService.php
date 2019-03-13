@@ -49,11 +49,9 @@ class SkuService
     {
         try {
             $sku = new Sku();
-            $spu = $this->spuDao->findById($req["spuId"]);
             $sku->spu_id = $req["spuId"];
             $sku->name = $req["name"];
             $sku->brief = $req["brief"];
-            $sku->category_id = $spu->category_id;
             $sku->origin_price = $req["originPrice"];
             $sku->price = $req["price"];
             $sku->number = $req["number"];

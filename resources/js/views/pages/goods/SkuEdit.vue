@@ -76,7 +76,6 @@
                     price: "",
                     number: "",
                     imageUrl: "",
-                    // categoryId: "",
                     state: "0",
                 },
                 rules: {
@@ -126,7 +125,6 @@
                             let data = res.data.data;
                             that.skuForm = {
                                 id: data.id,
-                                // categoryId: data.category_id,
                                 spuId: data.sku_id,
                                 name: data.name,
                                 brief: data.brief,

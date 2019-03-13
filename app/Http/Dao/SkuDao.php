@@ -117,6 +117,7 @@ class SkuDao
         $offset = ($pageNo - 1) * $size;
         $result = DB::table("sku")
             ->join("spu", "sku.spu_id", "=", "spu.id")
+            ->select("sku.id", "sku.spu_id", "spu.category_id", "sku.name", "sku.origin_price", "sku.price", "sku.number", "sku.brief", "sku.is_recom", "spu.brand_id")
             ->where(["spu.category_id" => $categoryId, "sku.state" => 1])
             ->offset($offset)
             ->limit($size)
