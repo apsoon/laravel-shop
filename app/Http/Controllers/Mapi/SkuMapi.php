@@ -28,7 +28,7 @@ class SkuMapi extends Controller
     public function list(Request $request)
     {
         $req = $request->all();
-       return $this->skuService->getPagedSku($req);
+        return $this->skuService->getPagedSku($req);
     }
 
     /**
@@ -53,6 +53,18 @@ class SkuMapi extends Controller
     {
         $req = $request->all();
         return $this->skuService->createSku($req);
+    }
+
+    /**
+     * 更新sku
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function update(Request $request)
+    {
+        $req = $request->all();
+        return $this->skuService->updateSku($req);
     }
 
     /**

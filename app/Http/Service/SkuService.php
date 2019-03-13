@@ -78,6 +78,36 @@ class SkuService
     }
 
     /**
+     * 更新sku
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function updateSku(array $req)
+    {
+        $sku = $this->skuDao->findById($req["id"]);
+        $sku->name = $req["name"];
+        $sku->brief = $req["brief"];
+        $sku->origin_price = $req["originPrice"];
+        $sku->price = $req["price"];
+        $sku->number = $req["number"];
+        $sku->state = $req["state"];
+        $sku->image_url = $req["imageUrl"];
+        $sku->is_recom = 0;
+        $options = $req["options"];
+        $optionList = [];
+        if ($sku->save()) {
+            $this->skuSpecOptionDao->deleteBySku($req["id"]);
+            foreach ($options as $option) {
+                array_push($optionList, ["sku_id" => $sku->id, "option_id" => $option]);
+            }
+        }
+        $result = $this->skuSpecOptionDao->insertList($optionList);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
      * spu id 获取
      *
      * @param array $req

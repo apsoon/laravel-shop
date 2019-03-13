@@ -51,6 +51,19 @@ class SkuSpecOptionDao
     }
 
     /**
+     * 通过sku删除所属规格
+     *
+     * @param $skuId
+     * @return mixed
+     */
+    public function deleteBySku($skuId)
+    {
+        $result = $this->skuSpecOption::where("sku_id", "=", $skuId)
+            ->delete();
+        return $result;
+    }
+
+    /**
      * SkuSpecOptionDao constructor.
      *
      * @param SkuSpecOption $skuSpecOption

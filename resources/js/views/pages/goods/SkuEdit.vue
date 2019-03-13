@@ -52,7 +52,8 @@
                 <el-radio v-model="skuForm.state" label="0">暂不上架</el-radio>
                 <el-radio v-model="skuForm.state" label="1">立即上架</el-radio>
             </el-form-item>
-            <el-button type="primary" @click="onSubmit">立即创建</el-button>
+            <el-button type="primary" @click="onCreate" v-if="type === 'create'">立即创建</el-button>
+            <el-button type="primary" @click="onUpdate" v-else>修改</el-button>
         </el-form>
     </el-card>
 </template>
@@ -66,6 +67,7 @@
             return {
                 skuId: "",
                 skuForm: {
+                    id: "",
                     spuId: "",
                     name: "",
                     brief: "",
@@ -74,6 +76,7 @@
                     price: "",
                     number: "",
                     imageUrl: "",
+                    // categoryId: "",
                     state: "0",
                 },
                 rules: {
@@ -122,6 +125,8 @@
                         if (res.data.code === 2000) {
                             let data = res.data.data;
                             that.skuForm = {
+                                id: data.id,
+                                // categoryId: data.category_id,
                                 spuId: data.sku_id,
                                 name: data.name,
                                 brief: data.brief,
@@ -136,9 +141,9 @@
             }
         },
         methods: {
-            onSubmit: function () {
+            onCreate: function () {
                 let that = this;
-                that.$refs.skuForm.validate((valid) => {
+                that.$refs.brandForm.validate((valid) => {
                     if (valid) {
                         let options = [],
                             specList = that.specList;
@@ -150,13 +155,33 @@
                         axios.post("/sku/create", that.skuForm)
                             .then(res => {
                                 if (res.data.code === 2000) {
-                                    // message
                                     that.$router.push("/spu/detail?spuId=" + that.spuId + "&active=" + "sku");
                                 }
-                            })
-                            .catch(err => {
-
-                            })
+                            }).catch(err => {
+                        });
+                    } else {
+                        return false;
+                    }
+                });
+            },
+            onUpdate: function () {
+                let that = this;
+                that.$refs.brandForm.validate((valid) => {
+                    if (valid) {
+                        let options = [],
+                            specList = that.specList;
+                        for (let spec of specList) {
+                            options.push(spec.option);
+                        }
+                        that.skuForm.options = options;
+                        console.info(that.skuForm);
+                        axios.post("/sku/update", that.skuForm)
+                            .then(res => {
+                                if (res.data.code === 2000) {
+                                    that.$router.push("/spu/detail?spuId=" + that.spuId + "&active=" + "sku");
+                                }
+                            }).catch(err => {
+                        });
                     } else {
                         return false;
                     }
