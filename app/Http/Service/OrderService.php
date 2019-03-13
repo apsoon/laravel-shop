@@ -259,6 +259,7 @@ class OrderService
         }
         foreach ($orders as $order) {
             $order->skus = $this->orderSkuDao->findByOrderSn($order->sn);
+            Log::info($order);
         }
         return new JsonResult(StatusCode::SUCCESS, $orders);
     }
