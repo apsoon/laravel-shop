@@ -5,13 +5,13 @@
         </div>
         <el-form ref="categoryForm" :rules="rules" :model="categoryForm" label-width="100px">
             <el-form-item label="分类名称" prop="name">
-                <el-input v-model="categoryForm.name"></el-input>
+                <el-input v-model="categoryForm.name"/>
             </el-form-item>
             <el-form-item label="上级分类">
                 <label>{{parentName}}</label>
             </el-form-item>
             <el-form-item label="排序优先级" prop="sortOrder">
-                <el-input v-model="categoryForm.sortOrder"></el-input>
+                <el-input v-model="categoryForm.sortOrder"/>
             </el-form-item>
             <el-form-item label="首页热推" prop="isRecom" v-if="parentId === '0'">
                 <el-radio v-model="categoryForm.isRecom" label="0">否</el-radio>

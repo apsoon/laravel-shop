@@ -5,19 +5,19 @@
         </div>
         <el-form ref="skuForm" :rules="rules" :model="skuForm" label-width="100px">
             <el-form-item label="产品名称" prop="name">
-                <el-input v-model="skuForm.name" placeholder="请输入产品名称"></el-input>
+                <el-input v-model="skuForm.name" placeholder="请输入产品名称"/>
             </el-form-item>
             <el-form-item label="产品简述" prop="brief">
-                <el-input v-model="skuForm.brief" placeholder="请输入产品简述"></el-input>
+                <el-input v-model="skuForm.brief" placeholder="请输入产品简述"/>
             </el-form-item>
             <el-form-item label="产品原价" prop="originPrice">
-                <el-input type="number" v-model="skuForm.originPrice" placeholder="请输入产品原价"></el-input>
+                <el-input type="number" v-model="skuForm.originPrice" placeholder="请输入产品原价"/>
             </el-form-item>
             <el-form-item label="产品价格" prop="price">
-                <el-input type="number" v-model="skuForm.price" placeholder="请输入产品价格"></el-input>
+                <el-input type="number" v-model="skuForm.price" placeholder="请输入产品价格"/>
             </el-form-item>
             <el-form-item label="产品数量" prop="number">
-                <el-input type="number" v-model="skuForm.number" placeholder="请输入产品数量"></el-input>
+                <el-input type="number" v-model="skuForm.number" placeholder="请输入产品数量"/>
             </el-form-item>
             <template slot-slop="scope" v-for="spec in specList">
                 <el-form-item :label="spec.name" prop="specOption">

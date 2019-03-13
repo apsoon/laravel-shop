@@ -70,6 +70,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SkuEdit",
@@ -77,6 +78,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       skuId: "",
       skuForm: {
+        id: "",
         spuId: "",
         name: "",
         brief: "",
@@ -135,6 +137,7 @@ __webpack_require__.r(__webpack_exports__);
         if (res.data.code === 2000) {
           var data = res.data.data;
           that.skuForm = {
+            id: data.id,
             spuId: data.sku_id,
             name: data.name,
             brief: data.brief,
@@ -148,9 +151,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    onSubmit: function onSubmit() {
+    onCreate: function onCreate() {
       var that = this;
-      that.$refs.skuForm.validate(function (valid) {
+      that.$refs.brandForm.validate(function (valid) {
         if (valid) {
           var options = [],
               specList = that.specList;
@@ -182,7 +185,48 @@ __webpack_require__.r(__webpack_exports__);
           console.info(that.skuForm);
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/create", that.skuForm).then(function (res) {
             if (res.data.code === 2000) {
-              // message
+              that.$router.push("/spu/detail?spuId=" + that.spuId + "&active=" + "sku");
+            }
+          }).catch(function (err) {});
+        } else {
+          return false;
+        }
+      });
+    },
+    onUpdate: function onUpdate() {
+      var that = this;
+      that.$refs.brandForm.validate(function (valid) {
+        if (valid) {
+          var options = [],
+              specList = that.specList;
+          var _iteratorNormalCompletion2 = true;
+          var _didIteratorError2 = false;
+          var _iteratorError2 = undefined;
+
+          try {
+            for (var _iterator2 = specList[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+              var spec = _step2.value;
+              options.push(spec.option);
+            }
+          } catch (err) {
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
+                _iterator2.return();
+              }
+            } finally {
+              if (_didIteratorError2) {
+                throw _iteratorError2;
+              }
+            }
+          }
+
+          that.skuForm.options = options;
+          console.info(that.skuForm);
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/update", that.skuForm).then(function (res) {
+            if (res.data.code === 2000) {
               that.$router.push("/spu/detail?spuId=" + that.spuId + "&active=" + "sku");
             }
           }).catch(function (err) {});
@@ -451,11 +495,17 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
-            [_vm._v("立即创建")]
-          )
+          _vm.type === "create"
+            ? _c(
+                "el-button",
+                { attrs: { type: "primary" }, on: { click: _vm.onCreate } },
+                [_vm._v("立即创建")]
+              )
+            : _c(
+                "el-button",
+                { attrs: { type: "primary" }, on: { click: _vm.onUpdate } },
+                [_vm._v("修改")]
+              )
         ],
         2
       )
