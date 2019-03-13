@@ -60,15 +60,6 @@
                 ).catch(err => {
 
             })
-            // .then(res => {
-            //     if (res.data.code === 2000) {
-            //         that.attrList = res.data.data;
-            //         console.info(that.attrList);
-            //     }
-            // })
-            // .catch(err => {
-            //
-            // });
         },
         methods: {
             onSubmit: function () {

@@ -33,6 +33,14 @@
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
             </el-form-item>
+            <el-form-item class="clearfix">
+                <el-transfer
+                        v-model="categoryForm.brandIds"
+                        :titles="['所有规格', '当前商品已选']"
+                        :data="brandList"
+                        :props="transferProp">
+                </el-transfer>
+            </el-form-item>
             <el-button type="primary" @click="onSubmit('create')" v-if="type==='create'">立即创建</el-button>
             <el-button type="primary" @click="onSubmit('update')" v-else>立即创建</el-button>
         </el-form>
@@ -70,6 +78,10 @@
                 },
                 type: "crate",
                 categoryId: "",
+                transferProp: {
+                    key: 'id',
+                    label: 'name'
+                }
             }
         },
         mounted: function () {
