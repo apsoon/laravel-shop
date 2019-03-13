@@ -113,6 +113,19 @@ class AfterSaleService
     }
 
     /**
+     * 修改售后订单状态
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function updateAfterSaleState(array $req)
+    {
+        $result = $this->afterSaleDao->updateStateById($req["id"], $req["state"]);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
      * AfterSaleService constructor.
      *
      * @param AfterSaleDao $afterSaleDao

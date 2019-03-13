@@ -31,6 +31,17 @@ class AfterSaleMapi extends Controller
         return $this->afterSaleService->getAsPagedListByType($req);
     }
 
+    /**
+     * 修改售后订单状态
+     *
+     * @param Request $request
+     * @return \App\Http\Util\JsonResult
+     */
+    public function modifyState(Request $request)
+    {
+        $req = $request->all();
+        return $this->afterSaleService->updateAfterSaleState($req);
+    }
 
     /**
      * AfterSaleFapi constructor.

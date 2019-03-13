@@ -55,6 +55,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AfterSaleList",
@@ -83,6 +84,36 @@ __webpack_require__.r(__webpack_exports__);
           that.afSaleList = res.data.data;
         }
       }).catch(function (err) {});
+    },
+    modifyState: function modifyState(type, index, id) {
+      var _this = this;
+
+      var that = this,
+          state = 1,
+          message = "确认";
+
+      if (type === "complete") {
+        state = 4;
+        message = "完成";
+      }
+
+      that.$confirm("是否" + message + "该售后订单?", '提示', {
+        confirmButtonText: "确认",
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("after/modify-state", {
+          state: state,
+          id: id
+        }).then(function (res) {
+          if (res.data.code === 2000) that.commentList[index].state = state;
+        });
+      }).catch(function () {
+        _this.$message({
+          type: 'info',
+          message: '已取消' + message
+        });
+      });
     }
   }
 });
@@ -182,11 +213,13 @@ var render = function() {
                   return [
                     scope.row.state === 0
                       ? _c("span", [_vm._v("待确定")])
-                      : scope.row.state === 4
-                        ? _c("span", [_vm._v("已完成")])
-                        : scope.row.state === 7
-                          ? _c("span", [_vm._v("已取消")])
-                          : _vm._e()
+                      : scope.row.state === 1
+                        ? _c("span", [_vm._v("处理中")])
+                        : scope.row.state === 4
+                          ? _c("span", [_vm._v("已完成")])
+                          : scope.row.state === 7
+                            ? _c("span", [_vm._v("已取消")])
+                            : _vm._e()
                   ]
                 }
               }
@@ -208,7 +241,7 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 _vm.modifyState(
-                                  "disable",
+                                  "accept",
                                   scope.$index,
                                   scope.row.id
                                 )
@@ -227,7 +260,7 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 _vm.modifyState(
-                                  "disable",
+                                  "complete",
                                   scope.$index,
                                   scope.row.id
                                 )

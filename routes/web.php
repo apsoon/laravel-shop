@@ -88,6 +88,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::GET("comment/list", "CommentMapi@list");
     Route::POST("comment/modify-state", "CommentMapi@modifyState");
     Route::GET("after/list", "AfterSaleMapi@list");
+    Route::POST("after/modify-state", "AfterSaleMapi@modifyState");
 
     // ================================================  营销管理 =================================================
     // 优惠券

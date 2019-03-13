@@ -115,6 +115,19 @@ class AfterSaleDao
     }
 
     /**
+     * 更新状态
+     *
+     * @param $id
+     * @param $state
+     * @return mixed
+     */
+    public function updateStateById($id, $state)
+    {
+        return $this->afterSale::where("id", "=", $id)
+            ->update(["state" => $state]);
+    }
+
+    /**
      * AfterSaleDao constructor.
      *
      * @param AfterSale $afterSale

@@ -20,6 +20,7 @@
             <el-table-column label="售后状态" prop="state" width="100">
                 <template slot-scope="scope">
                     <span v-if="scope.row.state === 0">待确定</span>
+                    <span v-else-if="scope.row.state === 1">处理中</span>
                     <span v-else-if="scope.row.state === 4">已完成</span>
                     <span v-else-if="scope.row.state === 7">已取消</span>
                 </template>
@@ -29,12 +30,12 @@
                     <el-button v-if="scope.row.state === 0"
                                size="mini"
                                type="primary"
-                               @click="modifyState('disable', scope.$index, scope.row.id)">确认
+                               @click="modifyState('accept', scope.$index, scope.row.id)">确认
                     </el-button>
                     <el-button v-if="scope.row.state === 1"
                                size="mini"
                                type="primary"
-                               @click="modifyState('disable', scope.$index, scope.row.id)">完成
+                               @click="modifyState('complete', scope.$index, scope.row.id)">完成
                     </el-button>
                 </template>
             </el-table-column>
@@ -72,7 +73,33 @@
                         }
                     }).catch(err => {
                 });
-            }
+            },
+            modifyState: function (type, index, id) {
+                let that = this,
+                    state = 1,
+                    message = "确认";
+                if (type === "complete") {
+                    state = 4;
+                    message = "完成";
+                }
+                that.$confirm("是否" + message + "该售后订单?", '提示', {
+                    confirmButtonText: "确认",
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    axios.post("after/modify-state", {
+                        state: state,
+                        id: id
+                    }).then(res => {
+                        if (res.data.code === 2000) that.commentList[index].state = state;
+                    });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消' + message
+                    });
+                });
+            },
         }
     }
 </script>
