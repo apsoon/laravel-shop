@@ -18,7 +18,7 @@ class CreateSkuTable extends Migration
             $table->integer("spu_id")->comment("商品id");
             $table->integer("category_id")->comment("分类id");
             $table->string("name")->comment("名称");
-            $table->string("brief")->comment("简述");
+//            $table->string("brief")->comment("简述");
             $table->decimal("origin_price")->default(0);
             $table->decimal("price")->default(0);
             $table->unsignedInteger("number")->default(0)->comment("sku数量");
