@@ -3,6 +3,7 @@
 namespace App\Http\Dao;
 
 use App\Http\Model\Sku;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class SkuDao
@@ -114,7 +115,9 @@ class SkuDao
     public function findByCategoryEffectPaged($categoryId, int $pageNo, int $size)
     {
         $offset = ($pageNo - 1) * $size;
-        $result = $this->sku::where(["category_id" => $categoryId, "state" => 1])
+        $result = DB::table("sku")
+            ->join("spu", "sku.spu_id", "=", "spu.id")
+            ->where(["spu.category_id" => $categoryId, "sku.state" => 1])
             ->offset($offset)
             ->limit($size)
             ->get();
