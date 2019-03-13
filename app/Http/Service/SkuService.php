@@ -11,9 +11,11 @@ namespace App\Http\Service;
 
 use App\Http\Dao\SkuDao;
 use App\Http\Dao\SkuSpecOptionDao;
+use App\Http\Dao\SpuDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Sku;
 use App\Http\Util\JsonResult;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class SkuService
@@ -26,6 +28,11 @@ class SkuService
      * @var SkuDao
      */
     private $skuDao;
+
+    /**
+     * @var SpuDao
+     */
+    private $spuDao;
 
     /**
      * @var SkuSpecOptionDao
@@ -42,12 +49,16 @@ class SkuService
     {
         try {
             $sku = new Sku();
+            $spu = $this->spuDao->findById($req["spuId"]);
             $sku->spu_id = $req["spuId"];
             $sku->name = $req["name"];
+            $sku->brief = $req["brief"];
+            $sku->category_id = $spu->category_id;
             $sku->origin_price = $req["originPrice"];
             $sku->price = $req["price"];
             $sku->number = $req["number"];
             $sku->state = $req["state"];
+            $sku->image_url = $req["imageUrl"];
             $sku->is_recom = 0;
             $options = $req["options"];
             $optionList = [];
@@ -59,9 +70,11 @@ class SkuService
             $result = $this->skuSpecOptionDao->insertList($optionList);
             if ($result) return new JsonResult();
         } catch (\Exception $e) {
+            Log::info(" [ SkuService.php ] ==================== createSku >>>>> error happened when create a SKU ");
+            Log::info($e);
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
-        return new JsonResult(StatusCode::SERVER_ERROR);
+        return new JsonResult();
     }
 
     /**
@@ -221,9 +234,10 @@ class SkuService
      * @param SkuDao $skuDao
      * @param SkuSpecOptionDao $skuSpecOptionDao
      */
-    public function __construct(SkuDao $skuDao, SkuSpecOptionDao $skuSpecOptionDao)
+    public function __construct(SkuDao $skuDao, SkuSpecOptionDao $skuSpecOptionDao, SpuDao $spuDao)
     {
         $this->skuDao = $skuDao;
         $this->skuSpecOptionDao = $skuSpecOptionDao;
+        $this->spuDao = $spuDao;
     }
 }

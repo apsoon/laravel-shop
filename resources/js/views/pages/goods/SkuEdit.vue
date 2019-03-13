@@ -1,13 +1,13 @@
 <template>
     <el-card>
         <div slot="header" class="clearfix">
-            <span>创建产品</span>
+            <span>编辑产品</span>
         </div>
         <el-form ref="skuForm" :rules="rules" :model="skuForm" label-width="100px">
             <el-form-item label="产品名称" prop="name">
                 <el-input v-model="skuForm.name" placeholder="请输入产品名称"></el-input>
             </el-form-item>
-            <el-form-item label="产品名称" prop="brief">
+            <el-form-item label="产品简述" prop="brief">
                 <el-input v-model="skuForm.brief" placeholder="请输入产品简述"></el-input>
             </el-form-item>
             <el-form-item label="产品原价" prop="originPrice">
@@ -20,7 +20,8 @@
                 <el-input type="number" v-model="skuForm.number" placeholder="请输入产品数量"></el-input>
             </el-form-item>
             <template slot-slop="scope" v-for="spec in specList">
-                <el-form-item :label="spec.name" prop="specOption" :rules="{validator: ruleSelect, trigger: 'blur'}">
+                <el-form-item :label="spec.name" prop="specOption">
+                    <!--:rules="{validator: ruleSelect, trigger: 'blur'}">-->
                     <el-select placeholder="请选择" v-model="spec.option">
                         <el-option
                                 v-for="option in spec.options"
@@ -31,6 +32,22 @@
                     </el-select>
                 </el-form-item>
             </template>
+            <el-form-item label="产品图片">
+                <el-upload
+                        class="upload-demo"
+                        action="/upload/image"
+                        :headers="uploadHeader"
+                        :on-success="onUploadSuccess"
+                        :on-error="onUploadFailed"
+                        :on-remove="onUploadFileRemoved"
+                        :limit="1"
+                        :data="uploadData"
+                        :file-list="imageList"
+                        list-type="picture-card">
+                    <i class="el-icon-plus"></i>
+                    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+                </el-upload>
+            </el-form-item>
             <el-form-item label="是否上架" prop="state">
                 <el-radio v-model="skuForm.state" label="0">暂不上架</el-radio>
                 <el-radio v-model="skuForm.state" label="1">立即上架</el-radio>
@@ -56,6 +73,7 @@
                     originPrice: "",
                     price: "",
                     number: "",
+                    imageUrl: "",
                     state: "0",
                 },
                 rules: {
@@ -72,13 +90,22 @@
                         {}
                     ]
                 },
-                specList: []
+                specList: [],
+                imageList: [],
+                uploadHeader: {},
+                uploadData: {
+                    type: "image",
+                    position: "sku"
+                },
             }
         },
         mounted: function () {
             let that = this,
                 spuId = that.$route.query.spuId,
                 type = that.$route.query.type;
+            that.uploadHeader = {
+                'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
+            };
             that.spuId = spuId;
             that.skuForm.spuId = spuId;
             axios.get("/spu/specOptionList?spuId=" + spuId)
@@ -124,7 +151,7 @@
                             .then(res => {
                                 if (res.data.code === 2000) {
                                     // message
-                                    that.$router.push("/spu/detail?spuId=", that.spuId + "&active=" + "sku");
+                                    that.$router.push("/spu/detail?spuId=" + that.spuId + "&active=" + "sku");
                                 }
                             })
                             .catch(err => {
@@ -136,11 +163,29 @@
                 });
             },
             ruleSelect: function (rule, value, callback) {
-                if (!value) {
-                    return callback(new Error('请选择'));
+                // if (!value) {
+                //     return callback(new Error('请选择'));
+                // }
+                // callback();
+            },
+            onUploadSuccess: function (response, file, fileList) {
+                let that = this;
+                if (response.code === 2000) {
+                    let skuForm = that.skuForm;
+                    skuForm.imageUrl = response.data.filePath;
+                    that.skuForm = skuForm;
                 }
-                callback();
-            }
+            },
+            onUploadFailed: function (err, file, fileList) {
+                // TODO 上传失败
+            },
+            onUploadFileRemoved: function (file, fileList) {
+                let that = this;
+                // TODO 删除文件
+                let skuForm = that.skuForm;
+                skuForm.logo = "";
+                that.skuForm = skuForm;
+            },
         }
     }
 </script>

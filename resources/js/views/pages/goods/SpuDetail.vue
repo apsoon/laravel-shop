@@ -81,6 +81,11 @@
             </router-link>
             <el-table ref="skuList" :data="skuList" tooltip-effect="dark" width="100%">
                 <el-table-column prop="name" label="名称" width="150px" align="center"/>
+                <el-table-column prop="image_url" label="商品图片" width="150px" align="center">
+                    <template slot-scope="scope">
+                        <img class="avatar" :src="scope.row.image_url"/>
+                    </template>
+                </el-table-column>
                 <el-table-column prop="origin_price" label="原价" width="150px" align="center"/>
                 <el-table-column prop="price" label="价格" width="150px" align="center"/>
                 <el-table-column prop="number" label="数量" width="150px" align="center"/>

@@ -53,6 +53,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SkuEdit",
@@ -67,6 +84,7 @@ __webpack_require__.r(__webpack_exports__);
         originPrice: "",
         price: "",
         number: "",
+        imageUrl: "",
         state: "0"
       },
       rules: {
@@ -87,13 +105,22 @@ __webpack_require__.r(__webpack_exports__);
         }],
         specOption: [{}]
       },
-      specList: []
+      specList: [],
+      imageList: [],
+      uploadHeader: {},
+      uploadData: {
+        type: "image",
+        position: "sku"
+      }
     };
   },
   mounted: function mounted() {
     var that = this,
         spuId = that.$route.query.spuId,
         type = that.$route.query.type;
+    that.uploadHeader = {
+      'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
+    };
     that.spuId = spuId;
     that.skuForm.spuId = spuId;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/specOptionList?spuId=" + spuId).then(function (res) {
@@ -164,12 +191,28 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    ruleSelect: function ruleSelect(rule, value, callback) {
-      if (!value) {
-        return callback(new Error('请选择'));
-      }
+    ruleSelect: function ruleSelect(rule, value, callback) {// if (!value) {
+      //     return callback(new Error('请选择'));
+      // }
+      // callback();
+    },
+    onUploadSuccess: function onUploadSuccess(response, file, fileList) {
+      var that = this;
 
-      callback();
+      if (response.code === 2000) {
+        var skuForm = that.skuForm;
+        skuForm.imageUrl = response.data.filePath;
+        that.skuForm = skuForm;
+      }
+    },
+    onUploadFailed: function onUploadFailed(err, file, fileList) {// TODO 上传失败
+    },
+    onUploadFileRemoved: function onUploadFileRemoved(file, fileList) {
+      var that = this; // TODO 删除文件
+
+      var skuForm = that.skuForm;
+      skuForm.logo = "";
+      that.skuForm = skuForm;
     }
   }
 });
@@ -197,7 +240,7 @@ var render = function() {
       _c(
         "div",
         { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
-        [_c("span", [_vm._v("创建产品")])]
+        [_c("span", [_vm._v("编辑产品")])]
       ),
       _vm._v(" "),
       _c(
@@ -231,7 +274,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { label: "产品名称", prop: "brief" } },
+            { attrs: { label: "产品简述", prop: "brief" } },
             [
               _c("el-input", {
                 attrs: { placeholder: "请输入产品简述" },
@@ -305,13 +348,7 @@ var render = function() {
             return [
               _c(
                 "el-form-item",
-                {
-                  attrs: {
-                    label: spec.name,
-                    prop: "specOption",
-                    rules: { validator: _vm.ruleSelect, trigger: "blur" }
-                  }
-                },
+                { attrs: { label: spec.name, prop: "specOption" } },
                 [
                   _c(
                     "el-select",
@@ -338,6 +375,44 @@ var render = function() {
               )
             ]
           }),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品图片" } },
+            [
+              _c(
+                "el-upload",
+                {
+                  staticClass: "upload-demo",
+                  attrs: {
+                    action: "/upload/image",
+                    headers: _vm.uploadHeader,
+                    "on-success": _vm.onUploadSuccess,
+                    "on-error": _vm.onUploadFailed,
+                    "on-remove": _vm.onUploadFileRemoved,
+                    limit: 1,
+                    data: _vm.uploadData,
+                    "file-list": _vm.imageList,
+                    "list-type": "picture-card"
+                  }
+                },
+                [
+                  _c("i", { staticClass: "el-icon-plus" }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "el-upload__tip",
+                      attrs: { slot: "tip" },
+                      slot: "tip"
+                    },
+                    [_vm._v("只能上传jpg/png文件，且不超过500kb")]
+                  )
+                ]
+              )
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
             "el-form-item",

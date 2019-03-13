@@ -113,7 +113,8 @@ class OrderService
                 $this->skuDao->decreaseNumber($sku->id, $requestSku->number); // TODO ? position
                 $originPrice += $sku->price * $requestSku->number;
                 $number += $requestSku->number;
-                array_push($skuList, ["order_sn" => $order->sn, "sku_id" => $sku->id, "number" => $requestSku->number, "name" => $sku->name, "price" => $sku->price, "total" => $sku->price * $requestSku->number]);
+                array_push($skuList, ["order_sn" => $order->sn, "sku_id" => $sku->id, "number" => $requestSku->number, "image_url" => $sku->image_url,
+                    "name" => $sku->name, "price" => $sku->price, "total" => $sku->price * $requestSku->number]);
             }
             $order->origin_price = $originPrice;
             $order->number = $number;

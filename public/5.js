@@ -175,6 +175,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -738,6 +743,28 @@ var render = function() {
                   width: "150px",
                   align: "center"
                 }
+              }),
+              _vm._v(" "),
+              _c("el-table-column", {
+                attrs: {
+                  prop: "image_url",
+                  label: "商品图片",
+                  width: "150px",
+                  align: "center"
+                },
+                scopedSlots: _vm._u([
+                  {
+                    key: "default",
+                    fn: function(scope) {
+                      return [
+                        _c("img", {
+                          staticClass: "avatar",
+                          attrs: { src: scope.row.image_url }
+                        })
+                      ]
+                    }
+                  }
+                ])
               }),
               _vm._v(" "),
               _c("el-table-column", {
