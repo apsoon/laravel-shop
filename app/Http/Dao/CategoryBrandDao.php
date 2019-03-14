@@ -10,6 +10,8 @@ namespace App\Http\Dao;
 
 
 use App\Http\Model\CategoryBrand;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class CategoryBrandDao
@@ -32,6 +34,30 @@ class CategoryBrandDao
     public function findByCategory($categoryId)
     {
         return $this->categoryBrand::where("category_id", "=", $categoryId)->get();
+    }
+
+    /**
+     * 批量添加
+     *
+     * @param array $insertList
+     * @return bool
+     */
+    public function insertList(array $insertList)
+    {
+        Log::info("==========================");
+        Log::info($insertList);
+        return DB::table($this->categoryBrand->getTable())->insert($insertList);
+    }
+
+    /**
+     * 分类删除
+     *
+     * @param $categoryId
+     * @return mixed
+     */
+    public function deleteByCategory($categoryId)
+    {
+        return $this->categoryBrand::where("category_id", "=", $categoryId)->delete();
     }
 
     /**

@@ -73,7 +73,8 @@ __webpack_require__.r(__webpack_exports__);
         parentId: 0,
         sortOrder: 0,
         imageUrl: "",
-        isRecom: "0"
+        isRecom: "0",
+        brandIds: []
       },
       rules: {
         name: [{
@@ -97,7 +98,8 @@ __webpack_require__.r(__webpack_exports__);
         label: 'name'
       },
       brandList: [],
-      existList: []
+      existList: [],
+      category: ""
     };
   },
   mounted: function mounted() {
@@ -125,72 +127,41 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function (err) {});
     }
 
-    var brandList = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("brand/list");
-    var existList = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("brand/list-category?categoryId=" + that.categoryId);
-    Promise.all([brandList, existList]).then(function (res) {
-      var notExist = [];
-      var brandList = res[0].data.data;
-      var existList = res[1].data.code === 2000 ? res[1].data.data : [];
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("brand/list").then(function (res) {
+      if (res.data.code === 2000) {
+        that.brandList = res.data.data;
+      }
+    }).catch(function (err) {});
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("brand/list-category?categoryId=" + that.categoryId).then(function (res) {
+      if (res.data.code === 2000) {
+        // let brandIds = [];
+        var exists = res.data.data;
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
-      try {
-        for (var _iterator = brandList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var brand = _step.value;
-          var e = false;
-          var _iteratorNormalCompletion2 = true;
-          var _didIteratorError2 = false;
-          var _iteratorError2 = undefined;
-
-          try {
-            for (var _iterator2 = existList[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-              exist = _step2.value;
-
-              if (brand.id === existList.id) {
-                e = true;
-                break;
-              }
-            }
-          } catch (err) {
-            _didIteratorError2 = true;
-            _iteratorError2 = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion2 && _iterator2.return != null) {
-                _iterator2.return();
-              }
-            } finally {
-              if (_didIteratorError2) {
-                throw _iteratorError2;
-              }
-            }
-          }
-
-          if (!e) {
-            notExist.push(brand);
-          }
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
         try {
-          if (!_iteratorNormalCompletion && _iterator.return != null) {
-            _iterator.return();
-          }
+          for (var _iterator = exists[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var exist = _step.value;
+            that.categoryForm.brandIds.push(exist.id);
+          } // that.categoryForm.brandIds = brandIds;
+
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
         } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return != null) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
           }
         }
       }
-
-      that.brandList = notExist;
-    }).catch(function (err) {
-      console.info("err");
-      console.info(err);
-    });
+    }).catch(function (err) {});
     that.uploadHeader = {
       'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
     };
@@ -405,7 +376,7 @@ var render = function() {
             [
               _c("el-transfer", {
                 attrs: {
-                  titles: ["所有规格", "当前商品已选"],
+                  titles: ["所有品牌", "当前分类已选"],
                   data: _vm.brandList,
                   props: _vm.transferProp
                 },

@@ -36,7 +36,7 @@
             <el-form-item label="添加分类" class="clearfix">
                 <el-transfer
                         v-model="categoryForm.brandIds"
-                        :titles="['所有规格', '当前商品已选']"
+                        :titles="['所有品牌', '当前分类已选']"
                         :data="brandList"
                         :props="transferProp">
                 </el-transfer>
@@ -61,7 +61,8 @@
                     parentId: 0,
                     sortOrder: 0,
                     imageUrl: "",
-                    isRecom: "0"
+                    isRecom: "0",
+                    brandIds: []
                 },
                 rules: {
                     name: [
@@ -83,7 +84,8 @@
                     label: 'name'
                 },
                 brandList: [],
-                existList: []
+                existList: [],
+                category: ""
             }
         },
         mounted: function () {
@@ -111,29 +113,24 @@
                     }).catch(err => {
                 });
             }
-            let brandList = axios.get("brand/list");
-            let existList = axios.get("brand/list-category?categoryId=" + that.categoryId);
-            Promise.all([brandList, existList])
+            axios.get("brand/list")
                 .then(res => {
-                    let notExist = [];
-                    let brandList = res[0].data.data;
-                    let existList = res[1].data.code === 2000 ? res[1].data.data : [];
-                    for (let brand of brandList) {
-                        let e = false;
-                        for (exist of existList) {
-                            if (brand.id === existList.id) {
-                                e = true;
-                                break;
-                            }
-                        }
-                        if (!e) {
-                            notExist.push(brand);
-                        }
+                    if (res.data.code === 2000) {
+                        that.brandList = res.data.data;
                     }
-                    that.brandList = notExist;
                 }).catch(err => {
-                console.info("err");
-                console.info(err);
+            });
+            axios.get("brand/list-category?categoryId=" + that.categoryId)
+                .then(res => {
+                    if (res.data.code === 2000) {
+                        // let brandIds = [];
+                        let exists = res.data.data;
+                        for (let exist of exists) {
+                            that.categoryForm. brandIds.push(exist.id);
+                        }
+                        // that.categoryForm.brandIds = brandIds;
+                    }
+                }).catch(err => {
             });
             that.uploadHeader = {
                 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')

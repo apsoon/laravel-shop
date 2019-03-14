@@ -9,6 +9,7 @@
 namespace App\Http\Service;
 
 
+use App\Http\Dao\CategoryBrandDao;
 use App\Http\Dao\CategoryDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Category;
@@ -27,6 +28,11 @@ class CategoryService
     private $categoryDao;
 
     /**
+     * @var CategoryBrandDao
+     */
+    private $categoryBrandDao;
+
+    /**
      * 创建分类
      *
      * @param array $req
@@ -34,6 +40,7 @@ class CategoryService
      */
     public function createCategory(array $req)
     {
+        // TODO transaction
         $category = new Category();
         $category->name = $req["name"];
         $category->sort_order = empty($req["sortOrder"]) ? 1 : $req["sortOrder"];
@@ -48,6 +55,14 @@ class CategoryService
         }
         $category->image_url = $req["imageUrl"];
         $result = $this->categoryDao->insert($category);
+        if ($result) {
+            $insertList = [];
+            $brandIds = $req["brandIds"];
+            foreach ($brandIds as $brandId) {
+                array_push($brandIds, ["category_id" => $category->id, "brand_id" => $brandId]);
+            }
+            $result = $this->categoryBrandDao->insertList($insertList);
+        }
         if ($result) return new JsonResult();
         return new JsonResult(StatusCode::SERVER_ERROR);
     }
@@ -60,11 +75,21 @@ class CategoryService
      */
     public function updateCategory(array $req)
     {
+        // TODO transaction
         $category = $this->categoryDao->findById($req["id"]);
         $category->name = $req["name"];
         $category->sort_order = $req["sortOrder"];
         $category->image_url = $req["imageUrl"];
         $result = $this->categoryDao->update($category);
+        if ($result) {
+            $insertList = [];
+            $brandIds = $req["brandIds"];
+            foreach ($brandIds as $brandId) {
+                array_push($insertList, ["category_id" => $category->id, "brand_id" => $brandId]);
+            }
+            $this->categoryBrandDao->deleteByCategory($category->id);
+            $result = $this->categoryBrandDao->insertList($insertList);
+        }
         if ($result) return new JsonResult();
         return new JsonResult(StatusCode::SERVER_ERROR);
     }
@@ -171,10 +196,13 @@ class CategoryService
 
     /**
      * CategoryService constructor.
+     *
      * @param CategoryDao $categoryDao
+     * @param CategoryBrandDao $categoryBrandDao
      */
-    public function __construct(CategoryDao $categoryDao)
+    public function __construct(CategoryDao $categoryDao, CategoryBrandDao $categoryBrandDao)
     {
         $this->categoryDao = $categoryDao;
+        $this->categoryBrandDao = $categoryBrandDao;
     }
 }

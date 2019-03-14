@@ -9,6 +9,7 @@
 namespace App\Http\Dao;
 
 use App\Http\Model\Brand;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class UserDao
