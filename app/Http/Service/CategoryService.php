@@ -9,11 +9,9 @@
 namespace App\Http\Service;
 
 
-use App\Http\Dao\CategoryBrandDao;
 use App\Http\Dao\CategoryDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Category;
-use App\Http\Model\CategoryBrand;
 use App\Http\Util\JsonResult;
 
 /**
@@ -27,11 +25,6 @@ class CategoryService
      * @var  CategoryDao
      */
     private $categoryDao;
-
-    /**
-     * @var CategoryBrandDao
-     */
-    private $categoryBrandDao;
 
     /**
      * 创建分类
@@ -85,8 +78,6 @@ class CategoryService
     public function getCategoryById(array $req)
     {
         $category = $this->categoryDao->findById($req["id"]);
-        $brands = $this->categoryBrandDao->findByCategory($req["id"]);
-        $category->brands = $brands;
         return new JsonResult(StatusCode::SUCCESS, $category);
     }
 
@@ -181,11 +172,9 @@ class CategoryService
     /**
      * CategoryService constructor.
      * @param CategoryDao $categoryDao
-     * @param CategoryBrandDao $categoryBrandDao
      */
-    public function __construct(CategoryDao $categoryDao, CategoryBrandDao $categoryBrandDao)
+    public function __construct(CategoryDao $categoryDao)
     {
         $this->categoryDao = $categoryDao;
-        $this->categoryBrandDao = $categoryBrandDao;
     }
 }

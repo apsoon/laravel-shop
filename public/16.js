@@ -127,15 +127,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
       }
-    }).catch(function (err) {}); // .then(res => {
-    //     if (res.data.code === 2000) {
-    //         that.attrList = res.data.data;
-    //         console.info(that.attrList);
-    //     }
-    // })
-    // .catch(err => {
-    //
-    // });
+    }).catch(function (err) {});
   },
   methods: {
     onSubmit: function onSubmit() {

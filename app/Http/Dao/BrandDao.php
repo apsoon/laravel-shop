@@ -127,6 +127,18 @@ class BrandDao
     }
 
     /**
+     * id in
+     *
+     * @param array $brandIds
+     * @return mixed
+     */
+    public function findByIdIn(array $brandIds)
+    {
+        $result = $this->brand::whereIn("id", $brandIds)->get();
+        return $result;
+    }
+
+    /**
      * UserDao constructor.
      *
      * @param Brand $brand

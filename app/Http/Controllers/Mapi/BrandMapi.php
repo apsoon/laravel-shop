@@ -85,6 +85,7 @@ class BrandMapi extends Controller
         $req = $request->all();
         $result = $this->brandService->modifyState($req);
         if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
@@ -96,6 +97,19 @@ class BrandMapi extends Controller
         $req = $request->all();
         $result = $this->brandService->deleteBrand($req);
         if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
+     * 获取当前分类下的品牌
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function listByCategory(Request $request)
+    {
+        $req = $request->all();
+        return $this->brandService->getBrandByCategory($req);
     }
 
     /**

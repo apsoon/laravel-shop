@@ -33,7 +33,7 @@
                     <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
                 </el-upload>
             </el-form-item>
-            <el-form-item class="clearfix">
+            <el-form-item label="添加分类" class="clearfix">
                 <el-transfer
                         v-model="categoryForm.brandIds"
                         :titles="['所有规格', '当前商品已选']"
@@ -81,7 +81,9 @@
                 transferProp: {
                     key: 'id',
                     label: 'name'
-                }
+                },
+                brandList: [],
+                existList: []
             }
         },
         mounted: function () {
@@ -109,6 +111,30 @@
                     }).catch(err => {
                 });
             }
+            let brandList = axios.get("brand/list");
+            let existList = axios.get("brand/list-category?categoryId=" + that.categoryId);
+            Promise.all([brandList, existList])
+                .then(res => {
+                    let notExist = [];
+                    let brandList = res[0].data.data;
+                    let existList = res[1].data.code === 2000 ? res[1].data.data : [];
+                    for (let brand of brandList) {
+                        let e = false;
+                        for (exist of existList) {
+                            if (brand.id === existList.id) {
+                                e = true;
+                                break;
+                            }
+                        }
+                        if (!e) {
+                            notExist.push(brand);
+                        }
+                    }
+                    that.brandList = notExist;
+                }).catch(err => {
+                console.info("err");
+                console.info(err);
+            });
             that.uploadHeader = {
                 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
             };

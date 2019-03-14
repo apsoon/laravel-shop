@@ -12,7 +12,7 @@ use App\Http\Dao\BrandDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\Brand;
 use App\Http\Util\JsonResult;
-use Illuminate\Support\Facades\Log;
+use App\Http\Dao\CategoryBrandDao;
 
 /**
  * Class UserService
@@ -26,6 +26,10 @@ class BrandService
      */
     private $brandDao;
 
+    /**
+     * @var CategoryBrandDao
+     */
+    private $categoryBrandDao;
 
     /**
      * 获取品牌列表
@@ -141,12 +145,32 @@ class BrandService
     }
 
     /**
+     * 获取当前分类下的品牌
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getBrandByCategory(array $req)
+    {
+        if (empty($req["categoryId"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $categoryBrands = $this->categoryBrandDao->findByCategory($req["categoryId"]);
+        $brandIds = [];
+        foreach ($categoryBrands as $categoryBrand) {
+            array_push($brandIds, $categoryBrand->brand_id);
+        }
+        $result = $this->brandDao->findByIdIn($brandIds);
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
+    /**
      * BrandService constructor.
      *
      * @param BrandDao $brandDao
+     * @param CategoryBrandDao $categoryBrandDao
      */
-    public function __construct(BrandDao $brandDao)
+    public function __construct(BrandDao $brandDao, CategoryBrandDao $categoryBrandDao)
     {
         $this->brandDao = $brandDao;
+        $this->categoryBrandDao = $categoryBrandDao;
     }
 }
