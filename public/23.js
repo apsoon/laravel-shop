@@ -30,6 +30,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdminList",
@@ -38,8 +46,19 @@ __webpack_require__.r(__webpack_exports__);
       adminList: []
     };
   },
-  mounted: {},
-  methods: {}
+  mounted: function mounted() {
+    var that = this;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/admin/list").then(function (res) {
+      if (res.data.code === 2000) {
+        that.adminList = res.data.data;
+      }
+    }).catch(function (err) {});
+  },
+  methods: {
+    modifyPassword: function modifyPassword() {
+      var that = this;
+    }
+  }
 });
 
 /***/ }),
@@ -93,19 +112,76 @@ var render = function() {
           }
         },
         [
-          _c("el-table-column", { attrs: { label: "编号", prop: "id" } }),
-          _vm._v(" "),
-          _c("el-table-column", { attrs: { label: "名称", prop: "name" } }),
-          _vm._v(" "),
-          _c("el-table-column", { attrs: { label: "电话", prop: "phone" } }),
-          _vm._v(" "),
-          _c("el-table-column", { attrs: { label: "邮箱", prop: "email" } }),
-          _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "注册时间", prop: "created_at" }
+            attrs: { label: "编号", prop: "id", width: "150" }
           }),
           _vm._v(" "),
-          _c("el-table-column", { attrs: { label: "操作" } })
+          _c("el-table-column", {
+            attrs: { label: "名称", prop: "name", width: "150" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "电话", prop: "phone", width: "150" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "邮箱", prop: "email", width: "200" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "注册时间", prop: "created_at", width: "200" }
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { label: "操作", "min-width": "1" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { type: "primary", size: "medium" },
+                        on: {
+                          click: function($event) {
+                            _vm.modifyPassword(scope.$index, scope.row.id)
+                          }
+                        }
+                      },
+                      [_vm._v("修改密码\n                ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { type: "warning", size: "medium" },
+                        on: {
+                          click: function($event) {
+                            _vm.modifyPassword(scope.$index, scope.row.id)
+                          }
+                        }
+                      },
+                      [_vm._v("禁用\n                ")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { type: "danger", size: "medium" },
+                        on: {
+                          click: function($event) {
+                            _vm.modifyPassword(scope.$index, scope.row.id)
+                          }
+                        }
+                      },
+                      [_vm._v("删除\n                ")]
+                    )
+                  ]
+                }
+              }
+            ])
+          })
         ],
         1
       )

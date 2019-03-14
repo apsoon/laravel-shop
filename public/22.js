@@ -9,6 +9,8 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -36,15 +38,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdminEdit",
   data: function data() {
+    var _this = this;
+
+    var validatePasswordConfirm = function validatePasswordConfirm(rule, value, callback) {
+      if (value === '') {
+        callback(new Error('请再次输入管理员密码'));
+      } else if (value !== _this.adminForm.password) {
+        callback(new Error('两次输入密码不一致!'));
+      } else {
+        callback();
+      }
+    };
+
     return {
       adminForm: {
         name: "",
         email: "",
         phone: "",
-        password: ""
+        password: "",
+        confirm: ""
       },
       rules: {
         name: [{
@@ -68,12 +84,11 @@ __webpack_require__.r(__webpack_exports__);
           trigger: 'blur'
         }],
         confirm: [{
-          required: true,
-          message: '请再次输入管理员密码',
+          validator: validatePasswordConfirm,
           trigger: 'blur'
         }]
       },
-      pwd: "",
+      password: "",
       confirm: "",
       type: "create"
     };
@@ -83,7 +98,17 @@ __webpack_require__.r(__webpack_exports__);
         type = that.$route.query.type;
     that.type = type;
   },
-  methods: function methods() {}
+  methods: {
+    onCreate: function onCreate() {
+      var that = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("admin/create", that.adminForm).then(function (res) {
+        if (res.data.code === 2000) {
+          that.$router.push("/admin-list");
+        }
+      }).catch(function (err) {});
+    },
+    onUpdate: function onUpdate() {}
+  }
 });
 
 /***/ }),
@@ -146,7 +171,7 @@ var render = function() {
             { attrs: { prop: "email", label: "邮箱" } },
             [
               _c("el-input", {
-                attrs: { placeholder: "请输入管理员邮箱" },
+                attrs: { type: "email", placeholder: "请输入管理员邮箱" },
                 model: {
                   value: _vm.adminForm.email,
                   callback: function($$v) {
@@ -164,7 +189,7 @@ var render = function() {
             { attrs: { prop: "phone", label: "手机" } },
             [
               _c("el-input", {
-                attrs: { placeholder: "请输入管理员电话" },
+                attrs: { type: "tel", placeholder: "请输入管理员电话" },
                 model: {
                   value: _vm.adminForm.phone,
                   callback: function($$v) {
@@ -182,7 +207,11 @@ var render = function() {
             { attrs: { prop: "password", label: "密码" } },
             [
               _c("el-input", {
-                attrs: { placeholder: "请输入管理员密码" },
+                attrs: {
+                  type: "password",
+                  placeholder: "请输入管理员密码",
+                  "show-password": ""
+                },
                 model: {
                   value: _vm.adminForm.password,
                   callback: function($$v) {
@@ -200,7 +229,11 @@ var render = function() {
             { attrs: { prop: "confirm", label: "确认密码" } },
             [
               _c("el-input", {
-                attrs: { placeholder: "请再次输入管理员密码" },
+                attrs: {
+                  type: "password",
+                  placeholder: "请再次输入管理员密码",
+                  "show-password": ""
+                },
                 model: {
                   value: _vm.adminForm.confirm,
                   callback: function($$v) {

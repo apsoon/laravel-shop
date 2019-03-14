@@ -8,16 +8,16 @@
                 <el-input v-model="adminForm.name" placeholder="请输入管理员名称"/>
             </el-form-item>
             <el-form-item prop="email" label="邮箱">
-                <el-input v-model="adminForm.email" placeholder="请输入管理员邮箱"/>
+                <el-input v-model="adminForm.email" type="email" placeholder="请输入管理员邮箱"/>
             </el-form-item>
             <el-form-item prop="phone" label="手机">
-                <el-input v-model="adminForm.phone" placeholder="请输入管理员电话"/>
+                <el-input v-model="adminForm.phone" type="tel" placeholder="请输入管理员电话"/>
             </el-form-item>
             <el-form-item prop="password" label="密码">
-                <el-input v-model="adminForm.password" placeholder="请输入管理员密码"/>
+                <el-input v-model="adminForm.password" type="password" placeholder="请输入管理员密码" show-password/>
             </el-form-item>
             <el-form-item prop="confirm" label="确认密码">
-                <el-input v-model="adminForm.confirm" placeholder="请再次输入管理员密码"/>
+                <el-input v-model="adminForm.confirm" type="password" placeholder="请再次输入管理员密码" show-password/>
             </el-form-item>
         </el-form>
         <el-button type="primary" @click="onCreate" v-if="type === 'create'">立即创建</el-button>
@@ -26,15 +26,27 @@
 </template>
 
 <script>
+    import axios from "axios";
+
     export default {
         name: "AdminEdit",
         data: function () {
+            let validatePasswordConfirm = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error('请再次输入管理员密码'));
+                } else if (value !== this.adminForm.password) {
+                    callback(new Error('两次输入密码不一致!'));
+                } else {
+                    callback();
+                }
+            };
             return {
                 adminForm: {
                     name: "",
                     email: "",
                     phone: "",
-                    password: ""
+                    password: "",
+                    confirm: ""
                 },
                 rules: {
                     name: [
@@ -50,10 +62,10 @@
                         {required: true, message: '请输入管理员密码', trigger: 'blur'}
                     ],
                     confirm: [
-                        {required: true, message: '请再次输入管理员密码', trigger: 'blur'}
+                        {validator: validatePasswordConfirm, trigger: 'blur'}
                     ],
                 },
-                pwd: "",
+                password: "",
                 confirm: "",
                 type: "create"
             }
@@ -63,8 +75,20 @@
                 type = that.$route.query.type;
             that.type = type;
         },
-        methods: function () {
+        methods: {
+            onCreate: function () {
+                let that = this;
+                axios.post("admin/create", that.adminForm)
+                    .then(res => {
+                        if (res.data.code === 2000) {
+                            that.$router.push("/admin-list");
+                        }
+                    }).catch(err => {
+                });
+            },
+            onUpdate: function () {
 
+            }
         },
     }
 </script>
