@@ -53,100 +53,100 @@ export default new VueRouter({
     saveScrollPosition: true,
     routes: [
 
-        {name: 'Login', path: '/login', component: Login},            // hidden: true        },
+        {name: 'Login', path: '/login', component: Login, hidden: true},
         {
             path: '/',
             component: Home,
             name: '首页',
-            iconCls: 'fa fa-address-card',
-            leaf: true,//只有一个节点
+            iconCls: 'el-icon-menu',
+            leaf: true, // 只有一个节点
             children: [
-                {name: 'Index', path: '/index', component: Index},
+                {name: '首页', path: '/index', component: Index},
             ]
         },
         {
             path: '/',
             component: Home,
             name: '商品管理',
-            iconCls: 'el-icon-message',//图标样式class
+            iconCls: 'el-icon-goods',//图标样式class
             children: [
-                {name: 'SpuList', path: '/spu-list', component: SpuList, hidden: true},
-                {name: 'SpuDetail', path: '/spu-detail', component: SpuDetail},
-                {name: 'SpuEdit', path: '/spu-Edit', component: SpuEdit},
-                {name: 'SpuSpecEdit', path: '/spu-spec-Edit', component: SpuSpecEdit},
-                {name: 'SpuBannerAdd', path: '/spu-banner-add', component: SpuBannerAdd},
-                {name: 'SpuSpecOption', path: '/spu-spec-option', component: SpuSpecOption},
-                {name: 'SkuEdit', path: '/sku-edit', component: SkuEdit},
-                {name: 'CategoryList', path: '/category-list', component: CategoryList},
-                {name: 'CategoryEdit', path: '/category-edit', component: CategoryEdit},
-                {name: 'BrandList', path: '/brand-list', component: BrandList},
-                {name: 'BrandEdit', path: '/brand-edit', component: BrandEdit},
-                {name: 'AttrList', path: '/attr-list', component: AttrList},
-                {name: 'AttrGroupAdd', path: '/attr-group-add', component: AttrGroupAdd},
-                {name: 'SpuAttrEdit', path: '/spu-attr-edit', component: SpuAttrEdit},
-                {name: 'AttrAdd', path: '/attr-add', component: AttrAdd},
-                {name: 'SpecList', path: '/spec-list', component: SpecList},
+                {name: '商品列表', path: '/spu-list', component: SpuList, hidden: true},
+                {name: 'SpuDetail', path: '/spu-detail', component: SpuDetail, hidden: true},
+                {name: 'SpuEdit', path: '/spu-Edit', component: SpuEdit, hidden: true},
+                {name: 'SpuSpecEdit', path: '/spu-spec-Edit', component: SpuSpecEdit, hidden: true},
+                {name: 'SpuBannerAdd', path: '/spu-banner-add', component: SpuBannerAdd, hidden: true},
+                {name: 'SpuSpecOption', path: '/spu-spec-option', component: SpuSpecOption, hidden: true},
+                {name: 'SkuEdit', path: '/sku-edit', component: SkuEdit, hidden: true},
+                {name: '分类列表', path: '/category-list', component: CategoryList},
+                {name: 'CategoryEdit', path: '/category-edit', component: CategoryEdit, hidden: true},
+                {name: '品牌列表', path: '/brand-list', component: BrandList},
+                {name: 'BrandEdit', path: '/brand-edit', component: BrandEdit, hidden: true},
+                {name: '属性列表', path: '/attr-list', component: AttrList},
+                {name: 'AttrGroupAdd', path: '/attr-group-add', component: AttrGroupAdd, hidden: true},
+                {name: 'SpuAttrEdit', path: '/spu-attr-edit', component: SpuAttrEdit, hidden: true},
+                {name: 'AttrAdd', path: '/attr-add', component: AttrAdd, hidden: true},
+                {name: '规格列表', path: '/spec-list', component: SpecList},
             ]
         },
         {
             path: '/',
             component: Home,
             name: '交易管理',
-            iconCls: 'el-icon-message',//图标样式class
+            iconCls: 'el-icon-sold-out',//图标样式class
             children: [
-                {name: 'OrderList', path: '/order-list', component: OrderList},
-                {name: 'OrderDetail', path: '/order-detail', component: OrderDetail},
-                {name: 'CommentList', path: '/comment-list', component: CommentList},
-                {name: 'PostModelList', path: '/post-model-list', component: PostModelList},
-                {name: 'PostModelEdit', path: '/post-model-edit', component: PostModelEdit},
-                {name: 'AfterSaleList', path: '/after-sale-list', component: AfterSaleList},
+                {name: '订单列表', path: '/order-list', component: OrderList},
+                {name: 'OrderDetail', path: '/order-detail', component: OrderDetail, hidden: true},
+                {name: '评论列表', path: '/comment-list', component: CommentList},
+                {name: '邮费模版', path: '/post-model-list', component: PostModelList},
+                {name: 'PostModelEdit', path: '/post-model-edit', component: PostModelEdit, hidden: true},
+                {name: '售后列表', path: '/after-sale-list', component: AfterSaleList},
             ]
         },
         {
             path: '/',
             component: Home,
             name: '营销管理',
-            iconCls: 'el-icon-message',//图标样式class
+            iconCls: 'el-icon-share',//图标样式class
             children: [
-                {name: 'CouponList', path: '/coupon-list', component: CouponList},
-                {name: 'CouponAdd', path: '/coupon-add', component: CouponAdd},
+                {name: '优惠券列表', path: '/coupon-list', component: CouponList},
+                {name: 'CouponAdd', path: '/coupon-add', component: CouponAdd, hidden: true},
             ]
         },
         {
             path: '/',
             component: Home,
             name: '用户管理',
-            iconCls: 'el-icon-message',//图标样式class
+            iconCls: 'el-icon-tickets',//图标样式class
             children: [
-                {name: 'UserList', path: '/user-list', component: UserList},
-                {name: 'AddrList', path: '/addr-list', component: AddrList},
+                {name: '用户列表', path: '/user-list', component: UserList},
+                {name: '地址列表', path: '/addr-list', component: AddrList},
             ]
         },
         {
             path: '/',
             component: Home,
             name: '广告管理',
-            iconCls: 'el-icon-message',//图标样式class
+            iconCls: 'el-icon-picture-outline',//图标样式class
             children: [
-                {name: 'AdList', path: '/ad-list', component: AdList},
-                {name: 'AdEdit', path: '/ad-edit', component: AdEdit},
+                {name: '广告列表', path: '/ad-list', component: AdList},
+                {name: 'AdEdit', path: '/ad-edit', component: AdEdit, hidden: true},
             ]
         },
         {
             path: '/',
             component: Home,
-            name: '广告管理',
-            iconCls: 'el-icon-message',//图标样式class
+            name: '权限管理',
+            iconCls: 'el-icon-circle-check-outline',//图标样式class
             children: [
-                {name: 'AdminList', path: '/admin-list', component: AdminList},
-                {name: 'AdminEdit', path: '/admin-edit', component: AdminEdit},
+                {name: '管理员列表', path: '/admin-list', component: AdminList},
+                {name: 'AdminEdit', path: '/admin-edit', component: AdminEdit, hidden: true},
             ]
         },
         {
             path: '/',
             component: Home,
             name: '商店设置',
-            iconCls: 'fa fa-address-card',
+            iconCls: 'el-icon-setting',
             leaf: true,//只有一个节点
             children: [
                 {name: '商店设置', path: '/shop-set', component: ShopSet},
