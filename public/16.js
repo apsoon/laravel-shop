@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[16],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/goods/SpuAttrEdit.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/pages/goods/SpuAttrEdit.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/goods/SkuEdit.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/pages/goods/SkuEdit.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -33,70 +33,180 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "SpuAttrEdit",
+  name: "SkuEdit",
   data: function data() {
     return {
-      attrList: [],
-      categoryId: "",
-      spuId: "",
-      attrForm: {},
-      rules: {}
+      skuId: "",
+      skuForm: {
+        id: "",
+        spuId: "",
+        name: "",
+        brief: "",
+        options: [],
+        originPrice: "",
+        price: "",
+        number: "",
+        imageUrl: "",
+        state: "0"
+      },
+      rules: {
+        name: [{
+          required: true,
+          message: '请输入产品名称',
+          trigger: 'blur'
+        }],
+        price: [{
+          required: true,
+          message: '请输入产品价格',
+          trigger: 'blur'
+        }],
+        number: [{
+          required: true,
+          message: '请输入产品数量',
+          trigger: 'blur'
+        }],
+        specOption: [{}]
+      },
+      specList: [],
+      imageList: [],
+      uploadHeader: {},
+      uploadData: {
+        type: "image",
+        position: "sku"
+      }
     };
   },
   mounted: function mounted() {
     var that = this,
-        categoryId = that.$route.query.categoryId,
-        spuId = that.$route.query.spuId;
-    that.categoryId = categoryId;
+        spuId = that.$route.query.spuId,
+        type = that.$route.query.type;
+    that.uploadHeader = {
+      'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
+    };
     that.spuId = spuId;
-    that.attrForm.spuId = spuId;
-    var cateAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-category?categoryId=" + categoryId);
-    var spuAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrValue/list?spuId=" + spuId);
-    Promise.all([cateAttr, spuAttr]).then(function (values) {
-      var careAttrList = values[0].data.data,
-          spuAttrList = values[1].data.data;
-      var _iteratorNormalCompletion = true;
-      var _didIteratorError = false;
-      var _iteratorError = undefined;
+    that.skuForm.spuId = spuId;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/specOptionList?spuId=" + spuId).then(function (res) {
+      if (res.data.code === 2000) {
+        that.specList = res.data.data;
+      }
+    }).catch(function (err) {});
 
-      try {
-        for (var _iterator = spuAttrList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-          var spu = _step.value;
+    if (type === 'modify') {
+      var skuId = that.$route.query.skuId;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/sku/detail?skuId=" + skuId).then(function (res) {
+        if (res.data.code === 2000) {
+          var data = res.data.data;
+          that.skuForm = {
+            id: data.id,
+            spuId: data.sku_id,
+            name: data.name,
+            brief: data.brief,
+            originPrice: data.origin_price,
+            price: data.price,
+            number: data.number,
+            state: "" + data.state
+          };
+        }
+      }).catch(function (err) {});
+    }
+  },
+  methods: {
+    onCreate: function onCreate() {
+      var that = this;
+      that.$refs.brandForm.validate(function (valid) {
+        if (valid) {
+          var options = [],
+              specList = that.specList;
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (var _iterator = specList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var spec = _step.value;
+              options.push(spec.option);
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator.return != null) {
+                _iterator.return();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+
+          that.skuForm.options = options;
+          console.info(that.skuForm);
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/create", that.skuForm).then(function (res) {
+            if (res.data.code === 2000) {
+              that.$router.push("/spu/detail?spuId=" + that.spuId + "&active=" + "sku");
+            }
+          }).catch(function (err) {});
+        } else {
+          return false;
+        }
+      });
+    },
+    onUpdate: function onUpdate() {
+      var that = this;
+      that.$refs.brandForm.validate(function (valid) {
+        if (valid) {
+          var options = [],
+              specList = that.specList;
           var _iteratorNormalCompletion2 = true;
           var _didIteratorError2 = false;
           var _iteratorError2 = undefined;
 
           try {
-            for (var _iterator2 = careAttrList[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-              var cate = _step2.value;
-
-              if (cate.id === spu.attr_group_id) {
-                var _iteratorNormalCompletion3 = true;
-                var _didIteratorError3 = false;
-                var _iteratorError3 = undefined;
-
-                try {
-                  for (var _iterator3 = cate.options[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {// if (option->attr_id)
-
-                    var option = _step3.value;
-                  }
-                } catch (err) {
-                  _didIteratorError3 = true;
-                  _iteratorError3 = err;
-                } finally {
-                  try {
-                    if (!_iteratorNormalCompletion3 && _iterator3.return != null) {
-                      _iterator3.return();
-                    }
-                  } finally {
-                    if (_didIteratorError3) {
-                      throw _iteratorError3;
-                    }
-                  }
-                }
-              }
+            for (var _iterator2 = specList[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+              var spec = _step2.value;
+              options.push(spec.option);
             }
           } catch (err) {
             _didIteratorError2 = true;
@@ -112,95 +222,51 @@ __webpack_require__.r(__webpack_exports__);
               }
             }
           }
-        }
-      } catch (err) {
-        _didIteratorError = true;
-        _iteratorError = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion && _iterator.return != null) {
-            _iterator.return();
-          }
-        } finally {
-          if (_didIteratorError) {
-            throw _iteratorError;
-          }
-        }
-      }
-    }).catch(function (err) {});
-  },
-  methods: {
-    onSubmit: function onSubmit() {
-      var that = this,
-          attrList = that.attrList,
-          spuAttrList = [];
-      var _iteratorNormalCompletion4 = true;
-      var _didIteratorError4 = false;
-      var _iteratorError4 = undefined;
 
-      try {
-        for (var _iterator4 = attrList[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-          var group = _step4.value;
-          var _iteratorNormalCompletion5 = true;
-          var _didIteratorError5 = false;
-          var _iteratorError5 = undefined;
-
-          try {
-            for (var _iterator5 = group.attrs[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-              var attr = _step5.value;
-              var spuAttr = {
-                attrGroupId: group.id,
-                attrId: attr.id,
-                value: attr.value
-              };
-              spuAttrList.push(spuAttr);
+          that.skuForm.options = options;
+          console.info(that.skuForm);
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/update", that.skuForm).then(function (res) {
+            if (res.data.code === 2000) {
+              that.$router.push("/spu/detail?spuId=" + that.spuId + "&active=" + "sku");
             }
-          } catch (err) {
-            _didIteratorError5 = true;
-            _iteratorError5 = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion5 && _iterator5.return != null) {
-                _iterator5.return();
-              }
-            } finally {
-              if (_didIteratorError5) {
-                throw _iteratorError5;
-              }
-            }
-          }
+          }).catch(function (err) {});
+        } else {
+          return false;
         }
-      } catch (err) {
-        _didIteratorError4 = true;
-        _iteratorError4 = err;
-      } finally {
-        try {
-          if (!_iteratorNormalCompletion4 && _iterator4.return != null) {
-            _iterator4.return();
-          }
-        } finally {
-          if (_didIteratorError4) {
-            throw _iteratorError4;
-          }
-        }
-      }
+      });
+    },
+    ruleSelect: function ruleSelect(rule, value, callback) {// if (!value) {
+      //     return callback(new Error('请选择'));
+      // }
+      // callback();
+    },
+    onUploadSuccess: function onUploadSuccess(response, file, fileList) {
+      var that = this;
 
-      that.attrForm.spuAttrList = spuAttrList;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/attrValue/create", that.attrForm).then(function (res) {
-        if (res.data.code === 2000) {
-          that.$router.push("/spu/detail?spuId=", that.spuId + "&active=" + "attr");
-        }
-      }).catch(function (err) {});
+      if (response.code === 2000) {
+        var skuForm = that.skuForm;
+        skuForm.imageUrl = response.data.filePath;
+        that.skuForm = skuForm;
+      }
+    },
+    onUploadFailed: function onUploadFailed(err, file, fileList) {// TODO 上传失败
+    },
+    onUploadFileRemoved: function onUploadFileRemoved(file, fileList) {
+      var that = this; // TODO 删除文件
+
+      var skuForm = that.skuForm;
+      skuForm.logo = "";
+      that.skuForm = skuForm;
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/goods/SpuAttrEdit.vue?vue&type=template&id=25249560&scoped=true&":
-/*!*********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/pages/goods/SpuAttrEdit.vue?vue&type=template&id=25249560&scoped=true& ***!
-  \*********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/goods/SkuEdit.vue?vue&type=template&id=7c85fd98&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/pages/goods/SkuEdit.vue?vue&type=template&id=7c85fd98&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -218,67 +284,228 @@ var render = function() {
       _c(
         "div",
         { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
-        [_c("span", [_vm._v("商品属性编辑")])]
+        [_c("span", [_vm._v("编辑产品")])]
       ),
       _vm._v(" "),
       _c(
         "el-form",
         {
-          ref: "attrForm",
+          ref: "skuForm",
           attrs: {
             rules: _vm.rules,
-            model: _vm.attrForm,
+            model: _vm.skuForm,
             "label-width": "100px"
           }
         },
         [
-          _vm._l(_vm.attrList, function(group) {
-            return _c(
-              "div",
-              [
-                _c("span", [_vm._v(_vm._s(group.name))]),
-                _vm._v(" "),
-                _c(
-                  "el-form",
-                  { attrs: { model: group, "label-width": "100px" } },
-                  _vm._l(group.attrs, function(attr) {
-                    return _c(
-                      "div",
-                      [
-                        _c(
-                          "el-form-item",
-                          { attrs: { label: attr.name } },
-                          [
-                            _c("el-input", {
-                              model: {
-                                value: attr.value,
-                                callback: function($$v) {
-                                  _vm.$set(attr, "value", $$v)
-                                },
-                                expression: "attr.value"
-                              }
-                            })
-                          ],
-                          1
-                        )
-                      ],
-                      1
-                    )
-                  }),
-                  0
-                )
-              ],
-              1
-            )
-          }),
-          _vm._v(" "),
-          _c("br"),
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品名称", prop: "name" } },
+            [
+              _c("el-input", {
+                attrs: { placeholder: "请输入产品名称" },
+                model: {
+                  value: _vm.skuForm.name,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "name", $$v)
+                  },
+                  expression: "skuForm.name"
+                }
+              })
+            ],
+            1
+          ),
           _vm._v(" "),
           _c(
-            "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
-            [_vm._v("立即创建")]
-          )
+            "el-form-item",
+            { attrs: { label: "产品简述", prop: "brief" } },
+            [
+              _c("el-input", {
+                attrs: { placeholder: "请输入产品简述" },
+                model: {
+                  value: _vm.skuForm.brief,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "brief", $$v)
+                  },
+                  expression: "skuForm.brief"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品原价", prop: "originPrice" } },
+            [
+              _c("el-input", {
+                attrs: { type: "number", placeholder: "请输入产品原价" },
+                model: {
+                  value: _vm.skuForm.originPrice,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "originPrice", $$v)
+                  },
+                  expression: "skuForm.originPrice"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品价格", prop: "price" } },
+            [
+              _c("el-input", {
+                attrs: { type: "number", placeholder: "请输入产品价格" },
+                model: {
+                  value: _vm.skuForm.price,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "price", $$v)
+                  },
+                  expression: "skuForm.price"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品数量", prop: "number" } },
+            [
+              _c("el-input", {
+                attrs: { type: "number", placeholder: "请输入产品数量" },
+                model: {
+                  value: _vm.skuForm.number,
+                  callback: function($$v) {
+                    _vm.$set(_vm.skuForm, "number", $$v)
+                  },
+                  expression: "skuForm.number"
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm._l(_vm.specList, function(spec) {
+            return [
+              _c(
+                "el-form-item",
+                { attrs: { label: spec.name, prop: "specOption" } },
+                [
+                  _c(
+                    "el-select",
+                    {
+                      attrs: { placeholder: "请选择" },
+                      model: {
+                        value: spec.option,
+                        callback: function($$v) {
+                          _vm.$set(spec, "option", $$v)
+                        },
+                        expression: "spec.option"
+                      }
+                    },
+                    _vm._l(spec.options, function(option) {
+                      return _c("el-option", {
+                        key: option.id,
+                        attrs: { label: option.name, value: option.id }
+                      })
+                    }),
+                    1
+                  )
+                ],
+                1
+              )
+            ]
+          }),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "产品图片" } },
+            [
+              _c(
+                "el-upload",
+                {
+                  staticClass: "upload-demo",
+                  attrs: {
+                    action: "/upload/image",
+                    headers: _vm.uploadHeader,
+                    "on-success": _vm.onUploadSuccess,
+                    "on-error": _vm.onUploadFailed,
+                    "on-remove": _vm.onUploadFileRemoved,
+                    limit: 1,
+                    data: _vm.uploadData,
+                    "file-list": _vm.imageList,
+                    "list-type": "picture-card"
+                  }
+                },
+                [
+                  _c("i", { staticClass: "el-icon-plus" }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "el-upload__tip",
+                      attrs: { slot: "tip" },
+                      slot: "tip"
+                    },
+                    [_vm._v("只能上传jpg/png文件，且不超过500kb")]
+                  )
+                ]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "el-form-item",
+            { attrs: { label: "是否上架", prop: "state" } },
+            [
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "0" },
+                  model: {
+                    value: _vm.skuForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.skuForm, "state", $$v)
+                    },
+                    expression: "skuForm.state"
+                  }
+                },
+                [_vm._v("暂不上架")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-radio",
+                {
+                  attrs: { label: "1" },
+                  model: {
+                    value: _vm.skuForm.state,
+                    callback: function($$v) {
+                      _vm.$set(_vm.skuForm, "state", $$v)
+                    },
+                    expression: "skuForm.state"
+                  }
+                },
+                [_vm._v("立即上架")]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _vm.type === "create"
+            ? _c(
+                "el-button",
+                { attrs: { type: "primary" }, on: { click: _vm.onCreate } },
+                [_vm._v("立即创建")]
+              )
+            : _c(
+                "el-button",
+                { attrs: { type: "primary" }, on: { click: _vm.onUpdate } },
+                [_vm._v("修改")]
+              )
         ],
         2
       )
@@ -293,17 +520,17 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/views/pages/goods/SpuAttrEdit.vue":
-/*!********************************************************!*\
-  !*** ./resources/js/views/pages/goods/SpuAttrEdit.vue ***!
-  \********************************************************/
+/***/ "./resources/js/views/pages/goods/SkuEdit.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/views/pages/goods/SkuEdit.vue ***!
+  \****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SpuAttrEdit_vue_vue_type_template_id_25249560_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SpuAttrEdit.vue?vue&type=template&id=25249560&scoped=true& */ "./resources/js/views/pages/goods/SpuAttrEdit.vue?vue&type=template&id=25249560&scoped=true&");
-/* harmony import */ var _SpuAttrEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SpuAttrEdit.vue?vue&type=script&lang=js& */ "./resources/js/views/pages/goods/SpuAttrEdit.vue?vue&type=script&lang=js&");
+/* harmony import */ var _SkuEdit_vue_vue_type_template_id_7c85fd98_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SkuEdit.vue?vue&type=template&id=7c85fd98&scoped=true& */ "./resources/js/views/pages/goods/SkuEdit.vue?vue&type=template&id=7c85fd98&scoped=true&");
+/* harmony import */ var _SkuEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SkuEdit.vue?vue&type=script&lang=js& */ "./resources/js/views/pages/goods/SkuEdit.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -313,50 +540,50 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _SpuAttrEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _SpuAttrEdit_vue_vue_type_template_id_25249560_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _SpuAttrEdit_vue_vue_type_template_id_25249560_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _SkuEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SkuEdit_vue_vue_type_template_id_7c85fd98_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SkuEdit_vue_vue_type_template_id_7c85fd98_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "25249560",
+  "7c85fd98",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/views/pages/goods/SpuAttrEdit.vue"
+component.options.__file = "resources/js/views/pages/goods/SkuEdit.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/views/pages/goods/SpuAttrEdit.vue?vue&type=script&lang=js&":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/views/pages/goods/SpuAttrEdit.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************************/
+/***/ "./resources/js/views/pages/goods/SkuEdit.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/views/pages/goods/SkuEdit.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuAttrEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SpuAttrEdit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/goods/SpuAttrEdit.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuAttrEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SkuEdit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/goods/SkuEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/views/pages/goods/SpuAttrEdit.vue?vue&type=template&id=25249560&scoped=true&":
-/*!***************************************************************************************************!*\
-  !*** ./resources/js/views/pages/goods/SpuAttrEdit.vue?vue&type=template&id=25249560&scoped=true& ***!
-  \***************************************************************************************************/
+/***/ "./resources/js/views/pages/goods/SkuEdit.vue?vue&type=template&id=7c85fd98&scoped=true&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/views/pages/goods/SkuEdit.vue?vue&type=template&id=7c85fd98&scoped=true& ***!
+  \***********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuAttrEdit_vue_vue_type_template_id_25249560_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SpuAttrEdit.vue?vue&type=template&id=25249560&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/goods/SpuAttrEdit.vue?vue&type=template&id=25249560&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuAttrEdit_vue_vue_type_template_id_25249560_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuEdit_vue_vue_type_template_id_7c85fd98_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SkuEdit.vue?vue&type=template&id=7c85fd98&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/goods/SkuEdit.vue?vue&type=template&id=7c85fd98&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuEdit_vue_vue_type_template_id_7c85fd98_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuAttrEdit_vue_vue_type_template_id_25249560_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SkuEdit_vue_vue_type_template_id_7c85fd98_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
