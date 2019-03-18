@@ -70,7 +70,7 @@ export default new VueRouter({
             name: '商品管理',
             iconCls: 'el-icon-goods',//图标样式class
             children: [
-                {name: '商品列表', path: '/spu-list', component: SpuList, hidden: true},
+                {name: '商品列表', path: '/spu-list', component: SpuList},
                 {name: 'SpuDetail', path: '/spu-detail', component: SpuDetail, hidden: true},
                 {name: 'SpuEdit', path: '/spu-Edit', component: SpuEdit, hidden: true},
                 {name: 'SpuSpecEdit', path: '/spu-spec-Edit', component: SpuSpecEdit, hidden: true},
