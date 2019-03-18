@@ -67,13 +67,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdList",
   data: function data() {
     return {
-      adList: []
+      adList: [],
+      pageNo: 1
     };
   },
   mounted: function mounted() {
@@ -418,14 +418,13 @@ var render = function() {
           total: 1000,
           "page-sizes": [20, 50, 100],
           "page-size": 20,
-          "current-page": _vm.currentPage3
+          "current-page": _vm.pageNo
         },
         on: {
           "current-change": _vm.onPageNoChanged,
           "update:currentPage": function($event) {
-            _vm.currentPage3 = $event
-          },
-          "size-change": _vm.handleSizeChange
+            _vm.pageNo = $event
+          }
         }
       })
     ],

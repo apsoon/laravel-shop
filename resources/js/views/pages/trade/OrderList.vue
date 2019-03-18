@@ -48,8 +48,7 @@
                        :page-sizes="[20, 50, 100]"
                        :page-size="20"
                        @current-change="onPageNoChanged"
-                       :current-page.sync="currentPage3"
-                       @size-change="handleSizeChange"
+                       :current-page.sync="pageNo"
                        style="margin-top: 20px; margin-bottom: 20px; float: right;"/>
     </el-card>
 </template>
