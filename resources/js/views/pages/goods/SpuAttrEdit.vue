@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card class="card">
         <div slot="header" class="clearfix">
             <span>商品属性编辑</span>
         </div>

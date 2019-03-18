@@ -1,170 +1,172 @@
 <template>
-    <el-tabs v-model="active" type="border-card" @tab-click="onTabClicked">
-        <el-tab-pane label="商品信息" name="info">
-            <router-link :to="{path: '/spu-edit', query:{type: 'modify', spuId: spuId}}">
-                <el-button type="primary" size="medium">
-                    商品编辑
-                </el-button>
-            </router-link>
-            <br/>
-            <br/>
-            <el-card>
-                <div slot="header" class="clearfix">
-                    <span>商品信息</span>
-                </div>
-                <el-row>商品名称: {{spu.name}}</el-row>
-                <el-row>品牌: {{spu.brand_name}}</el-row>
-                <el-row>分类: {{spu.category_name}}</el-row>
-                <el-row>状态:
-                    <span v-if="spu.state">已上架</span>
-                    <span v-else>已下架</span>
-                </el-row>
-            </el-card>
-            <br/>
-            <el-card>
-                <div slot="header" class="clearfix">
-                    <span>商品详情</span>
-                </div>
-                <span v-html="spuDetail.html">
+    <el-card class="card">
+        <el-tabs v-model="active" type="card" @tab-click="onTabClicked">
+            <el-tab-pane label="商品信息" name="info">
+                <router-link :to="{path: '/spu-edit', query:{type: 'modify', spuId: spuId}}">
+                    <el-button type="primary" size="medium">
+                        商品编辑
+                    </el-button>
+                </router-link>
+                <br/>
+                <br/>
+                <el-card>
+                    <div slot="header" class="clearfix">
+                        <span>商品信息</span>
+                    </div>
+                    <el-row>商品名称: {{spu.name}}</el-row>
+                    <el-row>品牌: {{spu.brand_name}}</el-row>
+                    <el-row>分类: {{spu.category_name}}</el-row>
+                    <el-row>状态:
+                        <span v-if="spu.state">已上架</span>
+                        <span v-else>已下架</span>
+                    </el-row>
+                </el-card>
+                <br/>
+                <el-card>
+                    <div slot="header" class="clearfix">
+                        <span>商品详情</span>
+                    </div>
+                    <span v-html="spuDetail.html">
 
                 </span>
-            </el-card>
-        </el-tab-pane>
-        <el-tab-pane label="商品属性" name="attr">
-            <router-link :to="{path: '/spu-attr-edit', query:{spuId:spuId,categoryId:spu.category_id}}">
-                <el-button type="primary" size="medium">
-                    编辑属性
-                </el-button>
-            </router-link>
-            <el-table ref="attrList" :data="attrList" tooltip-effect="dark" width="100%">
-                <el-table-column label="属性名称" prop="attr_name"/>
-                <el-table-column label="属性值" prop="value"/>
-                <el-table-column label="属性组" prop="attr_group_name"/>
-                <el-table-column label="操作">
-                </el-table-column>
-            </el-table>
-        </el-tab-pane>
-        <el-tab-pane label="商品规格" name="spec">
-            <router-link :to="{path: '/spu-spec-edit', query: {spuId: spuId}}">
-                <el-button type="primary" size="medium">编辑规格</el-button>
-            </router-link>
-            <el-table ref="specList" tooltip-effect="dark" :data="specList" width="100%">
-                <el-table-column prop="name" label="名称" width="150px">
-                </el-table-column>
-                <el-table-column label="选项" min-width="1">
-                    <template slot-scope="scope">
-                        <el-tag
-                                v-for="option in scope.row.options"
-                                :key="option.id"
-                                type="primary"
-                                :disable-transitions="true">
-                            {{option.name}}
-                        </el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column label="操作" width="200px">
-                    <template slot-scope="scope">
-                        <router-link
-                                :to="{path: '/spu-spec-option', query: {spuId: spuId, specId: scope.row.id}}">
-                            <el-button size="mini" type="info" @click="">修改选项
+                </el-card>
+            </el-tab-pane>
+            <el-tab-pane label="商品属性" name="attr">
+                <router-link :to="{path: '/spu-attr-edit', query:{spuId:spuId,categoryId:spu.category_id}}">
+                    <el-button type="primary" size="medium">
+                        编辑属性
+                    </el-button>
+                </router-link>
+                <el-table ref="attrList" :data="attrList" tooltip-effect="dark" width="100%">
+                    <el-table-column label="属性名称" prop="attr_name"/>
+                    <el-table-column label="属性值" prop="value"/>
+                    <el-table-column label="属性组" prop="attr_group_name"/>
+                    <el-table-column label="操作">
+                    </el-table-column>
+                </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="商品规格" name="spec">
+                <router-link :to="{path: '/spu-spec-edit', query: {spuId: spuId}}">
+                    <el-button type="primary" size="medium">编辑规格</el-button>
+                </router-link>
+                <el-table ref="specList" tooltip-effect="dark" :data="specList" width="100%">
+                    <el-table-column prop="name" label="名称" width="150px">
+                    </el-table-column>
+                    <el-table-column label="选项" min-width="1">
+                        <template slot-scope="scope">
+                            <el-tag
+                                    v-for="option in scope.row.options"
+                                    :key="option.id"
+                                    type="primary"
+                                    :disable-transitions="true">
+                                {{option.name}}
+                            </el-tag>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作" width="200px">
+                        <template slot-scope="scope">
+                            <router-link
+                                    :to="{path: '/spu-spec-option', query: {spuId: spuId, specId: scope.row.id}}">
+                                <el-button size="mini" type="info" @click="">修改选项
+                                </el-button>
+                            </router-link>
+                            <el-button size="mini" type="danger" @click="deleteSpec(scope.$index, scope.row.id)">删除
                             </el-button>
-                        </router-link>
-                        <el-button size="mini" type="danger" @click="deleteSpec(scope.$index, scope.row.id)">删除
-                        </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </el-tab-pane>
-        <el-tab-pane label="产品列表" name="sku">
-            <router-link :to="{path: '/sku-edit',query: {type:'create', spuId: spuId}}">
-                <el-button type="primary" size="medium">添加产品</el-button>
-            </router-link>
-            <el-table ref="skuList" :data="skuList" tooltip-effect="dark" width="100%">
-                <el-table-column prop="name" label="名称" width="150px" align="center"/>
-                <el-table-column prop="image_url" label="商品图片" width="150px" align="center">
-                    <template slot-scope="scope">
-                        <img class="avatar" :src="scope.row.image_url"/>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="origin_price" label="原价" width="150px" align="center"/>
-                <el-table-column prop="price" label="价格" width="150px" align="center"/>
-                <el-table-column prop="number" label="数量" width="150px" align="center"/>
-                <el-table-column prop="value" label="规格" min-width="1"/>
-                <el-table-column prop="state" label="状态" width="100px" align="center">
-                    <template slot-scope="scope">
-                        <span v-if="scope.row.state===1">已上架</span>
-                        <span v-else>已下架</span>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="is_recom" label="是否热销" width="100px" align="center">
-                    <template slot-scope="scope">
-                        <span v-if="scope.row.is_recom === 1">是</span>
-                        <span v-else>否</span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="操作" width="350px">
-                    <template slot-scope="scope">
-                        <router-link
-                                :to="{path: '/sku-edit', query: {type: 'modify', spuId: spuId, skuId: scope.row.id}}">
-                            <el-button size="mini" type="info">修改</el-button>
-                        </router-link>
-                        <el-button v-if="scope.row.state" size="mini" type="warning"
-                                   @click="modifySkuState('disable', scope.$index, scope.row.id)">下架
-                        </el-button>
-                        <el-button v-else size="mini" type="success"
-                                   @click="modifySkuState('enable', scope.$index, scope.row.id)">上架
-                        </el-button>
-                        <el-button size="mini" type="danger" @click="deleteAd(scope.$index, scope.row.id)">删除
-                        </el-button>
-                        <el-button type="primary" size="mini" @click="modifySkuRecom('add', scope)"
-                                   v-if="scope.row.is_recom === 0">设置推荐
-                        </el-button>
-                        <el-button type="primary" size="mini" @click="modifySkuRecom('remove', scope)"
-                                   v-else>取消热推
-                        </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </el-tab-pane>
-        <el-tab-pane label="Banner" name="banner">
-            <router-link :to="{path: '/spu-banner-add',query: {spuId: spuId}}">
-                <el-button type="primary" size="medium">添加Banner</el-button>
-            </router-link>
-            <el-button type="danger" size="medium" @click="deleteBanners()">批量删除</el-button>
-            <el-table ref="multipleTable" :data="bannerList" tooltip-effect="dark" style="width: 100%">
-                <el-table-column type="selection" width="55"/>
-                <el-table-column label="图片" prop="imageUrl" width="150">
-                    <template slot-scope="scope">
-                        <el-popover placement="right" title="图片预览" trigger="hover">
-                            <img :src="scope.row.image_url"/>
-                            <img slot="reference" :src="scope.row.image_url" :alt="scope.row.image_url"
-                                 style="max-height: 50px;max-width: 130px"/>
-                        </el-popover>
-                    </template>
-                </el-table-column>
-                <el-table-column label="排序" prop="sort_order" width="150"/>
-                <el-table-column label="状态" prop="state" width="150">
-                    <template slot-scope="scope">
-                        <span v-if="scope.row.state===0">已禁用</span>
-                        <span v-else>已启用</span>
-                    </template>
-                </el-table-column>
-                <el-table-column width="300" label="操作">
-                    <template slot-scope="scope">
-                        <el-button v-if="scope.row.state" size="mini" type="warning"
-                                   @click="modifyBannerState('disable', scope.$index, scope.row.id)">禁用
-                        </el-button>
-                        <el-button v-else size="mini" type="success"
-                                   @click="modifyBannerState('enable', scope.$index, scope.row.id)">启用
-                        </el-button>
-                        <el-button size="mini" type="danger"
-                                   @click="deleteBanner(scope.$index, scope.row.id)">删除
-                        </el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-        </el-tab-pane>
-    </el-tabs>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="产品列表" name="sku">
+                <router-link :to="{path: '/sku-edit',query: {type:'create', spuId: spuId}}">
+                    <el-button type="primary" size="medium">添加产品</el-button>
+                </router-link>
+                <el-table ref="skuList" :data="skuList" tooltip-effect="dark" width="100%">
+                    <el-table-column prop="name" label="名称" width="150px" align="center"/>
+                    <el-table-column prop="image_url" label="商品图片" width="150px" align="center">
+                        <template slot-scope="scope">
+                            <img class="avatar" :src="scope.row.image_url"/>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="origin_price" label="原价" width="150px" align="center"/>
+                    <el-table-column prop="price" label="价格" width="150px" align="center"/>
+                    <el-table-column prop="number" label="数量" width="150px" align="center"/>
+                    <el-table-column prop="value" label="规格" min-width="1"/>
+                    <el-table-column prop="state" label="状态" width="100px" align="center">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.state===1">已上架</span>
+                            <span v-else>已下架</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="is_recom" label="是否热销" width="100px" align="center">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.is_recom === 1">是</span>
+                            <span v-else>否</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="操作" width="350px">
+                        <template slot-scope="scope">
+                            <router-link
+                                    :to="{path: '/sku-edit', query: {type: 'modify', spuId: spuId, skuId: scope.row.id}}">
+                                <el-button size="mini" type="info">修改</el-button>
+                            </router-link>
+                            <el-button v-if="scope.row.state" size="mini" type="warning"
+                                       @click="modifySkuState('disable', scope.$index, scope.row.id)">下架
+                            </el-button>
+                            <el-button v-else size="mini" type="success"
+                                       @click="modifySkuState('enable', scope.$index, scope.row.id)">上架
+                            </el-button>
+                            <el-button size="mini" type="danger" @click="deleteAd(scope.$index, scope.row.id)">删除
+                            </el-button>
+                            <el-button type="primary" size="mini" @click="modifySkuRecom('add', scope)"
+                                       v-if="scope.row.is_recom === 0">设置推荐
+                            </el-button>
+                            <el-button type="primary" size="mini" @click="modifySkuRecom('remove', scope)"
+                                       v-else>取消热推
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-tab-pane>
+            <el-tab-pane label="Banner" name="banner">
+                <router-link :to="{path: '/spu-banner-add',query: {spuId: spuId}}">
+                    <el-button type="primary" size="medium">添加Banner</el-button>
+                </router-link>
+                <el-button type="danger" size="medium" @click="deleteBanners()">批量删除</el-button>
+                <el-table ref="multipleTable" :data="bannerList" tooltip-effect="dark" style="width: 100%">
+                    <el-table-column type="selection" width="55"/>
+                    <el-table-column label="图片" prop="imageUrl" width="150">
+                        <template slot-scope="scope">
+                            <el-popover placement="right" title="图片预览" trigger="hover">
+                                <img :src="scope.row.image_url"/>
+                                <img slot="reference" :src="scope.row.image_url" :alt="scope.row.image_url"
+                                     style="max-height: 50px;max-width: 130px"/>
+                            </el-popover>
+                        </template>
+                    </el-table-column>
+                    <el-table-column label="排序" prop="sort_order" width="150"/>
+                    <el-table-column label="状态" prop="state" width="150">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.state===0">已禁用</span>
+                            <span v-else>已启用</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column width="300" label="操作">
+                        <template slot-scope="scope">
+                            <el-button v-if="scope.row.state" size="mini" type="warning"
+                                       @click="modifyBannerState('disable', scope.$index, scope.row.id)">禁用
+                            </el-button>
+                            <el-button v-else size="mini" type="success"
+                                       @click="modifyBannerState('enable', scope.$index, scope.row.id)">启用
+                            </el-button>
+                            <el-button size="mini" type="danger"
+                                       @click="deleteBanner(scope.$index, scope.row.id)">删除
+                            </el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </el-tab-pane>
+        </el-tabs>
+    </el-card>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card class="card">
         <div slot="header" class="clearfix">
             <router-link to="/coupon-add">
                 <el-button type="primary" size="medium">添加优惠券</el-button>

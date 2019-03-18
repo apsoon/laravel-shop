@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card class="card">
         <div slot="header" class="clearfix">
             <router-link :to="{path: '/spu-edit', query: {type: 'create'}}">
                 <el-button type="primary" size="medium">添加商品</el-button>

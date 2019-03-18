@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card shadow="never">
         <div slot="header" class="clearfix">
             <router-link :to="{path: '/brand-edit',query :{type: 'create'}}">
                 <el-button type="primary" size="medium">添加品牌</el-button>

@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card shadow="never">
         <div slot="header" class="clearfix">
             <span>品牌</span>
         </div>

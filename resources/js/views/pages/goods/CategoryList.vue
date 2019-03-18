@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card shadow="never">
         <div slot="header" class="clearfix">
             <router-link :to="{path:'/category-edit', query: {type: 'create', parentId: 0, parentName:'一级分类'}}">
                 <el-button type="primary" size="medium">添加一级分类</el-button>

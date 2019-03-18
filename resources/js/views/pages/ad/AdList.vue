@@ -1,5 +1,5 @@
 <template>
-    <el-card>
+    <el-card shadow="never">
         <div slot="header" class="clearfix">
             <router-link :to="{path: '/ad-edit', query: {type: 'create'}}">
                 <el-button type="primary" size="medium">添加广告</el-button>
