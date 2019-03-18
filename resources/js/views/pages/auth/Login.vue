@@ -1,15 +1,15 @@
 <template>
-    <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px"
+    <el-form :model="loginForm" :rules="rules2" ref="loginForm" label-position="left" label-width="0px"
              class="demo-ruleForm login-container">
         <h3 class="title">系统登录</h3>
-        <el-form-item prop="account">
-            <el-input type="text" v-model="ruleForm2.account" auto-complete="off" placeholder="账号"></el-input>
+        <el-form-item prop="name">
+            <el-input type="text" v-model="loginForm.name" auto-complete="off" placeholder="账号"></el-input>
         </el-form-item>
-        <el-form-item prop="checkPass">
-            <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off" placeholder="密码"></el-input>
+        <el-form-item prop="password">
+            <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
         </el-form-item>
         <el-form-item style="width:100%;">
-            <el-button type="primary" style="width:100%;" @click.native.prevent="handleSubmit2" :loading="logining">登录
+            <el-button type="primary" style="width:100%;" @click.native.prevent="onLogin" :loading="logining">登录
             </el-button>
         </el-form-item>
     </el-form>
@@ -24,62 +24,54 @@
         data() {
             return {
                 logining: false,
-                ruleForm2: {
-                    account: 'admin',
-                    checkPass: '123456'
+                loginForm: {
+                    name: 'admin',
+                    password: '123456'
                 },
                 rules2: {
-                    account: [
+                    name: [
                         {required: true, message: '请输入账号', trigger: 'blur'},
-                        //{ validator: validaePass }
                     ],
-                    checkPass: [
+                    password: [
                         {required: true, message: '请输入密码', trigger: 'blur'},
-                        //{ validator: validaePass2 }
                     ]
                 },
                 checked: true
             };
         },
         methods: {
-            handleReset2() {
-                this.$refs.ruleForm2.resetFields();
-            },
-            handleSubmit2(ev) {
-                var _this = this;
-                this.$refs.ruleForm2.validate((valid) => {
+            onLogin(ev) {
+                let that = this;
+                that.$refs.loginForm.validate((valid) => {
                     if (valid) {
-                        //_this.$router.replace('/table');
-                        this.logining = true;
-                        //NProgress.start();
+                        that.logining = true;
                         //生成salt的迭代次数
                         const saltRounds = 10;
                         //随机生成salt
                         const salt = bcrypt.genSaltSync(saltRounds);
                         //获取hash值
-                        var hash = bcrypt.hashSync(this.ruleForm2.checkPass, salt);
+                        let hash = bcrypt.hashSync(this.loginForm.password, salt);
                         //把hash值赋值给password变量
-                        var loginParams = {name: this.ruleForm2.account, password: hash};
+                        let loginParams = {name: this.loginForm.name, password: hash};
                         this.requestLogin(loginParams).then(res => {
                             this.logining = false;
                             console.info(res);
-                            // let {message, code, data} = data;
                             if (res.code !== 2000) {
-                                this.$message({
+                                that.$message({
                                     message: res.message,
                                     type: 'error'
                                 });
                             } else {
-                                const pwdMatchFlag = bcrypt.compareSync(this.ruleForm2.checkPass, res.data.hash);
+                                const pwdMatchFlag = bcrypt.compareSync(that.loginForm.password, res.data.hash);
                                 if (pwdMatchFlag) {
-                                    this.$message({
+                                    that.$message({
                                         message: "登录成功",
                                         type: 'success'
                                     });
                                     // sessionStorage.setItem('user', JSON.stringify(user));
-                                    this.$router.push({path: '/index'});
+                                    that.$router.push({path: '/index'});
                                 } else {
-                                    this.$message({
+                                    that.$message({
                                         message: "账号或密码错误",
                                         type: 'error'
                                     });
@@ -100,6 +92,7 @@
 </script>
 
 <style lang="scss" scoped>
+
     .login-container {
         -webkit-border-radius: 5px;
         border-radius: 5px;
