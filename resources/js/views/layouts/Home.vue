@@ -63,30 +63,33 @@
     }
 
     .header {
-        background-color: #3c8dbc;
+        background-color: #FFFFFF;
         width: 100%;
-        height: 60px;
-        line-height: 60px;
-        color: #fff;
+        height: 55px;
+        line-height: 50px;
+        color: #262626;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
     }
 
     .logo {
         width: 230px;
         height: 100%;
-        background-color: #367fa9;
+        background-color: #FFFFFF;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        color: white;
+        color: #262626;
         font-weight: bold;
         font-size: 20px;
+        border-right: 1px solid #EAEAEA;
+        border-bottom: 1px solid #EAEAEA;
     }
 
     .main {
         display: flex;
         position: absolute;
-        top: 60px;
+        top: 55px;
         bottom: 0;
         overflow: hidden;
     }
@@ -94,7 +97,7 @@
     .sidebar {
         flex: 0 0 230px;
         width: 230px;
-        background-color: #E9EDF3;
+        background-color: #F7F9FB;
     }
 
     .content-container {
@@ -113,10 +116,10 @@
     }
 
     .sub-menu-item {
-        background-color: #DEE2ED;
+        background-color: #F1F1F3;
     }
 
     .menu-item {
-        background-color: #E9EDF3;
+        background-color: #F7F9FB;
     }
 </style>

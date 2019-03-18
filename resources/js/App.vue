@@ -38,6 +38,7 @@
         top: 0;
         bottom: 0;
         width: 100%;
+        background: #E8ECF2;
     }
 
     .el-submenu [class^=fa] {
