@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Mapi;
 use App\Http\Controllers\Controller;
 use App\Http\Service\AdminService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AdminMapi
@@ -41,9 +42,16 @@ class AdminMapi extends Controller
         return $this->adminService->getAdminList();
     }
 
+    /**
+     * 登录
+     *
+     * @param Request $request
+     * @return \App\Http\Util\JsonResult
+     */
     public function login(Request $request)
     {
-
+        $req = $request->all();
+        return $this->adminService->login($req);
     }
 
     public function reset(Request $request)

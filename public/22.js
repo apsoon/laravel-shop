@@ -1,9 +1,9 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[22],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/permit/AdminEdit.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/pages/permit/AdminEdit.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/goods/SpuSpecEdit.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/pages/goods/SpuSpecEdit.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -30,93 +30,88 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "AdminEdit",
+  name: "SpuSpecAdd",
   data: function data() {
-    var _this = this;
-
-    var validatePasswordConfirm = function validatePasswordConfirm(rule, value, callback) {
-      if (value === '') {
-        callback(new Error('请再次输入管理员密码'));
-      } else if (value !== _this.adminForm.password) {
-        callback(new Error('两次输入密码不一致!'));
-      } else {
-        callback();
-      }
-    };
-
     return {
-      adminForm: {
-        name: "",
-        email: "",
-        phone: "",
-        password: "",
-        confirm: ""
+      spuId: 0,
+      specForm: {
+        spuId: "",
+        specIds: []
       },
-      rules: {
-        name: [{
-          required: true,
-          message: '请输入管理员名称',
-          trigger: 'blur'
-        }],
-        email: [{
-          required: true,
-          message: '请输入管理员邮箱',
-          trigger: 'blur'
-        }],
-        phone: [{
-          required: true,
-          message: '请输入管理员电话',
-          trigger: 'blur'
-        }],
-        password: [{
-          required: true,
-          message: '请输入管理员密码',
-          trigger: 'blur'
-        }],
-        confirm: [{
-          validator: validatePasswordConfirm,
-          trigger: 'blur'
-        }]
-      },
-      password: "",
-      confirm: "",
-      type: "create"
+      rules: {},
+      specList: [],
+      transferProp: {
+        key: 'id',
+        label: 'name'
+      }
     };
   },
   mounted: function mounted() {
     var that = this,
-        type = that.$route.query.type;
-    that.type = type;
+        spuId = that.$route.query.spuId;
+    that.spuid = spuId;
+    that.specForm.spuId = spuId;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spec/list").then(function (res) {
+      if (res.data.code === 2000) {
+        that.specList = res.data.data;
+      }
+    }).catch(function (err) {});
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spec/list-spu?spuId=" + spuId).then(function (res) {
+      if (res.data.code === 2000) {
+        that.existList = res.data.data;
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = that.existList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var item = _step.value;
+            that.specForm.specIds.push(item.id);
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator.return != null) {
+              _iterator.return();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      }
+    }).catch(function (err) {});
   },
   methods: {
-    onCreate: function onCreate() {
+    onSubmit: function onSubmit() {
       var that = this;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("admin/create", that.adminForm).then(function (res) {
+      console.info(that.specList);
+      console.info(that.specForm.specIds);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/pu/relateSpec", that.specForm).then(function (res) {
         if (res.data.code === 2000) {
-          that.$router.push("/admin-list");
+          that.$router.push("spu/detail?spuId=" + that.spuId + "&active=" + "spec");
+        } else {
+          that.$message({
+            type: 'error',
+            message: '添加失败!'
+          });
         }
       }).catch(function (err) {});
-    },
-    onUpdate: function onUpdate() {}
+    }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/permit/AdminEdit.vue?vue&type=template&id=8e7bf8e2&scoped=true&":
-/*!********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/pages/permit/AdminEdit.vue?vue&type=template&id=8e7bf8e2&scoped=true& ***!
-  \********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/goods/SpuSpecEdit.vue?vue&type=template&id=5bbf492a&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/views/pages/goods/SpuSpecEdit.vue?vue&type=template&id=5bbf492a&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -134,90 +129,29 @@ var render = function() {
       _c(
         "div",
         { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
-        [_c("span", [_vm._v("编辑管理员")])]
+        [_c("span", [_vm._v("添加规格及选项")])]
       ),
       _vm._v(" "),
       _c(
         "el-form",
-        {
-          ref: "adminForm",
-          attrs: {
-            rules: _vm.rules,
-            model: _vm.adminForm,
-            "label-width": "100px"
-          }
-        },
+        { ref: "specForm", attrs: { model: _vm.specForm, rules: _vm.rules } },
         [
           _c(
             "el-form-item",
-            { attrs: { prop: "name", label: "名称" } },
+            { staticClass: "clearfix", attrs: { prop: "specId" } },
             [
-              _c("el-input", {
-                attrs: { placeholder: "请输入管理员名称" },
-                model: {
-                  value: _vm.adminForm.name,
-                  callback: function($$v) {
-                    _vm.$set(_vm.adminForm, "name", $$v)
-                  },
-                  expression: "adminForm.name"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { prop: "email", label: "邮箱" } },
-            [
-              _c("el-input", {
-                attrs: { type: "email", placeholder: "请输入管理员邮箱" },
-                model: {
-                  value: _vm.adminForm.email,
-                  callback: function($$v) {
-                    _vm.$set(_vm.adminForm, "email", $$v)
-                  },
-                  expression: "adminForm.email"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { prop: "phone", label: "手机" } },
-            [
-              _c("el-input", {
-                attrs: { type: "tel", placeholder: "请输入管理员电话" },
-                model: {
-                  value: _vm.adminForm.phone,
-                  callback: function($$v) {
-                    _vm.$set(_vm.adminForm, "phone", $$v)
-                  },
-                  expression: "adminForm.phone"
-                }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "el-form-item",
-            { attrs: { prop: "password", label: "密码" } },
-            [
-              _c("el-input", {
+              _c("el-transfer", {
                 attrs: {
-                  type: "password",
-                  placeholder: "请输入管理员密码",
-                  "show-password": ""
+                  titles: ["所有规格", "当前商品已选"],
+                  data: _vm.specList,
+                  props: _vm.transferProp
                 },
                 model: {
-                  value: _vm.adminForm.password,
+                  value: _vm.specForm.specIds,
                   callback: function($$v) {
-                    _vm.$set(_vm.adminForm, "password", $$v)
+                    _vm.$set(_vm.specForm, "specIds", $$v)
                   },
-                  expression: "adminForm.password"
+                  expression: "specForm.specIds"
                 }
               })
             ],
@@ -225,41 +159,13 @@ var render = function() {
           ),
           _vm._v(" "),
           _c(
-            "el-form-item",
-            { attrs: { prop: "confirm", label: "确认密码" } },
-            [
-              _c("el-input", {
-                attrs: {
-                  type: "password",
-                  placeholder: "请再次输入管理员密码",
-                  "show-password": ""
-                },
-                model: {
-                  value: _vm.adminForm.confirm,
-                  callback: function($$v) {
-                    _vm.$set(_vm.adminForm, "confirm", $$v)
-                  },
-                  expression: "adminForm.confirm"
-                }
-              })
-            ],
-            1
+            "el-button",
+            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
+            [_vm._v("添加规格")]
           )
         ],
         1
-      ),
-      _vm._v(" "),
-      _vm.type === "create"
-        ? _c(
-            "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.onCreate } },
-            [_vm._v("立即创建")]
-          )
-        : _c(
-            "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.onUpdate } },
-            [_vm._v("修改")]
-          )
+      )
     ],
     1
   )
@@ -271,17 +177,17 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/views/pages/permit/AdminEdit.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/views/pages/permit/AdminEdit.vue ***!
-  \*******************************************************/
+/***/ "./resources/js/views/pages/goods/SpuSpecEdit.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/views/pages/goods/SpuSpecEdit.vue ***!
+  \********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _AdminEdit_vue_vue_type_template_id_8e7bf8e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminEdit.vue?vue&type=template&id=8e7bf8e2&scoped=true& */ "./resources/js/views/pages/permit/AdminEdit.vue?vue&type=template&id=8e7bf8e2&scoped=true&");
-/* harmony import */ var _AdminEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminEdit.vue?vue&type=script&lang=js& */ "./resources/js/views/pages/permit/AdminEdit.vue?vue&type=script&lang=js&");
+/* harmony import */ var _SpuSpecEdit_vue_vue_type_template_id_5bbf492a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SpuSpecEdit.vue?vue&type=template&id=5bbf492a&scoped=true& */ "./resources/js/views/pages/goods/SpuSpecEdit.vue?vue&type=template&id=5bbf492a&scoped=true&");
+/* harmony import */ var _SpuSpecEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SpuSpecEdit.vue?vue&type=script&lang=js& */ "./resources/js/views/pages/goods/SpuSpecEdit.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -291,50 +197,50 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _AdminEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _AdminEdit_vue_vue_type_template_id_8e7bf8e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _AdminEdit_vue_vue_type_template_id_8e7bf8e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _SpuSpecEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SpuSpecEdit_vue_vue_type_template_id_5bbf492a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SpuSpecEdit_vue_vue_type_template_id_5bbf492a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "8e7bf8e2",
+  "5bbf492a",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/views/pages/permit/AdminEdit.vue"
+component.options.__file = "resources/js/views/pages/goods/SpuSpecEdit.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/views/pages/permit/AdminEdit.vue?vue&type=script&lang=js&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/views/pages/permit/AdminEdit.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************/
+/***/ "./resources/js/views/pages/goods/SpuSpecEdit.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/views/pages/goods/SpuSpecEdit.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./AdminEdit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/permit/AdminEdit.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuSpecEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SpuSpecEdit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/goods/SpuSpecEdit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuSpecEdit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/views/pages/permit/AdminEdit.vue?vue&type=template&id=8e7bf8e2&scoped=true&":
-/*!**************************************************************************************************!*\
-  !*** ./resources/js/views/pages/permit/AdminEdit.vue?vue&type=template&id=8e7bf8e2&scoped=true& ***!
-  \**************************************************************************************************/
+/***/ "./resources/js/views/pages/goods/SpuSpecEdit.vue?vue&type=template&id=5bbf492a&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/views/pages/goods/SpuSpecEdit.vue?vue&type=template&id=5bbf492a&scoped=true& ***!
+  \***************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminEdit_vue_vue_type_template_id_8e7bf8e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./AdminEdit.vue?vue&type=template&id=8e7bf8e2&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/permit/AdminEdit.vue?vue&type=template&id=8e7bf8e2&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminEdit_vue_vue_type_template_id_8e7bf8e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuSpecEdit_vue_vue_type_template_id_5bbf492a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SpuSpecEdit.vue?vue&type=template&id=5bbf492a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/views/pages/goods/SpuSpecEdit.vue?vue&type=template&id=5bbf492a&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuSpecEdit_vue_vue_type_template_id_5bbf492a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminEdit_vue_vue_type_template_id_8e7bf8e2_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SpuSpecEdit_vue_vue_type_template_id_5bbf492a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

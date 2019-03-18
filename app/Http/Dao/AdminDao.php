@@ -33,6 +33,17 @@ class AdminDao
     }
 
     /**
+     * 名子获取
+     *
+     * @param $name
+     * @return mixed
+     */
+    public function findByName($name)
+    {
+        return $this->admin::where("name", "=", $name)->first();
+    }
+
+    /**
      * AdminDao constructor.
      *
      * @param Admin $admin

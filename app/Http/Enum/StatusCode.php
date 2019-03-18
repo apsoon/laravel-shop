@@ -55,6 +55,11 @@ class StatusCode
         "message" => "用户不存在"
     ];
 
+    const ACCOUNT_OR_PWD_ERROR= [
+        "code" => 8004,
+        "message" => "账号或密码错误"
+    ];
+
     const WX_CODE_LACKED = [
         "code" => 8004,
         "message" => "缺少微信code"

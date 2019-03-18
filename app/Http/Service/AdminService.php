@@ -12,6 +12,7 @@ namespace App\Http\Service;
 use App\Http\Dao\AdminDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Util\JsonResult;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * Class AdminService
@@ -23,6 +24,21 @@ class AdminService
      * @var AdminDao
      */
     private $adminDao;
+
+    /**
+     * 登录
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function login(array $req)
+    {
+        $admin = $this->adminDao->findByName($req["name"]);
+        if (empty($admin)) return new JsonResult(StatusCode::USER_NOT_EXIST);
+        $result = new \stdClass();
+        $result->hash = $admin->password;
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
 
     /**
      * 创建admin

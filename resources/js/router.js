@@ -15,6 +15,12 @@ export default new VueRouter({
             path: '/',
             component: resolve => void(require(['./views/pages/Index.vue'], resolve))
         },
+        {
+            name: 'Login',
+            path: '/login',
+            component: resolve => void(require(['./views/pages/auth/Login.vue'], resolve)),
+            // hidden: true
+        },
 
         // =============================  商品管理  ===============================
         {
