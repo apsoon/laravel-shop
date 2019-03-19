@@ -115335,6 +115335,22 @@ Vue.use(element_ui__WEBPACK_IMPORTED_MODULE_0___default.a);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+_router__WEBPACK_IMPORTED_MODULE_3__["default"].beforeEach(function (to, from, next) {
+  //NProgress.start();
+  if (to.path === '/login') {
+    sessionStorage.removeItem('user');
+  }
+
+  var user = JSON.parse(sessionStorage.getItem('user'));
+
+  if (!user && to.path !== '/login') {
+    next({
+      path: '/login'
+    });
+  } else {
+    next();
+  }
+});
 var app = new Vue({
   el: '#app',
   router: _router__WEBPACK_IMPORTED_MODULE_3__["default"],

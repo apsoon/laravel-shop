@@ -29,6 +29,18 @@ Vue.use(ElementUI);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+router.beforeEach((to, from, next) => {
+    //NProgress.start();
+    if (to.path === '/login') {
+        sessionStorage.removeItem('user');
+    }
+    let user = JSON.parse(sessionStorage.getItem('user'));
+    if (!user && to.path !== '/login') {
+        next({path: '/login'})
+    } else {
+        next()
+    }
+});
 
 const app = new Vue({
     el: '#app',
