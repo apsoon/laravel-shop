@@ -42,6 +42,7 @@
             return {
                 spuList: [],
                 pageNo: 1,
+                loading: true
             }
         },
         mounted: function () {

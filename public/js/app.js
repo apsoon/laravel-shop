@@ -4374,12 +4374,15 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       groupList: [],
-      pageNo: 1
+      pageNo: 1,
+      loading: true
     };
   },
   mounted: function mounted() {
     var that = this;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrGroup/list?pageNo=" + that.pageNo).then(function (res) {
+      that.loading = false;
+
       if (res.data.code === 2000) {
         that.groupList = res.data.data;
         console.info(that.groupList);
@@ -4635,12 +4638,15 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       brandList: [],
-      pageNo: 1
+      pageNo: 1,
+      loading: true
     };
   },
   mounted: function mounted() {
     var that = this;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('brand/list').then(function (res) {
+      that.loading = false;
+
       if (res.data.code === 2000) {
         that.brandList = res.data.data;
         console.info(res.data.data);
@@ -5045,15 +5051,17 @@ __webpack_require__.r(__webpack_exports__);
       categoryTreeProps: {
         label: name // children: children
 
-      }
+      },
+      loading: true
     };
   },
   mounted: function mounted() {
     var that = this;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("category/treeList").then(function (res) {
+      that.loading = false;
+
       if (res.data.code === 2000) {
         that.categoryList = res.data.data;
-        console.info(that.categoryList);
       }
     }).catch(function (err) {});
   },
@@ -6414,7 +6422,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       spuList: [],
-      pageNo: 1
+      pageNo: 1,
+      loading: true
     };
   },
   mounted: function mounted() {
@@ -91934,6 +91943,14 @@ var render = function() {
       _c(
         "el-table",
         {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
           ref: "groupList",
           attrs: {
             data: _vm.groupList,
@@ -92286,6 +92303,14 @@ var render = function() {
       _c(
         "el-table",
         {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
           ref: "multipleTable",
           staticStyle: { width: "100%" },
           attrs: { data: _vm.brandList, "tooltip-effect": "dark" }
@@ -92731,6 +92756,14 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("el-tree", {
+        directives: [
+          {
+            name: "loading",
+            rawName: "v-loading",
+            value: _vm.loading,
+            expression: "loading"
+          }
+        ],
         ref: "treeCategory",
         attrs: {
           data: _vm.categoryList,
