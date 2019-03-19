@@ -4,6 +4,15 @@
             <el-col :span="10" class="logo" style="width: 230px;">
                 电商小程序后台
             </el-col>
+            <el-col :span="4" class="userinfo">
+                <el-dropdown trigger="hover">
+                    <span class="el-dropdown-link">测试{{sysUserName}}<i class="el-icon-caret-bottom"></i> </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <!--<el-dropdown-item>设置</el-dropdown-item>-->
+                        <el-dropdown-item divided @click.native="onLogout">退出登录</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </el-col>
         </el-col>
         <el-col :span="24" class="main">
             <aside class="sidebar">
@@ -50,7 +59,18 @@
         data: function () {
             return {}
         },
-        methods: {}
+        methods: {
+            //退出登录
+            onLogout: function () {
+                let that = this;
+                this.$confirm('确认退出吗?', '提示', {})
+                    .then(() => {
+                        sessionStorage.removeItem('user');
+                        that.$router.push('/login');
+                    }).catch(() => {
+                });
+            },
+        }
     }
 </script>
 
@@ -84,6 +104,21 @@
         font-size: 20px;
         border-right: 1px solid #EAEAEA;
         border-bottom: 1px solid #EAEAEA;
+    }
+
+    .userinfo {
+        text-align: right;
+        padding-right: 35px;
+        float: right;
+
+    }
+
+    .userinfo-inner {
+        width: 80px;
+        height: 40px;
+        cursor: pointer;
+        color: #fff;
+
     }
 
     .main {
