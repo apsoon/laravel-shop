@@ -6,7 +6,7 @@
             </router-link>
             <el-button type="danger" size="medium" @click="deleteBrands()">批量删除</el-button>
         </div>
-        <el-table ref="multipleTable" :data="brandList" tooltip-effect="dark" style="width: 100%">
+        <el-table ref="multipleTable" :data="brandList" tooltip-effect="dark" style="width: 100%" v-loading="loading">
             <el-table-column type="selection" width="55"/>
             <el-table-column prop="name" label="名称" width="120"/>
             <el-table-column prop="cover" label="品牌图片" width="120">
@@ -61,13 +61,15 @@
         data: function () {
             return {
                 brandList: [],
-                pageNo: 1
+                pageNo: 1,
+                loading: true
             }
         },
         mounted: function () {
             let that = this;
             axios.get('brand/list')
                 .then(res => {
+                    that.loading = false;
                     if (res.data.code === 2000) {
                         that.brandList = res.data.data;
                         console.info(res.data.data);

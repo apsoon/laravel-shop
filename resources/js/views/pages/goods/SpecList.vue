@@ -3,7 +3,7 @@
         <div slot="header" class="clearfix">
             <span>规格列表</span>
         </div>
-        <div>
+        <div v-loading="loading">
             <el-tag
                     v-for="spec in specList"
                     :key="spec.name"
@@ -34,19 +34,20 @@
             return {
                 specList: [],
                 inputVisible: false,
-                inputValue: ''
+                inputValue: '',
+                loading: true,
             }
         },
         mounted: function () {
             let that = this;
             axios.get("/spec/list")
                 .then(res => {
+                    that.loading = false;
                     if (res.data.code === 2000) {
                         that.specList = res.data.data;
                     }
-                })
-                .catch(err => {
-                })
+                }).catch(err => {
+            })
         },
         methods: {
             showInput: function () {
@@ -59,18 +60,17 @@
                 let that = this,
                     inputValue = that.inputValue;
                 if (inputValue) {
-                    axios.post("/spec/create", {
-                        name: inputValue
-                    }).then(res => {
-                        if (res.data.code === 2000) {
-                            that.specList.push({name: inputValue});
-                        } else {
-                            that.$message({
-                                type: 'error',
-                                message: '添加失败!'
-                            });
-                        }
-                    }).catch(err => {
+                    axios.post("/spec/create", {name: inputValue})
+                        .then(res => {
+                            if (res.data.code === 2000) {
+                                that.specList.push({name: inputValue});
+                            } else {
+                                that.$message({
+                                    type: 'error',
+                                    message: '添加失败!'
+                                });
+                            }
+                        }).catch(err => {
                     });
                 }
                 this.inputVisible = false;

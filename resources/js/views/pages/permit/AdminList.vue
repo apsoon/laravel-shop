@@ -5,7 +5,7 @@
                 <el-button type="primary" size="medium">添加管理员</el-button>
             </router-link>
         </div>
-        <el-table ref="adminList" :data="adminList" tooltip-effect="dark" width="100%">
+        <el-table ref="adminList" :data="adminList" tooltip-effect="dark" width="100%" v-loading="loading">
             <el-table-column label="编号" prop="id" width="150"/>
             <el-table-column label="名称" prop="name" width="150"/>
             <el-table-column label="电话" prop="phone" width="150"/>
@@ -32,13 +32,15 @@
         name: "AdminList",
         data: function () {
             return {
-                adminList: []
+                adminList: [],
+                loading: true,
             }
         },
         mounted: function () {
             let that = this;
             axios.get("/admin/list")
                 .then(res => {
+                    that.loading = false;
                     if (res.data.code === 2000) {
                         that.adminList = res.data.data;
                     }

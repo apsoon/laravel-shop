@@ -3887,13 +3887,15 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       adList: [],
-      pageNo: 1
+      pageNo: 1,
+      loading: true
     };
   },
   mounted: function mounted() {
     var that = this;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('ad/list').then(function (res) {
       that.adList = res.data.data;
+      that.loading = false;
     });
   },
   methods: {
@@ -5429,12 +5431,15 @@ __webpack_require__.r(__webpack_exports__);
     return {
       specList: [],
       inputVisible: false,
-      inputValue: ''
+      inputValue: '',
+      loading: true
     };
   },
   mounted: function mounted() {
     var that = this;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spec/list").then(function (res) {
+      that.loading = false;
+
       if (res.data.code === 2000) {
         that.specList = res.data.data;
       }
@@ -6415,10 +6420,11 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var that = this;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/page-list?pageNo=1").then(function (res) {
+      that.loading = false;
+
       if (res.data.code && res.data.data) {
         that.spuList = that.spuList.concat(res.data.data);
         that.pageNo++;
-        console.info(" ------------------- ", that.spuList);
       }
     }).catch(function (err) {});
   }
@@ -6864,19 +6870,21 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       pageNo: 1,
-      couponList: []
+      couponList: [],
+      loading: true
     };
   },
   mounted: function mounted() {
     var that = this;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/coupon/list?pageNo=" + that.pageNo).then(function (res) {
+      that.loading = false;
+
       if (res.data.code === 2000) {
         that.couponList = res.data.data;
       }
 
       console.info(that.couponList);
-    });
-    console.info(that.couponList);
+    }).catch(function (err) {});
   }
 });
 
@@ -7038,12 +7046,15 @@ __webpack_require__.r(__webpack_exports__);
   name: "AdminList",
   data: function data() {
     return {
-      adminList: []
+      adminList: [],
+      loading: true
     };
   },
   mounted: function mounted() {
     var that = this;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/admin/list").then(function (res) {
+      that.loading = false;
+
       if (res.data.code === 2000) {
         that.adminList = res.data.data;
       }
@@ -7160,7 +7171,10 @@ __webpack_require__.r(__webpack_exports__);
       var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'all';
       var pageNo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var that = this;
+      that.loading = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/after/list?type=" + type + "&pageNo=" + pageNo).then(function (res) {
+        that.loading = false;
+
         if (res.data.code === 2000) {
           that.afSaleList = res.data.data;
         }
@@ -7285,7 +7299,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       commentList: [],
       pageNo: 1,
-      active: "all"
+      active: "all",
+      loading: true
     };
   },
   mounted: function mounted() {
@@ -7322,7 +7337,10 @@ __webpack_require__.r(__webpack_exports__);
       var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'all';
       var pageNo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var that = this;
+      that.loading = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/comment/list?type=" + type + "&pageNo=" + pageNo).then(function (res) {
+        that.loading = false;
+
         if (res.data.code === 2000) {
           that.commentList = res.data.data;
         }
@@ -7479,7 +7497,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       active: "all",
       pageNo: 1,
-      orderList: []
+      orderList: [],
+      loading: true
     };
   },
   mounted: function mounted() {
@@ -7495,7 +7514,10 @@ __webpack_require__.r(__webpack_exports__);
       var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'all';
       var pageNo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var that = this;
+      that.loading = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/order/list?type=" + type + "&pageNo=" + pageNo).then(function (res) {
+        that.loading = false;
+
         if (res.data.code === 2000) {
           that.orderList = res.data.data;
         }
@@ -7580,8 +7602,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "PostModelList"
+  name: "PostModelList",
+  data: function data() {
+    return {};
+  }
 });
 
 /***/ }),
@@ -7647,12 +7675,15 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       userList: [],
-      pageNo: 1
+      pageNo: 1,
+      loading: true
     };
   },
   mounted: function mounted() {
     var that = this;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("user/list-page?pageNo=" + 1).then(function (res) {
+      that.loading = false;
+
       if (res.data.code === 2000) {
         that.userList = res.data.data;
       }
@@ -91377,6 +91408,14 @@ var render = function() {
       _c(
         "el-table",
         {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
           ref: "adList",
           staticStyle: { width: "100%" },
           attrs: { data: _vm.adList, "tooltip-effect": "dark" }
@@ -93107,6 +93146,16 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
+      {
+        directives: [
+          {
+            name: "loading",
+            rawName: "v-loading",
+            value: _vm.loading,
+            expression: "loading"
+          }
+        ]
+      },
       [
         _vm._l(_vm.specList, function(spec) {
           return _c(
@@ -94357,6 +94406,14 @@ var render = function() {
       _c(
         "el-table",
         {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
           ref: "spuList",
           attrs: { data: _vm.spuList, "tooltip-effect": "dark", width: "100%" }
         },
@@ -95085,6 +95142,14 @@ var render = function() {
       _c(
         "el-table",
         {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
           ref: "couponList",
           attrs: {
             "tooltip-effect": "dark",
@@ -95491,6 +95556,14 @@ var render = function() {
       _c(
         "el-table",
         {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
           ref: "adminList",
           attrs: {
             data: _vm.adminList,
@@ -95667,6 +95740,14 @@ var render = function() {
       _c(
         "el-table",
         {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
           ref: "afSaleList",
           attrs: {
             "tooltip-effect": "dark",
@@ -95835,6 +95916,14 @@ var render = function() {
       _c(
         "el-table",
         {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
           ref: "commentList",
           attrs: {
             data: _vm.commentList,
@@ -96199,6 +96288,14 @@ var render = function() {
       _c(
         "el-table",
         {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
           ref: "orderList",
           attrs: {
             "tooltip-effect": "dark",
@@ -96483,29 +96580,45 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("el-card", { attrs: { shadow: "never" } }, [
-    _c(
-      "div",
-      { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
-      [
-        _c(
-          "router-link",
+  return _c(
+    "el-card",
+    { attrs: { shadow: "never" } },
+    [
+      _c(
+        "div",
+        { staticClass: "clearfix", attrs: { slot: "header" }, slot: "header" },
+        [
+          _c(
+            "router-link",
+            {
+              attrs: {
+                to: { path: "post-model-edit", query: { type: "create" } }
+              }
+            },
+            [
+              _c("el-button", { attrs: { type: "primary", size: "medium" } }, [
+                _vm._v("添加新模版")
+              ])
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("el-table", {
+        directives: [
           {
-            attrs: {
-              to: { path: "post-model-edit", query: { type: "create" } }
-            }
-          },
-          [
-            _c("el-button", { attrs: { type: "primary", size: "medium" } }, [
-              _vm._v("添加新模版")
-            ])
-          ],
-          1
-        )
-      ],
-      1
-    )
-  ])
+            name: "loading",
+            rawName: "v-loading",
+            value: _vm.loading,
+            expression: "loading"
+          }
+        ]
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -96566,6 +96679,14 @@ var render = function() {
       _c(
         "el-table",
         {
+          directives: [
+            {
+              name: "loading",
+              rawName: "v-loading",
+              value: _vm.loading,
+              expression: "loading"
+            }
+          ],
           ref: "userList",
           attrs: { data: _vm.userList, "tooltip-effect": "dark", width: "100%" }
         },

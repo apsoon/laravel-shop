@@ -10,7 +10,7 @@
             <el-tab-pane label="已完成" name="complete"/>
             <el-tab-pane label="已取消" name="cancel"/>
         </el-tabs>
-        <el-table ref="afSaleList" tooltip-effect="dark" width="100%" :data="afSaleList" stripe>
+        <el-table ref="afSaleList" tooltip-effect="dark" width="100%" :data="afSaleList" stripe v-loading="loading">
             <el-table-column type="selection" width="55"/>
             <el-table-column label="订单号" prop="order_sn" width="250"/>
             <el-table-column label="用户" prop="user_id" width="150"/>
@@ -66,8 +66,10 @@
             },
             getAfterSaleList: function (type = 'all', pageNo = 1) {
                 let that = this;
+                that.loading = true;
                 axios.get("/after/list?type=" + type + "&pageNo=" + pageNo)
                     .then(res => {
+                        that.loading = false;
                         if (res.data.code === 2000) {
                             that.afSaleList = res.data.data;
                         }

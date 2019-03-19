@@ -9,7 +9,7 @@
             <el-tab-pane label="审核通过" name="valid"/>
             <el-tab-pane label="审核不通过" name="invalid"/>
         </el-tabs>
-        <el-table ref="commentList" :data="commentList" tooltip-effect="dart" width="100%">
+        <el-table ref="commentList" :data="commentList" tooltip-effect="dart" width="100%" v-loading="loading">
             <el-table-column type="selection" width="55"/>
             <el-table-column label="商品" prop="sku_name" width="150" align="center"/>
             <el-table-column label="订单编号" prop="order_sn" width="220" align="center"/>
@@ -74,6 +74,7 @@
                 commentList: [],
                 pageNo: 1,
                 active: "all",
+                loading: true,
             }
         },
         mounted: function () {
@@ -106,8 +107,10 @@
             },
             getCommentList: function (type = 'all', pageNo = 1) {
                 let that = this;
+                that.loading = true;
                 axios.get("/comment/list?type=" + type + "&pageNo=" + pageNo)
                     .then(res => {
+                        that.loading = false;
                         if (res.data.code === 2000) {
                             that.commentList = res.data.data;
                         }

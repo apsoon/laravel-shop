@@ -5,7 +5,7 @@
                 <el-button type="primary" size="medium">添加商品</el-button>
             </router-link>
         </div>
-        <el-table ref="spuList" :data="spuList" tooltip-effect="dark" width="100%">
+        <el-table ref="spuList" :data="spuList" tooltip-effect="dark" width="100%" v-loading="loading">
             <el-table-column type="selection" width="55"/>
             <el-table-column prop="name" label="名称" width="150"/>
             <el-table-column prop="category_name" label="分类" width="150"/>
@@ -48,10 +48,10 @@
             let that = this;
             axios.get("spu/page-list?pageNo=1")
                 .then(res => {
+                    that.loading = false;
                     if (res.data.code && res.data.data) {
                         that.spuList = that.spuList.concat(res.data.data);
                         that.pageNo++;
-                        console.info(" ------------------- ", that.spuList);
                     }
                 }).catch(err => {
             });

@@ -11,7 +11,7 @@
                  ref="treeCategory"
                  :props="categoryTreeProps"
                  :default-expand-all="false"
-                 :expand-on-click-node="false">
+                 :expand-on-click-node="false" v-loading="loading">
             <span class="custom-tree-node" slot-scope="{ node, data }">
                 <span>
                     {{ data.name }}
@@ -50,17 +50,19 @@
                 categoryTreeProps: {
                     label: name,
                     // children: children
-                }
+                },
+                loading: true
             }
         },
         mounted: function () {
             let that = this;
-            axios.get("category/treeList").then(res => {
-                if (res.data.code === 2000) {
-                    that.categoryList = res.data.data;
-                    console.info(that.categoryList);
-                }
-            }).catch(err => {
+            axios.get("category/treeList")
+                .then(res => {
+                    that.loading = false;
+                    if (res.data.code === 2000) {
+                        that.categoryList = res.data.data;
+                    }
+                }).catch(err => {
             });
         },
         methods: {

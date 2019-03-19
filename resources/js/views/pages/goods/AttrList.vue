@@ -5,7 +5,7 @@
                 <el-button type="primary" size="medium">添加属性组</el-button>
             </router-link>
         </div>
-        <el-table ref="groupList" :data="groupList" tooltip-effect="dark" width="100%">
+        <el-table ref="groupList" :data="groupList" tooltip-effect="dark" width="100%" v-loading="loading">
             <el-table-column label="属性组名称" prop="name" width="150px">
             </el-table-column>
             <el-table-column label="所属分类" prop="category_id" width="150px">
@@ -53,21 +53,21 @@
         data: function () {
             return {
                 groupList: [],
-                pageNo: 1
+                pageNo: 1,
+                loading: true,
             }
         },
         mounted: function () {
             let that = this;
             axios.get("/attrGroup/list?pageNo=" + that.pageNo)
                 .then(res => {
+                    that.loading = false;
                     if (res.data.code === 2000) {
                         that.groupList = res.data.data;
                         console.info(that.groupList);
                     }
-                })
-                .catch(err => {
-
-                })
+                }).catch(err => {
+            })
         },
         methods: {}
     }

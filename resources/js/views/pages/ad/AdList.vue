@@ -6,7 +6,7 @@
             </router-link>
             <el-button type="danger" size="medium" @click="deleteAds">批量删除</el-button>
         </div>
-        <el-table ref="adList" :data="adList" tooltip-effect="dark" style="width: 100%">
+        <el-table ref="adList" :data="adList" tooltip-effect="dark" style="width: 100%" v-loading="loading">
             <el-table-column type="selection" width="55"/>
             <el-table-column prop="name" label="名称" width="120"/>
             <el-table-column prop="image_url" label="广告图片" width="120">
@@ -63,12 +63,14 @@
             return {
                 adList: [],
                 pageNo: 1,
+                loading: true,
             }
         },
         mounted: function () {
             let that = this;
             axios.get('ad/list').then(res => {
                 that.adList = res.data.data;
+                that.loading = false;
             });
         },
         methods: {

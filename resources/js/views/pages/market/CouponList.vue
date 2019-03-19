@@ -5,7 +5,7 @@
                 <el-button type="primary" size="medium">添加优惠券</el-button>
             </router-link>
         </div>
-        <el-table ref="couponList" tooltip-effect="dark" width="100%" :data="couponList">
+        <el-table ref="couponList" tooltip-effect="dark" width="100%" :data="couponList" v-loading="loading">
             <el-table-column type="expand">
                 <template slot-scope="props">
                     <el-form label-position="left" inline class="demo-table-expand">
@@ -74,19 +74,21 @@
         data: function () {
             return {
                 pageNo: 1,
-                couponList: []
+                couponList: [],
+                loading: true,
             }
         },
         mounted: function () {
             let that = this;
             axios.get("/coupon/list?pageNo=" + that.pageNo)
                 .then(res => {
+                    that.loading = false;
                     if (res.data.code === 2000) {
                         that.couponList = res.data.data
                     }
                     console.info(that.couponList);
-                });
-            console.info(that.couponList);
+                }).catch(err => {
+            });
         }
     }
 </script>

@@ -12,7 +12,7 @@
             <el-tab-pane label="已完成" name="complete"/>
             <el-tab-pane label="已取消" name="cancel"/>
         </el-tabs>
-        <el-table ref="orderList" tooltip-effect="dark" width="100%" :data="orderList" stripe>
+        <el-table ref="orderList" tooltip-effect="dark" width="100%" :data="orderList" stripe v-loading="loading">
             <el-table-column type="selection" width="55"/>
             <el-table-column label="订单号" prop="sn" width="250"/>
             <el-table-column label="下单时间" prop="create_time" width="250"/>
@@ -62,7 +62,8 @@
             return {
                 active: "all",
                 pageNo: 1,
-                orderList: []
+                orderList: [],
+                loading: true
             }
         },
         mounted: function () {
@@ -76,8 +77,10 @@
             },
             getOrderList: function (type = 'all', pageNo = 1) {
                 let that = this;
+                that.loading = true;
                 axios.get("/order/list?type=" + type + "&pageNo=" + pageNo)
                     .then(res => {
+                        that.loading = false;
                         if (res.data.code === 2000) {
                             that.orderList = res.data.data;
                         }
