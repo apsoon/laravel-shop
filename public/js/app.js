@@ -3507,7 +3507,17 @@ __webpack_require__.r(__webpack_exports__);
     Sidebar: _Sidebar_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
-    return {};
+    return {
+      userName: ''
+    };
+  },
+  mounted: function mounted() {
+    var user = sessionStorage.getItem('user');
+
+    if (user) {
+      user = JSON.parse(user);
+      this.userName = user.name || '';
+    }
   },
   methods: {
     //退出登录
@@ -90665,7 +90675,7 @@ var render = function() {
                 { attrs: { trigger: "hover" } },
                 [
                   _c("span", { staticClass: "el-dropdown-link" }, [
-                    _vm._v("测试" + _vm._s(_vm.sysUserName)),
+                    _vm._v(_vm._s(_vm.userName)),
                     _c("i", { staticClass: "el-icon-caret-bottom" })
                   ]),
                   _vm._v(" "),

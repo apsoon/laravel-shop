@@ -6,7 +6,7 @@
             </el-col>
             <el-col :span="4" class="userinfo">
                 <el-dropdown trigger="hover">
-                    <span class="el-dropdown-link">测试{{sysUserName}}<i class="el-icon-caret-bottom"></i> </span>
+                    <span class="el-dropdown-link">{{userName}}<i class="el-icon-caret-bottom"></i> </span>
                     <el-dropdown-menu slot="dropdown">
                         <!--<el-dropdown-item>设置</el-dropdown-item>-->
                         <el-dropdown-item divided @click.native="onLogout">退出登录</el-dropdown-item>
@@ -57,7 +57,14 @@
         name: "Home",
         components: {Header, Sidebar},
         data: function () {
-            return {}
+            return {userName: '',}
+        },
+        mounted: function () {
+            let user = sessionStorage.getItem('user');
+            if (user) {
+                user = JSON.parse(user);
+                this.userName = user.name || '';
+            }
         },
         methods: {
             //退出登录
