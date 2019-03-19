@@ -1,5 +1,5 @@
 <template>
-    <el-card class="card">
+    <el-card shadow="never">
         <el-tabs v-model="active" type="card" @tab-click="onTabClicked">
             <el-tab-pane label="商品信息" name="info">
                 <router-link :to="{path: '/spu-edit', query:{type: 'modify', spuId: spuId}}">

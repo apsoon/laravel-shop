@@ -1,5 +1,5 @@
 <template>
-    <el-card class="card">
+    <el-card shadow="never">
         <div slot="header" class="clearfix">
             <span>邮费模版编辑</span>
         </div>

@@ -1,5 +1,5 @@
 <template>
-    <el-card class="card">
+    <el-card shadow="never">
         <div slot="header" class="clearfix">
             <span>优惠券编辑</span>
         </div>

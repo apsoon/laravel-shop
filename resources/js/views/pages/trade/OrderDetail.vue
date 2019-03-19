@@ -1,5 +1,5 @@
 <template>
-    <el-card class="card">
+    <el-card shadow="never">
         <div slot="header">
             <span>订单详情</span>
         </div>
