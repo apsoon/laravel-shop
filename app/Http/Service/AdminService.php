@@ -13,6 +13,7 @@ use App\Http\Dao\AdminDao;
 use App\Http\Enum\StatusCode;
 use App\Http\Util\JsonResult;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AdminService
@@ -34,10 +35,31 @@ class AdminService
     public function login(array $req)
     {
         $admin = $this->adminDao->findByName($req["name"]);
-        if (empty($admin)) return new JsonResult(StatusCode::USER_NOT_EXIST);
-        $result = new \stdClass();
-        $result->hash = $admin->password;
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        Log::info($req);
+        if (empty($admin) || $admin->password != $req["password"]) return new JsonResult(StatusCode::ACCOUNT_OR_PWD_ERROR);
+        $token = md5($req["password"] . time() . $req["name"]);
+        $admin->remember_token = $token;
+        $admin->save();
+        unset($admin->remember_token);
+        unset($admin->password);
+        unset($admin->email_verified_at);
+        unset($admin->updated_at);
+        unset($admin->created_at);
+        $admin->token = $token;
+        return new JsonResult(StatusCode::SUCCESS, $admin);
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function getUserInfo(array $req)
+    {
+        $admin = $this->adminDao->findByName($req["name"]);
+        if ($admin->remember_token != $req["token"]) return new JsonResult(StatusCode::PARAM_ERROR);
+        return new JsonResult(StatusCode::SUCCESS, $admin);
     }
 
     /**

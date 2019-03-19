@@ -16,8 +16,7 @@
 </template>
 
 <script>
-
-    const bcrypt = require('bcryptjs');
+    import md5 from "md5";
 
     export default {
         name: "Login",
@@ -45,14 +44,7 @@
                 that.$refs.loginForm.validate((valid) => {
                     if (valid) {
                         that.logining = true;
-                        //生成salt的迭代次数
-                        const saltRounds = 10;
-                        //随机生成salt
-                        const salt = bcrypt.genSaltSync(saltRounds);
-                        //获取hash值
-                        let hash = bcrypt.hashSync(this.loginForm.password, salt);
-                        //把hash值赋值给password变量
-                        let loginParams = {name: this.loginForm.name, password: hash};
+                        let loginParams = {name: that.loginForm.name, password: md5(that.loginForm.password)};
                         this.requestLogin(loginParams).then(res => {
                             this.logining = false;
                             console.info(res);
@@ -62,20 +54,12 @@
                                     type: 'error'
                                 });
                             } else {
-                                const pwdMatchFlag = bcrypt.compareSync(that.loginForm.password, res.data.hash);
-                                if (pwdMatchFlag) {
-                                    that.$message({
-                                        message: "登录成功",
-                                        type: 'success'
-                                    });
-                                    // sessionStorage.setItem('user', JSON.stringify(user));
-                                    that.$router.push({path: '/index'});
-                                } else {
-                                    that.$message({
-                                        message: "账号或密码错误",
-                                        type: 'error'
-                                    });
-                                }
+                                that.$message({
+                                    message: "登录成功",
+                                    type: 'success'
+                                });
+                                sessionStorage.setItem('user', JSON.stringify(res.data));
+                                that.$router.push({path: '/index'});
                             }
                         });
                     } else {
