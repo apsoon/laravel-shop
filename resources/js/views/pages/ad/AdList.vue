@@ -75,7 +75,7 @@
             that.token = user.token;
             that.adminId = user.id;
             ;
-            axios.get('ad/list' + "?admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get('ad/list' + "?adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     that.adList = res.data.data;
                     that.loading = false;

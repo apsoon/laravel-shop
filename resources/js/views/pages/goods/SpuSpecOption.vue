@@ -51,7 +51,7 @@
             that.adminId = user.id;
             that.spuId = spuId;
             that.specId = specId;
-            axios.get("/spu/optionList?spuId=" + spuId + "&specId=" + specId + "&admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("/spu/optionList?spuId=" + spuId + "&specId=" + specId + "&adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.optionList = res.data.data;

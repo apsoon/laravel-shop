@@ -112,7 +112,7 @@
                 that.type = type;
                 let adId = that.$route.query.adId;
                 that.adId = adId;
-                axios.get("/ad/detail?adId=" + adId + "&admin_id=" + that.adminId + "&token=" + that.token)
+                axios.get("/ad/detail?adId=" + adId + "&adminId=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         if (res.data.code === 2000) {
                             let data = res.data.data;
@@ -133,7 +133,7 @@
 
                     });
             }
-            axios.get("adPos/list" + "&admin_id=" + that.adminId + "&token=" + that.token).then(res => {
+            axios.get("adPos/list" + "&adminId=" + that.adminId + "&token=" + that.token).then(res => {
                 that.positionList = res.data.data;
                 console.info(that.positionList);
             });

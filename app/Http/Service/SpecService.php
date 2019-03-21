@@ -45,14 +45,15 @@ class SpecService
      * 创建
      *
      * @param array $req
-     * @return bool
+     * @return JsonResult
      */
     public function createSpec(array $req)
     {
         $spec = new Spec();
         $spec->name = $req["name"];
         $result = $this->specDao->insert($spec);
-        return $result;
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**

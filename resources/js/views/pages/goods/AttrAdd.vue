@@ -48,7 +48,7 @@
             that.token = user.token;
             that.adminId = user.id;
             that.attrGroupId = attrGroupId;
-            axios.get("/attr/list-group?attrGroupId=" + attrGroupId + "&admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("/attr/list-group?attrGroupId=" + attrGroupId + "&adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.attrList = res.data.data;

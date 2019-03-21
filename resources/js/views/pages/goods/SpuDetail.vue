@@ -200,7 +200,7 @@
             console.info(active);
             if (active) that.active = active;
             that.spuId = spuId;
-            axios.get("spu/detail?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("spu/detail?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.spu = res.data.data.spu;
@@ -210,13 +210,13 @@
                 })
                 .catch(err => {
                 });
-            axios.get("spu/specOptionList?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("spu/specOptionList?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.specList = res.data.data;
                     }
                 });
-            axios.get("sku/listBySpu?spuId=" + that.spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("sku/listBySpu?spuId=" + that.spuId + "&adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.skuList = res.data.data;
@@ -225,13 +225,13 @@
                 .catch(err => {
 
                 });
-            axios.get("/attr/value-list-spu?spuId=" + that.spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("/attr/value-list-spu?spuId=" + that.spuId + "&adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.attrList = res.data.data;
                     }
                 });
-            axios.get("/spu/banner-list?spuId=" + that.spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("/spu/banner-list?spuId=" + that.spuId + "&adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.bannerList = res.data.data;

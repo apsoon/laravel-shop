@@ -3748,7 +3748,7 @@ __webpack_require__.r(__webpack_exports__);
       that.type = type;
       var adId = that.$route.query.adId;
       that.adId = adId;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/ad/detail?adId=" + adId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/ad/detail?adId=" + adId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
         if (res.data.code === 2000) {
           var data = res.data.data;
           that.adForm = {
@@ -3766,7 +3766,7 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function (err) {});
     }
 
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("adPos/list" + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("adPos/list" + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.positionList = res.data.data;
       console.info(that.positionList);
     });
@@ -3914,7 +3914,7 @@ __webpack_require__.r(__webpack_exports__);
     that.token = user.token;
     that.adminId = user.id;
     ;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('ad/list' + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('ad/list' + "?adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.adList = res.data.data;
       that.loading = false;
     });
@@ -4211,7 +4211,7 @@ __webpack_require__.r(__webpack_exports__);
     that.token = user.token;
     that.adminId = user.id;
     that.attrGroupId = attrGroupId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-group?attrGroupId=" + attrGroupId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-group?attrGroupId=" + attrGroupId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.attrList = res.data.data;
       }
@@ -4334,7 +4334,7 @@ __webpack_require__.r(__webpack_exports__);
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("category/treeList" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("category/treeList" + "?adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.categoryList = res.data.data;
       }
@@ -4438,7 +4438,7 @@ __webpack_require__.r(__webpack_exports__);
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrGroup/list?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrGroup/list?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {
@@ -4556,7 +4556,7 @@ __webpack_require__.r(__webpack_exports__);
       var brandId = that.$route.query.brandId;
       that.brandId = brandId;
       that.type = "modify";
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/brand/detail?brandId=" + brandId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/brand/detail?brandId=" + brandId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
         if (res.data.code === 2000) {
           var data = res.data.data;
           that.brandForm = {
@@ -4723,7 +4723,7 @@ __webpack_require__.r(__webpack_exports__);
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('brand/list' + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('brand/list' + "?adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {
@@ -4979,7 +4979,7 @@ __webpack_require__.r(__webpack_exports__);
     } else {
       var categoryId = that.$route.query.categoryId;
       that.categoryId = categoryId;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/category/detail?id=" + categoryId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/category/detail?id=" + categoryId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
         if (res.data.code === 2000) {
           var data = res.data.data;
           that.categoryForm = {
@@ -4993,12 +4993,12 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function (err) {});
     }
 
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("brand/list" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("brand/list" + "?adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.brandList = res.data.data;
       }
     }).catch(function (err) {});
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("brand/list-category?categoryId=" + that.categoryId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("brand/list-category?categoryId=" + that.categoryId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         // let brandIds = [];
         var exists = res.data.data;
@@ -5162,7 +5162,7 @@ __webpack_require__.r(__webpack_exports__);
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("category/treeList" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("category/treeList" + "?adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {
@@ -5371,7 +5371,7 @@ __webpack_require__.r(__webpack_exports__);
     };
     that.spuId = spuId;
     that.skuForm.spuId = spuId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/specOptionList?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/specOptionList?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.specList = res.data.data;
       }
@@ -5379,7 +5379,7 @@ __webpack_require__.r(__webpack_exports__);
 
     if (type === 'modify') {
       var skuId = that.$route.query.skuId;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/sku/detail?skuId=" + skuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/sku/detail?skuId=" + skuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
         if (res.data.code === 2000) {
           var data = res.data.data;
           that.skuForm = {
@@ -5564,7 +5564,7 @@ __webpack_require__.r(__webpack_exports__);
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spec/list" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spec/list" + "?adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {
@@ -5671,8 +5671,8 @@ __webpack_require__.r(__webpack_exports__);
     that.categoryId = categoryId;
     that.spuId = spuId;
     that.attrForm.spuId = spuId;
-    var cateAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-category?categoryId=" + categoryId + "&admin_id=" + that.adminId + "&token=" + that.token);
-    var spuAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrValue/list?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token);
+    var cateAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-category?categoryId=" + categoryId + "&adminId=" + that.adminId + "&token=" + that.token);
+    var spuAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrValue/list?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token);
     Promise.all([cateAttr, spuAttr]).then(function (values) {
       var careAttrList = values[0].data.data,
           spuAttrList = values[1].data.data;
@@ -6150,29 +6150,29 @@ __webpack_require__.r(__webpack_exports__);
     console.info(active);
     if (active) that.active = active;
     that.spuId = spuId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/detail?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/detail?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.spu = res.data.data.spu;
         that.categoryId = res.data.data.spu.category_id;
         that.spuDetail = res.data.data.detail;
       }
     }).catch(function (err) {});
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/specOptionList?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/specOptionList?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.specList = res.data.data;
       }
     });
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("sku/listBySpu?spuId=" + that.spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("sku/listBySpu?spuId=" + that.spuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.skuList = res.data.data;
       }
     }).catch(function (err) {});
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/value-list-spu?spuId=" + that.spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/value-list-spu?spuId=" + that.spuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.attrList = res.data.data;
       }
     });
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/banner-list?spuId=" + that.spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/banner-list?spuId=" + that.spuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.bannerList = res.data.data;
       }
@@ -6460,7 +6460,7 @@ __webpack_require__.r(__webpack_exports__);
     if (type === 'modify') {
       var spuId = that.$route.query.spuId;
       that.spuId = spuId;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/spu/detail?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/spu/detail?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
         if (res.data.code === 2000) {
           var data = res.data.data;
           that.spuForm = {
@@ -6477,12 +6477,12 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function (err) {});
     }
 
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("category/treeList" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("category/treeList" + "?adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.categoryList = res.data.data;
       }
     }).catch(function (err) {});
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("brand/list" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("brand/list" + "?adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.brandList = res.data.data;
       }
@@ -6605,7 +6605,7 @@ __webpack_require__.r(__webpack_exports__);
     getSpuList: function getSpuList() {
       var that = this;
       that.loading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/page-list?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/page-list?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
         that.loading = false;
 
         if (res.data.code === 2000) {
@@ -6683,12 +6683,12 @@ __webpack_require__.r(__webpack_exports__);
     that.adminId = user.id;
     that.spuid = spuId;
     that.specForm.spuId = spuId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spec/list" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spec/list" + "?adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.specList = res.data.data;
       }
     }).catch(function (err) {});
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spec/list-spu?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spec/list-spu?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.existList = res.data.data;
         var _iteratorNormalCompletion = true;
@@ -6800,7 +6800,7 @@ __webpack_require__.r(__webpack_exports__);
     that.adminId = user.id;
     that.spuId = spuId;
     that.specId = specId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/optionList?spuId=" + spuId + "&specId=" + specId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/optionList?spuId=" + spuId + "&specId=" + specId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.optionList = res.data.data;
       }
@@ -7097,7 +7097,7 @@ __webpack_require__.r(__webpack_exports__);
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/coupon/list?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/coupon/list?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {
@@ -7293,7 +7293,7 @@ __webpack_require__.r(__webpack_exports__);
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/admin/list" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/admin/list" + "?adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {
@@ -7423,7 +7423,7 @@ __webpack_require__.r(__webpack_exports__);
       var pageNo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var that = this;
       that.loading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/after/list?type=" + type + "&pageNo=" + pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/after/list?type=" + type + "&pageNo=" + pageNo + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
         that.loading = false;
 
         if (res.data.code === 2000) {
@@ -7602,7 +7602,7 @@ __webpack_require__.r(__webpack_exports__);
       var pageNo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var that = this;
       that.loading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/comment/list?type=" + type + "&pageNo=" + pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/comment/list?type=" + type + "&pageNo=" + pageNo + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
         that.loading = false;
 
         if (res.data.code === 2000) {
@@ -7681,7 +7681,7 @@ __webpack_require__.r(__webpack_exports__);
     that.token = user.token;
     that.adminId = user.id;
     that.sn = orderSn;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/order/detail?orderSn=" + orderSn + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/order/detail?orderSn=" + orderSn + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         var orderDetail = res.data.data;
         that.skuList = orderDetail.skuList;
@@ -7794,7 +7794,7 @@ __webpack_require__.r(__webpack_exports__);
       var pageNo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var that = this;
       that.loading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/order/list?type=" + type + "&pageNo=" + pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/order/list?type=" + type + "&pageNo=" + pageNo + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
         that.loading = false;
 
         if (res.data.code === 2000) {
@@ -7972,7 +7972,7 @@ __webpack_require__.r(__webpack_exports__);
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("user/list-page?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("user/list-page?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {

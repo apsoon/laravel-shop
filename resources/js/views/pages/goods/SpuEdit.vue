@@ -100,7 +100,7 @@
             if (type === 'modify') {
                 let spuId = that.$route.query.spuId;
                 that.spuId = spuId;
-                axios.get("/spu/detail?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
+                axios.get("/spu/detail?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         if (res.data.code === 2000) {
                             let data = res.data.data;
@@ -118,14 +118,14 @@
                     }).catch(err => {
                 });
             }
-            axios.get("category/treeList" + "?admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("category/treeList" + "?adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.categoryList = res.data.data;
                     }
                 }).catch(err => {
             });
-            axios.get("brand/list" + "?admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("brand/list" + "?adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.brandList = res.data.data;

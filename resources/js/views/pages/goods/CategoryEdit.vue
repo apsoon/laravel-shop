@@ -104,7 +104,7 @@
             } else {
                 let categoryId = that.$route.query.categoryId;
                 that.categoryId = categoryId;
-                axios.get("/category/detail?id=" + categoryId + "&admin_id=" + that.adminId + "&token=" + that.token)
+                axios.get("/category/detail?id=" + categoryId + "&adminId=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         if (res.data.code === 2000) {
                             let data = res.data.data;
@@ -119,14 +119,14 @@
                     }).catch(err => {
                 });
             }
-            axios.get("brand/list" + "?admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("brand/list" + "?adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.brandList = res.data.data;
                     }
                 }).catch(err => {
             });
-            axios.get("brand/list-category?categoryId=" + that.categoryId + "&admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("brand/list-category?categoryId=" + that.categoryId + "&adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         // let brandIds = [];

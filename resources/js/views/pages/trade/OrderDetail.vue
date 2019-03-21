@@ -47,7 +47,7 @@
             that.token = user.token;
             that.adminId = user.id;
             that.sn = orderSn;
-            axios.get("/order/detail?orderSn=" + orderSn + "&admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("/order/detail?orderSn=" + orderSn + "&adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         let orderDetail = res.data.data;

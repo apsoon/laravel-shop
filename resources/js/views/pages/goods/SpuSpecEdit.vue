@@ -48,14 +48,14 @@
             that.adminId = user.id;
             that.spuid = spuId;
             that.specForm.spuId = spuId;
-            axios.get("spec/list" + "?admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("spec/list" + "?adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.specList = res.data.data
                     }
                 }).catch(err => {
             });
-            axios.get("spec/list-spu?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("spec/list-spu?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.existList = res.data.data;

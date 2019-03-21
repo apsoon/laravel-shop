@@ -55,14 +55,19 @@ class StatusCode
         "message" => "用户不存在"
     ];
 
-    const ACCOUNT_OR_PWD_ERROR= [
-        "code" => 8004,
-        "message" => "账号或密码错误"
-    ];
-
     const WX_CODE_LACKED = [
         "code" => 8004,
         "message" => "缺少微信code"
+    ];
+
+    const ACCOUNT_OR_PWD_ERROR = [
+        "code" => 8005,
+        "message" => "账号或密码错误"
+    ];
+
+    const AUTH_FAILED = [
+        "code" => 8006,
+        "message" => "用户信息验证失败"
     ];
 
     // 100XX 商品

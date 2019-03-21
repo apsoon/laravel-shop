@@ -85,7 +85,7 @@
                 let brandId = that.$route.query.brandId;
                 that.brandId = brandId;
                 that.type = "modify";
-                axios.get("/brand/detail?brandId=" + brandId + "&admin_id=" + that.adminId + "&token=" + that.token)
+                axios.get("/brand/detail?brandId=" + brandId + "&adminId=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         if (res.data.code === 2000) {
                             let data = res.data.data;

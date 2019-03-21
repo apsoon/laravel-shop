@@ -61,7 +61,7 @@
             user = JSON.parse(user);
             that.token = user.token;
             that.adminId = user.id;
-            axios.get("category/treeList" + "?admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("category/treeList" + "?adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     that.loading = false;
                     if (res.data.code === 2000) {

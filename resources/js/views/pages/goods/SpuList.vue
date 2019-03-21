@@ -60,7 +60,7 @@
             getSpuList: function () {
                 let that = this;
                 that.loading = true;
-                axios.get("spu/page-list?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token)
+                axios.get("spu/page-list?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         that.loading = false;
                         if (res.data.code === 2000) {

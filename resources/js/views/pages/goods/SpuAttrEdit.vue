@@ -47,8 +47,8 @@
             that.categoryId = categoryId;
             that.spuId = spuId;
             that.attrForm.spuId = spuId;
-            let cateAttr = axios.get("/attr/list-category?categoryId=" + categoryId + "&admin_id=" + that.adminId + "&token=" + that.token);
-            let spuAttr = axios.get("/attrValue/list?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token);
+            let cateAttr = axios.get("/attr/list-category?categoryId=" + categoryId + "&adminId=" + that.adminId + "&token=" + that.token);
+            let spuAttr = axios.get("/attrValue/list?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token);
             Promise.all([cateAttr, spuAttr])
                 .then(values => {
                         let careAttrList = values[0].data.data,

@@ -25,13 +25,13 @@ class FapiAuth
         $rules = ['userId' => 'required', 'token' => 'required'];
         $valid = Validator::make($req, $rules);
         if ($valid->fails()) {
-            exit(new JsonResult(StatusCode::PARAM_LACKED));
+            exit(new JsonResult(StatusCode::AUTH_FAILED));
         }
         $user = User::where(['user_id' => $req['userId'], 'token' => $req['token']])->count();
         if ($user) {
             return $next($request);
         } else {
-            exit(new JsonResult(StatusCode::USER_NOT_EXIST));
+            exit(new JsonResult(StatusCode::AUTH_FAILED));
         }
     }
 }

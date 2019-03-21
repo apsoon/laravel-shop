@@ -116,7 +116,7 @@
             };
             that.spuId = spuId;
             that.skuForm.spuId = spuId;
-            axios.get("/spu/specOptionList?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
+            axios.get("/spu/specOptionList?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.specList = res.data.data;
@@ -125,7 +125,7 @@
             });
             if (type === 'modify') {
                 let skuId = that.$route.query.skuId;
-                axios.get("/sku/detail?skuId=" + skuId + "&admin_id=" + that.adminId + "&token=" + that.token)
+                axios.get("/sku/detail?skuId=" + skuId + "&adminId=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         if (res.data.code === 2000) {
                             let data = res.data.data;

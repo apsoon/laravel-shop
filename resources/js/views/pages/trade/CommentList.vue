@@ -115,7 +115,7 @@
             getCommentList: function (type = 'all', pageNo = 1) {
                 let that = this;
                 that.loading = true;
-                axios.get("/comment/list?type=" + type + "&pageNo=" + pageNo + "&admin_id=" + that.adminId + "&token=" + that.token)
+                axios.get("/comment/list?type=" + type + "&pageNo=" + pageNo + "&adminId=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         that.loading = false;
                         if (res.data.code === 2000) {
