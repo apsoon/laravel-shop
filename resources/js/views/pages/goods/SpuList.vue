@@ -24,7 +24,8 @@
             </el-table-column>
         </el-table>
         <el-pagination background layout=" prev, pager, next, jumper"
-                       :total="1000"
+                       :total="totalSpu"
+                       :page-size="20"
                        @current-change="onPageNoChanged"
                        :current-page.sync="pageNo"
                        style="margin-top: 20px; margin-bottom: 20px; float: right;"/>
@@ -43,6 +44,7 @@
                 loading: true,
                 token: "",
                 adminId: "",
+                totalSpu: 0
             }
         },
         mounted: function () {
@@ -51,20 +53,27 @@
             user = JSON.parse(user);
             that.token = user.token;
             that.adminId = user.id;
-            axios.get("spu/page-list?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token)
-                .then(res => {
-                    that.loading = false;
-                    if (res.data.code && res.data.data) {
-                        that.spuList = that.spuList.concat(res.data.data);
-                        that.pageNo++;
-                    }
-                }).catch(err => {
-            });
+            that.getSpuList();
+
         },
         methods: {
+            getSpuList: function () {
+                let that = this;
+                that.loading = true;
+                axios.get("spu/page-list?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token)
+                    .then(res => {
+                        that.loading = false;
+                        if (res.data.code === 2000) {
+                            that.spuList = res.data.data.spuList;
+                            that.totalSpu = res.data.data.total;
+                        }
+                    }).catch(err => {
+                });
+            },
             onPageNoChanged: function (e) {
                 let that = this;
                 that.pageNo = e;
+                that.getSpuList();
             }
         }
     }

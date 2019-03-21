@@ -6579,6 +6579,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuList",
@@ -6588,7 +6589,8 @@ __webpack_require__.r(__webpack_exports__);
       pageNo: 1,
       loading: true,
       token: "",
-      adminId: ""
+      adminId: "",
+      totalSpu: 0
     };
   },
   mounted: function mounted() {
@@ -6597,19 +6599,25 @@ __webpack_require__.r(__webpack_exports__);
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/page-list?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
-      that.loading = false;
-
-      if (res.data.code && res.data.data) {
-        that.spuList = that.spuList.concat(res.data.data);
-        that.pageNo++;
-      }
-    }).catch(function (err) {});
+    that.getSpuList();
   },
   methods: {
+    getSpuList: function getSpuList() {
+      var that = this;
+      that.loading = true;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/page-list?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
+        that.loading = false;
+
+        if (res.data.code === 2000) {
+          that.spuList = res.data.data.spuList;
+          that.totalSpu = res.data.data.total;
+        }
+      }).catch(function (err) {});
+    },
     onPageNoChanged: function onPageNoChanged(e) {
       var that = this;
       that.pageNo = e;
+      that.getSpuList();
     }
   }
 });
@@ -94789,7 +94797,8 @@ var render = function() {
         attrs: {
           background: "",
           layout: " prev, pager, next, jumper",
-          total: 1000,
+          total: _vm.totalSpu,
+          "page-size": 20,
           "current-page": _vm.pageNo
         },
         on: {
