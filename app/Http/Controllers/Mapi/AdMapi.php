@@ -109,7 +109,7 @@ class AdMapi extends Controller
      */
     public function __construct(AdService $adService)
     {
-        $this->middleware("auth-fapi");
+        $this->middleware("auth-mapi");
         $this->adService = $adService;
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Enum\StatusCode;
 use App\Http\Model\Admin;
 use App\Http\Util\JsonResult;
 use Closure;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class MapiAuth
@@ -20,6 +21,10 @@ class MapiAuth
     public function handle($request, Closure $next)
     {
         $req = $request->all();
+        Log::info("-------------------");
+        // 如果是登录交给下一级处理
+        Log::info($req);
+        if (sizeof($req) == 2 && !empty($req["name"]) && !empty($req["password"])) return $next($request);
         $rules = ['admin_id' => 'required', 'token' => 'required'];
         $valid = Validator::make($req, $rules);
         if ($valid->fails()) {

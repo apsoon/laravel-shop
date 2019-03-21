@@ -76,7 +76,7 @@ class AdminMapi extends Controller
      */
     public function __construct(AdminService $adminService)
     {
-        $this->middleware("auth-fapi");
+        $this->middleware("auth-mapi");
         $this->adminService = $adminService;
     }
 }
