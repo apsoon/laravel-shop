@@ -3513,6 +3513,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var user = sessionStorage.getItem('user');
+    console.info(user);
 
     if (user) {
       user = JSON.parse(user);
@@ -3527,7 +3528,10 @@ __webpack_require__.r(__webpack_exports__);
         sessionStorage.removeItem('user');
         that.$router.push('/login');
       }).catch(function () {});
-    }
+    },
+    handleSelect: function handleSelect() {},
+    handleOpen: function handleOpen() {},
+    handleClose: function handleClose() {}
   }
 });
 
@@ -4008,7 +4012,8 @@ __webpack_require__.r(__webpack_exports__);
           });
         });
       }
-    }
+    },
+    onPageNoChanged: function onPageNoChanged() {}
   }
 });
 
@@ -4375,12 +4380,15 @@ __webpack_require__.r(__webpack_exports__);
     return {
       groupList: [],
       pageNo: 1,
-      loading: true
+      loading: true,
+      token: ""
     };
   },
   mounted: function mounted() {
-    var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrGroup/list?pageNo=" + that.pageNo).then(function (res) {
+    var that = this,
+        user = sessionStorage.getItem('user');
+    that.token = JSON.parse(user).token;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrGroup/list?pageNo=" + that.pageNo + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {
@@ -4389,7 +4397,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     }).catch(function (err) {});
   },
-  methods: {}
+  methods: {
+    onPageNoChanged: function onPageNoChanged() {}
+  }
 });
 
 /***/ }),
@@ -4654,6 +4664,7 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    onPageNoChanged: function onPageNoChanged() {},
     modifyState: function modifyState(type, index, id) {
       var _this = this;
 
@@ -6423,12 +6434,18 @@ __webpack_require__.r(__webpack_exports__);
     return {
       spuList: [],
       pageNo: 1,
-      loading: true
+      loading: true,
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
-    var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/page-list?pageNo=1").then(function (res) {
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/page-list?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code && res.data.data) {
@@ -6436,6 +6453,9 @@ __webpack_require__.r(__webpack_exports__);
         that.pageNo++;
       }
     }).catch(function (err) {});
+  },
+  methods: {
+    onPageNoChanged: function onPageNoChanged() {}
   }
 });
 
@@ -6894,6 +6914,9 @@ __webpack_require__.r(__webpack_exports__);
 
       console.info(that.couponList);
     }).catch(function (err) {});
+  },
+  methods: {
+    onPageNoChanged: function onPageNoChanged() {}
   }
 });
 
@@ -7698,7 +7721,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     }).catch(function (err) {});
   },
-  methods: {}
+  methods: {
+    onPageNoChanged: function onPageNoChanged() {}
+  }
 });
 
 /***/ }),
@@ -90756,14 +90781,6 @@ var render = function() {
             _c(
               "el-menu",
               {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: !_vm.collapsed,
-                    expression: "!collapsed"
-                  }
-                ],
                 staticClass: "el-menu-vertical-demo",
                 attrs: {
                   "default-active": _vm.$route.path,
@@ -90771,9 +90788,9 @@ var render = function() {
                   router: ""
                 },
                 on: {
-                  open: _vm.handleopen,
-                  close: _vm.handleclose,
-                  select: _vm.handleselect
+                  open: _vm.handleOpen,
+                  close: _vm.handleClose,
+                  select: _vm.handleSelect
                 }
               },
               [

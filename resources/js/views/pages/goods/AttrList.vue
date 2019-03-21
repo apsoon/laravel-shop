@@ -55,11 +55,14 @@
                 groupList: [],
                 pageNo: 1,
                 loading: true,
+                token: "",
             }
         },
         mounted: function () {
-            let that = this;
-            axios.get("/attrGroup/list?pageNo=" + that.pageNo)
+            let that = this,
+                user = sessionStorage.getItem('user');
+            that.token = JSON.parse(user).token;
+            axios.get("/attrGroup/list?pageNo=" + that.pageNo + "&token=" + that.token)
                 .then(res => {
                     that.loading = false;
                     if (res.data.code === 2000) {
@@ -69,7 +72,10 @@
                 }).catch(err => {
             })
         },
-        methods: {}
+        methods: {
+            onPageNoChanged: function () {
+            }
+        }
     }
 </script>
 

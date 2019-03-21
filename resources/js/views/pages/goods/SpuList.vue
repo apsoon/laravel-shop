@@ -42,12 +42,18 @@
             return {
                 spuList: [],
                 pageNo: 1,
-                loading: true
+                loading: true,
+                token: "",
+                adminId: ""
             }
         },
         mounted: function () {
-            let that = this;
-            axios.get("spu/page-list?pageNo=1")
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
+            axios.get("spu/page-list?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     that.loading = false;
                     if (res.data.code && res.data.data) {
@@ -56,6 +62,10 @@
                     }
                 }).catch(err => {
             });
+        },
+        methods: {
+            onPageNoChanged: function () {
+            }
         }
     }
 </script>

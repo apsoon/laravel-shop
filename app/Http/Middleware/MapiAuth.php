@@ -21,9 +21,7 @@ class MapiAuth
     public function handle($request, Closure $next)
     {
         $req = $request->all();
-        Log::info("-------------------");
         // 如果是登录交给下一级处理
-        Log::info($req);
         if (sizeof($req) == 2 && !empty($req["name"]) && !empty($req["password"])) return $next($request);
         $rules = ['admin_id' => 'required', 'token' => 'required'];
         $valid = Validator::make($req, $rules);

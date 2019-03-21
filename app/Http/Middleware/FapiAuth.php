@@ -6,7 +6,6 @@ use App\Http\Enum\StatusCode;
 use App\Http\Model\User;
 use App\Http\Util\JsonResult;
 use Closure;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class FapiAuth

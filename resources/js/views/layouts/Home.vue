@@ -16,9 +16,9 @@
         </el-col>
         <el-col :span="24" class="main">
             <aside class="sidebar">
-                <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleopen"
-                         @close="handleclose" @select="handleselect"
-                         unique-opened router v-show="!collapsed">
+                <el-menu :default-active="$route.path" class="el-menu-vertical-demo" @open="handleOpen"
+                         @close="handleClose" @select="handleSelect"
+                         unique-opened router>
                     <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
                         <el-submenu class="menu-item" :index="index+''" v-if="!item.leaf">
                             <template slot="title"><i :class="item.iconCls"></i>{{item.name}}</template>
@@ -61,6 +61,7 @@
         },
         mounted: function () {
             let user = sessionStorage.getItem('user');
+            console.info(user);
             if (user) {
                 user = JSON.parse(user);
                 this.userName = user.name || '';
@@ -77,6 +78,15 @@
                     }).catch(() => {
                 });
             },
+            handleSelect: function () {
+
+            },
+            handleOpen: function () {
+
+            },
+            handleClose: function () {
+
+            }
         }
     }
 </script>

@@ -77,6 +77,8 @@
                 });
         },
         methods: {
+            onPageNoChanged: function () {
+            },
             modifyState: function (type, index, id) {
                 let that = this,
                     state = 1;

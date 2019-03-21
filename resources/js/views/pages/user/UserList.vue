@@ -46,7 +46,10 @@
                 }).catch(err => {
             });
         },
-        methods: {}
+        methods: {
+            onPageNoChanged: function () {
+            }
+        }
     }
 </script>
 

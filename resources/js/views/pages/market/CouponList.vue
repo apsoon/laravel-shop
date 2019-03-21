@@ -89,6 +89,10 @@
                     console.info(that.couponList);
                 }).catch(err => {
             });
+        },
+        methods: {
+            onPageNoChanged: function () {
+            }
         }
     }
 </script>
