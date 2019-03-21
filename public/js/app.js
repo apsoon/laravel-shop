@@ -4435,7 +4435,7 @@ __webpack_require__.r(__webpack_exports__);
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrGroup/list?pageNo=" + that.pageNo + "&token=" + that.token).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrGroup/list?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {
