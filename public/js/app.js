@@ -7483,9 +7483,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
 //
 //
 //
@@ -7572,7 +7569,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     that.adminId = user.id;
     that.getCommentList();
   },
-  methods: _defineProperty({
+  methods: {
     modifyState: function modifyState(type, index, id) {
       var _this = this;
 
@@ -7617,11 +7614,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var that = this;
       that.getCommentList(tab.name);
     },
-    onPageNoChanged: function onPageNoChanged() {}
-  }, "onPageNoChanged", function onPageNoChanged(e) {
-    var that = this;
-    that.pageNo = e;
-  })
+    onPageNoChanged: function onPageNoChanged(e) {
+      var that = this;
+      that.pageNo = e;
+    }
+  }
 });
 
 /***/ }),
@@ -96438,7 +96435,7 @@ var render = function() {
         },
         attrs: {
           background: "",
-          layout: "total, sizes, prev, pager, next, jumper",
+          layout: "prev, pager, next, jumper",
           total: 1000,
           "page-sizes": [20, 50, 100],
           "page-size": 20,
@@ -96448,8 +96445,7 @@ var render = function() {
           "current-change": _vm.onPageNoChanged,
           "update:currentPage": function($event) {
             _vm.pageNo = $event
-          },
-          "size-change": _vm.onPageSizeChanged
+          }
         }
       })
     ],
