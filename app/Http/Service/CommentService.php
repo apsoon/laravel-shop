@@ -121,8 +121,12 @@ class CommentService
     public function getPagedEffectCommentBySku(array $req)
     {
         $size = 20;
-        $result = $this->commentDao->findPagedBySkuEffect($req["skuId"], $req["pageNo"], $size);
-        return new JsonResult(StatusCode::SUCCESS, $result);
+        $comments = $this->commentDao->findPagedBySkuEffect($req["skuId"], $req["pageNo"], $size);
+        foreach ($comments as $comment) {
+            $user = $this->userDao->findByUserId($comment->user_id);
+            $comment->nickname = $user->nickname;
+        }
+        return new JsonResult(StatusCode::SUCCESS, $comments);
     }
 
     /**
