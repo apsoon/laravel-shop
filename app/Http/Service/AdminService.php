@@ -35,7 +35,6 @@ class AdminService
     public function login(array $req)
     {
         $admin = $this->adminDao->findByName($req["name"]);
-        Log::info($req);
         if (empty($admin) || $admin->password != $req["password"]) return new JsonResult(StatusCode::ACCOUNT_OR_PWD_ERROR);
         $token = md5($req["password"] . time() . $req["name"]);
         $admin->remember_token = $token;
