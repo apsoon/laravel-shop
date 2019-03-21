@@ -19,17 +19,17 @@ class MapiAuth
      */
     public function handle($request, Closure $next)
     {
-//        $req = $request->all();
-//        $rules = ['admin_id' => 'required', 'token' => 'required'];
-//        $valid = Validator::make($req, $rules);
-//        if ($valid->fails()) {
-//            return new JsonResult(StatusCode::PARAM_LACKED);
-//        }
-//        $admin = Admin::where(['id' => $req['admin_id'], 'remember_token' => $req['token']])->count();
-//        if ($admin) {
+        $req = $request->all();
+        $rules = ['admin_id' => 'required', 'token' => 'required'];
+        $valid = Validator::make($req, $rules);
+        if ($valid->fails()) {
+            exit(new JsonResult(StatusCode::PARAM_LACKED));
+        }
+        $admin = Admin::where(['id' => $req['admin_id'], 'remember_token' => $req['token']])->count();
+        if ($admin) {
             return $next($request);
-//        } else {
-//            return new JsonResult(StatusCode::USER_NOT_EXIST);
-//        }
+        } else {
+            exit(new JsonResult(StatusCode::USER_NOT_EXIST));
+        }
     }
 }
