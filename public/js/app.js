@@ -7775,7 +7775,8 @@ __webpack_require__.r(__webpack_exports__);
       orderList: [],
       loading: true,
       token: "",
-      adminId: ""
+      adminId: "",
+      totalOrder: 0
     };
   },
   mounted: function mounted() {
@@ -7800,7 +7801,8 @@ __webpack_require__.r(__webpack_exports__);
         that.loading = false;
 
         if (res.data.code === 2000) {
-          that.orderList = res.data.data;
+          that.orderList = res.data.data.orderList;
+          that.totalOrder = res.data.data.total;
         }
       }).catch(function (err) {});
     },
@@ -96731,8 +96733,8 @@ var render = function() {
         },
         attrs: {
           background: "",
-          layout: "total, sizes, prev, pager, next, jumper",
-          total: 1000,
+          layout: "prev, pager, next, jumper",
+          total: _vm.totalOrder,
           "page-sizes": [20, 50, 100],
           "page-size": 20,
           "current-page": _vm.pageNo

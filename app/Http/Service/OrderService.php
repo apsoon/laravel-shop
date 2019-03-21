@@ -291,8 +291,15 @@ class OrderService
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = empty($req["size"]) ? 20 : $req["size"];
         $type = $req["type"];
-        if ($type === "all") $result = $this->orderDao->findPagedList($pageNo, $size);
-        else $result = $this->orderDao->findPagedListByState(OrderStatus::findByKey($type)["code"], $pageNo, $size);
+        $result = new \stdClass();
+        if ($type === "all") {
+            $result->orderList = $this->orderDao->findPagedList($pageNo, $size);
+            $result->total = Order::count();
+        } else {
+            $state = OrderStatus::findByKey($type)["code"];
+            $result->orderList = $this->orderDao->findPagedListByState($state, $pageNo, $size);
+            $result->total = Order::where("state", "=", $state)->count();
+        }
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 

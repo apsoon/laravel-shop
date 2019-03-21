@@ -43,8 +43,8 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-pagination background layout="total, sizes, prev, pager, next, jumper"
-                       :total="1000"
+        <el-pagination background layout="prev, pager, next, jumper"
+                       :total="totalOrder"
                        :page-sizes="[20, 50, 100]"
                        :page-size="20"
                        @current-change="onPageNoChanged"
@@ -65,7 +65,8 @@
                 orderList: [],
                 loading: true,
                 token: "",
-                adminId: ""
+                adminId: "",
+                totalOrder: 0
             }
         },
         mounted: function () {
@@ -88,7 +89,8 @@
                     .then(res => {
                         that.loading = false;
                         if (res.data.code === 2000) {
-                            that.orderList = res.data.data;
+                            that.orderList = res.data.data.orderList;
+                            that.totalOrder = res.data.data.total;
                         }
                     }).catch(err => {
                 });
