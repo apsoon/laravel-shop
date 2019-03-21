@@ -52,6 +52,7 @@ class AfterSaleFapi extends Controller
      */
     public function list(Request $request)
     {
+        $this->middleware("auth-fapi");
         $req = $request->all();
         return $this->afterSaleService->getPagedASListByUserState($req);
     }

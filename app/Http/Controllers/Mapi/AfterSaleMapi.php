@@ -50,6 +50,7 @@ class AfterSaleMapi extends Controller
      */
     public function __construct(AfterSaleService $afterSaleService)
     {
+        $this->middleware("auth-fapi");
         $this->afterSaleService = $afterSaleService;
     }
 }

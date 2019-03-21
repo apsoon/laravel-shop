@@ -82,7 +82,7 @@ class SpecMapi extends Controller
      */
     public function __construct(SpecService $specService, CategoryService $categoryService)
     {
-//        $this->middleware('auth');
+        $this->middleware("auth-mapi");
         $this->specService = $specService;
         $this->categoryService = $categoryService;
     }

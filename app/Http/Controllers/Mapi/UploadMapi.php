@@ -58,6 +58,7 @@ class UploadMapi extends Controller
      */
     public function __construct(UploadService $uploadService)
     {
+        $this->middleware("auth-mapi");
         $this->uploadService = $uploadService;
     }
 }

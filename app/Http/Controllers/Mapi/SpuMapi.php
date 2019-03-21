@@ -189,6 +189,7 @@ class SpuMapi extends Controller
      */
     public function __construct(SpuService $spuService)
     {
+        $this->middleware("auth-mapi");
         $this->spuService = $spuService;
     }
 }

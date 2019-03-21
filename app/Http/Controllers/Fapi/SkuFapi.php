@@ -105,6 +105,7 @@ class SkuFapi extends Controller
      */
     public function __construct(SkuService $skuService)
     {
+        $this->middleware("auth-fapi");
         $this->skuService = $skuService;
     }
 }

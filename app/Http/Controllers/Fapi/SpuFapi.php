@@ -83,6 +83,7 @@ class SpuFapi extends Controller
      */
     public function __construct(SpuService $spuService, AttrService $attrService)
     {
+        $this->middleware("auth-fapi");
         $this->spuService = $spuService;
         $this->attrService = $attrService;
     }

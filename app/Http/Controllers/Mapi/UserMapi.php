@@ -34,6 +34,7 @@ class UserMapi extends Controller
      */
     public function __construct(UserService $userService)
     {
+        $this->middleware("auth-mapi");
         $this->userService = $userService;
     }
 }

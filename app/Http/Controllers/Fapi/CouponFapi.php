@@ -63,6 +63,7 @@ class CouponFapi extends Controller
      */
     public function __construct(CouponService $couponService)
     {
+        $this->middleware("auth-fapi");
         $this->couponService = $couponService;
     }
 }

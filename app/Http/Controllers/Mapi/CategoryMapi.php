@@ -97,6 +97,7 @@ class CategoryMapi extends Controller
      */
     public function __construct(CategoryService $categoryService)
     {
+        $this->middleware("auth-mapi");
         $this->categoryService = $categoryService;
     }
 }

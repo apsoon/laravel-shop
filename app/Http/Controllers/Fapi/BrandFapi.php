@@ -35,6 +35,7 @@ class BrandFapi extends Controller
      */
     public function __construct(BrandService $brandService)
     {
+        $this->middleware("auth-fapi");
         $this->brandService = $brandService;
     }
 }

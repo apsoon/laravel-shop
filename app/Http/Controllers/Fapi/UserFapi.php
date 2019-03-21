@@ -75,6 +75,7 @@ class UserFapi extends Controller
      */
     public function __construct(UserService $userService, AddrService $addrService)
     {
+        $this->middleware("auth-fapi");
         $this->userService = $userService;
         $this->addrService = $addrService;
     }

@@ -84,6 +84,7 @@ class CollectionFapi extends Controller
      */
     public function __construct(CollectionService $collectionService)
     {
+        $this->middleware("auth-fapi");
         $this->collectionService = $collectionService;
     }
 }

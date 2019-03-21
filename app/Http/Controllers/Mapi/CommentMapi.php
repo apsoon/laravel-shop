@@ -52,6 +52,7 @@ class CommentMapi extends Controller
      */
     public function __construct(CommentService $commentService)
     {
+        $this->middleware("auth-mapi");
         $this->commentService = $commentService;
     }
 }

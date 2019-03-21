@@ -84,6 +84,7 @@ class CartFapi extends Controller
      */
     public function __construct(CartService $cartService)
     {
+        $this->middleware("auth-fapi");
         $this->cartService = $cartService;
     }
 }

@@ -119,7 +119,7 @@ class BrandMapi extends Controller
      */
     public function __construct(BrandService $brandService)
     {
-//        $this->middleware('auth');
+        $this->middleware("auth-mapi");
         $this->brandService = $brandService;
     }
 }

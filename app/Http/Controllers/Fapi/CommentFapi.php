@@ -52,6 +52,7 @@ class CommentFapi extends Controller
      */
     public function __construct(CommentService $commentService)
     {
+        $this->middleware("auth-fapi");
         $this->commentService = $commentService;
     }
 }

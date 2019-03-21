@@ -61,9 +61,9 @@ class CouponMapi
      *
      * @param CouponService $couponService
      */
-    public
-    function __construct(CouponService $couponService)
+    public function __construct(CouponService $couponService)
     {
+        $this->middleware("auth-mapi");
         $this->couponService = $couponService;
     }
 }

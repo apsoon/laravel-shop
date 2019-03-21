@@ -42,6 +42,7 @@ class CategoryFapi extends Controller
      */
     public function __construct(CategoryService $categoryService)
     {
+        $this->middleware("auth-fapi");
         $this->categoryService = $categoryService;
     }
 

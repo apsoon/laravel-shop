@@ -88,6 +88,7 @@ class OrderFapi extends Controller
      */
     public function __construct(OrderService $orderService)
     {
+        $this->middleware("auth-fapi");
         $this->orderService = $orderService;
     }
 }

@@ -104,6 +104,7 @@ class SkuMapi extends Controller
      */
     public function __construct(SkuService $skuService)
     {
+        $this->middleware("auth-mapi");
         $this->skuService = $skuService;
     }
 }

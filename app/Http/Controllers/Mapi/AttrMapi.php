@@ -147,20 +147,6 @@ class AttrMapi extends Controller
         $req = $request->all();
         return $this->attrService->createSpuAttrValue($req);
     }
-//
-//    /**
-//     * spu value list
-//     *
-//     * @param Request $request
-//     * @return JsonResult
-//     */
-//    public function valueList(Request $request)
-//    {
-//        $req = $request->all();
-//        return $this->attrService->getSpuAttrValueList($req);
-//    }
-
-    // ===========================================================================  constructor  ===========================================================================
 
     /**
      * AttrMapi constructor.
@@ -170,6 +156,7 @@ class AttrMapi extends Controller
      */
     public function __construct(AttrService $attrService, CategoryService $categoryService)
     {
+        $this->middleware("auth-mapi");
         $this->attrService = $attrService;
         $this->categoryService = $categoryService;
     }
