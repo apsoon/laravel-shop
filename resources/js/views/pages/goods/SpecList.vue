@@ -36,11 +36,17 @@
                 inputVisible: false,
                 inputValue: '',
                 loading: true,
+                token: "",
+                adminId: "",
             }
         },
         mounted: function () {
-            let that = this;
-            axios.get("/spec/list")
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
+            axios.get("/spec/list" + "?admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     that.loading = false;
                     if (res.data.code === 2000) {
@@ -60,7 +66,12 @@
                 let that = this,
                     inputValue = that.inputValue;
                 if (inputValue) {
-                    axios.post("/spec/create", {name: inputValue})
+                    let data = {
+                        name: inputValue,
+                        token: that.token,
+                        adminId: that.adminId
+                    };
+                    axios.post("/spec/create", data)
                         .then(res => {
                             if (res.data.code === 2000) {
                                 that.specList.push({name: inputValue});

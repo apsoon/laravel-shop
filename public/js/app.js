@@ -3704,7 +3704,9 @@ __webpack_require__.r(__webpack_exports__);
         positionId: "",
         imageUrl: "",
         linkType: "0",
-        skuId: "0"
+        skuId: "0",
+        token: "",
+        adminId: ""
       },
       rules: {
         name: [{
@@ -3731,7 +3733,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var that = this;
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.uploadHeader = {
       'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
     };
@@ -3742,7 +3748,7 @@ __webpack_require__.r(__webpack_exports__);
       that.type = type;
       var adId = that.$route.query.adId;
       that.adId = adId;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/ad/detail?adId=" + adId).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/ad/detail?adId=" + adId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
         if (res.data.code === 2000) {
           var data = res.data.data;
           that.adForm = {
@@ -3760,7 +3766,7 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function (err) {});
     }
 
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("adPos/list").then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("adPos/list" + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.positionList = res.data.data;
       console.info(that.positionList);
     });
@@ -3770,6 +3776,8 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       that.$refs["adForm"].validate(function (valid) {
         if (valid) {
+          that.adForm.token = that.token;
+          that.adForm.adminId = that.adminId;
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/create", that.adForm).then(function (res) {
             if (res.data.code === 2000) {
               _router__WEBPACK_IMPORTED_MODULE_1__["default"].push("ad-list");
@@ -3785,6 +3793,8 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       that.$refs["adForm"].validate(function (valid) {
         if (valid) {
+          that.adForm.token = that.token;
+          that.adForm.adminId = that.adminId;
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/update", that.adForm).then(function (res) {
             if (res.data.code === 2000) {
               _router__WEBPACK_IMPORTED_MODULE_1__["default"].push("ad-list");
@@ -3892,12 +3902,19 @@ __webpack_require__.r(__webpack_exports__);
     return {
       adList: [],
       pageNo: 1,
-      loading: true
+      loading: true,
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
-    var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('ad/list').then(function (res) {
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
+    ;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('ad/list' + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.adList = res.data.data;
       that.loading = false;
     });
@@ -3915,10 +3932,13 @@ __webpack_require__.r(__webpack_exports__);
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/modState", {
+        var data = {
           state: state,
-          id: id
-        }).then(function (res) {
+          id: id,
+          token: that.token,
+          adminId: that.adminId
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/modState", data).then(function (res) {
           if (res.data.code === 2000) that.adList[index].state = state;
         });
       }).catch(function () {
@@ -3939,9 +3959,13 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         var ids = [];
         ids.push(id);
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/delete", {
-          ids: ids
-        }).then(function (res) {
+        var data = {
+          state: state,
+          id: id,
+          token: that.token,
+          adminId: that.adminId
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/delete", data).then(function (res) {
           if (res.data.code === 2000) {
             that.adList.splice(index, 1);
             that.$message({
@@ -3994,9 +4018,13 @@ __webpack_require__.r(__webpack_exports__);
             }
           }
 
-          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/delete", {
-            ids: ids
-          }).then(function (res) {
+          var data = {
+            state: state,
+            id: id,
+            token: that.token,
+            adminId: that.adminId
+          };
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("ad/delete", data).then(function (res) {
             if (res.data.code === 2000) {
               that.$message({
                 type: 'success',
@@ -4167,14 +4195,20 @@ __webpack_require__.r(__webpack_exports__);
       attrGroupId: "",
       attrList: [],
       inputVisible: false,
-      inputValue: ''
+      inputValue: '',
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
     var that = this,
-        attrGroupId = that.$route.query.attrGroupId;
+        attrGroupId = that.$route.query.attrGroupId,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.attrGroupId = attrGroupId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-group?attrGroupId=" + attrGroupId).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-group?attrGroupId=" + attrGroupId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.attrList = res.data.data;
       }
@@ -4196,7 +4230,9 @@ __webpack_require__.r(__webpack_exports__);
       if (inputValue) {
         var data = {
           attrGroupId: that.attrGroupId,
-          name: inputValue
+          name: inputValue,
+          token: that.token,
+          adminId: that.adminId
         };
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/attr/create", data).then(function (res) {
           if (res.data.code === 2000) {
@@ -4284,12 +4320,18 @@ __webpack_require__.r(__webpack_exports__);
         label: 'name'
       },
       categoryList: [],
-      category: []
+      category: [],
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
-    var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("category/treeList").then(function (res) {
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("category/treeList" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.categoryList = res.data.data;
       }
@@ -4300,6 +4342,8 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       that.$refs.attrGroupForm.validate(function (valid) {
         if (valid) {
+          that.attrGroupForm.token = that.token;
+          that.attrGroupForm.adminId = that.adminId;
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/attrGroup/create", that.attrGroupForm).then(function (res) {
             if (res.data.code === 2000) {}
           }).catch(function (err) {});
@@ -4381,13 +4425,16 @@ __webpack_require__.r(__webpack_exports__);
       groupList: [],
       pageNo: 1,
       loading: true,
-      token: ""
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
     var that = this,
         user = sessionStorage.getItem('user');
-    that.token = JSON.parse(user).token;
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrGroup/list?pageNo=" + that.pageNo + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
@@ -4466,7 +4513,9 @@ __webpack_require__.r(__webpack_exports__);
         describe: "",
         region: "",
         logo: "",
-        state: "0"
+        state: "0",
+        token: "",
+        adminId: ""
       },
       rules: {
         name: [{
@@ -4487,7 +4536,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var that = this;
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.uploadHeader = {
       'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
     };
@@ -4497,7 +4550,7 @@ __webpack_require__.r(__webpack_exports__);
       var brandId = that.$route.query.brandId;
       that.brandId = brandId;
       that.type = "modify";
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/brand/detail?brandId=" + brandId).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/brand/detail?brandId=" + brandId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
         if (res.data.code === 2000) {
           var data = res.data.data;
           that.brandForm = {
@@ -4517,6 +4570,8 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       that.$refs.brandForm.validate(function (valid) {
         if (valid) {
+          that.brandForm.token = that.token;
+          that.brandForm.adminId = that.adminId;
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/create", that.brandForm).then(function (res) {
             if (res.data.code === 2000) {
               that.$message({
@@ -4537,6 +4592,8 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       that.$refs.brandForm.validate(function (valid) {
         if (valid) {
+          that.brandForm.token = that.token;
+          that.brandForm.adminId = that.adminId;
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/brand/update", that.brandForm).then(function (res) {
             if (res.data.code === 2000) {
               that.$message({
@@ -4649,12 +4706,18 @@ __webpack_require__.r(__webpack_exports__);
     return {
       brandList: [],
       pageNo: 1,
-      loading: true
+      loading: true,
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
-    var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('brand/list').then(function (res) {
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('brand/list' + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {
@@ -4679,7 +4742,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/modState", {
           state: state,
-          id: id
+          id: id,
+          token: that.token,
+          adminId: that.adminId
         }).then(function (res) {
           if (res.data.code === 2000) that.brandList[index].state = state;
         });
@@ -4701,9 +4766,12 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         var ids = [];
         ids.push(id);
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", {
-          ids: ids
-        }).then(function (res) {
+        var data = {
+          ids: ids,
+          token: that.token,
+          adminId: that.adminId
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", data).then(function (res) {
           if (res.data.code === 2000) {
             that.brandList.splice(index, 1);
             that.$message({
@@ -4756,9 +4824,12 @@ __webpack_require__.r(__webpack_exports__);
             }
           }
 
-          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", {
-            ids: ids
-          }).then(function (res) {
+          var data = {
+            ids: ids,
+            token: that.token,
+            adminId: that.adminId
+          };
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", data).then(function (res) {
             if (res.data.code === 2000) {
               that.$message({
                 type: 'success',
@@ -4879,12 +4950,18 @@ __webpack_require__.r(__webpack_exports__);
       },
       brandList: [],
       existList: [],
-      category: ""
+      category: "",
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
     var that = this,
-        type = that.$route.query.type;
+        type = that.$route.query.type,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.type = type;
 
     if (type === "create") {
@@ -4893,7 +4970,7 @@ __webpack_require__.r(__webpack_exports__);
     } else {
       var categoryId = that.$route.query.categoryId;
       that.categoryId = categoryId;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/category/detail?id=" + categoryId).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/category/detail?id=" + categoryId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
         if (res.data.code === 2000) {
           var data = res.data.data;
           that.categoryForm = {
@@ -4907,12 +4984,12 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function (err) {});
     }
 
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("brand/list").then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("brand/list" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.brandList = res.data.data;
       }
     }).catch(function (err) {});
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("brand/list-category?categoryId=" + that.categoryId).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("brand/list-category?categoryId=" + that.categoryId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         // let brandIds = [];
         var exists = res.data.data;
@@ -4951,6 +5028,9 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       that.$refs.categoryForm.validate(function (valid) {
         if (valid) {
+          that.categoryForm.token = that.token;
+          that.categoryForm.adminId = that.adminId;
+
           if (that.type === "create") {
             that.categoryForm.parentId = that.parentId;
             axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("category/create", that.categoryForm).then(function (res) {
@@ -5060,15 +5140,20 @@ __webpack_require__.r(__webpack_exports__);
     return {
       categoryList: [],
       categoryTreeProps: {
-        label: name // children: children
-
+        label: name
       },
-      loading: true
+      loading: true,
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
-    var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("category/treeList").then(function (res) {
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("category/treeList" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {
@@ -5087,7 +5172,9 @@ __webpack_require__.r(__webpack_exports__);
         type: 'danger'
       }).then(function () {
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("category/delete", {
-          id: data.id
+          id: data.id,
+          token: that.token,
+          adminId: that.adminId
         }).then(function (res) {
           if (res.data.code === 2000) {
             that.$message({
@@ -5120,11 +5207,13 @@ __webpack_require__.r(__webpack_exports__);
         type: 'warning'
       }).then(function () {
         var isRecom = type === 'add' ? 1 : 0,
-            param = {
+            data = {
           id: data.id,
-          isRecom: isRecom
+          isRecom: isRecom,
+          token: that.token,
+          adminId: that.adminId
         };
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/category/recom", param).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/category/recom", data).then(function (res) {
           if (res.data.code === 2000) {
             console.info(node);
             node.data.is_recom = isRecom;
@@ -5229,7 +5318,9 @@ __webpack_require__.r(__webpack_exports__);
         price: "",
         number: "",
         imageUrl: "",
-        state: "0"
+        state: "0",
+        token: "",
+        adminId: ""
       },
       rules: {
         name: [{
@@ -5261,13 +5352,17 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var that = this,
         spuId = that.$route.query.spuId,
-        type = that.$route.query.type;
+        type = that.$route.query.type,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.uploadHeader = {
       'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
     };
     that.spuId = spuId;
     that.skuForm.spuId = spuId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/specOptionList?spuId=" + spuId).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/specOptionList?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.specList = res.data.data;
       }
@@ -5275,7 +5370,7 @@ __webpack_require__.r(__webpack_exports__);
 
     if (type === 'modify') {
       var skuId = that.$route.query.skuId;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/sku/detail?skuId=" + skuId).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/sku/detail?skuId=" + skuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
         if (res.data.code === 2000) {
           var data = res.data.data;
           that.skuForm = {
@@ -5324,7 +5419,8 @@ __webpack_require__.r(__webpack_exports__);
           }
 
           that.skuForm.options = options;
-          console.info(that.skuForm);
+          that.skuForm.token = that.token;
+          that.skuForm.adminId = that.adminId;
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/create", that.skuForm).then(function (res) {
             if (res.data.code === 2000) {
               that.$router.push("/spu/detail?spuId=" + that.spuId + "&active=" + "sku");
@@ -5366,7 +5462,8 @@ __webpack_require__.r(__webpack_exports__);
           }
 
           that.skuForm.options = options;
-          console.info(that.skuForm);
+          that.skuForm.token = that.token;
+          that.skuForm.adminId = that.adminId;
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/update", that.skuForm).then(function (res) {
             if (res.data.code === 2000) {
               that.$router.push("/spu/detail?spuId=" + that.spuId + "&active=" + "sku");
@@ -5377,11 +5474,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    ruleSelect: function ruleSelect(rule, value, callback) {// if (!value) {
-      //     return callback(new Error('请选择'));
-      // }
-      // callback();
-    },
+    ruleSelect: function ruleSelect(rule, value, callback) {},
     onUploadSuccess: function onUploadSuccess(response, file, fileList) {
       var that = this;
 
@@ -5451,12 +5544,18 @@ __webpack_require__.r(__webpack_exports__);
       specList: [],
       inputVisible: false,
       inputValue: '',
-      loading: true
+      loading: true,
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
-    var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spec/list").then(function (res) {
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spec/list" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {
@@ -5478,9 +5577,12 @@ __webpack_require__.r(__webpack_exports__);
           inputValue = that.inputValue;
 
       if (inputValue) {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/spec/create", {
-          name: inputValue
-        }).then(function (res) {
+        var data = {
+          name: inputValue,
+          token: that.token,
+          adminId: that.adminId
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/spec/create", data).then(function (res) {
           if (res.data.code === 2000) {
             that.specList.push({
               name: inputValue
@@ -5544,18 +5646,24 @@ __webpack_require__.r(__webpack_exports__);
       categoryId: "",
       spuId: "",
       attrForm: {},
-      rules: {}
+      rules: {},
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
     var that = this,
         categoryId = that.$route.query.categoryId,
-        spuId = that.$route.query.spuId;
+        spuId = that.$route.query.spuId,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.categoryId = categoryId;
     that.spuId = spuId;
     that.attrForm.spuId = spuId;
-    var cateAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-category?categoryId=" + categoryId);
-    var spuAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrValue/list?spuId=" + spuId);
+    var cateAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-category?categoryId=" + categoryId + "&admin_id=" + that.adminId + "&token=" + that.token);
+    var spuAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrValue/list?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token);
     Promise.all([cateAttr, spuAttr]).then(function (values) {
       var careAttrList = values[0].data.data,
           spuAttrList = values[1].data.data;
@@ -5762,12 +5870,18 @@ __webpack_require__.r(__webpack_exports__);
       uploadData: {
         type: "spu",
         position: "banner"
-      }
+      },
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
     var that = this,
-        spuId = that.$route.query.spuId;
+        spuId = that.$route.query.spuId,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.spuBannerForm.spuId = spuId;
     that.spuId = spuId;
     that.uploadHeader = {
@@ -5779,6 +5893,8 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       that.$refs.spuBannerForm.validate(function (valid) {
         if (valid) {
+          that.spuBannerForm.token = that.token;
+          that.spuBannerForm.adminId = that.adminId;
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("spu/create-banner", that.spuBannerForm).then(function (res) {
             if (res.data.code === 2000) {
               that.$message({
@@ -6009,39 +6125,45 @@ __webpack_require__.r(__webpack_exports__);
       skuList: [],
       specList: [],
       attrList: [],
-      bannerList: []
+      bannerList: [],
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
     var that = this,
-        spuId = that.$route.query.spuId;
+        spuId = that.$route.query.spuId,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     var active = that.$route.query.active;
     console.info(active);
     if (active) that.active = active;
     that.spuId = spuId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/detail?spuId=" + spuId).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/detail?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.spu = res.data.data.spu;
         that.categoryId = res.data.data.spu.category_id;
         that.spuDetail = res.data.data.detail;
       }
     }).catch(function (err) {});
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/specOptionList?spuId=" + spuId).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spu/specOptionList?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.specList = res.data.data;
       }
     });
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("sku/listBySpu?spuId=" + that.spuId).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("sku/listBySpu?spuId=" + that.spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.skuList = res.data.data;
       }
     }).catch(function (err) {});
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/value-list-spu?spuId=" + that.spuId).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/value-list-spu?spuId=" + that.spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.attrList = res.data.data;
       }
     });
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/banner-list?spuId=" + that.spuId).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/banner-list?spuId=" + that.spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.bannerList = res.data.data;
       }
@@ -6060,10 +6182,13 @@ __webpack_require__.r(__webpack_exports__);
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("spu/modify-banner-state", {
+        var data = {
           state: state,
-          id: id
-        }).then(function (res) {
+          id: id,
+          token: that.token,
+          adminId: that.adminId
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("spu/modify-banner-state", data).then(function (res) {
           if (res.data.code === 2000) that.bannerList[index].state = state;
         });
       }).catch(function () {
@@ -6077,9 +6202,12 @@ __webpack_require__.r(__webpack_exports__);
       var that = this,
           ids = [];
       ids.push(id);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", {
-        ids: ids
-      }).then(function (res) {
+      var data = {
+        ids: ids,
+        token: that.token,
+        adminId: that.adminId
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", data).then(function (res) {
         if (res.data.code === 2000) {
           that.brandList.splice(index, 1);
           that.$message({
@@ -6119,9 +6247,12 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
 
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", {
-          ids: ids
-        }).then(function (res) {
+        var data = {
+          ids: ids,
+          token: that.token,
+          adminId: that.adminId
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", data).then(function (res) {
           if (res.data.code === 2000) {
             that.$message({
               type: 'success',
@@ -6146,11 +6277,13 @@ __webpack_require__.r(__webpack_exports__);
         type: 'warning'
       }).then(function () {
         var isRecom = type === 'add' ? 1 : 0,
-            param = {
+            data = {
           id: node.row.id,
-          isRecom: isRecom
+          isRecom: isRecom,
+          token: that.token,
+          adminId: that.adminId
         };
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/recom", param).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/recom", data).then(function (res) {
           if (res.data.code === 2000) {
             console.info(node);
             node.row.is_recom = isRecom;
@@ -6175,10 +6308,13 @@ __webpack_require__.r(__webpack_exports__);
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("sku/modify-state", {
+        var data = {
           state: state,
-          id: id
-        }).then(function (res) {
+          id: id,
+          token: that.token,
+          adminId: that.adminId
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("sku/modify-state", data).then(function (res) {
           if (res.data.code === 2000) that.skuList[index].state = state;
         });
       }).catch(function () {
@@ -6285,11 +6421,17 @@ __webpack_require__.r(__webpack_exports__);
       },
       brandList: [],
       spuId: "",
-      type: "create"
+      type: "create",
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
-    var that = this; // wangEditor
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id; // wangEditor
 
     var editor = new wangeditor__WEBPACK_IMPORTED_MODULE_0___default.a(that.$refs.editor); //这个地方传入div元素的id 需要加#号
 
@@ -6309,7 +6451,7 @@ __webpack_require__.r(__webpack_exports__);
     if (type === 'modify') {
       var spuId = that.$route.query.spuId;
       that.spuId = spuId;
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/spu/detail?spuId=" + spuId).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/spu/detail?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
         if (res.data.code === 2000) {
           var data = res.data.data;
           that.spuForm = {
@@ -6326,12 +6468,12 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function (err) {});
     }
 
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("category/treeList").then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("category/treeList" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.categoryList = res.data.data;
       }
     }).catch(function (err) {});
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("brand/list").then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("brand/list" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.brandList = res.data.data;
       }
@@ -6342,6 +6484,9 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       that.$refs.spuForm.validate(function (valid) {
         if (valid) {
+          that.spuForm.token = that.token;
+          that.spuForm.adminId = that.adminId;
+
           if (that.type === 'modify') {
             axios__WEBPACK_IMPORTED_MODULE_1___default.a.post("/spu/update", that.spuForm).then(function (res) {
               if (res.data.code === 2000) {
@@ -6506,20 +6651,26 @@ __webpack_require__.r(__webpack_exports__);
       transferProp: {
         key: 'id',
         label: 'name'
-      }
+      },
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
     var that = this,
-        spuId = that.$route.query.spuId;
+        spuId = that.$route.query.spuId,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.spuid = spuId;
     that.specForm.spuId = spuId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spec/list").then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spec/list" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.specList = res.data.data;
       }
     }).catch(function (err) {});
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spec/list-spu?spuId=" + spuId).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("spec/list-spu?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.existList = res.data.data;
         var _iteratorNormalCompletion = true;
@@ -6551,8 +6702,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onSubmit: function onSubmit() {
       var that = this;
-      console.info(that.specList);
-      console.info(that.specForm.specIds);
+      that.specForm.token = that.token;
+      that.specForm.adminId = that.adminId;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/pu/relateSpec", that.specForm).then(function (res) {
         if (res.data.code === 2000) {
           that.$router.push("spu/detail?spuId=" + that.spuId + "&active=" + "spec");
@@ -6616,16 +6767,22 @@ __webpack_require__.r(__webpack_exports__);
       inputVisible: false,
       inputValue: '',
       spuId: "",
-      specId: ""
+      specId: "",
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
     var that = this,
         spuId = that.$route.query.spuId,
-        specId = that.$route.query.specId;
+        specId = that.$route.query.specId,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.spuId = spuId;
     that.specId = specId;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/optionList?spuId=" + spuId + "&specId=" + specId).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/optionList?spuId=" + spuId + "&specId=" + specId + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         that.optionList = res.data.data;
       }
@@ -6648,7 +6805,9 @@ __webpack_require__.r(__webpack_exports__);
         var data = {
           name: inputValue,
           spuId: that.spuId,
-          specId: that.specId
+          specId: that.specId,
+          token: that.token,
+          adminId: that.adminId
         };
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/spu/createOption", data).then(function (res) {
           if (res.data.code === 2000) {
@@ -6786,10 +6945,18 @@ __webpack_require__.r(__webpack_exports__);
         // ]
 
       },
-      effectDate: []
+      effectDate: [],
+      token: "",
+      adminId: ""
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    var that = this;
+    user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
+  },
   methods: {
     onSubmit: function onSubmit() {
       var that = this;
@@ -6800,7 +6967,8 @@ __webpack_require__.r(__webpack_exports__);
             that.couponForm.effectEnd = that.effectDate[1].getTime();
           }
 
-          console.info(that.couponForm);
+          that.couponForm.token = that.token;
+          that.couponForm.adminId = that.adminId;
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/coupon/create", that.couponForm).then(function (res) {
             if (res.data.code === 2000) {
               that.$router.push("/coupon-list");
@@ -6900,12 +7068,18 @@ __webpack_require__.r(__webpack_exports__);
     return {
       pageNo: 1,
       couponList: [],
-      loading: true
+      loading: true,
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
-    var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/coupon/list?pageNo=" + that.pageNo).then(function (res) {
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/coupon/list?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {
@@ -7012,17 +7186,25 @@ __webpack_require__.r(__webpack_exports__);
       },
       password: "",
       confirm: "",
-      type: "create"
+      type: "create",
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
     var that = this,
-        type = that.$route.query.type;
+        type = that.$route.query.type,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.type = type;
   },
   methods: {
     onCreate: function onCreate() {
       var that = this;
+      that.adminForm.token = that.token;
+      that.adminForm.adminId = that.adminId;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("admin/create", that.adminForm).then(function (res) {
         if (res.data.code === 2000) {
           that.$router.push("/admin-list");
@@ -7079,12 +7261,18 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       adminList: [],
-      loading: true
+      loading: true,
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
-    var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/admin/list").then(function (res) {
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/admin/list" + "?admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {
@@ -7187,11 +7375,17 @@ __webpack_require__.r(__webpack_exports__);
     return {
       afSaleList: [],
       active: "all",
-      pageNo: 1
+      pageNo: 1,
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
-    var that = this;
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.getAfterSaleList();
   },
   methods: {
@@ -7204,7 +7398,7 @@ __webpack_require__.r(__webpack_exports__);
       var pageNo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var that = this;
       that.loading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/after/list?type=" + type + "&pageNo=" + pageNo).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/after/list?type=" + type + "&pageNo=" + pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
         that.loading = false;
 
         if (res.data.code === 2000) {
@@ -7231,7 +7425,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("after/modify-state", {
           state: state,
-          id: id
+          id: id,
+          token: that.token,
+          adminId: that.adminId
         }).then(function (res) {
           if (res.data.code === 2000) that.commentList[index].state = state;
         });
@@ -7332,11 +7528,17 @@ __webpack_require__.r(__webpack_exports__);
       commentList: [],
       pageNo: 1,
       active: "all",
-      loading: true
+      loading: true,
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
-    var that = this;
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.getCommentList();
   },
   methods: {
@@ -7354,7 +7556,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("comment/modify-state", {
           state: state,
-          id: id
+          id: id,
+          token: that.token,
+          adminId: that.adminId
         }).then(function (res) {
           if (res.data.code === 2000) that.commentList[index].state = state;
         });
@@ -7370,7 +7574,7 @@ __webpack_require__.r(__webpack_exports__);
       var pageNo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var that = this;
       that.loading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/comment/list?type=" + type + "&pageNo=" + pageNo).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/comment/list?type=" + type + "&pageNo=" + pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
         that.loading = false;
 
         if (res.data.code === 2000) {
@@ -7434,14 +7638,20 @@ __webpack_require__.r(__webpack_exports__);
     return {
       sn: "",
       order: {},
-      skuList: []
+      skuList: [],
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
     var that = this,
-        orderSn = that.$route.query.sn;
+        orderSn = that.$route.query.sn,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.sn = orderSn;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/order/detail?orderSn=" + orderSn).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/order/detail?orderSn=" + orderSn + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       if (res.data.code === 2000) {
         var orderDetail = res.data.data;
         that.skuList = orderDetail.skuList;
@@ -7530,11 +7740,17 @@ __webpack_require__.r(__webpack_exports__);
       active: "all",
       pageNo: 1,
       orderList: [],
-      loading: true
+      loading: true,
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
-    var that = this;
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
     that.getOrderList();
   },
   methods: {
@@ -7547,7 +7763,7 @@ __webpack_require__.r(__webpack_exports__);
       var pageNo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       var that = this;
       that.loading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/order/list?type=" + type + "&pageNo=" + pageNo).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/order/list?type=" + type + "&pageNo=" + pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
         that.loading = false;
 
         if (res.data.code === 2000) {
@@ -7608,7 +7824,9 @@ __webpack_require__.r(__webpack_exports__);
           message: '请输入运费模版名称',
           trigger: 'blur'
         }]
-      }
+      },
+      token: "",
+      adminId: ""
     };
   }
 });
@@ -7640,7 +7858,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PostModelList",
   data: function data() {
-    return {};
+    return {
+      token: "",
+      adminId: ""
+    };
   }
 });
 
@@ -7708,12 +7929,18 @@ __webpack_require__.r(__webpack_exports__);
     return {
       userList: [],
       pageNo: 1,
-      loading: true
+      loading: true,
+      token: "",
+      adminId: ""
     };
   },
   mounted: function mounted() {
-    var that = this;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("user/list-page?pageNo=" + 1).then(function (res) {
+    var that = this,
+        user = sessionStorage.getItem('user');
+    user = JSON.parse(user);
+    that.token = user.token;
+    that.adminId = user.id;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("user/list-page?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token).then(function (res) {
       that.loading = false;
 
       if (res.data.code === 2000) {

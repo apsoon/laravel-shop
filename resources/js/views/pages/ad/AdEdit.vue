@@ -71,7 +71,9 @@
                     positionId: "",
                     imageUrl: "",
                     linkType: "0",
-                    skuId: "0"
+                    skuId: "0",
+                    token: "",
+                    adminId: ""
                 },
                 rules: {
                     name: [
@@ -96,7 +98,11 @@
             }
         },
         mounted: function () {
-            let that = this;
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             that.uploadHeader = {
                 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
             };
@@ -106,7 +112,7 @@
                 that.type = type;
                 let adId = that.$route.query.adId;
                 that.adId = adId;
-                axios.get("/ad/detail?adId=" + adId)
+                axios.get("/ad/detail?adId=" + adId + "&admin_id=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         if (res.data.code === 2000) {
                             let data = res.data.data;
@@ -127,7 +133,7 @@
 
                     });
             }
-            axios.get("adPos/list").then(res => {
+            axios.get("adPos/list" + "&admin_id=" + that.adminId + "&token=" + that.token).then(res => {
                 that.positionList = res.data.data;
                 console.info(that.positionList);
             });
@@ -137,6 +143,8 @@
                 let that = this;
                 that.$refs["adForm"].validate((valid) => {
                     if (valid) {
+                        that.adForm.token = that.token;
+                        that.adForm.adminId = that.adminId;
                         axios.post("ad/create", that.adForm)
                             .then(res => {
                                 if (res.data.code === 2000) {
@@ -153,6 +161,8 @@
                 let that = this;
                 that.$refs["adForm"].validate((valid) => {
                     if (valid) {
+                        that.adForm.token = that.token;
+                        that.adForm.adminId = that.adminId;
                         axios.post("ad/update", that.adForm)
                             .then(res => {
                                 if (res.data.code === 2000) {

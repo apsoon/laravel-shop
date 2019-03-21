@@ -99,11 +99,17 @@
                     //     {required: true, message: '请输入优惠券面值', trigger: 'blur'}
                     // ]
                 },
-                effectDate: []
+                effectDate: [],
+                token: "",
+                adminId: ""
             }
         },
         mounted: function () {
-
+            let that = this;
+            user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id
         },
         methods: {
             onSubmit: function () {
@@ -114,7 +120,8 @@
                             that.couponForm.effectStart = that.effectDate[0].getTime();
                             that.couponForm.effectEnd = that.effectDate[1].getTime();
                         }
-                        console.info(that.couponForm);
+                        that.couponForm.token = that.token;
+                        that.couponForm.adminId = that.adminId;
                         axios.post("/coupon/create", that.couponForm)
                             .then(res => {
                                 if (res.data.code === 2000) {

@@ -184,17 +184,23 @@
                 skuList: [],
                 specList: [],
                 attrList: [],
-                bannerList: []
+                bannerList: [],
+                token: "",
+                adminId: ""
             }
         },
         mounted: function () {
             let that = this,
-                spuId = that.$route.query.spuId;
+                spuId = that.$route.query.spuId,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             let active = that.$route.query.active;
             console.info(active);
             if (active) that.active = active;
             that.spuId = spuId;
-            axios.get("spu/detail?spuId=" + spuId)
+            axios.get("spu/detail?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.spu = res.data.data.spu;
@@ -204,13 +210,13 @@
                 })
                 .catch(err => {
                 });
-            axios.get("spu/specOptionList?spuId=" + spuId)
+            axios.get("spu/specOptionList?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.specList = res.data.data;
                     }
                 });
-            axios.get("sku/listBySpu?spuId=" + that.spuId)
+            axios.get("sku/listBySpu?spuId=" + that.spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.skuList = res.data.data;
@@ -219,13 +225,13 @@
                 .catch(err => {
 
                 });
-            axios.get("/attr/value-list-spu?spuId=" + that.spuId)
+            axios.get("/attr/value-list-spu?spuId=" + that.spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.attrList = res.data.data;
                     }
                 });
-            axios.get("/spu/banner-list?spuId=" + that.spuId)
+            axios.get("/spu/banner-list?spuId=" + that.spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.bannerList = res.data.data;
@@ -243,12 +249,16 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    axios.post("spu/modify-banner-state", {
+                    let data = {
                         state: state,
-                        id: id
-                    }).then(res => {
-                        if (res.data.code === 2000) that.bannerList[index].state = state;
-                    });
+                        id: id,
+                        token: that.token,
+                        adminId: that.adminId
+                    };
+                    axios.post("spu/modify-banner-state", data)
+                        .then(res => {
+                            if (res.data.code === 2000) that.bannerList[index].state = state;
+                        });
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -260,9 +270,12 @@
                 let that = this,
                     ids = [];
                 ids.push(id);
-                axios.post("brand/delete", {
-                    ids: ids
-                })
+                let data = {
+                    ids: ids,
+                    token: that.token,
+                    adminId: that.adminId
+                };
+                axios.post("brand/delete", data)
                     .then(res => {
                         if (res.data.code === 2000) {
                             that.brandList.splice(index, 1);
@@ -281,9 +294,12 @@
                     for (let section of selections) {
                         ids.push(section.id);
                     }
-                    axios.post("brand/delete", {
-                        ids: ids
-                    })
+                    let data = {
+                        ids: ids,
+                        token: that.token,
+                        adminId: that.adminId
+                    };
+                    axios.post("brand/delete", data)
                         .then(res => {
                             if (res.data.code === 2000) {
                                 that.$message({
@@ -309,11 +325,13 @@
                     type: 'warning'
                 }).then(() => {
                     let isRecom = type === 'add' ? 1 : 0,
-                        param = {
+                        data = {
                             id: node.row.id,
-                            isRecom: isRecom
+                            isRecom: isRecom,
+                            token: that.token,
+                            adminId: that.adminId
                         };
-                    axios.post("/sku/recom", param)
+                    axios.post("/sku/recom", data)
                         .then(res => {
                             if (res.data.code === 2000) {
                                 console.info(node);
@@ -337,12 +355,16 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    axios.post("sku/modify-state", {
+                    let data = {
                         state: state,
-                        id: id
-                    }).then(res => {
-                        if (res.data.code === 2000) that.skuList[index].state = state;
-                    });
+                        id: id,
+                        token: that.token,
+                        adminId: that.adminId
+                    };
+                    axios.post("sku/modify-state", data)
+                        .then(res => {
+                            if (res.data.code === 2000) that.skuList[index].state = state;
+                        });
                 }).catch(() => {
                     this.$message({
                         type: 'info',

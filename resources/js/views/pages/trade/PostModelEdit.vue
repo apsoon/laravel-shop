@@ -31,7 +31,9 @@
                     name: [
                         {required: true, message: '请输入运费模版名称', trigger: 'blur'}
                     ]
-                }
+                },
+                token: "",
+                adminId: ""
             }
         }
     }

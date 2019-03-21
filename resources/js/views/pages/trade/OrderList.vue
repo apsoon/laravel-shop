@@ -63,11 +63,17 @@
                 active: "all",
                 pageNo: 1,
                 orderList: [],
-                loading: true
+                loading: true,
+                token: "",
+                adminId: ""
             }
         },
         mounted: function () {
-            let that = this;
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             that.getOrderList();
         },
         methods: {
@@ -78,7 +84,7 @@
             getOrderList: function (type = 'all', pageNo = 1) {
                 let that = this;
                 that.loading = true;
-                axios.get("/order/list?type=" + type + "&pageNo=" + pageNo)
+                axios.get("/order/list?type=" + type + "&pageNo=" + pageNo + "&admin_id=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         that.loading = false;
                         if (res.data.code === 2000) {

@@ -53,10 +53,16 @@
                 afSaleList: [],
                 active: "all",
                 pageNo: 1,
+                token: "",
+                adminId: "",
             }
         },
         mounted: function () {
-            let that = this;
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             that.getAfterSaleList();
         },
         methods: {
@@ -67,7 +73,7 @@
             getAfterSaleList: function (type = 'all', pageNo = 1) {
                 let that = this;
                 that.loading = true;
-                axios.get("/after/list?type=" + type + "&pageNo=" + pageNo)
+                axios.get("/after/list?type=" + type + "&pageNo=" + pageNo + "&admin_id=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         that.loading = false;
                         if (res.data.code === 2000) {
@@ -91,7 +97,9 @@
                 }).then(() => {
                     axios.post("after/modify-state", {
                         state: state,
-                        id: id
+                        id: id,
+                        token: that.token,
+                        adminId: that.adminId
                     }).then(res => {
                         if (res.data.code === 2000) that.commentList[index].state = state;
                     });

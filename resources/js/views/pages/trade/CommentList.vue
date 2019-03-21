@@ -75,10 +75,16 @@
                 pageNo: 1,
                 active: "all",
                 loading: true,
+                token: "",
+                adminId: "",
             }
         },
         mounted: function () {
-            let that = this;
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             that.getCommentList();
         },
         methods: {
@@ -94,7 +100,9 @@
                 }).then(() => {
                     axios.post("comment/modify-state", {
                         state: state,
-                        id: id
+                        id: id,
+                        token: that.token,
+                        adminId: that.adminId
                     }).then(res => {
                         if (res.data.code === 2000) that.commentList[index].state = state;
                     });
@@ -108,7 +116,7 @@
             getCommentList: function (type = 'all', pageNo = 1) {
                 let that = this;
                 that.loading = true;
-                axios.get("/comment/list?type=" + type + "&pageNo=" + pageNo)
+                axios.get("/comment/list?type=" + type + "&pageNo=" + pageNo + "&admin_id=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         that.loading = false;
                         if (res.data.code === 2000) {

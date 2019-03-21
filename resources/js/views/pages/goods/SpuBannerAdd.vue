@@ -53,11 +53,17 @@
                     type: "spu",
                     position: "banner"
                 },
+                token: "",
+                adminId: "",
             }
         },
         mounted: function () {
             let that = this,
-                spuId = that.$route.query.spuId;
+                spuId = that.$route.query.spuId,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             that.spuBannerForm.spuId = spuId;
             that.spuId = spuId;
             that.uploadHeader = {
@@ -69,6 +75,8 @@
                 let that = this;
                 that.$refs.spuBannerForm.validate((valid) => {
                     if (valid) {
+                        that.spuBannerForm.token = that.token;
+                        that.spuBannerForm.adminId = that.adminId;
                         axios.post("spu/create-banner", that.spuBannerForm)
                             .then(res => {
                                 if (res.data.code === 2000) {

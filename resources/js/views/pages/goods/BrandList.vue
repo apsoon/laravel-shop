@@ -62,12 +62,18 @@
             return {
                 brandList: [],
                 pageNo: 1,
-                loading: true
+                loading: true,
+                token: "",
+                adminId: ""
             }
         },
         mounted: function () {
-            let that = this;
-            axios.get('brand/list')
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
+            axios.get('brand/list' + "?admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     that.loading = false;
                     if (res.data.code === 2000) {
@@ -91,7 +97,9 @@
                 }).then(() => {
                     axios.post("brand/modState", {
                         state: state,
-                        id: id
+                        id: id,
+                        token: that.token,
+                        adminId: that.adminId
                     }).then(res => {
                         if (res.data.code === 2000) that.brandList[index].state = state;
                     });
@@ -111,9 +119,12 @@
                 }).then(() => {
                     let ids = [];
                     ids.push(id);
-                    axios.post("brand/delete", {
-                        ids: ids
-                    })
+                    let data = {
+                        ids: ids,
+                        token: that.token,
+                        adminId: that.adminId
+                    };
+                    axios.post("brand/delete", data)
                         .then(res => {
                             if (res.data.code === 2000) {
                                 that.brandList.splice(index, 1);
@@ -143,9 +154,12 @@
                         for (let section of selections) {
                             ids.push(section.id);
                         }
-                        axios.post("brand/delete", {
-                            ids: ids
-                        })
+                        let data = {
+                            ids: ids,
+                            token: that.token,
+                            adminId: that.adminId
+                        };
+                        axios.post("brand/delete", data)
                             .then(res => {
                                 if (res.data.code === 2000) {
                                     that.$message({

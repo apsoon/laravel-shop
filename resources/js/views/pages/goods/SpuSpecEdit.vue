@@ -34,22 +34,28 @@
                 transferProp: {
                     key: 'id',
                     label: 'name'
-                }
+                },
+                token: "",
+                adminId: ""
             }
         },
         mounted: function () {
             let that = this,
-                spuId = that.$route.query.spuId;
+                spuId = that.$route.query.spuId,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             that.spuid = spuId;
             that.specForm.spuId = spuId;
-            axios.get("spec/list")
+            axios.get("spec/list" + "?admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.specList = res.data.data
                     }
                 }).catch(err => {
             });
-            axios.get("spec/list-spu?spuId=" + spuId)
+            axios.get("spec/list-spu?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.existList = res.data.data;
@@ -63,8 +69,8 @@
         methods: {
             onSubmit: function () {
                 let that = this;
-                console.info(that.specList);
-                console.info(that.specForm.specIds);
+                that.specForm.token = that.token;
+                that.specForm.adminId = that.adminId;
                 axios.post("/pu/relateSpec", that.specForm)
                     .then(res => {
                         if (res.data.code === 2000) {

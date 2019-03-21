@@ -67,17 +67,25 @@
                 },
                 password: "",
                 confirm: "",
-                type: "create"
+                type: "create",
+                token: "",
+                adminId: ""
             }
         },
         mounted: function () {
             let that = this,
-                type = that.$route.query.type;
+                type = that.$route.query.type,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             that.type = type;
         },
         methods: {
             onCreate: function () {
                 let that = this;
+                that.adminForm.token = that.token;
+                that.adminForm.adminId = that.adminId;
                 axios.post("admin/create", that.adminForm)
                     .then(res => {
                         if (res.data.code === 2000) {

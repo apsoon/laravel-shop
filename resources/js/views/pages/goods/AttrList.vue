@@ -56,12 +56,15 @@
                 pageNo: 1,
                 loading: true,
                 token: "",
+                adminId: "",
             }
         },
         mounted: function () {
             let that = this,
                 user = sessionStorage.getItem('user');
-            that.token = JSON.parse(user).token;
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             axios.get("/attrGroup/list?pageNo=" + that.pageNo + "&token=" + that.token)
                 .then(res => {
                     that.loading = false;

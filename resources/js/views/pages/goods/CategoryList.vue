@@ -49,14 +49,19 @@
                 categoryList: [],
                 categoryTreeProps: {
                     label: name,
-                    // children: children
                 },
-                loading: true
+                loading: true,
+                token: "",
+                adminId: ""
             }
         },
         mounted: function () {
-            let that = this;
-            axios.get("category/treeList")
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
+            axios.get("category/treeList" + "?admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     that.loading = false;
                     if (res.data.code === 2000) {
@@ -74,7 +79,9 @@
                     type: 'danger'
                 }).then(() => {
                     axios.post("category/delete", {
-                        id: data.id
+                        id: data.id,
+                        token: that.token,
+                        adminId: that.adminId
                     }).then(res => {
                         if (res.data.code === 2000) {
                             that.$message({
@@ -105,11 +112,13 @@
                     type: 'warning'
                 }).then(() => {
                     let isRecom = type === 'add' ? 1 : 0,
-                        param = {
+                        data = {
                             id: data.id,
-                            isRecom: isRecom
+                            isRecom: isRecom,
+                            token: that.token,
+                            adminId: that.adminId
                         };
-                    axios.post("/category/recom", param)
+                    axios.post("/category/recom", data)
                         .then(res => {
                             if (res.data.code === 2000) {
                                 console.info(node);

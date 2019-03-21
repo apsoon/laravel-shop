@@ -34,11 +34,17 @@
             return {
                 adminList: [],
                 loading: true,
+                token: "",
+                adminId: "",
             }
         },
         mounted: function () {
-            let that = this;
-            axios.get("/admin/list")
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
+            axios.get("/admin/list" + "?admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     that.loading = false;
                     if (res.data.code === 2000) {

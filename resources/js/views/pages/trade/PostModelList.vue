@@ -15,7 +15,10 @@
     export default {
         name: "PostModelList",
         data: function () {
-            return {}
+            return {
+                token: "",
+                adminId: ""
+            }
         }
     }
 </script>

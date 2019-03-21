@@ -9,17 +9,16 @@
 namespace App\Http\Controllers\Mapi;
 
 
-use App\Http\Enum\StatusCode;
+use App\Http\Controllers\Controller;
 use App\Http\Service\CouponService;
 use App\Http\Util\JsonResult;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 /**
  * Class CouponMapi
  * @package App\Http\Controllers\Mapi
  */
-class CouponMapi
+class CouponMapi extends Controller
 {
 
     /**

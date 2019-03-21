@@ -75,11 +75,17 @@
                 },
                 brandList: [],
                 spuId: "",
-                type: "create"
+                type: "create",
+                token: "",
+                adminId: ""
             }
         },
         mounted: function () {
-            let that = this;
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             // wangEditor
             let editor = new WangEditor(that.$refs.editor); //这个地方传入div元素的id 需要加#号
             editor.customConfig.onchange = (html) => {
@@ -94,7 +100,7 @@
             if (type === 'modify') {
                 let spuId = that.$route.query.spuId;
                 that.spuId = spuId;
-                axios.get("/spu/detail?spuId=" + spuId)
+                axios.get("/spu/detail?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         if (res.data.code === 2000) {
                             let data = res.data.data;
@@ -112,14 +118,14 @@
                     }).catch(err => {
                 });
             }
-            axios.get("category/treeList")
+            axios.get("category/treeList" + "?admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.categoryList = res.data.data;
                     }
                 }).catch(err => {
             });
-            axios.get("brand/list")
+            axios.get("brand/list" + "?admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.brandList = res.data.data;
@@ -132,6 +138,8 @@
                 let that = this;
                 that.$refs.spuForm.validate((valid) => {
                     if (valid) {
+                        that.spuForm.token = that.token;
+                        that.spuForm.adminId = that.adminId;
                         if (that.type === 'modify') {
                             axios.post("/spu/update", that.spuForm)
                                 .then(res => {

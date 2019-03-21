@@ -76,11 +76,17 @@
                 pageNo: 1,
                 couponList: [],
                 loading: true,
+                token: "",
+                adminId: "",
             }
         },
         mounted: function () {
-            let that = this;
-            axios.get("/coupon/list?pageNo=" + that.pageNo)
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
+            axios.get("/coupon/list?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     that.loading = false;
                     if (res.data.code === 2000) {

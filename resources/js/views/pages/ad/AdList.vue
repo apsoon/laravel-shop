@@ -64,14 +64,22 @@
                 adList: [],
                 pageNo: 1,
                 loading: true,
+                token: "",
+                adminId: "",
             }
         },
         mounted: function () {
-            let that = this;
-            axios.get('ad/list').then(res => {
-                that.adList = res.data.data;
-                that.loading = false;
-            });
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
+            ;
+            axios.get('ad/list' + "?admin_id=" + that.adminId + "&token=" + that.token)
+                .then(res => {
+                    that.adList = res.data.data;
+                    that.loading = false;
+                });
         },
         methods: {
             modifyState: function (type, index, id) {
@@ -84,12 +92,16 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    axios.post("ad/modState", {
+                    let data = {
                         state: state,
-                        id: id
-                    }).then(res => {
-                        if (res.data.code === 2000) that.adList[index].state = state;
-                    });
+                        id: id,
+                        token: that.token,
+                        adminId: that.adminId
+                    };
+                    axios.post("ad/modState", data)
+                        .then(res => {
+                            if (res.data.code === 2000) that.adList[index].state = state;
+                        });
                 }).catch(() => {
                     this.$message({
                         type: 'info',
@@ -106,9 +118,13 @@
                 }).then(() => {
                     let ids = [];
                     ids.push(id);
-                    axios.post("ad/delete", {
-                        ids: ids
-                    })
+                    let data = {
+                        state: state,
+                        id: id,
+                        token: that.token,
+                        adminId: that.adminId
+                    };
+                    axios.post("ad/delete", data)
                         .then(res => {
                             if (res.data.code === 2000) {
                                 that.adList.splice(index, 1);
@@ -138,9 +154,13 @@
                         for (let section of selections) {
                             ids.push(section.id);
                         }
-                        axios.post("ad/delete", {
-                            ids: ids
-                        })
+                        let data = {
+                            state: state,
+                            id: id,
+                            token: that.token,
+                            adminId: that.adminId
+                        };
+                        axios.post("ad/delete", data)
                             .then(res => {
                                 if (res.data.code === 2000) {
                                     that.$message({

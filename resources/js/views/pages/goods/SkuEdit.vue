@@ -77,6 +77,8 @@
                     number: "",
                     imageUrl: "",
                     state: "0",
+                    token: "",
+                    adminId: "",
                 },
                 rules: {
                     name: [
@@ -104,13 +106,17 @@
         mounted: function () {
             let that = this,
                 spuId = that.$route.query.spuId,
-                type = that.$route.query.type;
+                type = that.$route.query.type,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             that.uploadHeader = {
                 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
             };
             that.spuId = spuId;
             that.skuForm.spuId = spuId;
-            axios.get("/spu/specOptionList?spuId=" + spuId)
+            axios.get("/spu/specOptionList?spuId=" + spuId + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.specList = res.data.data;
@@ -119,7 +125,7 @@
             });
             if (type === 'modify') {
                 let skuId = that.$route.query.skuId;
-                axios.get("/sku/detail?skuId=" + skuId)
+                axios.get("/sku/detail?skuId=" + skuId + "&admin_id=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         if (res.data.code === 2000) {
                             let data = res.data.data;
@@ -149,7 +155,8 @@
                             options.push(spec.option);
                         }
                         that.skuForm.options = options;
-                        console.info(that.skuForm);
+                        that.skuForm.token = that.token;
+                        that.skuForm.adminId = that.adminId;
                         axios.post("/sku/create", that.skuForm)
                             .then(res => {
                                 if (res.data.code === 2000) {
@@ -172,7 +179,8 @@
                             options.push(spec.option);
                         }
                         that.skuForm.options = options;
-                        console.info(that.skuForm);
+                        that.skuForm.token = that.token;
+                        that.skuForm.adminId = that.adminId;
                         axios.post("/sku/update", that.skuForm)
                             .then(res => {
                                 if (res.data.code === 2000) {
@@ -186,10 +194,6 @@
                 });
             },
             ruleSelect: function (rule, value, callback) {
-                // if (!value) {
-                //     return callback(new Error('请选择'));
-                // }
-                // callback();
             },
             onUploadSuccess: function (response, file, fileList) {
                 let that = this;

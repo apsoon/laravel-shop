@@ -34,14 +34,20 @@
             return {
                 sn: "",
                 order: {},
-                skuList: []
+                skuList: [],
+                token: "",
+                adminId: ""
             }
         },
         mounted: function () {
             let that = this,
-                orderSn = that.$route.query.sn;
+                orderSn = that.$route.query.sn,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             that.sn = orderSn;
-            axios.get("/order/detail?orderSn=" + orderSn)
+            axios.get("/order/detail?orderSn=" + orderSn + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         let orderDetail = res.data.data;

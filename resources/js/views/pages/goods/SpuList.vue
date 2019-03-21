@@ -44,7 +44,7 @@
                 pageNo: 1,
                 loading: true,
                 token: "",
-                adminId: ""
+                adminId: "",
             }
         },
         mounted: function () {

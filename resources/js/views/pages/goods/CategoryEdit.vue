@@ -85,12 +85,18 @@
                 },
                 brandList: [],
                 existList: [],
-                category: ""
+                category: "",
+                token: "",
+                adminId: ""
             }
         },
         mounted: function () {
             let that = this,
-                type = that.$route.query.type;
+                type = that.$route.query.type,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             that.type = type;
             if (type === "create") {
                 that.parentId = that.$route.query.parentId;
@@ -98,7 +104,7 @@
             } else {
                 let categoryId = that.$route.query.categoryId;
                 that.categoryId = categoryId;
-                axios.get("/category/detail?id=" + categoryId)
+                axios.get("/category/detail?id=" + categoryId + "&admin_id=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         if (res.data.code === 2000) {
                             let data = res.data.data;
@@ -113,20 +119,20 @@
                     }).catch(err => {
                 });
             }
-            axios.get("brand/list")
+            axios.get("brand/list" + "?admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.brandList = res.data.data;
                     }
                 }).catch(err => {
             });
-            axios.get("brand/list-category?categoryId=" + that.categoryId)
+            axios.get("brand/list-category?categoryId=" + that.categoryId + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         // let brandIds = [];
                         let exists = res.data.data;
                         for (let exist of exists) {
-                            that.categoryForm. brandIds.push(exist.id);
+                            that.categoryForm.brandIds.push(exist.id);
                         }
                         // that.categoryForm.brandIds = brandIds;
                     }
@@ -141,6 +147,8 @@
                 let that = this;
                 that.$refs.categoryForm.validate((valid) => {
                     if (valid) {
+                        that.categoryForm.token = that.token;
+                        that.categoryForm.adminId = that.adminId;
                         if (that.type === "create") {
                             that.categoryForm.parentId = that.parentId;
                             axios.post("category/create", that.categoryForm)

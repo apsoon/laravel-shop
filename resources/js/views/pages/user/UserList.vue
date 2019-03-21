@@ -32,12 +32,18 @@
             return {
                 userList: [],
                 pageNo: 1,
-                loading: true
+                loading: true,
+                token: "",
+                adminId: ""
             }
         },
         mounted: function () {
-            let that = this;
-            axios.get("user/list-page?pageNo=" + 1)
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
+            axios.get("user/list-page?pageNo=" + that.pageNo + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     that.loading = false;
                     if (res.data.code === 2000) {

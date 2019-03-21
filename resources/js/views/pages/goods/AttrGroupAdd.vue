@@ -49,16 +49,23 @@
                     label: 'name'
                 },
                 categoryList: [],
-                category: []
+                category: [],
+                token: "",
+                adminId: "",
             }
         },
         mounted: function () {
-            let that = this;
-            axios.get("category/treeList").then(res => {
-                if (res.data.code === 2000) {
-                    that.categoryList = res.data.data;
-                }
-            }).catch(err => {
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
+            axios.get("category/treeList" + "?admin_id=" + that.adminId + "&token=" + that.token)
+                .then(res => {
+                    if (res.data.code === 2000) {
+                        that.categoryList = res.data.data;
+                    }
+                }).catch(err => {
             });
         },
         methods: {
@@ -66,15 +73,16 @@
                 let that = this;
                 that.$refs.attrGroupForm.validate((valid) => {
                     if (valid) {
+                        that.attrGroupForm.token = that.token;
+                        that.attrGroupForm.adminId = that.adminId;
                         axios.post("/attrGroup/create", that.attrGroupForm)
                             .then(res => {
                                 if (res.data.code === 2000) {
 
                                 }
-                            })
-                            .catch(err => {
+                            }).catch(err => {
 
-                            });
+                        });
                     }
                 });
             },

@@ -51,7 +51,9 @@
                     describe: "",
                     region: "",
                     logo: "",
-                    state: "0"
+                    state: "0",
+                    token: "",
+                    adminId: ""
                 },
                 rules: {
                     name: [
@@ -70,7 +72,11 @@
             }
         },
         mounted: function () {
-            let that = this;
+            let that = this,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             that.uploadHeader = {
                 'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').getAttribute('content')
             };
@@ -79,7 +85,7 @@
                 let brandId = that.$route.query.brandId;
                 that.brandId = brandId;
                 that.type = "modify";
-                axios.get("/brand/detail?brandId=" + brandId)
+                axios.get("/brand/detail?brandId=" + brandId + "&admin_id=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         if (res.data.code === 2000) {
                             let data = res.data.data;
@@ -102,6 +108,8 @@
                 let that = this;
                 that.$refs.brandForm.validate((valid) => {
                     if (valid) {
+                        that.brandForm.token = that.token;
+                        that.brandForm.adminId = that.adminId;
                         axios.post("brand/create", that.brandForm)
                             .then(res => {
                                 if (res.data.code === 2000) {
@@ -124,6 +132,8 @@
                 let that = this;
                 that.$refs.brandForm.validate((valid) => {
                     if (valid) {
+                        that.brandForm.token = that.token;
+                        that.brandForm.adminId = that.adminId;
                         axios.post("/brand/update", that.brandForm)
                             .then(res => {
                                 if (res.data.code === 2000) {

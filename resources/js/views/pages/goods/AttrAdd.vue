@@ -35,14 +35,20 @@
                 attrGroupId: "",
                 attrList: [],
                 inputVisible: false,
-                inputValue: ''
+                inputValue: '',
+                token: "",
+                adminId: ""
             }
         },
         mounted: function () {
             let that = this,
-                attrGroupId = that.$route.query.attrGroupId;
+                attrGroupId = that.$route.query.attrGroupId,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             that.attrGroupId = attrGroupId;
-            axios.get("/attr/list-group?attrGroupId=" + attrGroupId)
+            axios.get("/attr/list-group?attrGroupId=" + attrGroupId + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.attrList = res.data.data;
@@ -62,7 +68,9 @@
                 if (inputValue) {
                     let data = {
                         attrGroupId: that.attrGroupId,
-                        name: inputValue
+                        name: inputValue,
+                        token: that.token,
+                        adminId: that.adminId
                     };
                     axios.post("/attr/create", data)
                         .then(res => {

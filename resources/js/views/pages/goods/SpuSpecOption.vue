@@ -37,15 +37,21 @@
                 inputValue: '',
                 spuId: "",
                 specId: "",
+                token: "",
+                adminId: "",
             }
         },
         mounted: function () {
             let that = this,
                 spuId = that.$route.query.spuId,
-                specId = that.$route.query.specId;
+                specId = that.$route.query.specId,
+                user = sessionStorage.getItem('user');
+            user = JSON.parse(user);
+            that.token = user.token;
+            that.adminId = user.id;
             that.spuId = spuId;
             that.specId = specId;
-            axios.get("/spu/optionList?spuId=" + spuId + "&specId=" + specId)
+            axios.get("/spu/optionList?spuId=" + spuId + "&specId=" + specId + "&admin_id=" + that.adminId + "&token=" + that.token)
                 .then(res => {
                     if (res.data.code === 2000) {
                         that.optionList = res.data.data;
@@ -68,7 +74,9 @@
                     let data = {
                         name: inputValue,
                         spuId: that.spuId,
-                        specId: that.specId
+                        specId: that.specId,
+                        token: that.token,
+                        adminId: that.adminId
                     };
                     axios.post("/spu/createOption", data)
                         .then(res => {
