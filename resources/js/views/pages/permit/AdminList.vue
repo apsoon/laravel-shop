@@ -56,6 +56,10 @@
         methods: {
             modifyPassword: function () {
                 let that = this;
+            },
+            onPageNoChanged: function (e) {
+                let that = this;
+                that.pageNo = e;
             }
         }
     }

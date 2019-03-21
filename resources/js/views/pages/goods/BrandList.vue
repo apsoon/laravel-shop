@@ -83,7 +83,9 @@
                 });
         },
         methods: {
-            onPageNoChanged: function () {
+            onPageNoChanged: function (e) {
+                let that = this;
+                that.pageNo = e;
             },
             modifyState: function (type, index, id) {
                 let that = this,

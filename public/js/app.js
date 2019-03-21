@@ -4041,7 +4041,10 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    onPageNoChanged: function onPageNoChanged() {}
+    onPageNoChanged: function onPageNoChanged(e) {
+      var that = this;
+      that.pageNo = e;
+    }
   }
 });
 
@@ -4445,7 +4448,10 @@ __webpack_require__.r(__webpack_exports__);
     }).catch(function (err) {});
   },
   methods: {
-    onPageNoChanged: function onPageNoChanged() {}
+    onPageNoChanged: function onPageNoChanged(e) {
+      var that = this;
+      that.pageNo = e;
+    }
   }
 });
 
@@ -4727,7 +4733,10 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    onPageNoChanged: function onPageNoChanged() {},
+    onPageNoChanged: function onPageNoChanged(e) {
+      var that = this;
+      that.pageNo = e;
+    },
     modifyState: function modifyState(type, index, id) {
       var _this = this;
 
@@ -6570,8 +6579,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuList",
@@ -6600,7 +6607,10 @@ __webpack_require__.r(__webpack_exports__);
     }).catch(function (err) {});
   },
   methods: {
-    onPageNoChanged: function onPageNoChanged() {}
+    onPageNoChanged: function onPageNoChanged(e) {
+      var that = this;
+      that.pageNo = e;
+    }
   }
 });
 
@@ -7090,7 +7100,10 @@ __webpack_require__.r(__webpack_exports__);
     }).catch(function (err) {});
   },
   methods: {
-    onPageNoChanged: function onPageNoChanged() {}
+    onPageNoChanged: function onPageNoChanged(e) {
+      var that = this;
+      that.pageNo = e;
+    }
   }
 });
 
@@ -7283,6 +7296,10 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     modifyPassword: function modifyPassword() {
       var that = this;
+    },
+    onPageNoChanged: function onPageNoChanged(e) {
+      var that = this;
+      that.pageNo = e;
     }
   }
 });
@@ -7437,6 +7454,10 @@ __webpack_require__.r(__webpack_exports__);
           message: '已取消' + message
         });
       });
+    },
+    onPageNoChanged: function onPageNoChanged(e) {
+      var that = this;
+      that.pageNo = e;
     }
   }
 });
@@ -7454,6 +7475,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -7541,7 +7564,7 @@ __webpack_require__.r(__webpack_exports__);
     that.adminId = user.id;
     that.getCommentList();
   },
-  methods: {
+  methods: _defineProperty({
     modifyState: function modifyState(type, index, id) {
       var _this = this;
 
@@ -7586,9 +7609,11 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       that.getCommentList(tab.name);
     },
-    onPageNoChanged: function onPageNoChanged() {},
-    onPageSizeChanged: function onPageSizeChanged() {}
-  }
+    onPageNoChanged: function onPageNoChanged() {}
+  }, "onPageNoChanged", function onPageNoChanged(e) {
+    var that = this;
+    that.pageNo = e;
+  })
 });
 
 /***/ }),
@@ -7949,7 +7974,10 @@ __webpack_require__.r(__webpack_exports__);
     }).catch(function (err) {});
   },
   methods: {
-    onPageNoChanged: function onPageNoChanged() {}
+    onPageNoChanged: function onPageNoChanged(e) {
+      var that = this;
+      that.pageNo = e;
+    }
   }
 });
 
@@ -94760,10 +94788,8 @@ var render = function() {
         },
         attrs: {
           background: "",
-          layout: "total, sizes, prev, pager, next, jumper",
+          layout: " prev, pager, next, jumper",
           total: 1000,
-          "page-sizes": [20, 50, 100],
-          "page-size": 20,
           "current-page": _vm.pageNo
         },
         on: {

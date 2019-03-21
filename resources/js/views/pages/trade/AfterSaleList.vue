@@ -110,6 +110,10 @@
                     });
                 });
             },
+            onPageNoChanged: function (e) {
+                let that = this;
+                that.pageNo = e;
+            }
         }
     }
 </script>
