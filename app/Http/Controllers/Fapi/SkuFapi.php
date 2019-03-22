@@ -70,6 +70,12 @@ class SkuFapi extends Controller
         return $this->skuService->getPagedSkuByCategoryEffect($req);
     }
 
+    /**
+     * 通过品牌和分类获取商品
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function listByCategoryBrand(Request $request)
     {
         $req = $request->all();
@@ -77,13 +83,23 @@ class SkuFapi extends Controller
     }
 
     /**
-     * 获取热推商品
+     * 获取推荐商品
      *
      * @return JsonResult
      */
     public function recom()
     {
         return $this->skuService->getRecomSkuList();
+    }
+
+    /**
+     * 获取热销商品
+     *
+     * @return JsonResult
+     */
+    public function hot()
+    {
+        return $this->skuService->getHotSkuList();
     }
 
     /**

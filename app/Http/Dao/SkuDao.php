@@ -148,13 +148,23 @@ class SkuDao
     }
 
     /**
-     * 获取热推
+     * 获取推荐
      *
      * @return mixed
      */
     public function findByRecomEffect()
     {
         return $this->sku::where(["is_recom" => 1, "state" => 1])->get();
+    }
+
+    /**
+     * 获取热销
+     *
+     * @return mixed
+     */
+    public function findByHotEffect()
+    {
+        return $this->sku::where(["is_hot" => 1, "state" => 1])->get();
     }
 
     /**

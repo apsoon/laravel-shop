@@ -197,6 +197,12 @@ class SkuService
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
+    public function getHotSkuList()
+    {
+        $result = $this->skuDao->findByHotEffect();
+        return new JsonResult(StatusCode::SUCCESS, $result);
+    }
+
     /**
      * 设置SKU是否热推
      *
