@@ -71,7 +71,7 @@ class UploadMapi extends Controller
             $savePath = public_path() . '/' . $filePath;
             $file->move($savePath, $newFileName);
             $result = new \stdClass();
-            $filePath = $filePath . $fileName;
+            $filePath = $filePath . $newFileName;
             $result->fileUrl = asset($filePath);
             $result->filePath = $filePath;
             $result->fileName = $newFileName;

@@ -353,7 +353,7 @@ class SpuService
         $bannerList = $this->spuGalleryDao->findBySpuIdEffect($req["spuId"]);
         if (Config::UPLOAD_TO_PUBLIC) {
             foreach ($bannerList as $banner) {
-                $banner->image_url = asset("storage/" . $banner->image_url);
+                $banner->image_url = asset( $banner->image_url);
             }
         }
         $result = array_values(array_sort($bannerList, function ($banner) {
@@ -374,7 +374,7 @@ class SpuService
         $bannerList = $this->spuGalleryDao->findBySpuId($req["spuId"]);
         if (Config::UPLOAD_TO_PUBLIC) {
             foreach ($bannerList as $banner) {
-                $banner->image_url = asset("storage/" . $banner->image_url);
+                $banner->image_url = asset( $banner->image_url);
             }
         }
         $result = array_values(array_sort($bannerList, function ($banner) {

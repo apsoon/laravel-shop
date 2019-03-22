@@ -41,7 +41,7 @@ class BrandService
     {
         $brandList = $this->brandDao->list();
         foreach ($brandList as $brand) {
-            if (!empty($brand->logo)) $brand->logo = asset("storage/" . $brand->logo);
+            if (!empty($brand->logo)) $brand->logo = asset( $brand->logo);
         }
         return new JsonResult(StatusCode::SUCCESS, $brandList);
     }
