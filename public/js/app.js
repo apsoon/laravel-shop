@@ -3508,16 +3508,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      userName: ''
+      userName: '',
+      adminId: ""
     };
   },
   mounted: function mounted() {
     var user = sessionStorage.getItem('user');
-    console.info(user);
 
     if (user) {
       user = JSON.parse(user);
       this.userName = user.name || '';
+      this.adminId = user.id || '';
     }
   },
   methods: {
@@ -3528,6 +3529,17 @@ __webpack_require__.r(__webpack_exports__);
         sessionStorage.removeItem('user');
         that.$router.push('/login');
       }).catch(function () {});
+    },
+    changeAdminData: function changeAdminData() {
+      var that = this,
+          query = {
+        type: 'modify',
+        adminId: that.adminId
+      };
+      that.$router.push({
+        path: '/admin-edit',
+        query: query
+      });
     },
     handleSelect: function handleSelect() {},
     handleOpen: function handleOpen() {},
@@ -7196,6 +7208,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdminEdit",
@@ -7218,7 +7236,8 @@ __webpack_require__.r(__webpack_exports__);
         email: "",
         phone: "",
         password: "",
-        confirm: ""
+        confirm: "",
+        oldPwd: ""
       },
       rules: {
         name: [{
@@ -7236,12 +7255,18 @@ __webpack_require__.r(__webpack_exports__);
           message: '请输入管理员电话',
           trigger: 'blur'
         }],
+        oldPwd: [{
+          required: true,
+          message: '请输入原管理员密码',
+          trigger: 'blur'
+        }],
         password: [{
           required: true,
-          message: '请输入管理员密码',
+          message: '请输入新管理员密码',
           trigger: 'blur'
         }],
         confirm: [{
+          required: true,
           validator: validatePasswordConfirm,
           trigger: 'blur'
         }]
@@ -7263,17 +7288,23 @@ __webpack_require__.r(__webpack_exports__);
     that.type = type;
   },
   methods: {
-    onCreate: function onCreate() {
+    onSubmit: function onSubmit() {
       var that = this;
-      that.adminForm.token = that.token;
-      that.adminForm.adminId = that.adminId;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("admin/create", that.adminForm).then(function (res) {
-        if (res.data.code === 2000) {
-          that.$router.push("/admin-list");
+      that.$refs.couponForm.validate(function (valid) {
+        if (valid) {
+          that.adminForm.token = that.token;
+          that.adminForm.adminId = that.adminId;
+
+          if (that.type === 'create') {
+            axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("admin/create", that.adminForm).then(function (res) {
+              if (res.data.code === 2000) {
+                that.$router.push("/admin-list");
+              }
+            }).catch(function (err) {});
+          } else if (that.type === 'modify') {}
         }
-      }).catch(function (err) {});
-    },
-    onUpdate: function onUpdate() {}
+      });
+    }
   }
 });
 
@@ -7290,8 +7321,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
 //
 //
 //
@@ -7343,9 +7372,6 @@ __webpack_require__.r(__webpack_exports__);
     }).catch(function (err) {});
   },
   methods: {
-    modifyPassword: function modifyPassword() {
-      var that = this;
-    },
     onPageNoChanged: function onPageNoChanged(e) {
       var that = this;
       that.pageNo = e;
@@ -91077,6 +91103,19 @@ var render = function() {
                           attrs: { divided: "" },
                           nativeOn: {
                             click: function($event) {
+                              return _vm.changeAdminData($event)
+                            }
+                          }
+                        },
+                        [_vm._v("修改个人资料")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "el-dropdown-item",
+                        {
+                          attrs: { divided: "" },
+                          nativeOn: {
+                            click: function($event) {
                               return _vm.onLogout($event)
                             }
                           }
@@ -95815,7 +95854,7 @@ var render = function() {
             { attrs: { prop: "name", label: "名称" } },
             [
               _c("el-input", {
-                attrs: { placeholder: "请输入管理员名称" },
+                attrs: { placeholder: "请输入名称" },
                 model: {
                   value: _vm.adminForm.name,
                   callback: function($$v) {
@@ -95833,7 +95872,7 @@ var render = function() {
             { attrs: { prop: "email", label: "邮箱" } },
             [
               _c("el-input", {
-                attrs: { type: "email", placeholder: "请输入管理员邮箱" },
+                attrs: { type: "email", placeholder: "请输入邮箱" },
                 model: {
                   value: _vm.adminForm.email,
                   callback: function($$v) {
@@ -95851,7 +95890,7 @@ var render = function() {
             { attrs: { prop: "phone", label: "手机" } },
             [
               _c("el-input", {
-                attrs: { type: "tel", placeholder: "请输入管理员电话" },
+                attrs: { type: "tel", placeholder: "请输入员电话" },
                 model: {
                   value: _vm.adminForm.phone,
                   callback: function($$v) {
@@ -95864,14 +95903,38 @@ var render = function() {
             1
           ),
           _vm._v(" "),
+          _vm.type === "modify"
+            ? _c(
+                "el-form-item",
+                { attrs: { prop: "oldPwd", label: "旧密码" } },
+                [
+                  _c("el-input", {
+                    attrs: {
+                      type: "password",
+                      placeholder: "请输入原密码",
+                      "show-password": ""
+                    },
+                    model: {
+                      value: _vm.adminForm.oldPwd,
+                      callback: function($$v) {
+                        _vm.$set(_vm.adminForm, "oldPwd", $$v)
+                      },
+                      expression: "adminForm.oldPwd"
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
           _c(
             "el-form-item",
-            { attrs: { prop: "password", label: "密码" } },
+            { attrs: { prop: "password", label: "新密码" } },
             [
               _c("el-input", {
                 attrs: {
                   type: "password",
-                  placeholder: "请输入管理员密码",
+                  placeholder: "请输入新密码",
                   "show-password": ""
                 },
                 model: {
@@ -95893,7 +95956,7 @@ var render = function() {
               _c("el-input", {
                 attrs: {
                   type: "password",
-                  placeholder: "请再次输入管理员密码",
+                  placeholder: "请再次输入密码",
                   "show-password": ""
                 },
                 model: {
@@ -95906,7 +95969,31 @@ var render = function() {
               })
             ],
             1
-          )
+          ),
+          _vm._v(" "),
+          _vm.type === "create"
+            ? _c(
+                "el-form-item",
+                { attrs: { prop: "rootPwd", label: "管理员密码" } },
+                [
+                  _c("el-input", {
+                    attrs: {
+                      type: "password",
+                      placeholder: "请输入原管理员密码",
+                      "show-password": ""
+                    },
+                    model: {
+                      value: _vm.adminForm.rootPwd,
+                      callback: function($$v) {
+                        _vm.$set(_vm.adminForm, "rootPwd", $$v)
+                      },
+                      expression: "adminForm.rootPwd"
+                    }
+                  })
+                ],
+                1
+              )
+            : _vm._e()
         ],
         1
       ),
@@ -95914,13 +96001,13 @@ var render = function() {
       _vm.type === "create"
         ? _c(
             "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.onCreate } },
+            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
             [_vm._v("立即创建")]
           )
         : _c(
             "el-button",
-            { attrs: { type: "primary" }, on: { click: _vm.onUpdate } },
-            [_vm._v("修改")]
+            { attrs: { type: "primary" }, on: { click: _vm.onSubmit } },
+            [_vm._v("立即修改")]
           )
     ],
     1
@@ -96018,44 +96105,27 @@ var render = function() {
                 key: "default",
                 fn: function(scope) {
                   return [
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { type: "primary", size: "medium" },
-                        on: {
-                          click: function($event) {
-                            _vm.modifyPassword(scope.$index, scope.row.id)
-                          }
-                        }
-                      },
-                      [_vm._v("修改密码\n                ")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { type: "warning", size: "medium" },
-                        on: {
-                          click: function($event) {
-                            _vm.modifyPassword(scope.$index, scope.row.id)
-                          }
-                        }
-                      },
-                      [_vm._v("禁用\n                ")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { type: "danger", size: "medium" },
-                        on: {
-                          click: function($event) {
-                            _vm.modifyPassword(scope.$index, scope.row.id)
-                          }
-                        }
-                      },
-                      [_vm._v("删除\n                ")]
-                    )
+                    scope.row.id === _vm.adminId
+                      ? _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to: {
+                                path: "/admin-edit",
+                                query: { type: "modify", adminId: scope.row.id }
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "el-button",
+                              { attrs: { type: "warning", size: "medium" } },
+                              [_vm._v("修改资料")]
+                            )
+                          ],
+                          1
+                        )
+                      : _vm._e()
                   ]
                 }
               }

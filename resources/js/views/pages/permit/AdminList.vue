@@ -13,12 +13,10 @@
             <el-table-column label="注册时间" prop="created_at" width="200"/>
             <el-table-column label="操作" min-width="1">
                 <template slot-scope="scope">
-                    <el-button type="primary" size="medium" @click="modifyPassword(scope.$index, scope.row.id)">修改密码
-                    </el-button>
-                    <el-button type="warning" size="medium" @click="modifyPassword(scope.$index, scope.row.id)">禁用
-                    </el-button>
-                    <el-button type="danger" size="medium" @click="modifyPassword(scope.$index, scope.row.id)">删除
-                    </el-button>
+                    <router-link :to="{path: '/admin-edit', query: {type: 'modify', adminId:scope.row.id}}"
+                                 v-if="scope.row.id === adminId">
+                        <el-button type="warning" size="medium">修改资料</el-button>
+                    </router-link>
                 </template>
             </el-table-column>
         </el-table>
@@ -54,9 +52,6 @@
             });
         },
         methods: {
-            modifyPassword: function () {
-                let that = this;
-            },
             onPageNoChanged: function (e) {
                 let that = this;
                 that.pageNo = e;
