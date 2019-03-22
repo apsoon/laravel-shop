@@ -161,7 +161,7 @@ class AttrService
      * 分页获取分类
      *
      * @param array $req
-     * @return mixed
+     * @return JsonResult
      */
     public function getPagedAttrGroupWithAttrList(array $req)
     {
@@ -171,7 +171,10 @@ class AttrService
             $attr = $this->attrDao->findByGroupId($group->id);
             $group->attrs = $attr;
         }
-        return $groups;
+        $result = new \stdClass();
+        $result->groupList = $groups;
+        $result->total = AttrGroup::count();
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     // ===========================================================================  attr option  ===========================================================================

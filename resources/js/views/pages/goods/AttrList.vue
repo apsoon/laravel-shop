@@ -35,8 +35,8 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-pagination background layout="total, sizes, prev, pager, next, jumper"
-                       :total="1000"
+        <el-pagination background layout="prev, pager, next, jumper"
+                       :total="totalGroup"
                        :page-sizes="[20, 50, 100]"
                        :page-size="20"
                        @current-change="onPageNoChanged"
@@ -57,6 +57,7 @@
                 loading: true,
                 token: "",
                 adminId: "",
+                totalGroup: 0,
             }
         },
         mounted: function () {
@@ -65,20 +66,26 @@
             user = JSON.parse(user);
             that.token = user.token;
             that.adminId = user.id;
-            axios.get("/attrGroup/list?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token)
-                .then(res => {
-                    that.loading = false;
-                    if (res.data.code === 2000) {
-                        that.groupList = res.data.data;
-                        console.info(that.groupList);
-                    }
-                }).catch(err => {
-            })
+            that.getAttrGroupList();
+
         },
         methods: {
+            getAttrGroupList: function () {
+                let that = this;
+                axios.get("/attr/group-list?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token)
+                    .then(res => {
+                        that.loading = false;
+                        if (res.data.code === 2000) {
+                            that.groupList = res.data.data.groupList;
+                            that.totalGroup = res.data.data.total;
+                        }
+                    }).catch(err => {
+                })
+            },
             onPageNoChanged: function (e) {
                 let that = this;
                 that.pageNo = e;
+                that.getAttrGroupList();
             }
         }
     }
