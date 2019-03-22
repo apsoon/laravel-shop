@@ -5390,7 +5390,8 @@ __webpack_require__.r(__webpack_exports__);
       uploadData: {
         type: "image",
         position: "sku"
-      }
+      },
+      type: "create"
     };
   },
   mounted: function mounted() {
@@ -5398,6 +5399,7 @@ __webpack_require__.r(__webpack_exports__);
         spuId = that.$route.query.spuId,
         type = that.$route.query.type,
         user = sessionStorage.getItem('user');
+    that.type = type;
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
@@ -5414,7 +5416,7 @@ __webpack_require__.r(__webpack_exports__);
 
     if (type === 'modify') {
       var skuId = that.$route.query.skuId;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/sku/detail?skuId=" + skuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/sku-detail?skuId=" + skuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
         if (res.data.code === 2000) {
           var data = res.data.data;
           that.skuForm = {
@@ -5434,7 +5436,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onCreate: function onCreate() {
       var that = this;
-      that.$refs.brandForm.validate(function (valid) {
+      console.info("123");
+      that.$refs.skuForm.validate(function (valid) {
         if (valid) {
           var options = [],
               specList = that.specList;
@@ -5467,7 +5470,7 @@ __webpack_require__.r(__webpack_exports__);
           that.skuForm.adminId = that.adminId;
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/create", that.skuForm).then(function (res) {
             if (res.data.code === 2000) {
-              that.$router.push("/spu/detail?spuId=" + that.spuId + "&active=" + "sku");
+              that.$router.push("/spu-detail?spuId=" + that.spuId + "&active=" + "sku");
             }
           }).catch(function (err) {});
         } else {
@@ -5477,7 +5480,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     onUpdate: function onUpdate() {
       var that = this;
-      that.$refs.brandForm.validate(function (valid) {
+      that.$refs.skuForm.validate(function (valid) {
         if (valid) {
           var options = [],
               specList = that.specList;

@@ -101,6 +101,7 @@
                     type: "image",
                     position: "sku"
                 },
+                type: "create",
             }
         },
         mounted: function () {
@@ -108,6 +109,7 @@
                 spuId = that.$route.query.spuId,
                 type = that.$route.query.type,
                 user = sessionStorage.getItem('user');
+            that.type = type;
             user = JSON.parse(user);
             that.token = user.token;
             that.adminId = user.id;
@@ -125,7 +127,7 @@
             });
             if (type === 'modify') {
                 let skuId = that.$route.query.skuId;
-                axios.get("/sku/detail?skuId=" + skuId + "&adminId=" + that.adminId + "&token=" + that.token)
+                axios.get("/sku-detail?skuId=" + skuId + "&adminId=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         if (res.data.code === 2000) {
                             let data = res.data.data;
@@ -147,7 +149,8 @@
         methods: {
             onCreate: function () {
                 let that = this;
-                that.$refs.brandForm.validate((valid) => {
+                console.info("123");
+                that.$refs.skuForm.validate((valid) => {
                     if (valid) {
                         let options = [],
                             specList = that.specList;
@@ -160,7 +163,7 @@
                         axios.post("/sku/create", that.skuForm)
                             .then(res => {
                                 if (res.data.code === 2000) {
-                                    that.$router.push("/spu/detail?spuId=" + that.spuId + "&active=" + "sku");
+                                    that.$router.push("/spu-detail?spuId=" + that.spuId + "&active=" + "sku");
                                 }
                             }).catch(err => {
                         });
@@ -171,7 +174,7 @@
             },
             onUpdate: function () {
                 let that = this;
-                that.$refs.brandForm.validate((valid) => {
+                that.$refs.skuForm.validate((valid) => {
                     if (valid) {
                         let options = [],
                             specList = that.specList;
