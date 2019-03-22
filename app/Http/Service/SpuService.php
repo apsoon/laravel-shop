@@ -98,7 +98,7 @@ class SpuService
             else throw new \Exception("failed");
         } catch (\Exception $e) {
             Log::error(" [ SpuService] ================= createSpu >>>>> error happened when create a spu ");
-            Log::error(json_encode(e));
+            Log::error(json_encode($e));
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
     }
