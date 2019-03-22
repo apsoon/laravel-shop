@@ -3907,6 +3907,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdList",
@@ -91846,6 +91847,11 @@ var render = function() {
                 key: "default",
                 fn: function(scope) {
                   return [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(scope.row.image_url) +
+                        "\n                "
+                    ),
                     _c(
                       "el-popover",
                       {

@@ -12,12 +12,6 @@ use Illuminate\Support\Facades\Storage;
 
 class UploadMapi extends Controller
 {
-
-    /**
-     * @var UploadService
-     */
-    private $uploadService;
-
     /**
      * 上传图片
      *
@@ -81,16 +75,5 @@ class UploadMapi extends Controller
             Log::error(json_encode($e));
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
-    }
-
-    /**
-     * UploadMapi constructor.
-     *
-     * @param UploadService $uploadService
-     */
-    public function __construct(UploadService $uploadService)
-    {
-//        $this->middleware("auth-mapi");
-        $this->uploadService = $uploadService;
     }
 }
