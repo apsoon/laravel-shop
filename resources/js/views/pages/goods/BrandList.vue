@@ -43,8 +43,8 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-pagination background layout="total, sizes, prev, pager, next, jumper"
-                       :total="1000"
+        <el-pagination background layout="prev, pager, next, jumper"
+                       :total="totalBrand"
                        :page-sizes="[20, 50, 100]"
                        :page-size="20"
                        @current-change="onPageNoChanged"
@@ -64,7 +64,8 @@
                 pageNo: 1,
                 loading: true,
                 token: "",
-                adminId: ""
+                adminId: "",
+                totalBrand: 0
             }
         },
         mounted: function () {
@@ -73,19 +74,27 @@
             user = JSON.parse(user);
             that.token = user.token;
             that.adminId = user.id;
-            axios.get('brand/list' + "?adminId=" + that.adminId + "&token=" + that.token)
-                .then(res => {
-                    that.loading = false;
-                    if (res.data.code === 2000) {
-                        that.brandList = res.data.data;
-                        console.info(res.data.data);
-                    }
-                });
+            that.getBrandList();
+
         },
         methods: {
+            getBrandList: function () {
+                let that = this;
+                that.loading = true;
+                axios.get('brand/page-list?pageNo=' + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token)
+                    .then(res => {
+                        that.loading = false;
+                        if (res.data.code === 2000) {
+                            that.brandList = res.data.data.brandList;
+                            that.totalBrand = res.data.data.total;
+                        }
+                    }).catch(err => {
+                });
+            },
             onPageNoChanged: function (e) {
                 let that = this;
                 that.pageNo = e;
+                that.getBrandList();
             },
             modifyState: function (type, index, id) {
                 let that = this,

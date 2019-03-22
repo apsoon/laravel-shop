@@ -4714,7 +4714,8 @@ __webpack_require__.r(__webpack_exports__);
       pageNo: 1,
       loading: true,
       token: "",
-      adminId: ""
+      adminId: "",
+      totalBrand: 0
     };
   },
   mounted: function mounted() {
@@ -4723,19 +4724,25 @@ __webpack_require__.r(__webpack_exports__);
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('brand/list' + "?adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
-      that.loading = false;
-
-      if (res.data.code === 2000) {
-        that.brandList = res.data.data;
-        console.info(res.data.data);
-      }
-    });
+    that.getBrandList();
   },
   methods: {
+    getBrandList: function getBrandList() {
+      var that = this;
+      that.loading = true;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('brand/page-list?pageNo=' + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
+        that.loading = false;
+
+        if (res.data.code === 2000) {
+          that.brandList = res.data.data.brandList;
+          that.totalBrand = res.data.data.total;
+        }
+      }).catch(function (err) {});
+    },
     onPageNoChanged: function onPageNoChanged(e) {
       var that = this;
       that.pageNo = e;
+      that.getBrandList();
     },
     modifyState: function modifyState(type, index, id) {
       var _this = this;
@@ -92766,8 +92773,8 @@ var render = function() {
         },
         attrs: {
           background: "",
-          layout: "total, sizes, prev, pager, next, jumper",
-          total: 1000,
+          layout: "prev, pager, next, jumper",
+          total: _vm.totalBrand,
           "page-sizes": [20, 50, 100],
           "page-size": 20,
           "current-page": _vm.pageNo

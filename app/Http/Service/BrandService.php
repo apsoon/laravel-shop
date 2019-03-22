@@ -56,11 +56,14 @@ class BrandService
     {
         $pageNo = empty($info["pageNo"]) ? 1 : $info["pageNo"];
         $size = empty($info["size"]) ? 20 : $info["size"];
+        $result = new \stdClass();
         $brandList = $this->brandDao->findByPage($pageNo, $size);
         foreach ($brandList as $brand) {
             if (!empty($brand->logo)) $brand->logo = asset("storage" . $brand->logo);
         }
-        return new JsonResult(StatusCode::SUCCESS, $brandList);
+        $result->brandList = $brandList;
+        $result->total = Brand::count();
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
