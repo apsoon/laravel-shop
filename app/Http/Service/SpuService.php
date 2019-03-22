@@ -25,6 +25,7 @@ use App\Http\Model\SpuGallery;
 use App\Http\Model\SpuSpecOption;
 use App\Http\Util\JsonResult;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class SpuService
@@ -94,10 +95,12 @@ class SpuService
                 $result = $spuDetail->save();
             }
             if ($result) return new JsonResult();
+            else throw new \Exception("failed");
         } catch (\Exception $e) {
+            Log::error(" [ SpuService] ================= createSpu >>>>> error happened when create a spu ");
+            Log::error(json_encode(e));
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
-        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
