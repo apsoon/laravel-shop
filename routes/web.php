@@ -43,6 +43,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::GET("sku/detail", "SkuMapi@detail");
     Route::GET("sku/listBySpu", "SkuMapi@listBySpu");
     Route::POST("sku/recom", "SkuMapi@modifyRecom");
+    Route::POST("sku/hot", "SkuMapi@modifyHot");
     Route::POST("sku/modify-state", "SkuMapi@modifySkuState");
 
     // 分类

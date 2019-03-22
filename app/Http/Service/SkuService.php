@@ -204,14 +204,27 @@ class SkuService
     }
 
     /**
-     * 设置SKU是否热推
+     * 设置SKU是否推荐
      *
      * @param array $req
      * @return JsonResult
      */
     public function modifySkuRecom(array $req)
     {
-        $result = $this->skuDao->modifyRecomById($req["id"], $req["isRecom"]);
+        $result = $this->skuDao->modifyRecomById($req["id"], $req["isSet"]);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
+     * 设置SKU是否热销
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function modifySkuHot(array $req)
+    {
+        $result = $this->skuDao->modifyHotById($req["id"], $req["isSet"]);
         if ($result) return new JsonResult();
         return new JsonResult(StatusCode::SERVER_ERROR);
     }

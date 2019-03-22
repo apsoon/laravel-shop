@@ -80,7 +80,7 @@ class SkuMapi extends Controller
     }
 
     /**
-     * 设置SKU是否热推
+     * 设置SKU是否推荐
      *
      * @param Request $request
      * @return JsonResult
@@ -89,6 +89,18 @@ class SkuMapi extends Controller
     {
         $req = $request->all();
         return $this->skuService->modifySkuRecom($req);
+    }
+
+    /**
+     * 设置SKU是否热销
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function modifyHot(Request $request)
+    {
+        $req = $request->all();
+        return $this->skuService->modifySkuHot($req);
     }
 
     public function modifySkuState(Request $request)

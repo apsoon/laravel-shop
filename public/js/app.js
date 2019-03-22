@@ -6121,6 +6121,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -6276,26 +6288,26 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       that.active = tab.name;
     },
-    modifySkuRecom: function modifySkuRecom(type, node) {
+    modifySkuSpecial: function modifySkuSpecial(type, isSet, node) {
       var that = this,
-          message = "设置为";
-      if (type === 0) message = "取消";
-      that.$confirm("是否" + message + "首页推荐商品", '警告', {
+          messageSet = "设置为",
+          messageType = "推荐";
+      if (type === 'hot') messageType = "热销";
+      if (isSet === 0) messageSet = "取消";
+      that.$confirm("是否" + messageSet + '首页' + messageType + '推荐商品', '警告', {
         confirmButtonText: "确认",
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
-        var isRecom = type === 'add' ? 1 : 0,
-            data = {
+        var data = {
           id: node.row.id,
-          isRecom: isRecom,
+          isSet: isSet,
           token: that.token,
           adminId: that.adminId
         };
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/recom", data).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/sku/" + type, data).then(function (res) {
           if (res.data.code === 2000) {
-            console.info(node);
-            node.row.is_recom = isRecom;
+            if (type === 'recom') node.row.is_recom = isSet;else if (type === 'hot') node.row.is_hot = isSet;
           }
         });
       }).catch(function () {
@@ -94185,7 +94197,7 @@ var render = function() {
                   _c("el-table-column", {
                     attrs: {
                       prop: "is_recom",
-                      label: "是否热销",
+                      label: "是否推荐",
                       width: "100px",
                       align: "center"
                     },
@@ -94195,6 +94207,27 @@ var render = function() {
                         fn: function(scope) {
                           return [
                             scope.row.is_recom === 1
+                              ? _c("span", [_vm._v("是")])
+                              : _c("span", [_vm._v("否")])
+                          ]
+                        }
+                      }
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: {
+                      prop: "is_hot",
+                      label: "是否热销",
+                      width: "100px",
+                      align: "center"
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            scope.row.is_hot === 1
                               ? _c("span", [_vm._v("是")])
                               : _c("span", [_vm._v("否")])
                           ]
@@ -94288,7 +94321,7 @@ var render = function() {
                                     attrs: { type: "primary", size: "mini" },
                                     on: {
                                       click: function($event) {
-                                        _vm.modifySkuRecom("add", scope)
+                                        _vm.modifySkuSpecial("recom", 1, scope)
                                       }
                                     }
                                   },
@@ -94300,11 +94333,37 @@ var render = function() {
                                     attrs: { type: "primary", size: "mini" },
                                     on: {
                                       click: function($event) {
-                                        _vm.modifySkuRecom("remove", scope)
+                                        _vm.modifySkuSpecial("recom", 0, scope)
                                       }
                                     }
                                   },
-                                  [_vm._v("取消热推\n                        ")]
+                                  [_vm._v("取消推荐\n                        ")]
+                                ),
+                            _vm._v(" "),
+                            scope.row.is_hot === 0
+                              ? _c(
+                                  "el-button",
+                                  {
+                                    attrs: { type: "primary", size: "mini" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.modifySkuSpecial("hot", 1, scope)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("设置热销\n                        ")]
+                                )
+                              : _c(
+                                  "el-button",
+                                  {
+                                    attrs: { type: "primary", size: "mini" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.modifySkuSpecial("hot", 0, scope)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("取消热销\n                        ")]
                                 )
                           ]
                         }

@@ -168,15 +168,27 @@ class SkuDao
     }
 
     /**
-     * 设置热推
+     * 设置推荐
      *
      * @param $id
-     * @param $isRecom
+     * @param $isSet
      * @return mixed
      */
-    public function modifyRecomById($id, $isRecom)
+    public function modifyRecomById($id, $isSet)
     {
-        return $this->sku::where("id", "=", $id)->update(["is_recom" => $isRecom]);
+        return $this->sku::where("id", "=", $id)->update(["is_recom" => $isSet]);
+    }
+
+    /**
+     * 设置热销
+     *
+     * @param $id
+     * @param $isSet
+     * @return mixed
+     */
+    public function modifyHotById($id, $isSet)
+    {
+        return $this->sku::where("id", "=", $id)->update(["is_hot" => $isSet]);
     }
 
     /**

@@ -97,9 +97,15 @@
                             <span v-else>已下架</span>
                         </template>
                     </el-table-column>
-                    <el-table-column prop="is_recom" label="是否热销" width="100px" align="center">
+                    <el-table-column prop="is_recom" label="是否推荐" width="100px" align="center">
                         <template slot-scope="scope">
                             <span v-if="scope.row.is_recom === 1">是</span>
+                            <span v-else>否</span>
+                        </template>
+                    </el-table-column>
+                    <el-table-column prop="is_hot" label="是否热销" width="100px" align="center">
+                        <template slot-scope="scope">
+                            <span v-if="scope.row.is_hot === 1">是</span>
                             <span v-else>否</span>
                         </template>
                     </el-table-column>
@@ -117,11 +123,17 @@
                             </el-button>
                             <el-button size="mini" type="danger" @click="deleteAd(scope.$index, scope.row.id)">删除
                             </el-button>
-                            <el-button type="primary" size="mini" @click="modifySkuRecom('add', scope)"
+                            <el-button type="primary" size="mini" @click="modifySkuSpecial('recom', 1, scope)"
                                        v-if="scope.row.is_recom === 0">设置推荐
                             </el-button>
-                            <el-button type="primary" size="mini" @click="modifySkuRecom('remove', scope)"
-                                       v-else>取消热推
+                            <el-button type="primary" size="mini" @click="modifySkuSpecial('recom', 0, scope)"
+                                       v-else>取消推荐
+                            </el-button>
+                            <el-button type="primary" size="mini" @click="modifySkuSpecial('hot', 1, scope)"
+                                       v-if="scope.row.is_hot === 0">设置热销
+                            </el-button>
+                            <el-button type="primary" size="mini" @click="modifySkuSpecial('hot', 0, scope)"
+                                       v-else>取消热销
                             </el-button>
                         </template>
                     </el-table-column>
@@ -315,27 +327,28 @@
                 let that = this;
                 that.active = tab.name;
             },
-            modifySkuRecom: function (type, node) {
+            modifySkuSpecial: function (type, isSet, node) {
                 let that = this,
-                    message = "设置为";
-                if (type === 0) message = "取消";
-                that.$confirm("是否" + message + "首页推荐商品", '警告', {
+                    messageSet = "设置为",
+                    messageType = "推荐";
+                if (type === 'hot') messageType = "热销";
+                if (isSet === 0) messageSet = "取消";
+                that.$confirm("是否" + messageSet + '首页' + messageType + '推荐商品', '警告', {
                     confirmButtonText: "确认",
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    let isRecom = type === 'add' ? 1 : 0,
-                        data = {
-                            id: node.row.id,
-                            isRecom: isRecom,
-                            token: that.token,
-                            adminId: that.adminId
-                        };
-                    axios.post("/sku/recom", data)
+                    let data = {
+                        id: node.row.id,
+                        isSet: isSet,
+                        token: that.token,
+                        adminId: that.adminId
+                    };
+                    axios.post("/sku/" + type, data)
                         .then(res => {
                             if (res.data.code === 2000) {
-                                console.info(node);
-                                node.row.is_recom = isRecom
+                                if (type === 'recom') node.row.is_recom = isSet;
+                                else if (type === 'hot') node.row.is_hot = isSet;
                             }
                         })
                 }).catch(() => {
