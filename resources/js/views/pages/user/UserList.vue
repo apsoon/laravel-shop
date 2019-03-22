@@ -13,8 +13,8 @@
             <el-table-column prop="phone" label="电话" width="150"/>
             <el-table-column prop="created_at" label="注册时间" min-width="1"/>
         </el-table>
-        <el-pagination background layout="total, sizes, prev, pager, next, jumper"
-                       :total="1000"
+        <el-pagination background layout="prev, pager, next, jumper"
+                       :total="totalUser"
                        :page-sizes="[20, 50, 100]"
                        :page-size="20"
                        @current-change="onPageNoChanged"
@@ -34,7 +34,8 @@
                 pageNo: 1,
                 loading: true,
                 token: "",
-                adminId: ""
+                adminId: "",
+                totalUser: 0
             }
         },
         mounted: function () {
@@ -43,19 +44,25 @@
             user = JSON.parse(user);
             that.token = user.token;
             that.adminId = user.id;
-            axios.get("user/list-page?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token)
-                .then(res => {
-                    that.loading = false;
-                    if (res.data.code === 2000) {
-                        that.userList = res.data.data;
-                    }
-                }).catch(err => {
-            });
+            that.getUserList();
         },
         methods: {
+            getUserList: function () {
+                let that = this;
+                axios.get("user/list-page?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token)
+                    .then(res => {
+                        that.loading = false;
+                        if (res.data.code === 2000) {
+                            that.userList = res.data.data.userList;
+                            that.totalUser = res.data.data.total;
+                        }
+                    }).catch(err => {
+                });
+            },
             onPageNoChanged: function (e) {
                 let that = this;
                 that.pageNo = e;
+                that.getUserList();
             }
         }
     }

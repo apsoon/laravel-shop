@@ -8006,7 +8006,8 @@ __webpack_require__.r(__webpack_exports__);
       pageNo: 1,
       loading: true,
       token: "",
-      adminId: ""
+      adminId: "",
+      totalUser: 0
     };
   },
   mounted: function mounted() {
@@ -8015,18 +8016,24 @@ __webpack_require__.r(__webpack_exports__);
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("user/list-page?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
-      that.loading = false;
-
-      if (res.data.code === 2000) {
-        that.userList = res.data.data;
-      }
-    }).catch(function (err) {});
+    that.getUserList();
   },
   methods: {
+    getUserList: function getUserList() {
+      var that = this;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("user/list-page?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
+        that.loading = false;
+
+        if (res.data.code === 2000) {
+          that.userList = res.data.data.userList;
+          that.totalUser = res.data.data.total;
+        }
+      }).catch(function (err) {});
+    },
     onPageNoChanged: function onPageNoChanged(e) {
       var that = this;
       that.pageNo = e;
+      that.getUserList();
     }
   }
 });
@@ -97153,8 +97160,8 @@ var render = function() {
         },
         attrs: {
           background: "",
-          layout: "total, sizes, prev, pager, next, jumper",
-          total: 1000,
+          layout: "prev, pager, next, jumper",
+          total: _vm.totalUser,
           "page-sizes": [20, 50, 100],
           "page-size": 20,
           "current-page": _vm.pageNo

@@ -96,7 +96,9 @@ class UserService
     {
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = 20;
-        $result = $this->userDao->listByPage($pageNo, $size);
+        $result = new \stdClass();
+        $result->userList = $this->userDao->listByPage($pageNo, $size);
+        $result->total = User::count();
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
