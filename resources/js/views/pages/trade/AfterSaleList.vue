@@ -45,7 +45,8 @@
                        :page-sizes="[20, 50, 100]"
                        :page-size="20"
                        @current-change="onPageNoChanged"
-                       :current-page.sync="pageNo"/>
+                       :current-page.sync="pageNo"
+                       style="margin-top: 20px; margin-bottom: 20px; float: right;"/>
     </el-card>
 </template>
 
@@ -85,7 +86,7 @@
                         that.loading = false;
                         if (res.data.code === 2000) {
                             that.afSaleList = res.data.data.afSaleList;
-                            that.toatlAf = res.data.data.totalAf;
+                            that.totalAf = res.data.data.total;
                         }
                     }).catch(err => {
                 });

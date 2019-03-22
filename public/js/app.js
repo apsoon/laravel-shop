@@ -7113,7 +7113,8 @@ __webpack_require__.r(__webpack_exports__);
       couponList: [],
       loading: true,
       token: "",
-      adminId: ""
+      adminId: "",
+      totalCoupon: 0
     };
   },
   mounted: function mounted() {
@@ -7122,20 +7123,25 @@ __webpack_require__.r(__webpack_exports__);
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/coupon/list?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
-      that.loading = false;
-
-      if (res.data.code === 2000) {
-        that.couponList = res.data.data;
-      }
-
-      console.info(that.couponList);
-    }).catch(function (err) {});
+    that.getCouponList();
   },
   methods: {
+    getCouponList: function getCouponList() {
+      var that = this;
+      that.loading = true;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/coupon/list?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
+        that.loading = false;
+
+        if (res.data.code === 2000) {
+          that.couponList = res.data.data.couponList;
+          that.totalCoupon = res.data.data.total;
+        }
+      }).catch(function (err) {});
+    },
     onPageNoChanged: function onPageNoChanged(e) {
       var that = this;
       that.pageNo = e;
+      that.getCouponList();
     }
   }
 });
@@ -7424,6 +7430,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AfterSaleList",
@@ -7460,7 +7467,7 @@ __webpack_require__.r(__webpack_exports__);
 
         if (res.data.code === 2000) {
           that.afSaleList = res.data.data.afSaleList;
-          that.toatlAf = res.data.data.totalAf;
+          that.totalAf = res.data.data.total;
         }
       }).catch(function (err) {});
     },
@@ -95725,8 +95732,8 @@ var render = function() {
         },
         attrs: {
           background: "",
-          layout: "total, sizes, prev, pager, next, jumper",
-          total: 1000,
+          layout: "prev, pager, next, jumper",
+          total: _vm.totalCoupon,
           "page-sizes": [20, 50, 100],
           "page-size": 20,
           "current-page": _vm.pageNo
@@ -96249,6 +96256,11 @@ var render = function() {
       ),
       _vm._v(" "),
       _c("el-pagination", {
+        staticStyle: {
+          "margin-top": "20px",
+          "margin-bottom": "20px",
+          float: "right"
+        },
         attrs: {
           background: "",
           layout: "prev, pager, next, jumper",

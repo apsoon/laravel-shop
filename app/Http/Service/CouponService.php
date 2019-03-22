@@ -79,7 +79,9 @@ class CouponService
     {
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = 20;
-        $result = $this->couponDao->findByPage($pageNo, $size);
+        $result = new \stdClass();
+        $result->couponList = $this->couponDao->findByPage($pageNo, $size);
+        $result->total = Coupon::count();
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 

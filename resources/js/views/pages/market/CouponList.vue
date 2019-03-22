@@ -56,8 +56,8 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-pagination background layout="total, sizes, prev, pager, next, jumper"
-                       :total="1000"
+        <el-pagination background layout="prev, pager, next, jumper"
+                       :total="totalCoupon"
                        :page-sizes="[20, 50, 100]"
                        :page-size="20"
                        @current-change="onPageNoChanged"
@@ -78,6 +78,7 @@
                 loading: true,
                 token: "",
                 adminId: "",
+                totalCoupon: 0
             }
         },
         mounted: function () {
@@ -86,20 +87,26 @@
             user = JSON.parse(user);
             that.token = user.token;
             that.adminId = user.id;
-            axios.get("/coupon/list?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token)
-                .then(res => {
-                    that.loading = false;
-                    if (res.data.code === 2000) {
-                        that.couponList = res.data.data
-                    }
-                    console.info(that.couponList);
-                }).catch(err => {
-            });
+            that.getCouponList();
         },
         methods: {
+            getCouponList: function () {
+                let that = this;
+                that.loading = true;
+                axios.get("/coupon/list?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token)
+                    .then(res => {
+                        that.loading = false;
+                        if (res.data.code === 2000) {
+                            that.couponList = res.data.data.couponList;
+                            that.totalCoupon = res.data.data.total;
+                        }
+                    }).catch(err => {
+                });
+            },
             onPageNoChanged: function (e) {
                 let that = this;
                 that.pageNo = e;
+                that.getCouponList();
             }
         }
     }
