@@ -10,6 +10,7 @@ namespace App\Http\Dao;
 
 
 use App\Http\Model\Admin;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class AdminDao
@@ -41,6 +42,17 @@ class AdminDao
     public function findByName($name)
     {
         return $this->admin::where("name", "=", $name)->first();
+    }
+
+    /**
+     * @param $adminId
+     * @return mixed
+     */
+    public function findById($adminId)
+    {
+        $result = $this->admin::where("id", "=", $adminId)->first();
+        Log::info($result);
+        return $result;
     }
 
     /**

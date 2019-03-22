@@ -10,7 +10,9 @@ namespace App\Http\Service;
 
 
 use App\Http\Dao\AdminDao;
+use App\Http\Dao\SkuDao;
 use App\Http\Enum\StatusCode;
+use App\Http\Model\Admin;
 use App\Http\Util\JsonResult;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -44,6 +46,7 @@ class AdminService
         unset($admin->email_verified_at);
         unset($admin->updated_at);
         unset($admin->created_at);
+        unset($admin->is_root);
         $admin->token = $token;
         return new JsonResult(StatusCode::SUCCESS, $admin);
     }
@@ -69,7 +72,35 @@ class AdminService
      */
     public function createAdmin(array $req)
     {
-        return new JsonResult();
+        $admin = $this->adminDao->findById($req["adminId"]);
+        Log::info($req);
+        Log::info($admin->password);
+        if (empty($admin) || $admin->is_root == 0 || $admin->password != $req["originPwd"]) return new JsonResult(StatusCode::PARAM_ERROR);
+        $new = new Admin();
+        $new->name = $req["name"];
+        $new->email = $req["email"];
+        $new->phone = $req["phone"];
+        $new->password = $req["password"];
+        if ($new->save()) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
+     * 更新
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function updateAdmin(array $req)
+    {
+        $admin = $this->adminDao->findById($req["adminId"]);
+        if (empty($admin) || $admin->password != $req["originPwd"]) return new JsonResult(StatusCode::PARAM_ERROR);
+        if (!empty($req["name"])) $admin->name = $req["name"];
+        if (!empty($req["email"])) $admin->email = $req["email"];
+        if (!empty($req["phone"])) $admin->phone = $req["phone"];
+        if (!empty($req["password"])) $admin->password = $req["password"];
+        if ($admin->save()) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**
@@ -82,6 +113,7 @@ class AdminService
         $adminList = $this->adminDao->findAll();
         foreach ($adminList as $admin) {
             unset($admin->password);
+            unset($admin->is_root);
         }
         return new JsonResult(StatusCode::SUCCESS, $adminList);
     }

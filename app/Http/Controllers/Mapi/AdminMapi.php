@@ -31,6 +31,12 @@ class AdminMapi extends Controller
         return $this->adminService->createAdmin($req);
     }
 
+    public function update(Request $request)
+    {
+       $req = $request->all();
+       return $this->adminService->updateAdmin($req);
+    }
+
     /**
      * admin列表
      *

@@ -13,8 +13,7 @@
             <el-table-column label="注册时间" prop="created_at" width="200"/>
             <el-table-column label="操作" min-width="1">
                 <template slot-scope="scope">
-                    <router-link :to="{path: '/admin-edit', query: {type: 'modify', adminId:scope.row.id}}"
-                                 v-if="scope.row.id === adminId">
+                    <router-link :to="{path: '/admin-edit', query: {type: 'modify', adminId:scope.row.id}}">
                         <el-button type="warning" size="medium">修改资料</el-button>
                     </router-link>
                 </template>

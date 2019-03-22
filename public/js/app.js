@@ -7005,10 +7005,7 @@ __webpack_require__.r(__webpack_exports__);
           required: true,
           message: '请输入优惠券编号',
           trigger: 'blur'
-        }] // value: [
-        //     {required: true, message: '请输入优惠券面值', trigger: 'blur'}
-        // ]
-
+        }]
       },
       effectDate: [],
       token: "",
@@ -7181,6 +7178,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var md5__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! md5 */ "./node_modules/md5/md5.js");
+/* harmony import */ var md5__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(md5__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -7211,18 +7210,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdminEdit",
   data: function data() {
     var _this = this;
 
+    var validatePassword = function validatePassword(rule, value, callback) {
+      if (_this.type === 'create' && value === '') {
+        callback(new Error('请输入密码'));
+      } else {
+        callback();
+      }
+    };
+
     var validatePasswordConfirm = function validatePasswordConfirm(rule, value, callback) {
-      if (value === '') {
-        callback(new Error('请再次输入管理员密码'));
+      if (_this.type === 'create' && value === '') {
+        callback(new Error('请再次输入密码'));
       } else if (value !== _this.adminForm.password) {
         callback(new Error('两次输入密码不一致!'));
       } else {
@@ -7237,42 +7242,38 @@ __webpack_require__.r(__webpack_exports__);
         phone: "",
         password: "",
         confirm: "",
-        oldPwd: ""
+        originPwd: ""
       },
       rules: {
         name: [{
           required: true,
-          message: '请输入管理员名称',
+          message: '请输入名称',
           trigger: 'blur'
         }],
         email: [{
           required: true,
-          message: '请输入管理员邮箱',
+          message: '请输入邮箱',
           trigger: 'blur'
         }],
         phone: [{
           required: true,
-          message: '请输入管理员电话',
+          message: '请输入电话',
           trigger: 'blur'
         }],
-        oldPwd: [{
+        originPwd: [{
           required: true,
-          message: '请输入原管理员密码',
+          message: '请输入登录密码',
           trigger: 'blur'
         }],
         password: [{
-          required: true,
-          message: '请输入新管理员密码',
+          validator: validatePassword,
           trigger: 'blur'
         }],
         confirm: [{
-          required: true,
           validator: validatePasswordConfirm,
           trigger: 'blur'
         }]
       },
-      password: "",
-      confirm: "",
       type: "create",
       token: "",
       adminId: ""
@@ -7289,19 +7290,40 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     onSubmit: function onSubmit() {
+      var _this2 = this;
+
       var that = this;
-      that.$refs.couponForm.validate(function (valid) {
+      that.$refs.adminForm.validate(function (valid) {
         if (valid) {
           that.adminForm.token = that.token;
           that.adminForm.adminId = that.adminId;
+          that.adminForm.originPwd = md5__WEBPACK_IMPORTED_MODULE_1___default()(that.adminForm.originPwd);
+          that.adminForm.password = md5__WEBPACK_IMPORTED_MODULE_1___default()(that.adminForm.password);
+          that.adminForm.confirm = md5__WEBPACK_IMPORTED_MODULE_1___default()(that.adminForm.confirm);
 
           if (that.type === 'create') {
             axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("admin/create", that.adminForm).then(function (res) {
               if (res.data.code === 2000) {
                 that.$router.push("/admin-list");
+              } else {
+                _this2.$message({
+                  type: 'error',
+                  message: '参数错误或无相映权限'
+                });
               }
             }).catch(function (err) {});
-          } else if (that.type === 'modify') {}
+          } else if (that.type === 'modify') {
+            axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("admin/update", that.adminForm).then(function (res) {
+              if (res.data.code === 2000) {
+                that.$router.push("/");
+              } else {
+                _this2.$message({
+                  type: 'error',
+                  message: '参数错误或无相映权限'
+                });
+              }
+            }).catch(function (err) {});
+          }
         }
       });
     }
@@ -7321,7 +7343,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-//
 //
 //
 //
@@ -95903,30 +95924,6 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _vm.type === "modify"
-            ? _c(
-                "el-form-item",
-                { attrs: { prop: "oldPwd", label: "旧密码" } },
-                [
-                  _c("el-input", {
-                    attrs: {
-                      type: "password",
-                      placeholder: "请输入原密码",
-                      "show-password": ""
-                    },
-                    model: {
-                      value: _vm.adminForm.oldPwd,
-                      callback: function($$v) {
-                        _vm.$set(_vm.adminForm, "oldPwd", $$v)
-                      },
-                      expression: "adminForm.oldPwd"
-                    }
-                  })
-                ],
-                1
-              )
-            : _vm._e(),
-          _vm._v(" "),
           _c(
             "el-form-item",
             { attrs: { prop: "password", label: "新密码" } },
@@ -95971,29 +95968,27 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _vm.type === "create"
-            ? _c(
-                "el-form-item",
-                { attrs: { prop: "rootPwd", label: "管理员密码" } },
-                [
-                  _c("el-input", {
-                    attrs: {
-                      type: "password",
-                      placeholder: "请输入原管理员密码",
-                      "show-password": ""
-                    },
-                    model: {
-                      value: _vm.adminForm.rootPwd,
-                      callback: function($$v) {
-                        _vm.$set(_vm.adminForm, "rootPwd", $$v)
-                      },
-                      expression: "adminForm.rootPwd"
-                    }
-                  })
-                ],
-                1
-              )
-            : _vm._e()
+          _c(
+            "el-form-item",
+            { attrs: { prop: "originPwd", label: "登录密码" } },
+            [
+              _c("el-input", {
+                attrs: {
+                  type: "password",
+                  placeholder: "请输入登录密码",
+                  "show-password": ""
+                },
+                model: {
+                  value: _vm.adminForm.originPwd,
+                  callback: function($$v) {
+                    _vm.$set(_vm.adminForm, "originPwd", $$v)
+                  },
+                  expression: "adminForm.originPwd"
+                }
+              })
+            ],
+            1
+          )
         ],
         1
       ),
@@ -96105,27 +96100,25 @@ var render = function() {
                 key: "default",
                 fn: function(scope) {
                   return [
-                    scope.row.id === _vm.adminId
-                      ? _c(
-                          "router-link",
-                          {
-                            attrs: {
-                              to: {
-                                path: "/admin-edit",
-                                query: { type: "modify", adminId: scope.row.id }
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "el-button",
-                              { attrs: { type: "warning", size: "medium" } },
-                              [_vm._v("修改资料")]
-                            )
-                          ],
-                          1
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: {
+                            path: "/admin-edit",
+                            query: { type: "modify", adminId: scope.row.id }
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "el-button",
+                          { attrs: { type: "warning", size: "medium" } },
+                          [_vm._v("修改资料")]
                         )
-                      : _vm._e()
+                      ],
+                      1
+                    )
                   ]
                 }
               }

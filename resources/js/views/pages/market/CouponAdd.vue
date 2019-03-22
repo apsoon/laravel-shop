@@ -95,9 +95,6 @@
                     sn: [
                         {required: true, message: '请输入优惠券编号', trigger: 'blur'}
                     ],
-                    // value: [
-                    //     {required: true, message: '请输入优惠券面值', trigger: 'blur'}
-                    // ]
                 },
                 effectDate: [],
                 token: "",
