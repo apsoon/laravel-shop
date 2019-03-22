@@ -11,6 +11,8 @@ namespace App\Http\Service;
 
 use App\Http\Dao\AfterSaleDao;
 use App\Http\Dao\OrderDao;
+use App\Http\Dao\SkuDao;
+use App\Http\Dao\UserDao;
 use App\Http\Enum\AfterSaleStatus;
 use App\Http\Enum\OrderStatus;
 use App\Http\Enum\StatusCode;
@@ -26,6 +28,11 @@ use Illuminate\Support\Facades\Log;
 class AfterSaleService
 {
     /**
+     * @var UserDao
+     */
+    private $userDao;
+
+    /**
      * @var AfterSaleDao
      */
     private $afterSaleDao;
@@ -34,6 +41,11 @@ class AfterSaleService
      * @var OrderDao
      */
     private $orderDao;
+
+    /**
+     * @var SkuDao
+     */
+    private $skuDao;
 
     /**
      * 创建售后
@@ -45,11 +57,6 @@ class AfterSaleService
     {
         if (empty($req["userId"]) || empty($req["orderSn"]) || empty($req["skuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $order = $this->orderDao->findBySn($req["orderSn"]);
-        Log::info("=======================");
-        Log::info($order);
-        Log::info(empty($order));
-        Log::info($order->user_id != $req["userId"]);
-        Log::info(($order->state < OrderStatus::COMMENT_REQUIRED));
         if (empty($order) || $order->user_id != $req["userId"] || ($order->state < OrderStatus::COMMENT_REQUIRED["code"]))
             return new JsonResult(StatusCode::PARAM_ERROR);
         $afterSale = new AfterSale();
@@ -107,8 +114,22 @@ class AfterSaleService
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = empty($req["size"]) ? 20 : $req["size"];
         $type = $req["type"];
-        if ($type === "all") $result = $this->afterSaleDao->findPagedList($pageNo, $size);
-        else $result = $this->afterSaleDao->findPagedListByState(AfterSaleStatus::findByKey($type)["code"], $pageNo, $size);
+        $result = new \stdClass();
+        if ($type === "all") {
+            $afSaleList = $this->afterSaleDao->findPagedList($pageNo, $size);
+            $result->total = AfterSale::count();
+        } else {
+            $state = AfterSaleStatus::findByKey($type)["code"];
+            $afSaleList = $this->afterSaleDao->findPagedListByState($state, $pageNo, $size);
+            $result->total = AfterSale::where("state", "=", $state)->count();
+        }
+        foreach ($afSaleList as $afSale) {
+            $user = $this->userDao->findByUserId($afSale->user_id);
+            $afSale->nickname = $user->nickname;
+            $sku = $this->skuDao->findById($afSale->sku_id);
+            $afSale->sku_name = $sku->name;
+        }
+        $result->afSaleList = $afSaleList;
         return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
@@ -130,10 +151,14 @@ class AfterSaleService
      *
      * @param AfterSaleDao $afterSaleDao
      * @param OrderDao $orderDao
+     * @param UserDao $userDao
+     * @param SkuDao $skuDao
      */
-    public function __construct(AfterSaleDao $afterSaleDao, OrderDao $orderDao)
+    public function __construct(AfterSaleDao $afterSaleDao, OrderDao $orderDao, UserDao $userDao, SkuDao $skuDao)
     {
         $this->afterSaleDao = $afterSaleDao;
         $this->orderDao = $orderDao;
+        $this->userDao = $userDao;
+        $this->skuDao = $skuDao;
     }
 }

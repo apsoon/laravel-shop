@@ -7418,6 +7418,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AfterSaleList",
@@ -7427,7 +7433,8 @@ __webpack_require__.r(__webpack_exports__);
       active: "all",
       pageNo: 1,
       token: "",
-      adminId: ""
+      adminId: "",
+      totalAf: 0
     };
   },
   mounted: function mounted() {
@@ -7452,7 +7459,8 @@ __webpack_require__.r(__webpack_exports__);
         that.loading = false;
 
         if (res.data.code === 2000) {
-          that.afSaleList = res.data.data;
+          that.afSaleList = res.data.data.afSaleList;
+          that.toatlAf = res.data.data.totalAf;
         }
       }).catch(function (err) {});
     },
@@ -7479,7 +7487,7 @@ __webpack_require__.r(__webpack_exports__);
           token: that.token,
           adminId: that.adminId
         }).then(function (res) {
-          if (res.data.code === 2000) that.commentList[index].state = state;
+          if (res.data.code === 2000) that.afSaleList[index].state = state;
         });
       }).catch(function () {
         _this.$message({
@@ -7491,6 +7499,7 @@ __webpack_require__.r(__webpack_exports__);
     onPageNoChanged: function onPageNoChanged(e) {
       var that = this;
       that.pageNo = e;
+      that.getAfterSaleList();
     }
   }
 });
@@ -96149,11 +96158,11 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "用户", prop: "user_id", width: "150" }
+            attrs: { label: "用户", prop: "nickname", width: "150" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "商品", prop: "sku_id", width: "100" }
+            attrs: { label: "商品", prop: "sku_name", width: "100" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -96237,7 +96246,24 @@ var render = function() {
           })
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("el-pagination", {
+        attrs: {
+          background: "",
+          layout: "prev, pager, next, jumper",
+          total: _vm.totalAf,
+          "page-sizes": [20, 50, 100],
+          "page-size": 20,
+          "current-page": _vm.pageNo
+        },
+        on: {
+          "current-change": _vm.onPageNoChanged,
+          "update:currentPage": function($event) {
+            _vm.pageNo = $event
+          }
+        }
+      })
     ],
     1
   )

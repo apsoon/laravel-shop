@@ -13,8 +13,8 @@
         <el-table ref="afSaleList" tooltip-effect="dark" width="100%" :data="afSaleList" stripe v-loading="loading">
             <el-table-column type="selection" width="55"/>
             <el-table-column label="订单号" prop="order_sn" width="250"/>
-            <el-table-column label="用户" prop="user_id" width="150"/>
-            <el-table-column label="商品" prop="sku_id" width="100"/>
+            <el-table-column label="用户" prop="nickname" width="150"/>
+            <el-table-column label="商品" prop="sku_name" width="100"/>
             <el-table-column label="售后原因" prop="reason" width="150"/>
             <el-table-column label="描述" prop="describe" min-width="1"/>
             <el-table-column label="售后状态" prop="state" width="100">
@@ -40,6 +40,12 @@
                 </template>
             </el-table-column>
         </el-table>
+        <el-pagination background layout="prev, pager, next, jumper"
+                       :total="totalAf"
+                       :page-sizes="[20, 50, 100]"
+                       :page-size="20"
+                       @current-change="onPageNoChanged"
+                       :current-page.sync="pageNo"/>
     </el-card>
 </template>
 
@@ -55,6 +61,7 @@
                 pageNo: 1,
                 token: "",
                 adminId: "",
+                totalAf: 0,
             }
         },
         mounted: function () {
@@ -77,7 +84,8 @@
                     .then(res => {
                         that.loading = false;
                         if (res.data.code === 2000) {
-                            that.afSaleList = res.data.data;
+                            that.afSaleList = res.data.data.afSaleList;
+                            that.toatlAf = res.data.data.totalAf;
                         }
                     }).catch(err => {
                 });
@@ -101,7 +109,7 @@
                         token: that.token,
                         adminId: that.adminId
                     }).then(res => {
-                        if (res.data.code === 2000) that.commentList[index].state = state;
+                        if (res.data.code === 2000) that.afSaleList[index].state = state;
                     });
                 }).catch(() => {
                     this.$message({
@@ -113,6 +121,7 @@
             onPageNoChanged: function (e) {
                 let that = this;
                 that.pageNo = e;
+                that.getAfterSaleList();
             }
         }
     }
