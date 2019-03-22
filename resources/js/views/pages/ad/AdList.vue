@@ -44,8 +44,8 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-pagination background layout="total, sizes, prev, pager, next, jumper"
-                       :total="1000"
+        <el-pagination background layout="prev, pager, next, jumper"
+                       :total="totalAd"
                        :page-sizes="[20, 50, 100]"
                        :page-size="20"
                        @current-change="onPageNoChanged"
@@ -66,6 +66,7 @@
                 loading: true,
                 token: "",
                 adminId: "",
+                totalAd: 0,
             }
         },
         mounted: function () {
@@ -74,14 +75,21 @@
             user = JSON.parse(user);
             that.token = user.token;
             that.adminId = user.id;
-            ;
-            axios.get('ad/list' + "?adminId=" + that.adminId + "&token=" + that.token)
-                .then(res => {
-                    that.adList = res.data.data;
-                    that.loading = false;
-                });
+            that.getAdList();
         },
         methods: {
+            getAdList: function () {
+                let that = this;
+                that.loading = true;
+                axios.get('ad/list' + "?adminId=" + that.adminId + "&token=" + that.token)
+                    .then(res => {
+                        that.loading = false;
+                        if (res.data.code === 2000) {
+                            that.adList = res.data.data.adList;
+                            that.totalAd = res.data.data.total
+                        }
+                    });
+            },
             modifyState: function (type, index, id) {
                 let that = this,
                     state = 1;
@@ -181,6 +189,7 @@
             onPageNoChanged: function (e) {
                 let that = this;
                 that.pageNo = e;
+                that.getAdList();
             }
         }
     }

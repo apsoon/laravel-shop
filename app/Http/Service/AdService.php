@@ -86,15 +86,20 @@ class AdService
      *
      * @return JsonResult
      */
-    public function getAdList()
+    public function getPagedAdList()
     {
-        $adList = $this->adDao->findAll();
+        $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
+        $size = 20;
+        $adList = $this->adDao->findByPage($pageNo, $size);
         if (Config::UPLOAD_TO_PUBLIC) {
             foreach ($adList as $ad) {
                 $ad->image_url = asset("storage/" . $ad->image_url);
             }
         }
-        return new JsonResult(StatusCode::SUCCESS, $adList);
+        $result = new \stdClass();
+        $result->adList = $adList;
+        $result->total = Ad::count();
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**

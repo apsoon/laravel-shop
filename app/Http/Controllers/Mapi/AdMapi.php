@@ -27,9 +27,9 @@ class AdMapi extends Controller
      *
      * @return JsonResult
      */
-    public function list()
+    public function listByPage()
     {
-        return $this->adService->getAdList();
+        return $this->adService->getPagedAdList();
     }
 
     /**

@@ -49,6 +49,7 @@
         methods: {
             getUserList: function () {
                 let that = this;
+                that.loading = true;
                 axios.get("user/list-page?pageNo=" + that.pageNo + "&adminId=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         that.loading = false;

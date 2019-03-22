@@ -41,6 +41,22 @@ class AdDao
     }
 
     /**
+     * 分页获取
+     *
+     * @param $pageNo
+     * @param $size
+     * @return mixed
+     */
+    public function findByPage($pageNo, $size)
+    {
+        $offset = ($pageNo - 1) * $size;
+        $result = $this->ad::offset($offset)
+            ->limit($size)
+            ->get();
+        return $result;
+    }
+
+    /**
      * id获取
      *
      * @param $adId
