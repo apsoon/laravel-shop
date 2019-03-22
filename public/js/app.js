@@ -7583,7 +7583,8 @@ __webpack_require__.r(__webpack_exports__);
       active: "all",
       loading: true,
       token: "",
-      adminId: ""
+      adminId: "",
+      totalComment: 0
     };
   },
   mounted: function mounted() {
@@ -7631,7 +7632,8 @@ __webpack_require__.r(__webpack_exports__);
         that.loading = false;
 
         if (res.data.code === 2000) {
-          that.commentList = res.data.data;
+          that.commentList = res.data.data.commentList;
+          that.totalComment = res.data.data.total;
         }
       }).catch(function (err) {});
     },
@@ -96508,7 +96510,7 @@ var render = function() {
         attrs: {
           background: "",
           layout: "prev, pager, next, jumper",
-          total: 1000,
+          total: _vm.totalComment,
           "page-sizes": [20, 50, 100],
           "page-size": 20,
           "current-page": _vm.pageNo

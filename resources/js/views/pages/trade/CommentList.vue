@@ -54,7 +54,7 @@
             </el-table-column>
         </el-table>
         <el-pagination background layout="prev, pager, next, jumper"
-                       :total="1000"
+                       :total="totalComment"
                        :page-sizes="[20, 50, 100]"
                        :page-size="20"
                        @current-change="onPageNoChanged"
@@ -76,6 +76,7 @@
                 loading: true,
                 token: "",
                 adminId: "",
+                totalComment: 0
             }
         },
         mounted: function () {
@@ -119,7 +120,8 @@
                     .then(res => {
                         that.loading = false;
                         if (res.data.code === 2000) {
-                            that.commentList = res.data.data;
+                            that.commentList = res.data.data.commentList;
+                            that.totalComment = res.data.data.total;
                         }
                     }).catch(err => {
                 });

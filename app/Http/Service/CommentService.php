@@ -101,15 +101,23 @@ class CommentService
         $pageNo = empty($req["pageNo"]) ? 1 : $req["pageNo"];
         $size = empty($req["size"]) ? 20 : $req["size"];
         $type = $req["type"];
-        if ($type === "all") $comments = $this->commentDao->findByPage($pageNo, $size);
-        else $comments = $this->commentDao->findPagedListByState(CommentStatus::findByKey($type)["code"], $pageNo, $size);
+        $result = new \stdClass();
+        if ($type === "all") {
+            $comments = $this->commentDao->findByPage($pageNo, $size);
+            $result->total = Comment::count();
+        } else {
+            $state = CommentStatus::findByKey($type)["code"];
+            $result->total = Comment::where("state", "=", $state)->count();
+            $comments = $this->commentDao->findPagedListByState($state, $pageNo, $size);
+        }
         foreach ($comments as $comment) {
             $user = $this->userDao->findByUserId($comment->user_id);
             $comment->nickname = $user->nickname;
             $sku = $this->skuDao->findById($comment->sku_id);
             $comment->sku_name = $sku->name;
         }
-        return new JsonResult(StatusCode::SUCCESS, $comments);
+        $result->commentList = $comments;
+        return new JsonResult(StatusCode::SUCCESS, $result);
     }
 
     /**
