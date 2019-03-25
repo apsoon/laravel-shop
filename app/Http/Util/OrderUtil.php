@@ -61,7 +61,7 @@ class OrderUtil
         $stringSignTemp = $stringA . "&key=" . OrderUtil::PAY_API_KEY;
         Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
         Log::info($stringSignTemp);
-        $sign = strtoupper(hash('sha256', $stringSignTemp));
+        $sign = strtoupper(md5($stringSignTemp));
         Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
         Log::info($sign);
         return $sign;
