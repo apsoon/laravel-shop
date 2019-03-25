@@ -55,7 +55,7 @@ class OrderUtil
             . "&total_fee=" . $price
             . "&trade_type=JSAPI";
         $stringSignTemp = $stringA . "&key=" . OrderUtil::PAY_API_KEY;
-        return strtoupper(md5($stringSignTemp));
+        return strtoupper(hash('sha256', $stringSignTemp));
     }
 
     public static function getPaySign($timeStamp, $nonceStr, $package)
