@@ -200,7 +200,7 @@ class OrderService
         $priceFen = $price * 100;
         $spbillCreateIp = "94.191.22.70";
         $notifyUrl = "http://http://94.191.22.70:8010/api/order/callback";
-        $body = "pay-test";
+        $body = "pay test";
         $nonceStr = OrderUtil::getNonceStr();
         $sign = OrderUtil::getPrePaySign($body, $nonceStr, $notifyUrl, $orderSn, $priceFen, $spbillCreateIp);
         $requestData = OrderUtil::wxSendData($orderSn, $priceFen, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp);

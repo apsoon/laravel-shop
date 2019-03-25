@@ -33,15 +33,15 @@ class OrderUtil
     {
         return "<xml>"
             . "<appid>" . env("WX_APP_ID") . "</appid>"
-            . "<mch_id>" . env("WX_MERCHANT_ID") . "</mch_id>"
             . "<body>" . $body . "</body>"
-            . "<out_trade_no>" . $orderSn . "</out_trade_no>"
-            . "<total_fee>" . $price . "</total_fee>"
-            . "<trade_type>JSAPI</trade_type>"
+            . "<mch_id>" . env("WX_MERCHANT_ID") . "</mch_id>"
             . "<nonce_str>" . $nonceStr . "</nonce_str>"
             . "<notify_url>" . $notifyUrl . "</notify_url>"
-            . "<sign>" . $sign . "</sign>"
+            . "<out_trade_no>" . $orderSn . "</out_trade_no>"
             . "<spbill_create_ip>" . $spbillCreateIp . "</spbill_create_ip>"
+            . "<total_fee>" . $price . "</total_fee>"
+            . "<trade_type>JSAPI</trade_type>"
+            . "<sign>" . $sign . "</sign>"
             . "</xml>";
     }
 
