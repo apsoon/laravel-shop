@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Log;
  */
 class OrderUtil
 {
-    const PAY_API_KEY = 'pay api key';
 
     public static function getNonceStr()
     {
@@ -61,7 +60,7 @@ class OrderUtil
             . "&trade_type=JSAPI";
         Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
         Log::info($stringA);
-        $stringSignTemp = $stringA . "&key=" . OrderUtil::PAY_API_KEY;
+        $stringSignTemp = $stringA . "&key=" . env("WX_MERCHANT_KEY");
         Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
         Log::info($stringSignTemp);
         $sign = strtoupper(md5($stringSignTemp));
@@ -77,7 +76,7 @@ class OrderUtil
             . "&package=prepay_id=" . $package
             . "&signType=MD5"
             . "&timeStamp=" . $timeStamp
-            . "&key=" . OrderUtil::PAY_API_KEY));
+            . "&key=" . env("WX_MERCHANT_KEY")));
     }
 
     public static function getPayParam($orderSn, $package)
