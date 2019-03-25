@@ -26,7 +26,7 @@ class OrderUtil
 //            $text .= $possible[floor(rand() * strlen($possible))];
 //        }
 //        return $text;
-        return md5(date_timestamp_get(date_create()) . "123" . rand() * 10000);
+        return strtoupper(md5(date_timestamp_get(date_create()) . "123" . rand() * 10000));
     }
 
     public static function wxSendData($orderSn, $price, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp)
