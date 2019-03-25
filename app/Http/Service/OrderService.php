@@ -190,7 +190,7 @@ class OrderService
             if ($resultObj->result_code != "SUCCESS") {
                 throw new \Exception("result error" . $resultObj->err_code_des);
             }
-            $package = $resultObj->prepay_id["0"];
+            $package = $resultObj->prepay_id[0];
             Log::info("=================== package =================== ");
             Log::info($package);
             $result = OrderUtil::getPayParam($orderSn, $package);
