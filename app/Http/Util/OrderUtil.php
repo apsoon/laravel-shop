@@ -31,16 +31,16 @@ class OrderUtil
     public static function wxSendData($orderSn, $price, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp)
     {
         $data = "<xml>"
-            . "<appid><![CDATA[" . env("WX_APP_ID") . "]]</appid>"
-            . "<body><![CDATA[" . $body . "]]</body>"
-            . "<mch_id><![CDATA[" . env("WX_MERCHANT_ID") . "]]</mch_id>"
-            . "<nonce_str><![CDATA[" . $nonceStr . "]]</nonce_str>"
-            . "<notify_url><![CDATA[" . $notifyUrl . "]]</notify_url>"
-            . "<out_trade_no><![CDATA[" . $orderSn . "]]</out_trade_no>"
-            . "<spbill_create_ip><![CDATA[" . $spbillCreateIp . "]]</spbill_create_ip>"
-            . "<total_fee><![CDATA[" . $price . "]]</total_fee>"
-            . "<trade_type><![CDATA[JSAPI]]</trade_type>"
-            . "<sign><![CDATA[" . $sign . "]]</sign>"
+            . "<appid>" . env("WX_APP_ID") . "</appid>"
+            . "<body>" . $body . "</body>"
+            . "<mch_id>" . env("WX_MERCHANT_ID") . "</mch_id>"
+            . "<nonce_str>" . $nonceStr . "</nonce_str>"
+            . "<notify_url>" . $notifyUrl . "</notify_url>"
+            . "<out_trade_no>" . $orderSn . "</out_trade_no>"
+            . "<spbill_create_ip>" . $spbillCreateIp . "</spbill_create_ip>"
+            . "<total_fee>" . $price . "</total_fee>"
+            . "<trade_type>JSAPI</trade_type>"
+            . "<sign>" . $sign . "</sign>"
             . "</xml>";
         Log::info(" [ OrderUtil.php ] =================== wxSendData >>>>> data = ");
         Log::info($data);
