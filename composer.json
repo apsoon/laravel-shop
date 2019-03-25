@@ -14,7 +14,11 @@
         "laravel/tinker": "^1.0",
       "ext-json": "*",
         "ext-spltype": "*",
-      "ext-http": "*"
+      "ext-http": "*",
+      "ext-curl": "*",
+        "ext-dom": "*",
+        "ext-simplexml": "*",
+        "ext-libxml": "*"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

@@ -20,10 +20,13 @@ use App\Http\Enum\StatusCode;
 use App\Http\Enum\UserCouponStatus;
 use App\Http\Model\Order;
 use App\Http\Util\JsonResult;
+use App\Http\Util\OrderUtil;
 use App\Http\Util\SNUtil;
 use function Composer\Autoload\includeFile;
 use DateTime;
+use DOMDocument;
 use function GuzzleHttp\Promise\all;
+use http\Env\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -89,10 +92,7 @@ class OrderService
             // ===================  商品相关
             // ----- 关联sku
             $requestSkus = json_decode($req["skuIds"]);
-//            $skuIds = $req["skuIds"];
-            Log::info($requestSkus);
             $skuList = [];
-//            $skuDecreaseList = [];
             $originPrice = 0;
             $number = 0;
             foreach ($requestSkus as $requestSku) {
@@ -109,7 +109,6 @@ class OrderService
                 if ($sku->number < $requestSku->number) {
                     return new JsonResult(StatusCode::STOCK_NOT_ENOUGH);
                 }
-//                array_push($skuDecreaseList, $sku);
                 $this->skuDao->decreaseNumber($sku->id, $requestSku->number); // TODO ? position
                 $originPrice += $sku->price * $requestSku->number;
                 $number += $requestSku->number;
@@ -160,18 +159,29 @@ class OrderService
             $order->price = $price;
             // =================== 提交订单
             $order->discount = $order->origin_price - $order->price;
-            Log::info(" ================== DEBUG START ================== ");
-            Log::info($order);
-            Log::info(" ================== DEBUG END ================== ");
             $order->save();
             // ===================
             $this->orderSkuDao->insertList($skuList);
             if ($couponEffect) {
                 $this->couponDao->updateStateByIdUser($userId, $couponId, UserCouponStatus::USED);
             }
+            // =================== 请求微信接口
+            $orderSn = $order->sn;
+            $wxResult = $this->createWxOrder($orderSn, $price);
+            if (empty($wxResult)) {
+                return new JsonResult(StatusCode::SERVER_ERROR);
+            }
+            //  加载XML内容
+            $resultObj = simplexml_load_string($wxResult, 'SimpleXMLElement', LIBXML_NOCDATA);
+            if ($resultObj->return_code != "SUCCESS") {
+                return new JsonResult(StatusCode::SERVER_ERROR);
+            }
+            if ($resultObj->result_code != "SUCCESS") {
+                return new JsonResult(StatusCode::SERVER_ERROR);
+            }
+            $package = $resultObj->prepay_id;
+            $result = OrderUtil::getPayParam($orderSn, $package);
             DB::commit();
-            $result = new \stdClass();
-            $result->orderSn = $order->sn;
             return new JsonResult(StatusCode::SUCCESS, $result);
         } catch (\Exception $e) {
             Log::info(" [ OrderService.php ] =================== createOrder >>>>> create order failed [ e ] =  ");
@@ -179,6 +189,38 @@ class OrderService
             DB::rollBack();
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
+    }
+
+    private function createWxOrder($orderSn, $price)
+    {
+        $priceFen = $price * 100;
+        $spbillCreateIp = "94.191.22.70";
+        $notifyUrl = "http://http://94.191.22.70:8010/api/order/callback";
+        $body = "支付测试";
+        $nonceStr = OrderUtil::getNonceStr();
+        $sign = OrderUtil::getPrePaySign($body, $nonceStr, $notifyUrl, $orderSn, $priceFen, $spbillCreateIp);
+        $requestData = OrderUtil::wxSendData($orderSn, $priceFen, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp);
+        $requestUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $requestUrl);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $requestData);
+        try {
+            return curl_exec($ch);
+        } catch (\Exception $e) {
+            Log::info(" [ OrderService.php ] =================== createWxOrder >>>>> create order failed [ e ] =  ");
+            Log::info($e);
+        } finally {
+            curl_close($ch);
+        }
+        return "";
+    }
+
+    public function dealWxCallBack(array $req)
+    {
+        Log::info(" [ OrderService ] =================== dealWxCallBack >>>>> log Start");
+        Log::info($req);
+        Log::info(" [ OrderService ] =================== dealWxCallBack >>>>> log End");
     }
 
     /**

@@ -44,6 +44,12 @@ class OrderFapi extends Controller
         return $this->orderService->cancelOrder($req);
     }
 
+    public function wxCallBack(Request $request)
+    {
+        $req = $request->all();
+        return $this->orderService->dealWxCallBack($req);
+    }
+
     /**
      * 删除订单
      *
