@@ -32,7 +32,7 @@ class UploadMapi extends Controller
         // 生成新的统一格式的文件名
         $newFileName = md5($fileName . time() . mt_rand(1, 10000)) . '.' . $extension;
         // 图片保存路径
-        $savePath = 'images/' . $req["type"] . "/" . $req["position"];
+        $savePath = '/upload/images/' . $req["type"] . "/" . $req["position"];
         // Web 访问路径
         $filePath = $savePath . "/" . $newFileName;
         if ($file->storePubliclyAs($savePath, $newFileName, ['disk' => 'public'])) {
@@ -61,7 +61,7 @@ class UploadMapi extends Controller
             // 生成新的统一格式的文件名
             $newFileName = md5($fileName . time() . mt_rand(1, 10000)) . '.' . $extension;
             // 图片保存路径
-            $filePath = 'images/' . $req["type"] . "/" . $req["position"].'/';
+            $filePath = '/upload/images/' . $req["type"] . "/" . $req["position"] . '/';
             $savePath = public_path() . '/' . $filePath;
             $file->move($savePath, $newFileName);
             $result = new \stdClass();
