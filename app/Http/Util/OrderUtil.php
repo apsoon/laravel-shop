@@ -83,13 +83,16 @@ class OrderUtil
 
     public static function getPayParam($orderSn, $package)
     {
+        Log::info(typeOf($package));
         $result = new \stdClass();
         $result->orderSn = $orderSn;
         $result->signType = 'MD5';
         $timeStamp = date_timestamp_get(date_create());
         $result->timeStamp = $timeStamp;
         $result->nonceStr = OrderUtil::getNonceStr();
+        Log::info($package);
         $result->package = $package;
+        Log::info($result->package);
         $result->paySign = OrderUtil::getPaySign($timeStamp, $result->nonceStr, $package);
         return $result;
     }
