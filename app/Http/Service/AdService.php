@@ -93,7 +93,7 @@ class AdService
         $adList = $this->adDao->findByPage($pageNo, $size);
         if (Config::UPLOAD_TO_PUBLIC) {
             foreach ($adList as $ad) {
-                $ad->image_url = asset( $ad->image_url);
+                $ad->image_url = asset($ad->image_url);
             }
         }
         $result = new \stdClass();
@@ -125,9 +125,10 @@ class AdService
     public function getAdListByKeyEffect(array $req)
     {
         if (empty($req["key"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        $adList = $this->adDao->findByKeyEffect($req["key"]);
+        $adList = $this->adDao->findByKeyEffect(AdPosition::findByKey($req["key"])["code"]);
+        Log::info($adList);
         foreach ($adList as $ad) {
-            $ad->image_url = empty($ad->image_url) ? "" : asset( $ad->image_url);
+            $ad->image_url = empty($ad->image_url) ? "" : asset($ad->image_url);
         }
         return new JsonResult(StatusCode::SUCCESS, $adList);
     }
