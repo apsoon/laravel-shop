@@ -71,6 +71,11 @@ class AfterSaleService
         return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
+    private function createWxRefund()
+    {
+
+    }
+
     /**
      * 取消售后订单
      *

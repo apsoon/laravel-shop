@@ -85,7 +85,7 @@ class OrderService
             $order = new Order();
             // ===================  订单相关
             $order->user_id = $userId;
-            $order->sn = SNUtil::generateOrderSn();
+            $order->sn = OrderUtil::generateOrderSn();
             $order->consignee = $req["consignee"];
             $order->phone = $req["phone"];
             $order->post_code = $req["postCode"];
@@ -204,6 +204,14 @@ class OrderService
         }
     }
 
+    /**
+     * 创建微信订单
+     *
+     * @param $orderSn
+     * @param $price
+     * @param $openId
+     * @return mixed|string
+     */
     private function createWxOrder($orderSn, $price, $openId)
     {
         $priceFen = $price * 100;
@@ -212,7 +220,7 @@ class OrderService
         $body = "pay test";
         $nonceStr = OrderUtil::getNonceStr();
         $sign = OrderUtil::getPrePaySign($openId, $body, $nonceStr, $notifyUrl, $orderSn, $priceFen, $spbillCreateIp);
-        $requestData = OrderUtil::wxSendData($openId, $orderSn, $priceFen, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp);
+        $requestData = OrderUtil::wxPaySendData($openId, $orderSn, $priceFen, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp);
         $requestUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $requestUrl);
@@ -231,6 +239,14 @@ class OrderService
             curl_close($ch);
         }
         return "";
+    }
+
+    /**
+     * 取消微信订单
+     */
+    private function cancelWxOrder()
+    {
+
     }
 
     public function dealWxCallBack(array $req)
