@@ -168,11 +168,15 @@ class OrderService
             // =================== 请求微信接口
             $orderSn = $order->sn;
             $wxResult = $this->createWxOrder($orderSn, $price);
+            Log::info("=================== wxrequest");
+            Log::info($wxResult);
             if (empty($wxResult)) {
                 return new JsonResult(StatusCode::SERVER_ERROR);
             }
             //  加载XML内容
             $resultObj = simplexml_load_string($wxResult, 'SimpleXMLElement', LIBXML_NOCDATA);
+            Log::info("=================== wxrequest");
+            Log::info($resultObj);
             if ($resultObj->return_code != "SUCCESS") {
                 return new JsonResult(StatusCode::SERVER_ERROR);
             }
