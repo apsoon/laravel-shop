@@ -210,7 +210,10 @@ class OrderService
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $requestData);
         try {
-            return curl_exec($ch);
+            $result = curl_exec($ch);
+            Log::info(" [ OrderService.php ] =================== createWxOrder >>>>> result =   ");
+            Log::info($result);
+            return $result;
         } catch (\Exception $e) {
             Log::info(" [ OrderService.php ] =================== createWxOrder >>>>> create wx order failed [ e ] =  ");
             Log::info($e);
