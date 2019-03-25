@@ -9,6 +9,8 @@
 namespace App\Http\Util;
 
 
+use Illuminate\Support\Facades\Log;
+
 /**
  * 预定义的一些工具函数
  */
@@ -54,8 +56,15 @@ class OrderUtil
             . "&spbill_create_ip=" . $spbillCreateIp
             . "&total_fee=" . $price
             . "&trade_type=JSAPI";
+        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
+        Log::info($stringA);
         $stringSignTemp = $stringA . "&key=" . OrderUtil::PAY_API_KEY;
-        return strtoupper(hash('sha256', $stringSignTemp));
+        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
+        Log::info($stringSignTemp);
+        $sign = strtoupper(hash('sha256', $stringSignTemp));
+        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
+        Log::info($sign);
+        return $sign;
     }
 
     public static function getPaySign($timeStamp, $nonceStr, $package)
