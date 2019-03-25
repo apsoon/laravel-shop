@@ -61,7 +61,7 @@ class UploadMapi extends Controller
             // 生成新的统一格式的文件名
             $newFileName = md5($fileName . time() . mt_rand(1, 10000)) . '.' . $extension;
             // 图片保存路径
-            $filePath = 'upload/images/' . $req["type"] . "/" . $req["position"] . '/';
+            $filePath = 'images/' . $req["type"] . "/" . $req["position"] . '/';
             $savePath = public_path() . '/' . $filePath;
             $file->move($savePath, $newFileName);
             $result = new \stdClass();
