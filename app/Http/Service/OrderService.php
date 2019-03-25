@@ -216,6 +216,7 @@ class OrderService
         curl_setopt($ch, CURLOPT_URL, $requestUrl);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $requestData);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         try {
             $result = curl_exec($ch);
             Log::info(" [ OrderService.php ] =================== createWxOrder >>>>> result =   ");
