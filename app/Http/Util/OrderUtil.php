@@ -31,7 +31,7 @@ class OrderUtil
 
     public static function wxSendData($orderSn, $price, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp)
     {
-        return "<xml>"
+        $data = "<xml>"
             . "<appid>" . env("WX_APP_ID") . "</appid>"
             . "<body>" . $body . "</body>"
             . "<mch_id>" . env("WX_MERCHANT_ID") . "</mch_id>"
@@ -43,6 +43,9 @@ class OrderUtil
             . "<trade_type>JSAPI</trade_type>"
             . "<sign>" . $sign . "</sign>"
             . "</xml>";
+        Log::info(" [ OrderUtil.php ] =================== wxSendData >>>>> data = ");
+        Log::info($data);
+        return  $data;
     }
 
     public static function getPrePaySign($body, $nonceStr, $notifyUrl, $orderSn, $price, $spbillCreateIp)
