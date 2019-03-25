@@ -83,7 +83,7 @@ class OrderUtil
 
     public static function getPayParam($orderSn, $package)
     {
-        Log::info(typeOf($package));
+        Log::info(gettype($package));
         $result = new \stdClass();
         $result->orderSn = $orderSn;
         $result->signType = 'MD5';
