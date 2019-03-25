@@ -183,7 +183,7 @@ class OrderService
             //  加载XML内容
             $resultObj = simplexml_load_string($wxResult, 'SimpleXMLElement', LIBXML_NOCDATA);
             Log::info("=================== resultObj =================== ");
-            Log::info($resultObj);
+            Log::info(json_encode($resultObj));
             if ($resultObj->return_code != "SUCCESS") {
                 throw new \Exception(" return error " . $resultObj->return_msg);
             }
