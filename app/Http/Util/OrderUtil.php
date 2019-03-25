@@ -18,12 +18,13 @@ class OrderUtil
 
     public static function getNonceStr()
     {
-        $text = "";
-        $possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        for ($i = 0; $i < 16; $i++) {
-            $text .= $possible[(int)floor(rand() * strlen($possible))];
-        }
-        return $text;
+//        $text = "";
+//        $possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//        for ($i = 0; $i < 16; $i++) {
+//            $text .= $possible[floor(rand() * strlen($possible))];
+//        }
+//        return $text;
+        return md5(date_timestamp_get(date_create()) . "123" . rand() * 10000);
     }
 
     public static function wxSendData($orderSn, $price, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp)

@@ -221,6 +221,7 @@ class OrderService
         Log::info(" [ OrderService ] =================== dealWxCallBack >>>>> log Start");
         Log::info($req);
         Log::info(" [ OrderService ] =================== dealWxCallBack >>>>> log End");
+        return new JsonResult();
     }
 
     /**
