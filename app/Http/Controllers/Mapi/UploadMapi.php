@@ -74,6 +74,7 @@ class UploadMapi extends Controller
             Log::error(" [ UploadMapi ] ================= image >>>>> error happened when upload a image >>>>> e = ");
             Log::error($e);
             Log::error(json_encode($e));
+            Log::error(" ===================================================== ");
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
     }
