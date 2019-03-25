@@ -28,7 +28,7 @@ class OrderUtil
         return strtoupper(md5(date_timestamp_get(date_create()) . "123" . rand() * 10000));
     }
 
-    public static function wxSendData($orderSn, $price, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp)
+    public static function wxSendData($openId, $orderSn, $price, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp)
     {
         $data = "<xml>"
             . "<appid>" . env("WX_APP_ID") . "</appid>"
@@ -36,6 +36,7 @@ class OrderUtil
             . "<mch_id>" . env("WX_MERCHANT_ID") . "</mch_id>"
             . "<nonce_str>" . $nonceStr . "</nonce_str>"
             . "<notify_url>" . $notifyUrl . "</notify_url>"
+            . "<openid>" . $openId . "</openid>"
             . "<out_trade_no>" . $orderSn . "</out_trade_no>"
             . "<spbill_create_ip>" . $spbillCreateIp . "</spbill_create_ip>"
             . "<total_fee>" . $price . "</total_fee>"
@@ -44,16 +45,17 @@ class OrderUtil
             . "</xml>";
         Log::info(" [ OrderUtil.php ] =================== wxSendData >>>>> data = ");
         Log::info($data);
-        return  $data;
+        return $data;
     }
 
-    public static function getPrePaySign($body, $nonceStr, $notifyUrl, $orderSn, $price, $spbillCreateIp)
+    public static function getPrePaySign($openId, $body, $nonceStr, $notifyUrl, $orderSn, $price, $spbillCreateIp)
     {
         $stringA = "appid=" . env("WX_APP_ID")
             . "&body=" . $body
             . "&mch_id=" . env("WX_MERCHANT_ID")
             . "&nonce_str=" . $nonceStr
             . "&notify_url=" . $notifyUrl
+            . "&openid=" . $openId
             . "&out_trade_no=" . $orderSn
             . "&spbill_create_ip=" . $spbillCreateIp
             . "&total_fee=" . $price

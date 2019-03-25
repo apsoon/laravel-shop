@@ -14,6 +14,7 @@ use App\Http\Dao\OrderDao;
 use App\Http\Dao\OrderSkuDao;
 use App\Http\Dao\SkuDao;
 use App\Http\Dao\UserCouponDao;
+use App\Http\Dao\UserDao;
 use App\Http\Enum\CouponSendType;
 use App\Http\Enum\OrderStatus;
 use App\Http\Enum\StatusCode;
@@ -57,6 +58,11 @@ class OrderService
     private $couponDao;
 
     /**
+     * @var UserDao
+     */
+    private $userDao;
+
+    /**
      * @var UserCouponDao
      */
     private $userCouponDao;
@@ -69,11 +75,12 @@ class OrderService
      */
     public function createOrder(array $req)
     {
+        $userId = $req["userId"];
+        $user = $this->userDao->findByUserId($userId);
         // 事务
         // 创建订单
         DB::beginTransaction();
         try {
-            $userId = $req["userId"];
             $couponEffect = false;
             $order = new Order();
             // ===================  订单相关
@@ -167,7 +174,7 @@ class OrderService
             }
             // =================== 请求微信接口
             $orderSn = $order->sn;
-            $wxResult = $this->createWxOrder($orderSn, $price);
+            $wxResult = $this->createWxOrder($orderSn, $price, $user->open_id);
             Log::info("=================== wxrequest =================== ");
             Log::info($wxResult);
             if (empty($wxResult)) {
@@ -195,15 +202,15 @@ class OrderService
         }
     }
 
-    private function createWxOrder($orderSn, $price)
+    private function createWxOrder($orderSn, $price, $openId)
     {
         $priceFen = $price * 100;
         $spbillCreateIp = "94.191.22.70";
         $notifyUrl = "http://http://94.191.22.70:8010/api/order/callback";
         $body = "pay test";
         $nonceStr = OrderUtil::getNonceStr();
-        $sign = OrderUtil::getPrePaySign($body, $nonceStr, $notifyUrl, $orderSn, $priceFen, $spbillCreateIp);
-        $requestData = OrderUtil::wxSendData($orderSn, $priceFen, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp);
+        $sign = OrderUtil::getPrePaySign($openId, $body, $nonceStr, $notifyUrl, $orderSn, $priceFen, $spbillCreateIp);
+        $requestData = OrderUtil::wxSendData($openId, $orderSn, $priceFen, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp);
         $requestUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $requestUrl);
@@ -377,13 +384,16 @@ class OrderService
      * @param SkuDao $skuDao
      * @param OrderSkuDao $orderSkuDao
      * @param CouponDao $couponDao
+     * @param UserDao $userDao
+     * @param UserCouponDao $userCouponDao
      */
-    public function __construct(OrderDao $orderDao, SkuDao $skuDao, OrderSkuDao $orderSkuDao, CouponDao $couponDao, UserCouponDao $userCouponDao)
+    public function __construct(OrderDao $orderDao, SkuDao $skuDao, OrderSkuDao $orderSkuDao, CouponDao $couponDao, UserDao $userDao, UserCouponDao $userCouponDao)
     {
         $this->orderDao = $orderDao;
         $this->skuDao = $skuDao;
         $this->orderSkuDao = $orderSkuDao;
         $this->couponDao = $couponDao;
+        $this->userDao = $userDao;
         $this->userCouponDao = $userCouponDao;
     }
 }
