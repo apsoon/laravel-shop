@@ -168,20 +168,20 @@ class OrderService
             // =================== 请求微信接口
             $orderSn = $order->sn;
             $wxResult = $this->createWxOrder($orderSn, $price);
-            Log::info("=================== wxrequest");
+            Log::info("=================== wxrequest =================== ");
             Log::info($wxResult);
             if (empty($wxResult)) {
-                return new JsonResult(StatusCode::SERVER_ERROR);
+                throw new \Exception("request failed");
             }
             //  加载XML内容
             $resultObj = simplexml_load_string($wxResult, 'SimpleXMLElement', LIBXML_NOCDATA);
-            Log::info("=================== wxrequest");
+            Log::info("=================== resultObj =================== ");
             Log::info($resultObj);
             if ($resultObj->return_code != "SUCCESS") {
-                return new JsonResult(StatusCode::SERVER_ERROR);
+                throw new \Exception(" return error " . $resultObj->return_msg);
             }
             if ($resultObj->result_code != "SUCCESS") {
-                return new JsonResult(StatusCode::SERVER_ERROR);
+                throw new \Exception("result error" . $resultObj->err_code_des);
             }
             $package = $resultObj->prepay_id;
             $result = OrderUtil::getPayParam($orderSn, $package);
@@ -212,7 +212,7 @@ class OrderService
         try {
             return curl_exec($ch);
         } catch (\Exception $e) {
-            Log::info(" [ OrderService.php ] =================== createWxOrder >>>>> create order failed [ e ] =  ");
+            Log::info(" [ OrderService.php ] =================== createWxOrder >>>>> create wx order failed [ e ] =  ");
             Log::info($e);
         } finally {
             curl_close($ch);
