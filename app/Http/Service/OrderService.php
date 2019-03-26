@@ -175,15 +175,15 @@ class OrderService
             // =================== 请求微信接口
             $orderSn = $order->sn;
             $wxResult = $this->createWxOrder($orderSn, $price, $user->open_id);
-            Log::info("=================== wxrequest =================== ");
-            Log::info($wxResult);
+//            Log::info("=================== wxrequest =================== ");
+//            Log::info($wxResult);
             if (empty($wxResult)) {
                 throw new \Exception("request failed");
             }
             //  加载XML内容
             $resultObj = simplexml_load_string($wxResult, 'SimpleXMLElement', LIBXML_NOCDATA);
-            Log::info("=================== resultObj =================== ");
-            Log::info(json_encode($resultObj));
+//            Log::info("=================== resultObj =================== ");
+//            Log::info(json_encode($resultObj));
             if ($resultObj->return_code != "SUCCESS") {
                 throw new \Exception(" return error " . $resultObj->return_msg);
             }
@@ -191,8 +191,8 @@ class OrderService
                 throw new \Exception("result error" . $resultObj->err_code_des);
             }
             $package = json_decode(json_encode($resultObj))->prepay_id;
-            Log::info("=================== package =================== ");
-            Log::info($package);
+//            Log::info("=================== package =================== ");
+//            Log::info($package);
             $result = OrderUtil::getPayParam($orderSn, $package);
             DB::commit();
             return new JsonResult(StatusCode::SUCCESS, $result);
@@ -229,8 +229,8 @@ class OrderService
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         try {
             $result = curl_exec($ch);
-            Log::info(" [ OrderService.php ] =================== createWxOrder >>>>> result =   ");
-            Log::info($result);
+//            Log::info(" [ OrderService.php ] =================== createWxOrder >>>>> result =   ");
+//            Log::info($result);
             return $result;
         } catch (\Exception $e) {
             Log::info(" [ OrderService.php ] =================== createWxOrder >>>>> create wx order failed [ e ] =  ");
