@@ -69,6 +69,7 @@ Route::group(["namespace" => "Fapi"], function () {
 
     // 订单
     Route::POST("order/create", "OrderFapi@create");
+    Route::POST("order/pay", "OrderFapi@pay");
     Route::GET("order/callback", "OrderFapi@wxCallBack");
     Route::POST("order/callback", "OrderFapi@wxCallBack");
     Route::POST("order/cancel", "OrderFapi@cancel");

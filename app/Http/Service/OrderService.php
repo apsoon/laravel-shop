@@ -76,7 +76,6 @@ class OrderService
     public function createOrder(array $req)
     {
         $userId = $req["userId"];
-        $user = $this->userDao->findByUserId($userId);
         // 事务
         // 创建订单
         DB::beginTransaction();
@@ -173,17 +172,41 @@ class OrderService
                 $this->couponDao->updateStateByIdUser($userId, $couponId, UserCouponStatus::USED);
             }
             // =================== 请求微信接口
-            $orderSn = $order->sn;
-            $wxResult = $this->createWxOrder($orderSn, $price, $user->open_id);
-//            Log::info("=================== wxrequest =================== ");
-//            Log::info($wxResult);
+            DB::commit();
+            $result = new \stdClass();
+            $result->orderSn = $order->sn;
+            return new JsonResult(StatusCode::SUCCESS, $result);
+        } catch (\Exception $e) {
+            Log::error(" [ OrderService.php ] =================== createOrder >>>>> create order failed [ e ] =  ");
+            Log::error($e);
+            DB::rollBack();
+            return new JsonResult(StatusCode::SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 支付订单
+     *
+     * @param array $req
+     * @return JsonResult
+     * @throws \Exception
+     */
+    public function payOrder(array $req)
+    {
+        if (empty($req["orderSn"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $orderSn = $req["orderSn"];
+        $order = $this->orderDao->findBySn($orderSn);
+        $user = $this->userDao->findByUserId($req["userId"]);
+        if (empty($order) || $order->state != OrderStatus::PAY_REQUIRED["code"] || $user->id != $req["userId"]) {
+            return new JsonResult(StatusCode::PARAM_ERROR);
+        }
+        try {
+            $wxResult = $this->createWxOrder($orderSn, $order->price, $user->open_id);
             if (empty($wxResult)) {
                 throw new \Exception("request failed");
             }
             //  加载XML内容
             $resultObj = simplexml_load_string($wxResult, 'SimpleXMLElement', LIBXML_NOCDATA);
-//            Log::info("=================== resultObj =================== ");
-//            Log::info(json_encode($resultObj));
             if ($resultObj->return_code != "SUCCESS") {
                 throw new \Exception(" return error " . $resultObj->return_msg);
             }
@@ -191,15 +214,11 @@ class OrderService
                 throw new \Exception("result error" . $resultObj->err_code_des);
             }
             $package = json_decode(json_encode($resultObj))->prepay_id;
-//            Log::info("=================== package =================== ");
-//            Log::info($package);
             $result = OrderUtil::getPayParam($orderSn, $package);
-            DB::commit();
             return new JsonResult(StatusCode::SUCCESS, $result);
         } catch (\Exception $e) {
-            Log::error(" [ OrderService.php ] =================== createOrder >>>>> create order failed [ e ] =  ");
+            Log::error(" [ OrderService.php ] =================== payOrder >>>>> pay order failed [ e ] =  ");
             Log::error($e);
-            DB::rollBack();
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
     }

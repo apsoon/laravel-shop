@@ -45,6 +45,19 @@ class OrderFapi extends Controller
     }
 
     /**
+     * 支付订单
+     *
+     * @param Request $request
+     * @return JsonResult
+     * @throws \Exception
+     */
+    public function pay(Request $request)
+    {
+        $req = $request->all();
+        return $this->orderService->payOrder($req);
+    }
+
+    /**
      * 微信订单调用
      *
      * @param Request $request
