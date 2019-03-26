@@ -260,24 +260,31 @@ class OrderService
         Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 1 = ");
         Log::debug($request);
         Log::debug(json_encode($request));
-        if ($request == null) {
-            $request = file_get_contents("php://input");
+        $wxRequest = $request;
+        if ($wxRequest == null) {
+            $wxRequest = trim(file_get_contents("php://input"));
+            Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 2 = ");
+            Log::debug($wxRequest);
+            Log::debug(json_encode($wxRequest));
         }
-        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 2 = ");
-        Log::debug($request);
-        Log::debug(json_encode($request));
-        if ($request == null) {
-            $request = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
+        if ($wxRequest == null) {
+            $wxRequest = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
+            Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 3 = ");
+            Log::debug($wxRequest);
+            Log::debug(json_encode($wxRequest));
         }
-        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 3 = ");
-        Log::debug($request);
-        Log::debug(json_encode($request));
-        if (empty($request)) {
+        if ($wxRequest == null) {
+            $wxRequest = $request->getContent();
+            Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 3 = ");
+            Log::debug($wxRequest);
+            Log::debug(json_encode($wxRequest));
+        }
+        if (empty($wxRequest)) {
             return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         }
         try {
             libxml_disable_entity_loader(true); //禁止引用外部xml实体
-            $xml = simplexml_load_string($request, 'SimpleXMLElement', LIBXML_NOCDATA); //XML转数组
+            $xml = simplexml_load_string($wxRequest, 'SimpleXMLElement', LIBXML_NOCDATA); //XML转数组
             $postData = (array)$xml;
             if ($postData["return_code"] != "SUCCESS") {
                 throw new \Exception(" return error " . $postData["return_msg"]);
