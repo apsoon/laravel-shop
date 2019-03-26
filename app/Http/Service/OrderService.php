@@ -276,7 +276,7 @@ class OrderService
             }
             $orderSn = $postData['out_trade_no'];
             $order = $this->orderDao->findBySn($orderSn);
-            if (empty($order) || $order->state != OrderStatus::DELIVERY_REQUIRED["code"]) {
+            if (empty($order) || $order->state != OrderStatus::PAY_REQUIRED["code"]) {
                 throw new \Exception(" Order not Exist" . $orderSn);
             }
             $postSign = $postData['sign'];
