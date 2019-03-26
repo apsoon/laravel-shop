@@ -261,19 +261,19 @@ class OrderService
         Log::debug($request);
         Log::debug(json_encode($request));
         $wxRequest = $request;
-        if ($wxRequest == null) {
-            $wxRequest = trim(file_get_contents("php://input"));
-            Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 2 = ");
-            Log::debug($wxRequest);
-            Log::debug(json_encode($wxRequest));
-        }
-        if ($wxRequest == null) {
+//        if ($wxRequest == null || empty($wxRequest)) {
+        $wxRequest = trim(file_get_contents("php://input"));
+        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 2 = ");
+        Log::debug($wxRequest);
+        Log::debug(json_encode($wxRequest));
+//        }
+        if ($wxRequest == null || empty($wxRequest)) {
             $wxRequest = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
             Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 3 = ");
             Log::debug($wxRequest);
             Log::debug(json_encode($wxRequest));
         }
-        if ($wxRequest == null) {
+        if ($wxRequest == null || empty($wxRequest)) {
             $wxRequest = $request->getContent();
             Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 3 = ");
             Log::debug($wxRequest);
