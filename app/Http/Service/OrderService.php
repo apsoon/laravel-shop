@@ -197,7 +197,10 @@ class OrderService
         $orderSn = $req["orderSn"];
         $order = $this->orderDao->findBySn($orderSn);
         $user = $this->userDao->findByUserId($req["userId"]);
-        if (empty($order) || $order->state != OrderStatus::PAY_REQUIRED["code"] || $user->id != $req["userId"]) {
+        Log::debug(" [ OrderService.php ] =================== payOrder >>>>> debug =  ");
+        Log::debug($order);
+        Log::debug($req);
+        if (empty($order) || $order->state != OrderStatus::PAY_REQUIRED["code"] || $order->user_id != $req["userId"]) {
             return new JsonResult(StatusCode::PARAM_ERROR);
         }
         try {
