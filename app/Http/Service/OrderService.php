@@ -215,8 +215,8 @@ class OrderService
     private function createWxOrder($orderSn, $price, $openId)
     {
         $priceFen = $price * 100;
-        $spbillCreateIp = "94.191.22.70";
-        $notifyUrl = "http://94.191.22.70/api/order/callback";
+        $spbillCreateIp = env("SERVER_IP");
+        $notifyUrl = "http://" . $spbillCreateIp . "/api/order/callback";
         $body = "pay test";
         $nonceStr = OrderUtil::getNonceStr();
         $sign = OrderUtil::getPrePaySign($openId, $body, $nonceStr, $notifyUrl, $orderSn, $priceFen, $spbillCreateIp);
