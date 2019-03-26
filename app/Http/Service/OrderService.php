@@ -260,9 +260,9 @@ class OrderService
         if (empty($request)) {
             return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         }
-        Log::info(" [ OrderService ] =================== dealWxCallBack >>>>> log Start");
-        Log::info($request);
-        Log::info(" [ OrderService ] =================== dealWxCallBack >>>>> log End");
+        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> log Start");
+        Log::debug($request);
+        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> log End");
         try {
             libxml_disable_entity_loader(true); //禁止引用外部xml实体
             $xml = simplexml_load_string($request, 'SimpleXMLElement', LIBXML_NOCDATA); //XML转数组
@@ -275,7 +275,9 @@ class OrderService
             }
             $orderSn = $postData['out_trade_no'];
             $order = $this->orderDao->findBySn($orderSn);
-            if (empty($order) || $order->state != OrderStatus::DELIVERY_REQUIRED["code"]) return new JsonResult(StatusCode::PARAM_ERROR);
+            if (empty($order) || $order->state != OrderStatus::DELIVERY_REQUIRED["code"]) {
+                throw new \Exception(" Order not Exist" . $orderSn);
+            }
             $postSign = $postData['sign'];
             unset($postData['sign']);
             $newSign = OrderUtil::getWxCallbackSign($postData);
@@ -284,8 +286,8 @@ class OrderService
                 $order->save();
             }
         } catch (\Exception $e) {
-            Log::info(" [ OrderService.php ] =================== dealWxCallBack >>>>>  wx callback failed [ e ] =  ");
-            Log::info($e);
+            Log::error(" [ OrderService.php ] =================== dealWxCallBack >>>>>  wx callback failed [ e ] =  ");
+            Log::error($e);
             return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         }
         return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
