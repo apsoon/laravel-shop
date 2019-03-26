@@ -197,9 +197,6 @@ class OrderService
         $orderSn = $req["orderSn"];
         $order = $this->orderDao->findBySn($orderSn);
         $user = $this->userDao->findByUserId($req["userId"]);
-        Log::debug(" [ OrderService.php ] =================== payOrder >>>>> debug =  ");
-        Log::debug($order);
-        Log::debug($req);
         if (empty($order) || $order->state != OrderStatus::PAY_REQUIRED["code"] || $order->user_id != $req["userId"]) {
             return new JsonResult(StatusCode::PARAM_ERROR);
         }
@@ -259,6 +256,18 @@ class OrderService
             curl_close($ch);
         }
         return "";
+    }
+
+    public function receiveOrder(array $req)
+    {
+        $orderSn = $req["orderSn"];
+        $order = $this->orderDao->findBySn($orderSn);
+        if (empty($order) || $order->state != OrderStatus::PAY_REQUIRED["code"] || $order->user_id != $req["userId"]) {
+            return new JsonResult(StatusCode::PARAM_ERROR);
+        }
+        $order->state = OrderStatus::COMMENT_REQUIRED["code"];
+        if ($order->save()) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
     /**

@@ -58,6 +58,18 @@ class OrderFapi extends Controller
     }
 
     /**
+     * 确认收货
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function receive(Request $request)
+    {
+        $req = $request->all();
+        return $this->orderService->receiveOrder($req);
+    }
+
+    /**
      * 微信订单调用
      *
      * @param Request $request
