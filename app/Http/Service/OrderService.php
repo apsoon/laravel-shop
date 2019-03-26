@@ -283,7 +283,7 @@ class OrderService
             unset($postData['sign']);
             $newSign = OrderUtil::getWxCallbackSign($postData);
             if ($postSign == $newSign) {
-                $order->state = OrderStatus::DELIVERY_REQUIRED;
+                $order->state = OrderStatus::DELIVERY_REQUIRED["code"];
                 $order->save();
             }
         } catch (\Exception $e) {
