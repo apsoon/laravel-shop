@@ -257,12 +257,17 @@ class OrderService
      */
     public function dealWxCallBack($request)
     {
+        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request = ");
+        Log::debug($request);
+        Log::debug(json_encode($request));
+        if ($request == null) {
+            $request = file_get_contents("php://input");
+        }
+        Log::debug($request);
+        Log::debug(json_encode($request));
         if (empty($request)) {
             return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         }
-        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> log Start");
-        Log::debug($request);
-        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> log End");
         try {
             libxml_disable_entity_loader(true); //禁止引用外部xml实体
             $xml = simplexml_load_string($request, 'SimpleXMLElement', LIBXML_NOCDATA); //XML转数组
