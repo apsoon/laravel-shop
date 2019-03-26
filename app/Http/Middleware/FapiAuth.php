@@ -6,6 +6,7 @@ use App\Http\Enum\StatusCode;
 use App\Http\Model\User;
 use App\Http\Util\JsonResult;
 use Closure;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -21,8 +22,11 @@ class FapiAuth
     public function handle($request, Closure $next)
     {
         $requestUri = \Request::getRequestUri();
+        Log::debug(" [ FapiAuth.php ] ================================ handle >>>>> url = ". $requestUri);
         // 特殊请求直接交给下一级处理
-        if (stristr($requestUri, "order/callback") || stristr($requestUri, "user/login")) return $next($request);
+        if (stristr($requestUri, "order/callback") || stristr($requestUri, "user/login")) {
+            return $next($request);
+        }
         $req = $request->all();
         $rules = ['userId' => 'required', 'token' => 'required'];
         $valid = Validator::make($req, $rules);

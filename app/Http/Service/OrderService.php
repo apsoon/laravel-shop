@@ -197,8 +197,8 @@ class OrderService
             DB::commit();
             return new JsonResult(StatusCode::SUCCESS, $result);
         } catch (\Exception $e) {
-            Log::info(" [ OrderService.php ] =================== createOrder >>>>> create order failed [ e ] =  ");
-            Log::info($e);
+            Log::error(" [ OrderService.php ] =================== createOrder >>>>> create order failed [ e ] =  ");
+            Log::error($e);
             DB::rollBack();
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
@@ -216,7 +216,7 @@ class OrderService
     {
         $priceFen = $price * 100;
         $spbillCreateIp = "94.191.22.70";
-        $notifyUrl = "http://http://94.191.22.70:8010/api/order/callback";
+        $notifyUrl = "http://94.191.22.70/api/order/callback";
         $body = "pay test";
         $nonceStr = OrderUtil::getNonceStr();
         $sign = OrderUtil::getPrePaySign($openId, $body, $nonceStr, $notifyUrl, $orderSn, $priceFen, $spbillCreateIp);
@@ -233,8 +233,8 @@ class OrderService
 //            Log::info($result);
             return $result;
         } catch (\Exception $e) {
-            Log::info(" [ OrderService.php ] =================== createWxOrder >>>>> create wx order failed [ e ] =  ");
-            Log::info($e);
+            Log::error(" [ OrderService.php ] =================== createWxOrder >>>>> create wx order failed [ e ] =  ");
+            Log::error($e);
         } finally {
             curl_close($ch);
         }
@@ -329,8 +329,8 @@ class OrderService
             $order->save();
             DB::commit();
         } catch (\Exception $e) {
-            Log::info(" [ OrderService ] ===================== cancelOrder >>>>>> error happened when cancel a order ");
-            Log::info($e);
+            Log::error(" [ OrderService ] ===================== cancelOrder >>>>>> error happened when cancel a order ");
+            Log::error($e);
             DB::rollBack();
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
@@ -372,7 +372,7 @@ class OrderService
         }
         foreach ($orders as $order) {
             $order->skus = $this->orderSkuDao->findByOrderSn($order->sn);
-            Log::info($order);
+//            Log::info($order);
         }
         return new JsonResult(StatusCode::SUCCESS, $orders);
     }

@@ -55,8 +55,8 @@ class OrderUtil
             . "<trade_type>JSAPI</trade_type>"
             . "<sign>" . $sign . "</sign>"
             . "</xml>";
-        Log::info(" [ OrderUtil.php ] =================== wxSendData >>>>> data = ");
-        Log::info($data);
+//        Log::info(" [ OrderUtil.php ] =================== wxSendData >>>>> data = ");
+//        Log::info($data);
         return $data;
     }
 
@@ -82,14 +82,14 @@ class OrderUtil
             . "&spbill_create_ip=" . $spbillCreateIp
             . "&total_fee=" . $price
             . "&trade_type=JSAPI";
-        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
-        Log::info($stringA);
+//        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
+//        Log::info($stringA);
         $stringSignTemp = $stringA . "&key=" . env("WX_MERCHANT_KEY");
-        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
-        Log::info($stringSignTemp);
+//        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
+//        Log::info($stringSignTemp);
         $sign = strtoupper(md5($stringSignTemp));
-        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
-        Log::info($sign);
+//        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
+//        Log::info($sign);
         return $sign;
     }
 
@@ -105,16 +105,16 @@ class OrderUtil
 
     public static function getPayParam($orderSn, $package)
     {
-        Log::info(gettype($package));
+//        Log::info(gettype($package));
         $result = new \stdClass();
         $result->orderSn = $orderSn;
         $result->signType = 'MD5';
         $timeStamp = date_timestamp_get(date_create());
         $result->timeStamp = $timeStamp;
         $result->nonceStr = OrderUtil::getNonceStr();
-        Log::info($package);
+//        Log::info($package);
         $result->package = "prepay_id=" . $package;
-        Log::info($result->package);
+//        Log::info($result->package);
         $result->paySign = OrderUtil::getPaySign($timeStamp, $result->nonceStr, $package);
         return $result;
     }
