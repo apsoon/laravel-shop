@@ -397,6 +397,25 @@ class OrderService
     }
 
     /**
+     * 发货
+     * @param array $req
+     * @return JsonResult
+     */
+    public function postOrder(array $req)
+    {
+        if (empty($req["orderSn"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $order = $this->orderDao->findBySn($req["orderSn"]);
+        Log::info($order);
+        Log::info(empty($order));
+        Log::info(empty($order));
+        if (empty($order) || $order->state != OrderStatus::DELIVERY_REQUIRED["code"]) return new JsonResult(StatusCode::PARAM_ERROR);
+        $order->express_number = $req["expressNumber"];
+        $order->state = OrderStatus::RECEIVE_REQUIRED["code"];
+        if ($order->save()) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
      * OrderService constructor.
      *
      * @param OrderDao $orderDao

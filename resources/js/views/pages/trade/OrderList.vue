@@ -38,7 +38,7 @@
                     <el-button v-if="scope.row.state === 1"
                                size="mini"
                                type="primary"
-                               @click="modifyState('disable', scope.$index, scope.row.id)">发货
+                               @click="postGoods(scope.$index, scope.row.sn)">发货
                     </el-button>
                 </template>
             </el-table-column>
@@ -78,6 +78,34 @@
             that.getOrderList();
         },
         methods: {
+            postGoods: function (index, sn) {
+                let that = this;
+                let promData = {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    inputPattern: /^[0-9a-zA-Z]+$/,
+                    inputErrorMessage: '快递单号格式不正确'
+                };
+                that.$prompt('快递单号', '提示', promData)
+                    .then((res => {
+                        let data = {
+                            orderSn: sn,
+                            expressNumber: res.value,
+                            token: that.token,
+                            adminId: that.adminId
+                        };
+                        axios.post("order/post", data)
+                            .then(res => {
+                                if (res.data.code === 2000) that.orderList[index].state = 2;
+                            }).catch(err => {
+                        });
+                    })).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '取消发货'
+                    });
+                });
+            },
             changeActive: function (tab, event) {
                 let that = this;
                 that.getOrderList(tab.name);

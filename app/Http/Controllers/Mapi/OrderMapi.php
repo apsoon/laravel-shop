@@ -44,6 +44,10 @@ class OrderMapi extends Controller
         return $this->orderService->getOrderDetailByOrderSn($req);
     }
 
+    public function post(Request $request){
+       $req = $request->all();
+       return $this->orderService->postOrder($req);
+    }
     /**
      * OrderMapi constructor.
      *
