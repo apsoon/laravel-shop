@@ -55,8 +55,6 @@ class OrderUtil
             . "<trade_type>JSAPI</trade_type>"
             . "<sign>" . $sign . "</sign>"
             . "</xml>";
-//        Log::info(" [ OrderUtil.php ] =================== wxSendData >>>>> data = ");
-//        Log::info($data);
         return $data;
     }
 
@@ -65,9 +63,33 @@ class OrderUtil
 
     }
 
-    public static function wxRefundData()
+    public static function wxRefundSendData($nonceStr, $sign, $orderSn, $afterSaleSn, $totalFee, $refundFee)
     {
+        $data = "<xml>"
+            . "<appid>" . env("WX_APP_ID") . "</appid>"
+            . "<mch_id>" . env("WX_MERCHANT_ID") . "</mch_id>"
+            . "<nonce_str>" . $nonceStr . "</nonce_str>"
+            . "<out_refund_no>" . $afterSaleSn . "</out_refund_no>"
+            . "<out_trade_no>" . $orderSn . "</out_trade_no>"
+            . "<refund_fee>" . $refundFee . "</refund_fee>"
+            . "<total_fee>" . $totalFee . "</total_fee>"
+            . "<sign>" . $sign . "</sign>"
+            . "</xml>";
+        return $data;
+    }
 
+    public static function getRefundSign(string $nonceStr, $orderSn, $afterSaleSn, $totalFee, $refundFee)
+    {
+        $stringA = "appid=" . env("WX_APP_ID")
+            . "&mch_id=" . env("WX_MERCHANT_ID")
+            . "&nonce_str=" . $nonceStr
+            . "out_refund_no" . $afterSaleSn
+            . "&out_trade_no=" . $orderSn
+            . "&refund_fee=" . $refundFee
+            . "&total_fee=" . $totalFee;
+        $stringSignTemp = $stringA . "&key=" . env("WX_MERCHANT_KEY");
+        $sign = strtoupper(md5($stringSignTemp));
+        return $sign;
     }
 
     public static function getPrePaySign($openId, $body, $nonceStr, $notifyUrl, $orderSn, $price, $spbillCreateIp)
@@ -82,14 +104,8 @@ class OrderUtil
             . "&spbill_create_ip=" . $spbillCreateIp
             . "&total_fee=" . $price
             . "&trade_type=JSAPI";
-//        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
-//        Log::info($stringA);
         $stringSignTemp = $stringA . "&key=" . env("WX_MERCHANT_KEY");
-        Log::debug(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
-        Log::debug($stringSignTemp);
         $sign = strtoupper(md5($stringSignTemp));
-//        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
-//        Log::info($sign);
         return $sign;
     }
 

@@ -83,12 +83,12 @@ class AfterSaleService
         if (empty($req["afterSaleSn"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $afterSaleSn = $req["afterSaleSn"];
         $afterSale = $this->afterSaleDao->findBySn($afterSaleSn);
-        $user = $this->userDao->findByUserId($req["userId"]);
+        $order = $this->orderDao->findBySn($afterSale->order_sn);
         if (empty($afterSale) || $afterSale->state != AfterSaleStatus::ACCEPT_REQUIRED["code"]) {
             return new JsonResult(StatusCode::PARAM_ERROR);
         }
         try {
-            $wxResult = $this->createWxOrder($afterSaleSn, $order->price, $user->open_id);
+            $wxResult = $this->createWxRefund($order->orderSn, $afterSaleSn, $order->price);
             if (empty($wxResult)) {
                 throw new \Exception("request failed");
             }
@@ -100,9 +100,10 @@ class AfterSaleService
             if ($resultObj->result_code != "SUCCESS") {
                 throw new \Exception("result error" . $resultObj->err_code_des);
             }
-            $package = json_decode(json_encode($resultObj))->prepay_id;
-            $result = OrderUtil::getPayParam($orderSn, $package);
-            return new JsonResult(StatusCode::SUCCESS, $result);
+            // TODO check sign
+            $afterSale->state = AfterSaleStatus::REFUNDING;
+            $afterSale->save();
+            return new JsonResult(StatusCode::SUCCESS);
         } catch (\Exception $e) {
             Log::error(" [ OrderService.php ] =================== payOrder >>>>> pay order failed [ e ] =  ");
             Log::error($e);
@@ -110,16 +111,14 @@ class AfterSaleService
         }
     }
 
-    private function createWxRefund()
+    private function createWxRefund($orderSn, $afterSaleSn, $price)
     {
-        $priceFen = $price * 100;
-        $spbillCreateIp = env("SERVER_IP");
-        $notifyUrl = "http://" . $spbillCreateIp . "/api/order/callback";
-        $body = "pay test";
+        $totalFee = $price * 100;
+        $refundFee = $totalFee;
         $nonceStr = OrderUtil::getNonceStr();
-        $sign = OrderUtil::getPrePaySign($openId, $body, $nonceStr, $notifyUrl, $orderSn, $priceFen, $spbillCreateIp);
-        $requestData = OrderUtil::wxRefundSendData($openId, $orderSn, $priceFen, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp);
-        $requestUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+        $sign = OrderUtil::getRefundSign($nonceStr, $orderSn, $afterSaleSn, $totalFee, $refundFee);
+        $requestData = OrderUtil::wxRefundSendData($nonceStr, $sign, $orderSn, $afterSaleSn, $totalFee, $refundFee);
+        $requestUrl = "https://api.mch.weixin.qq.com/secapi/pay/refund";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $requestUrl);
         curl_setopt($ch, CURLOPT_POST, true);
