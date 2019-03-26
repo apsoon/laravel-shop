@@ -118,4 +118,31 @@ class OrderUtil
         $result->paySign = OrderUtil::getPaySign($timeStamp, $result->nonceStr, $package);
         return $result;
     }
+
+    public static function getWxCallbackSign($params)
+    {
+        //签名步骤一：按字典序排序数组参数
+        ksort($params);
+        $string = OrderUtil::ToUrlParams($params);  //参数进行拼接key=value&k=v
+        //签名步骤二：在string后加入KEY
+        $string = $string . "&key=" . env("WX_MERCHANT_KEY");
+        //签名步骤三：MD5加密
+        $string = md5($string);
+        //签名步骤四：所有字符转为大写
+        $result = strtoupper($string);
+        return $result;
+    }
+
+    static function ToUrlParams($params)
+    {
+        $string = '';
+        if (!empty($params)) {
+            $array = array();
+            foreach ($params as $key => $value) {
+                $array[] = $key . '=' . $value;
+            }
+            $string = implode("&", $array);
+        }
+        return $string;
+    }
 }

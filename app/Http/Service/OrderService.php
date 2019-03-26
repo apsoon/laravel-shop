@@ -249,12 +249,46 @@ class OrderService
 
     }
 
-    public function dealWxCallBack(array $req)
+    /**
+     * 微信支付回调
+     *
+     * @param $request
+     * @return JsonResult|string
+     */
+    public function dealWxCallBack($request)
     {
+        if (empty($request)) {
+            return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+        }
         Log::info(" [ OrderService ] =================== dealWxCallBack >>>>> log Start");
-        Log::info($req);
+        Log::info($request);
         Log::info(" [ OrderService ] =================== dealWxCallBack >>>>> log End");
-        return new JsonResult();
+        try {
+            libxml_disable_entity_loader(true); //禁止引用外部xml实体
+            $xml = simplexml_load_string($request, 'SimpleXMLElement', LIBXML_NOCDATA); //XML转数组
+            $postData = (array)$xml;
+            if ($postData["return_code"] != "SUCCESS") {
+                throw new \Exception(" return error " . $postData["return_msg"]);
+            }
+            if ($postData["result_code"]) {
+                throw new \Exception(" return error " . $postData["err_code_des"]);
+            }
+            $orderSn = $postData['out_trade_no'];
+            $order = $this->orderDao->findBySn($orderSn);
+            if (empty($order) || $order->state != OrderStatus::DELIVERY_REQUIRED["code"]) return new JsonResult(StatusCode::PARAM_ERROR);
+            $postSign = $postData['sign'];
+            unset($postData['sign']);
+            $newSign = OrderUtil::getWxCallbackSign($postData);
+            if ($postSign == $newSign) {
+                $order->state = OrderStatus::DELIVERY_REQUIRED;
+                $order->save();
+            }
+        } catch (\Exception $e) {
+            Log::info(" [ OrderService.php ] =================== dealWxCallBack >>>>>  wx callback failed [ e ] =  ");
+            Log::info($e);
+            return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+        }
+        return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
     }
 
     /**
@@ -405,9 +439,6 @@ class OrderService
     {
         if (empty($req["orderSn"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $order = $this->orderDao->findBySn($req["orderSn"]);
-        Log::info($order);
-        Log::info(empty($order));
-        Log::info(empty($order));
         if (empty($order) || $order->state != OrderStatus::DELIVERY_REQUIRED["code"]) return new JsonResult(StatusCode::PARAM_ERROR);
         $order->express_number = $req["expressNumber"];
         $order->state = OrderStatus::RECEIVE_REQUIRED["code"];

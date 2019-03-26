@@ -52,8 +52,7 @@ class OrderFapi extends Controller
      */
     public function wxCallBack(Request $request)
     {
-        $req = $request->all();
-        return $this->orderService->dealWxCallBack($req);
+        return $this->orderService->dealWxCallBack($request);
     }
 
     /**
