@@ -85,8 +85,8 @@ class OrderUtil
 //        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
 //        Log::info($stringA);
         $stringSignTemp = $stringA . "&key=" . env("WX_MERCHANT_KEY");
-//        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
-//        Log::info($stringSignTemp);
+        Log::debug(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
+        Log::debug($stringSignTemp);
         $sign = strtoupper(md5($stringSignTemp));
 //        Log::info(" [ OrderUtil.php ] =================== getPrePaySign >>>>> ");
 //        Log::info($sign);
