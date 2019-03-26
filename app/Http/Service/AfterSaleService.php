@@ -59,7 +59,11 @@ class AfterSaleService
     {
         if (empty($req["userId"]) || empty($req["orderSn"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $order = $this->orderDao->findBySn($req["orderSn"]);
-        if (empty($order) || $order->user_id != $req["userId"] || ($order->state < OrderStatus::COMMENT_REQUIRED["code"])) return new JsonResult(StatusCode::PARAM_ERROR);
+        $exist = $this->afterSaleDao->findByOrderSn($order->sn);
+        if (!empty($exist) && ($exist->state != AfterSaleStatus::COMPLETE["code"] || $exist->state != AfterSaleStatus::CANCEL["code"]))
+            return new JsonResult(StatusCode::DO_NOT_REPEAT_ORDER);
+        if (empty($order) || $order->user_id != $req["userId"] || ($order->state < OrderStatus::COMMENT_REQUIRED["code"]))
+            return new JsonResult(StatusCode::PARAM_ERROR);
         $afterSale = new AfterSale();
         $afterSale->sn = OrderUtil::generateOrderSn();
         $afterSale->user_id = $req["userId"];
@@ -116,8 +120,10 @@ class AfterSaleService
         $totalFee = $price * 100;
         $refundFee = $totalFee;
         $nonceStr = OrderUtil::getNonceStr();
-        $sign = OrderUtil::getRefundSign($nonceStr, $orderSn, $afterSaleSn, $totalFee, $refundFee);
-        $requestData = OrderUtil::wxRefundSendData($nonceStr, $sign, $orderSn, $afterSaleSn, $totalFee, $refundFee);
+        $spbillCreateIp = env("SERVER_IP");
+        $notifyUrl = "http://" . $spbillCreateIp . "/after/callback";
+        $sign = OrderUtil::getRefundSign($nonceStr, $orderSn, $afterSaleSn, $totalFee, $refundFee, $notifyUrl);
+        $requestData = OrderUtil::wxRefundSendData($nonceStr, $sign, $orderSn, $afterSaleSn, $totalFee, $refundFee, $notifyUrl);
         $requestUrl = "https://api.mch.weixin.qq.com/secapi/pay/refund";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $requestUrl);

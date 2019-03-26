@@ -118,4 +118,8 @@ class StatusCode
         "code" => 13001,
         "message" => "订单不存在"
     ];
+    const DO_NOT_REPEAT_ORDER = [
+        "code" => 13002,
+        "message" => "请不要重复下单"
+    ];
 }

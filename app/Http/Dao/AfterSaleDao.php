@@ -61,6 +61,12 @@ class AfterSaleDao
             ->first();
     }
 
+    public function findByOrderSn($orderSn)
+    {
+        return $this->afterSale::where("order_sn", "=", $orderSn)
+            ->first();
+    }
+
     /**
      * @param string $userId
      * @param int $pageNo

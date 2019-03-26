@@ -63,12 +63,13 @@ class OrderUtil
 
     }
 
-    public static function wxRefundSendData($nonceStr, $sign, $orderSn, $afterSaleSn, $totalFee, $refundFee)
+    public static function wxRefundSendData($nonceStr, $sign, $orderSn, $afterSaleSn, $totalFee, $refundFee, $notifyUrl)
     {
         $data = "<xml>"
             . "<appid>" . env("WX_APP_ID") . "</appid>"
             . "<mch_id>" . env("WX_MERCHANT_ID") . "</mch_id>"
             . "<nonce_str>" . $nonceStr . "</nonce_str>"
+            . "<notify_url>" . $notifyUrl . "</notify_url>"
             . "<out_refund_no>" . $afterSaleSn . "</out_refund_no>"
             . "<out_trade_no>" . $orderSn . "</out_trade_no>"
             . "<refund_fee>" . $refundFee . "</refund_fee>"
@@ -78,11 +79,12 @@ class OrderUtil
         return $data;
     }
 
-    public static function getRefundSign(string $nonceStr, $orderSn, $afterSaleSn, $totalFee, $refundFee)
+    public static function getRefundSign(string $nonceStr, $orderSn, $afterSaleSn, $totalFee, $refundFee, $notifyUrl)
     {
         $stringA = "appid=" . env("WX_APP_ID")
             . "&mch_id=" . env("WX_MERCHANT_ID")
             . "&nonce_str=" . $nonceStr
+            . "&notify_url=" . $notifyUrl
             . "out_refund_no" . $afterSaleSn
             . "&out_trade_no=" . $orderSn
             . "&refund_fee=" . $refundFee
