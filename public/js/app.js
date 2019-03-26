@@ -7491,6 +7491,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AfterSaleList",
@@ -7531,16 +7537,41 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).catch(function (err) {});
     },
-    modifyState: function modifyState(type, index, id) {
+    refundAfterSale: function refundAfterSale(index, sn) {
       var _this = this;
+
+      var that = this;
+      var comfirmData = {
+        confirmButtonText: "确认",
+        cancelButtonText: '取消',
+        type: 'warning'
+      };
+      that.$confirm("是否对此售后订单退款?", '提示', comfirmData).then(function () {
+        var data = {
+          afterSaleSn: sn,
+          token: that.token,
+          adminId: that.adminId
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("after/refund", data).then(function (res) {
+          if (res.data.code === 2000) that.afSaleList[index].state = 2;
+        });
+      }).catch(function () {
+        _this.$message({
+          type: 'info',
+          message: '已取消' + message
+        });
+      });
+    },
+    modifyState: function modifyState(type, index, id) {
+      var _this2 = this;
 
       var that = this,
           state = 1,
           message = "确认";
 
-      if (type === "complete") {
+      if (type === "reject") {
         state = 4;
-        message = "完成";
+        message = "拒绝";
       }
 
       that.$confirm("是否" + message + "该售后订单?", '提示', {
@@ -7557,7 +7588,7 @@ __webpack_require__.r(__webpack_exports__);
           if (res.data.code === 2000) that.afSaleList[index].state = state;
         });
       }).catch(function () {
-        _this.$message({
+        _this2.$message({
           type: 'info',
           message: '已取消' + message
         });
@@ -96299,14 +96330,16 @@ var render = function() {
                 fn: function(scope) {
                   return [
                     scope.row.state === 0
-                      ? _c("span", [_vm._v("待确定")])
+                      ? _c("span", [_vm._v("待确认")])
                       : scope.row.state === 1
                         ? _c("span", [_vm._v("处理中")])
-                        : scope.row.state === 4
-                          ? _c("span", [_vm._v("已完成")])
-                          : scope.row.state === 7
-                            ? _c("span", [_vm._v("已取消")])
-                            : _vm._e()
+                        : scope.row.state === 2
+                          ? _c("span", [_vm._v("退款中")])
+                          : scope.row.state === 4
+                            ? _c("span", [_vm._v("已完成")])
+                            : scope.row.state === 7
+                              ? _c("span", [_vm._v("已取消")])
+                              : _vm._e()
                   ]
                 }
               }
@@ -96347,14 +96380,29 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 _vm.modifyState(
-                                  "complete",
+                                  "reject",
                                   scope.$index,
                                   scope.row.id
                                 )
                               }
                             }
                           },
-                          [_vm._v("完成\n                ")]
+                          [_vm._v("拒绝\n                ")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    scope.row.state === 1
+                      ? _c(
+                          "el-button",
+                          {
+                            attrs: { size: "mini", type: "primary" },
+                            on: {
+                              click: function($event) {
+                                _vm.refundAfterSale(scope.$index, scope.row.sn)
+                              }
+                            }
+                          },
+                          [_vm._v("退款\n                ")]
                         )
                       : _vm._e()
                   ]

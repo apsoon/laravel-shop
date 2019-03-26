@@ -19,8 +19,9 @@
             <el-table-column label="描述" prop="describe" min-width="1"/>
             <el-table-column label="售后状态" prop="state" width="100">
                 <template slot-scope="scope">
-                    <span v-if="scope.row.state === 0">待确定</span>
+                    <span v-if="scope.row.state === 0">待确认</span>
                     <span v-else-if="scope.row.state === 1">处理中</span>
+                    <span v-else-if="scope.row.state === 2">退款中</span>
                     <span v-else-if="scope.row.state === 4">已完成</span>
                     <span v-else-if="scope.row.state === 7">已取消</span>
                 </template>
@@ -35,7 +36,12 @@
                     <el-button v-if="scope.row.state === 1"
                                size="mini"
                                type="primary"
-                               @click="modifyState('complete', scope.$index, scope.row.id)">完成
+                               @click="modifyState('reject', scope.$index, scope.row.id)">拒绝
+                    </el-button>
+                    <el-button v-if="scope.row.state === 1"
+                               size="mini"
+                               type="primary"
+                               @click="refundAfterSale(scope.$index, scope.row.sn)">退款
                     </el-button>
                 </template>
             </el-table-column>
@@ -91,13 +97,37 @@
                     }).catch(err => {
                 });
             },
+            refundAfterSale: function (index, sn) {
+                let that = this;
+                let comfirmData = {
+                    confirmButtonText: "确认",
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                };
+                that.$confirm("是否对此售后订单退款?", '提示', comfirmData)
+                    .then(() => {
+                        let data = {
+                            afterSaleSn: sn,
+                            token: that.token,
+                            adminId: that.adminId
+                        };
+                        axios.post("after/refund", data).then(res => {
+                            if (res.data.code === 2000) that.afSaleList[index].state = 2;
+                        });
+                    }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消' + message
+                    });
+                });
+            },
             modifyState: function (type, index, id) {
                 let that = this,
                     state = 1,
-                    message = "确认";
-                if (type === "complete") {
+                    message = "确认处理";
+                if (type === "reject") {
                     state = 4;
-                    message = "完成";
+                    message = "拒绝";
                 }
                 that.$confirm("是否" + message + "该售后订单?", '提示', {
                     confirmButtonText: "确认",
