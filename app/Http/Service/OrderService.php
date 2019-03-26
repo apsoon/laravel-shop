@@ -257,28 +257,7 @@ class OrderService
      */
     public function dealWxCallBack($request)
     {
-        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 1 = ");
-        Log::debug($request);
-        Log::debug(json_encode($request));
-        $wxRequest = $request;
-//        if ($wxRequest == null || empty($wxRequest)) {
         $wxRequest = trim(file_get_contents("php://input"));
-        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 2 = ");
-        Log::debug($wxRequest);
-        Log::debug(json_encode($wxRequest));
-//        }
-        if ($wxRequest == null || empty($wxRequest)) {
-            $wxRequest = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
-            Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 3 = ");
-            Log::debug($wxRequest);
-            Log::debug(json_encode($wxRequest));
-        }
-        if ($wxRequest == null || empty($wxRequest)) {
-            $wxRequest = $request->getContent();
-            Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 3 = ");
-            Log::debug($wxRequest);
-            Log::debug(json_encode($wxRequest));
-        }
         if (empty($wxRequest)) {
             return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
         }
@@ -289,7 +268,7 @@ class OrderService
             if ($postData["return_code"] != "SUCCESS") {
                 throw new \Exception(" return error " . $postData["return_msg"]);
             }
-            if ($postData["result_code"]) {
+            if ($postData["result_code"] != "SUCCESS") {
                 throw new \Exception(" return error " . $postData["err_code_des"]);
             }
             $orderSn = $postData['out_trade_no'];
