@@ -127,7 +127,7 @@
             });
             if (type === 'modify') {
                 let skuId = that.$route.query.skuId;
-                axios.get("/sku-detail?skuId=" + skuId + "&adminId=" + that.adminId + "&token=" + that.token)
+                axios.get("/sku/detail?skuId=" + skuId + "&adminId=" + that.adminId + "&token=" + that.token)
                     .then(res => {
                         if (res.data.code === 2000) {
                             let data = res.data.data;

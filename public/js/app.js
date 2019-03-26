@@ -5416,7 +5416,7 @@ __webpack_require__.r(__webpack_exports__);
 
     if (type === 'modify') {
       var skuId = that.$route.query.skuId;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/sku-detail?skuId=" + skuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/sku/detail?skuId=" + skuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
         if (res.data.code === 2000) {
           var data = res.data.data;
           that.skuForm = {
@@ -7567,7 +7567,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var that = this,
           state = 1,
-          message = "确认";
+          message = "确认处理";
 
       if (type === "reject") {
         state = 4;
