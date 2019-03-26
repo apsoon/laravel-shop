@@ -265,6 +265,9 @@ class OrderService
             libxml_disable_entity_loader(true); //禁止引用外部xml实体
             $xml = simplexml_load_string($wxRequest, 'SimpleXMLElement', LIBXML_NOCDATA); //XML转数组
             $postData = (array)$xml;
+            Log::debug(" [ OrderService.php ] =================== dealWxCallBack >>>>>  postData = ");
+            Log::debug($postData);
+            Log::debug(json_encode($postData));
             if ($postData["return_code"] != "SUCCESS") {
                 throw new \Exception(" return error " . $postData["return_msg"]);
             }
