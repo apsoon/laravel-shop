@@ -113,7 +113,7 @@ class OrderUtil
         $result->timeStamp = $timeStamp;
         $result->nonceStr = OrderUtil::getNonceStr();
         Log::info($package);
-        $result->package = $package;
+        $result->package = "prepay_id=" . $package;
         Log::info($result->package);
         $result->paySign = OrderUtil::getPaySign($timeStamp, $result->nonceStr, $package);
         return $result;
