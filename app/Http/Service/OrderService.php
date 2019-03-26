@@ -257,12 +257,19 @@ class OrderService
      */
     public function dealWxCallBack($request)
     {
-        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request = ");
+        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 1 = ");
         Log::debug($request);
         Log::debug(json_encode($request));
         if ($request == null) {
             $request = file_get_contents("php://input");
         }
+        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 2 = ");
+        Log::debug($request);
+        Log::debug(json_encode($request));
+        if ($request == null) {
+            $request = isset($GLOBALS['HTTP_RAW_POST_DATA']) ? $GLOBALS['HTTP_RAW_POST_DATA'] : '';
+        }
+        Log::debug(" [ OrderService ] =================== dealWxCallBack >>>>> request 3 = ");
         Log::debug($request);
         Log::debug(json_encode($request));
         if (empty($request)) {
