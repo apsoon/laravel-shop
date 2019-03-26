@@ -57,15 +57,13 @@ class AfterSaleService
      */
     public function createAfterSale(array $req)
     {
-        if (empty($req["userId"]) || empty($req["orderSn"]) || empty($req["skuId"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        if (empty($req["userId"]) || empty($req["orderSn"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $order = $this->orderDao->findBySn($req["orderSn"]);
-        if (empty($order) || $order->user_id != $req["userId"] || ($order->state < OrderStatus::COMMENT_REQUIRED["code"]))
-            return new JsonResult(StatusCode::PARAM_ERROR);
+        if (empty($order) || $order->user_id != $req["userId"] || ($order->state < OrderStatus::COMMENT_REQUIRED["code"])) return new JsonResult(StatusCode::PARAM_ERROR);
         $afterSale = new AfterSale();
         $afterSale->sn = OrderUtil::generateOrderSn();
         $afterSale->user_id = $req["userId"];
         $afterSale->order_sn = $req["orderSn"];
-        $afterSale->sku_id = $req["skuId"];
         $afterSale->reason = $req["reason"];
         $afterSale->describe = $req["describe"];
         $afterSale->state = AfterSaleStatus::ACCEPT_REQUIRED["code"];
