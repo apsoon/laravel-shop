@@ -52,6 +52,16 @@ class AfterSaleDao
     }
 
     /**
+     * @param $afterSaleSn
+     * @return mixed
+     */
+    public function findBySn($afterSaleSn)
+    {
+        return $this->afterSale::where("sn", "=", $afterSaleSn)
+            ->first();
+    }
+
+    /**
      * @param string $userId
      * @param int $pageNo
      * @param int $size

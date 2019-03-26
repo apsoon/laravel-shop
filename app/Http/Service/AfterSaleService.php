@@ -18,6 +18,8 @@ use App\Http\Enum\OrderStatus;
 use App\Http\Enum\StatusCode;
 use App\Http\Model\AfterSale;
 use App\Http\Util\JsonResult;
+use App\Http\Util\OrderUtil;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -60,6 +62,7 @@ class AfterSaleService
         if (empty($order) || $order->user_id != $req["userId"] || ($order->state < OrderStatus::COMMENT_REQUIRED["code"]))
             return new JsonResult(StatusCode::PARAM_ERROR);
         $afterSale = new AfterSale();
+        $afterSale->sn = OrderUtil::generateOrderSn();
         $afterSale->user_id = $req["userId"];
         $afterSale->order_sn = $req["orderSn"];
         $afterSale->sku_id = $req["skuId"];
@@ -71,9 +74,105 @@ class AfterSaleService
         return new JsonResult(StatusCode::SERVER_ERROR);
     }
 
+    /**
+     * 退款
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function refundAfterSale(array $req)
+    {
+        if (empty($req["afterSaleSn"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $afterSaleSn = $req["afterSaleSn"];
+        $afterSale = $this->afterSaleDao->findBySn($afterSaleSn);
+        $user = $this->userDao->findByUserId($req["userId"]);
+        if (empty($afterSale) || $afterSale->state != AfterSaleStatus::ACCEPT_REQUIRED["code"]) {
+            return new JsonResult(StatusCode::PARAM_ERROR);
+        }
+        try {
+            $wxResult = $this->createWxOrder($afterSaleSn, $order->price, $user->open_id);
+            if (empty($wxResult)) {
+                throw new \Exception("request failed");
+            }
+            //  加载XML内容
+            $resultObj = simplexml_load_string($wxResult, 'SimpleXMLElement', LIBXML_NOCDATA);
+            if ($resultObj->return_code != "SUCCESS") {
+                throw new \Exception(" return error " . $resultObj->return_msg);
+            }
+            if ($resultObj->result_code != "SUCCESS") {
+                throw new \Exception("result error" . $resultObj->err_code_des);
+            }
+            $package = json_decode(json_encode($resultObj))->prepay_id;
+            $result = OrderUtil::getPayParam($orderSn, $package);
+            return new JsonResult(StatusCode::SUCCESS, $result);
+        } catch (\Exception $e) {
+            Log::error(" [ OrderService.php ] =================== payOrder >>>>> pay order failed [ e ] =  ");
+            Log::error($e);
+            return new JsonResult(StatusCode::SERVER_ERROR);
+        }
+    }
+
     private function createWxRefund()
     {
+        $priceFen = $price * 100;
+        $spbillCreateIp = env("SERVER_IP");
+        $notifyUrl = "http://" . $spbillCreateIp . "/api/order/callback";
+        $body = "pay test";
+        $nonceStr = OrderUtil::getNonceStr();
+        $sign = OrderUtil::getPrePaySign($openId, $body, $nonceStr, $notifyUrl, $orderSn, $priceFen, $spbillCreateIp);
+        $requestData = OrderUtil::wxRefundSendData($openId, $orderSn, $priceFen, $body, $nonceStr, $notifyUrl, $sign, $spbillCreateIp);
+        $requestUrl = "https://api.mch.weixin.qq.com/pay/unifiedorder";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $requestUrl);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $requestData);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        try {
+            $result = curl_exec($ch);
+            return $result;
+        } catch (\Exception $e) {
+            Log::error(" [ OrderService.php ] =================== createWxOrder >>>>> create wx order failed [ e ] =  ");
+            Log::error($e);
+        } finally {
+            curl_close($ch);
+        }
+        return "";
+    }
 
+    public function dealWxCallBack(Request $request)
+    {
+        $wxRequest = trim(file_get_contents("php://input"));
+        if (empty($wxRequest)) {
+            return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+        }
+        try {
+            libxml_disable_entity_loader(true); //禁止引用外部xml实体
+            $xml = simplexml_load_string($wxRequest, 'SimpleXMLElement', LIBXML_NOCDATA); //XML转数组
+            $postData = (array)$xml;
+            if ($postData["return_code"] != "SUCCESS") {
+                throw new \Exception(" return error " . $postData["return_msg"]);
+            }
+            if ($postData["result_code"] != "SUCCESS") {
+                throw new \Exception(" return error " . $postData["err_code_des"]);
+            }
+            $afterSaleSn = $postData['out_refund_no'];
+            $afterSale = $this->afterSaleDao->findBySn($afterSaleSn);
+            if (empty($afterSale) || $afterSale->state != AfterSaleStatus::ING["code"]) {
+                throw new \Exception(" Order not Exist" . $afterSaleSn);
+            }
+            $postSign = $postData['sign'];
+            unset($postData['sign']);
+            $newSign = OrderUtil::generateSign($postData);
+            if ($postSign == $newSign) {
+                $afterSale->state = AfterSaleStatus::COMPLETE["code"];
+                $afterSale->save();
+            }
+        } catch (\Exception $e) {
+            Log::error(" [ AfterSaleService.php ] =================== dealWxCallBack >>>>>  wx callback failed [ e ] =  ");
+            Log::error($e);
+            return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
+        }
+        return '<xml><return_code><![CDATA[SUCCESS]]></return_code><return_msg><![CDATA[OK]]></return_msg></xml>';
     }
 
     /**
@@ -84,8 +183,8 @@ class AfterSaleService
      */
     public function cancelAfterSale(array $req)
     {
-        if (empty($req["userId"]) || empty($req["id"])) return new JsonResult(StatusCode::PARAM_LACKED);
-        $afterSale = $this->afterSaleDao->findById($req["id"]);
+        if (empty($req["afterSaleSn"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $afterSale = $this->afterSaleDao->findBySn($req["afterSaleSn"]);
         if (empty($afterSale) || $afterSale->user_id != $req["userId"]) return new JsonResult(StatusCode::PARAM_ERROR);
         $afterSale->state = AfterSaleStatus::CANCEL["code"];
         $result = $this->afterSaleDao->update($afterSale);

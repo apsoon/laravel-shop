@@ -119,7 +119,13 @@ class OrderUtil
         return $result;
     }
 
-    public static function getWxCallbackSign($params)
+    /**
+     * 生产Sign
+     *
+     * @param $params
+     * @return string
+     */
+    public static function generateSign($params)
     {
         //签名步骤一：按字典序排序数组参数
         ksort($params);

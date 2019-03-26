@@ -20,9 +20,11 @@ class MapiAuth
      */
     public function handle($request, Closure $next)
     {
+        $requestUri = \Request::getRequestUri();
+        Log::debug(" [ MapiAuth.php ] ================================ handle >>>>> url = " . $requestUri);
         $req = $request->all();
         // 如果是登录交给下一级处理
-        if (sizeof($req) == 2 && !empty($req["name"]) && !empty($req["password"])) return $next($request);
+        if ((sizeof($req) == 2 && !empty($req["name"]) && !empty($req["password"])) || stristr($requestUri, "after/callback")) return $next($request);
         $rules = ['adminId' => 'required', 'token' => 'required'];
         $valid = Validator::make($req, $rules);
         if ($valid->fails()) {

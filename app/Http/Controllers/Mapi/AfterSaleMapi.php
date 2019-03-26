@@ -32,6 +32,29 @@ class AfterSaleMapi extends Controller
     }
 
     /**
+     * 退款
+     *
+     * @param Request $request
+     * @return \App\Http\Util\JsonResult
+     */
+    public function refund(Request $request)
+    {
+        $req = $request->all();
+        return $this->afterSaleService->refundAfterSale($req);
+    }
+
+    /**
+     * 微信订单调用
+     *
+     * @param Request $request
+     * @return string
+     */
+    public function wxCallBack(Request $request)
+    {
+        return $this->afterSaleService->dealWxCallBack($request);
+    }
+
+    /**
      * 修改售后订单状态
      *
      * @param Request $request

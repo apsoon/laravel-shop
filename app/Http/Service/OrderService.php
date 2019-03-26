@@ -248,8 +248,6 @@ class OrderService
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         try {
             $result = curl_exec($ch);
-//            Log::info(" [ OrderService.php ] =================== createWxOrder >>>>> result =   ");
-//            Log::info($result);
             return $result;
         } catch (\Exception $e) {
             Log::error(" [ OrderService.php ] =================== createWxOrder >>>>> create wx order failed [ e ] =  ");
@@ -284,9 +282,6 @@ class OrderService
             libxml_disable_entity_loader(true); //禁止引用外部xml实体
             $xml = simplexml_load_string($wxRequest, 'SimpleXMLElement', LIBXML_NOCDATA); //XML转数组
             $postData = (array)$xml;
-            Log::debug(" [ OrderService.php ] =================== dealWxCallBack >>>>>  postData = ");
-            Log::debug($postData);
-            Log::debug(json_encode($postData));
             if ($postData["return_code"] != "SUCCESS") {
                 throw new \Exception(" return error " . $postData["return_msg"]);
             }
@@ -300,7 +295,7 @@ class OrderService
             }
             $postSign = $postData['sign'];
             unset($postData['sign']);
-            $newSign = OrderUtil::getWxCallbackSign($postData);
+            $newSign = OrderUtil::generateSign($postData);
             if ($postSign == $newSign) {
                 $order->state = OrderStatus::DELIVERY_REQUIRED["code"];
                 $order->save();
@@ -392,7 +387,6 @@ class OrderService
         }
         foreach ($orders as $order) {
             $order->skus = $this->orderSkuDao->findByOrderSn($order->sn);
-//            Log::info($order);
         }
         return new JsonResult(StatusCode::SUCCESS, $orders);
     }

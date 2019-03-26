@@ -15,9 +15,9 @@ class CreateAfterSaleTable extends Migration
     {
         Schema::create('after_sale', function (Blueprint $table) {
             $table->increments('id');
+            $table->string("sn")->comment("售后编号");
             $table->string("user_id")->comment("userId");
             $table->string("order_sn")->comment("订单编号");
-            $table->integer("sku_id")->comment("SKU ID");
             $table->string("reason")->comment("申请原因");
             $table->text("describe")->comment("描述");
             $table->tinyInteger("state")->comment("售后状态");
