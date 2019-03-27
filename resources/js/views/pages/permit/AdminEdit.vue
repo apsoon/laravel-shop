@@ -93,6 +93,22 @@
             that.token = user.token;
             that.adminId = user.id;
             that.type = type;
+            if (type === "modify") {
+                axios.get("admin/detail?adminId=" + that.adminId + "&adminId=" + that.adminId + "&token=" + that.token)
+                    .then(res => {
+                        if (res.data.code === 2000) {
+                            let data = res.data.data;
+                            that.adminForm = {
+                                name: data.name,
+                                email: data.email,
+                                phone: data.phone,
+                                confirm: "",
+                                originPwd: "",
+                            }
+                        }
+                    }).catch(err => {
+                });
+            }
         },
         methods: {
             onSubmit: function () {

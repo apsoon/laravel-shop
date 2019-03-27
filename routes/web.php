@@ -122,8 +122,8 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::POST("upload/image", "UploadMapi@image");
 
     // ================================================  管理员  =================================================
-    Route::GET("admin/list", "AdminMapi@list");
     Route::POST("admin/create", "AdminMapi@create");
+    Route::GET("admin/detail", "AdminMapi@detail");
     Route::POST("admin/update", "AdminMapi@update");
     Route::POST("admin/login", "AdminMapi@login");
 

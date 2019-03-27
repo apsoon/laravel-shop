@@ -118,6 +118,12 @@ class AdminService
         return new JsonResult(StatusCode::SUCCESS, $adminList);
     }
 
+    public function getAdminById(array $req)
+    {
+        $admin = $this->adminDao->findById($req["adminId"]);
+        return new JsonResult(StatusCode::SUCCESS, $admin);
+    }
+
     /**
      * AdminService constructor.
      *

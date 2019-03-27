@@ -31,10 +31,22 @@ class AdminMapi extends Controller
         return $this->adminService->createAdmin($req);
     }
 
+    /**
+     * update
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
     public function update(Request $request)
     {
-       $req = $request->all();
-       return $this->adminService->updateAdmin($req);
+        $req = $request->all();
+        return $this->adminService->updateAdmin($req);
+    }
+
+    public function detail(Request $request)
+    {
+        $req = $request->all();
+        return $this->adminService->getAdminById($req);
     }
 
     /**

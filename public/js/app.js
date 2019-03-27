@@ -7317,6 +7317,21 @@ __webpack_require__.r(__webpack_exports__);
     that.token = user.token;
     that.adminId = user.id;
     that.type = type;
+
+    if (type === "modify") {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("admin/detail?adminId=" + that.adminId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
+        if (res.data.code === 2000) {
+          var data = res.data.data;
+          that.adminForm = {
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            confirm: "",
+            originPwd: ""
+          };
+        }
+      }).catch(function (err) {});
+    }
   },
   methods: {
     onSubmit: function onSubmit() {
