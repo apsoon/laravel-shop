@@ -258,11 +258,17 @@ class OrderService
         return "";
     }
 
+    /**
+     * 收货
+     *
+     * @param array $req
+     * @return JsonResult
+     */
     public function receiveOrder(array $req)
     {
         $orderSn = $req["orderSn"];
         $order = $this->orderDao->findBySn($orderSn);
-        if (empty($order) || $order->state != OrderStatus::PAY_REQUIRED["code"] || $order->user_id != $req["userId"]) {
+        if (empty($order) || $order->state != OrderStatus::RECEIVE_REQUIRED["code"] || $order->user_id != $req["userId"]) {
             return new JsonResult(StatusCode::PARAM_ERROR);
         }
         $order->state = OrderStatus::COMMENT_REQUIRED["code"];
@@ -409,8 +415,7 @@ class OrderService
      * @param array $req
      * @return JsonResult
      */
-    public
-    function getOrderStatusNumberByUser(array $req)
+    public function getOrderStatusNumberByUser(array $req)
     {
         $userId = $req["userId"];
         $statusList = [OrderStatus::PAY_REQUIRED, OrderStatus::DELIVERY_REQUIRED, OrderStatus::RECEIVE_REQUIRED, OrderStatus::COMMENT_REQUIRED];
