@@ -5949,7 +5949,7 @@ __webpack_require__.r(__webpack_exports__);
                 message: '添加成功!'
               });
               setTimeout(function () {
-                that.$router.push("/spu/detail?spuId=" + that.spuId + "&active=" + "banner");
+                that.$router.push("/spu-detail?spuId=" + that.spuId + "&active=" + "banner");
               }, 1000);
             }
           });
