@@ -159,9 +159,9 @@ class SpuService
         $total = Spu::count();
         foreach ($spuList as $spu) {
             $cate = $this->categoryDao->findById($spu->category_id);
-            $spu->category_name = $cate->name;
+            if (!empty($cate)) $spu->category_name = $cate->name;
             $brand = $this->brandDao->findById($spu->brand_id);
-            $spu->brand_name = $brand->name;
+            if (!empty($brand)) $spu->brand_name = $brand->name;
         }
         $result = new \stdClass();
         $result->spuList = $spuList;
