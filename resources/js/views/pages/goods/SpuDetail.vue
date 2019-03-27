@@ -144,7 +144,8 @@
                     <el-button type="primary" size="medium">添加Banner</el-button>
                 </router-link>
                 <el-button type="danger" size="medium" @click="deleteBanners()">批量删除</el-button>
-                <el-table ref="multipleTable" :data="bannerList" tooltip-effect="dark" style="width: 100%">
+                <el-table ref="multipleTable" :data="bannerList" tooltip-effect="dark" style="width: 100%"
+                          v-loading="loadingBanner">
                     <el-table-column type="selection" width="55"/>
                     <el-table-column label="图片" prop="imageUrl" width="150">
                         <template slot-scope="scope">
@@ -162,7 +163,7 @@
                             <span v-else>已启用</span>
                         </template>
                     </el-table-column>
-                    <el-table-column width="300" label="操作">
+                    <el-table-column min-width="1" label="操作">
                         <template slot-scope="scope">
                             <el-button v-if="scope.row.state" size="mini" type="warning"
                                        @click="modifyBannerState('disable', scope.$index, scope.row.id)">禁用
@@ -198,7 +199,8 @@
                 attrList: [],
                 bannerList: [],
                 token: "",
-                adminId: ""
+                adminId: "",
+                loadingBanner: true
             }
         },
         mounted: function () {
@@ -243,14 +245,21 @@
                         that.attrList = res.data.data;
                     }
                 });
-            axios.get("/spu/banner-list?spuId=" + that.spuId + "&adminId=" + that.adminId + "&token=" + that.token)
-                .then(res => {
-                    if (res.data.code === 2000) {
-                        that.bannerList = res.data.data;
-                    }
-                });
+            that.loadBanner();
+
         },
         methods: {
+            loadBanner: function () {
+                let that = this;
+                that.loadingBanner = true;
+                axios.get("/spu/banner-list?spuId=" + that.spuId + "&adminId=" + that.adminId + "&token=" + that.token)
+                    .then(res => {
+                        that.loadingBanner = false;
+                        if (res.data.code === 2000) {
+                            that.bannerList = res.data.data;
+                        }
+                    });
+            },
             modifyBannerState: function (type, index, id) {
                 let that = this,
                     state = 1;
@@ -279,24 +288,9 @@
                 });
             },
             deleteBanner: function (index, id) {
-                let that = this,
-                    ids = [];
+                let that = this, ids = [];
                 ids.push(id);
-                let data = {
-                    ids: ids,
-                    token: that.token,
-                    adminId: that.adminId
-                };
-                axios.post("brand/delete", data)
-                    .then(res => {
-                        if (res.data.code === 2000) {
-                            that.brandList.splice(index, 1);
-                            that.$message({
-                                type: 'success',
-                                message: '删除成功!'
-                            });
-                        }
-                    });
+                that.doDeleteBanner(ids);
             },
             deleteBanners: function () {
                 let that = this,
@@ -306,22 +300,38 @@
                     for (let section of selections) {
                         ids.push(section.id);
                     }
+                    that.doDeleteBanner(ids);
+                }
+            },
+            doDeleteBanner: function (ids) {
+                let that = this;
+                that.$confirm("确认删除Banner?", '提示', {
+                    confirmButtonText: "确认",
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
                     let data = {
                         ids: ids,
                         token: that.token,
                         adminId: that.adminId
                     };
-                    axios.post("brand/delete", data)
+                    axios.post("spu/delete-banner", data)
                         .then(res => {
+                            console.info();
                             if (res.data.code === 2000) {
                                 that.$message({
                                     type: 'success',
                                     message: '删除成功!'
                                 });
-                                that.$router.reload();
+                                that.loadBanner();
                             }
                         });
-                }
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
             },
             onTabClicked: function (tab, event) {
                 let that = this;

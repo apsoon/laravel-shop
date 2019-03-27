@@ -80,6 +80,32 @@ class SpuGalleryDao
     }
 
     /**
+     * id删除
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function deleteById(int $id)
+    {
+        $result = $this->spuGallery::where(["id" => $id])
+            ->delete();
+        return $result;
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param array $ids
+     * @return mixed
+     */
+    public function deleteByIds(array $ids)
+    {
+        $result = $this->spuGallery::whereIn("id", $ids)
+            ->delete();
+        return $result;
+    }
+
+    /**
      * 更新
      *
      * @param SpuGallery $banner

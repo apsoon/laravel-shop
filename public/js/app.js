@@ -6171,6 +6171,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SpuDetail",
@@ -6186,7 +6187,8 @@ __webpack_require__.r(__webpack_exports__);
       attrList: [],
       bannerList: [],
       token: "",
-      adminId: ""
+      adminId: "",
+      loadingBanner: true
     };
   },
   mounted: function mounted() {
@@ -6222,13 +6224,20 @@ __webpack_require__.r(__webpack_exports__);
         that.attrList = res.data.data;
       }
     });
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/banner-list?spuId=" + that.spuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
-      if (res.data.code === 2000) {
-        that.bannerList = res.data.data;
-      }
-    });
+    that.loadBanner();
   },
   methods: {
+    loadBanner: function loadBanner() {
+      var that = this;
+      that.loadingBanner = true;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/spu/banner-list?spuId=" + that.spuId + "&adminId=" + that.adminId + "&token=" + that.token).then(function (res) {
+        that.loadingBanner = false;
+
+        if (res.data.code === 2000) {
+          that.bannerList = res.data.data;
+        }
+      });
+    },
     modifyBannerState: function modifyBannerState(type, index, id) {
       var _this = this;
 
@@ -6261,20 +6270,7 @@ __webpack_require__.r(__webpack_exports__);
       var that = this,
           ids = [];
       ids.push(id);
-      var data = {
-        ids: ids,
-        token: that.token,
-        adminId: that.adminId
-      };
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", data).then(function (res) {
-        if (res.data.code === 2000) {
-          that.brandList.splice(index, 1);
-          that.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
-        }
-      });
+      that.doDeleteBanner(ids);
     },
     deleteBanners: function deleteBanners() {
       var that = this,
@@ -6306,21 +6302,40 @@ __webpack_require__.r(__webpack_exports__);
           }
         }
 
+        that.doDeleteBanner(ids);
+      }
+    },
+    doDeleteBanner: function doDeleteBanner(ids) {
+      var _this2 = this;
+
+      var that = this;
+      that.$confirm("确认删除Banner?", '提示', {
+        confirmButtonText: "确认",
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
         var data = {
           ids: ids,
           token: that.token,
           adminId: that.adminId
         };
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("brand/delete", data).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("spu/delete-banner", data).then(function (res) {
+          console.info();
+
           if (res.data.code === 2000) {
             that.$message({
               type: 'success',
               message: '删除成功!'
             });
-            that.$router.reload();
+            that.loadBanner();
           }
         });
-      }
+      }).catch(function () {
+        _this2.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
     },
     onTabClicked: function onTabClicked(tab, event) {
       var that = this;
@@ -6356,7 +6371,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     modifySkuState: function modifySkuState(type, index, id) {
-      var _this2 = this;
+      var _this3 = this;
 
       var that = this,
           state = 1;
@@ -6377,7 +6392,7 @@ __webpack_require__.r(__webpack_exports__);
           if (res.data.code === 2000) that.skuList[index].state = state;
         });
       }).catch(function () {
-        _this2.$message({
+        _this3.$message({
           type: 'info',
           message: '已取消' + message
         });
@@ -94584,6 +94599,14 @@ var render = function() {
               _c(
                 "el-table",
                 {
+                  directives: [
+                    {
+                      name: "loading",
+                      rawName: "v-loading",
+                      value: _vm.loadingBanner,
+                      expression: "loadingBanner"
+                    }
+                  ],
                   ref: "multipleTable",
                   staticStyle: { width: "100%" },
                   attrs: { data: _vm.bannerList, "tooltip-effect": "dark" }
@@ -94655,7 +94678,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("el-table-column", {
-                    attrs: { width: "300", label: "操作" },
+                    attrs: { "min-width": "1", label: "操作" },
                     scopedSlots: _vm._u([
                       {
                         key: "default",

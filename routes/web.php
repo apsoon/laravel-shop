@@ -34,6 +34,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     Route::GET("spu/optionList", "SpuMapi@listOption");
     Route::POST("spu/createOption", "SpuMapi@createOption");
     Route::POST("spu/create-banner", "SpuMapi@createBanner");
+    Route::POST("spu/delete-banner", "SpuMapi@deleteBanner");
     Route::POST("spu/modify-banner-state", "SpuMapi@modifyBannerState");
     Route::POST("spu/update-banner", "SpuMapi@updateBanner");
     Route::GET("spu/banner-list", "SpuMapi@bannerList");

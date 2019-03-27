@@ -122,6 +122,12 @@ class SpuMapi extends Controller
         return $this->spuService->createSpuBanner($req);
     }
 
+    public function deleteBanner(Request $request)
+    {
+        $req = $request->all();
+        return $this->spuService->deleteSpuBanner($req);
+    }
+
     /**
      * 获取SPU 的 banner列表
      *

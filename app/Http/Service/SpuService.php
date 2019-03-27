@@ -353,7 +353,7 @@ class SpuService
         $bannerList = $this->spuGalleryDao->findBySpuIdEffect($req["spuId"]);
         if (Config::UPLOAD_TO_PUBLIC) {
             foreach ($bannerList as $banner) {
-                $banner->image_url = asset( $banner->image_url);
+                $banner->image_url = asset($banner->image_url);
             }
         }
         $result = array_values(array_sort($bannerList, function ($banner) {
@@ -374,7 +374,7 @@ class SpuService
         $bannerList = $this->spuGalleryDao->findBySpuId($req["spuId"]);
         if (Config::UPLOAD_TO_PUBLIC) {
             foreach ($bannerList as $banner) {
-                $banner->image_url = asset( $banner->image_url);
+                $banner->image_url = asset($banner->image_url);
             }
         }
         $result = array_values(array_sort($bannerList, function ($banner) {
@@ -397,6 +397,19 @@ class SpuService
         $banner->state = $req["state"];
         $banner->sort_order = $req["sortOrder"];
         $result = $this->spuGalleryDao->insert($banner);
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    public function deleteSpuBanner(array $req)
+    {
+        if (empty($req["ids"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $ids = $req["ids"];
+        if (sizeof($ids) == 1) {
+            $result = $this->spuGalleryDao->deleteById($ids[0]);
+        } else {
+            $result = $this->spuGalleryDao->deleteByIds($ids);
+        }
         if ($result) return new JsonResult();
         return new JsonResult(StatusCode::SERVER_ERROR);
     }
