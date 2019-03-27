@@ -19,7 +19,18 @@
                 </template>
             </el-table-column>
             <el-table-column prop="content" label="描述" min-width="1"/>
-            <el-table-column prop="position_id" label="位置" width="120"/>
+            <el-table-column prop="position_id" label="位置" width="120">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.position_id=== 1">Banner</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="link_type" label="跳转类型" width="120">
+                <template slot-scope="scope">
+                    <span v-if="scope.row.link_type=== 1">Banner</span>
+                    <span v-else>未设置跳转</span>
+                </template>
+            </el-table-column>
+            <el-table-column prop="sku_id" label="跳转编号" width="120"/>
             <el-table-column prop="sort_order" label="排序" width="120"/>
             <el-table-column prop="state" label="状态" width="120">
                 <template slot-scope="scope">

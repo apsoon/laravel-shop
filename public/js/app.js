@@ -3907,6 +3907,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AdList",
@@ -5988,6 +5999,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+//
 //
 //
 //
@@ -91768,7 +91780,7 @@ var render = function() {
                 { attrs: { label: "商品编号", prop: "skuId" } },
                 [
                   _c("el-input", {
-                    attrs: { placeholder: "请输入商品编号" },
+                    attrs: { placeholder: "请输入产品编号" },
                     model: {
                       value: _vm.adForm.skuId,
                       callback: function($$v) {
@@ -91956,7 +91968,39 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { prop: "position_id", label: "位置", width: "120" }
+            attrs: { prop: "position_id", label: "位置", width: "120" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    scope.row.position_id === 1
+                      ? _c("span", [_vm._v("Banner")])
+                      : _vm._e()
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "link_type", label: "跳转类型", width: "120" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    scope.row.link_type === 1
+                      ? _c("span", [_vm._v("Banner")])
+                      : _c("span", [_vm._v("未设置跳转")])
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "sku_id", label: "跳转编号", width: "120" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -94296,6 +94340,15 @@ var render = function() {
                   }
                 },
                 [
+                  _c("el-table-column", {
+                    attrs: {
+                      prop: "id",
+                      label: "产品编号",
+                      width: "100px",
+                      align: "center"
+                    }
+                  }),
+                  _vm._v(" "),
                   _c("el-table-column", {
                     attrs: {
                       prop: "name",

@@ -43,7 +43,7 @@
                 <el-radio v-model="adForm.linkType" label="1">跳转商品页</el-radio>
             </el-form-item>
             <el-form-item label="商品编号" prop="skuId" v-if="adForm.linkType === '1'">
-                <el-input v-model="adForm.skuId" placeholder="请输入商品编号"/>
+                <el-input v-model="adForm.skuId" placeholder="请输入产品编号"/>
             </el-form-item>
             <el-form-item label="是否启用" prop="state">
                 <el-radio v-model="adForm.state" label="0">禁用</el-radio>

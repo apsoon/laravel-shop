@@ -81,6 +81,7 @@
                     <el-button type="primary" size="medium">添加产品</el-button>
                 </router-link>
                 <el-table ref="skuList" :data="skuList" tooltip-effect="dark" width="100%">
+                    <el-table-column prop="id" label="产品编号" width="100px" align="center"/>
                     <el-table-column prop="name" label="名称" width="150px" align="center"/>
                     <el-table-column prop="image_url" label="商品图片" width="150px" align="center">
                         <template slot-scope="scope">
