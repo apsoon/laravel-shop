@@ -121,6 +121,8 @@ class AdminService
     public function getAdminById(array $req)
     {
         $admin = $this->adminDao->findById($req["adminId"]);
+        unset($admin->password);
+        unset($admin->is_root);
         return new JsonResult(StatusCode::SUCCESS, $admin);
     }
 
