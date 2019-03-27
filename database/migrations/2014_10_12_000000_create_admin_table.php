@@ -22,6 +22,7 @@ class CreateAdminTable extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        DB::statement("INSERT INTO admin('name','password') VALUES('admin','e10adc3949ba59abbe56e057f20f883e')");// 表注释
     }
 
     /**
