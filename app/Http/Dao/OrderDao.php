@@ -96,6 +96,7 @@ class OrderDao
     {
         $offset = ($pageNo - 1) * $size;
         $result = $this->order::where("user_id", "=", $userId)
+            ->orderBy("created_at", "desc")
             ->offset($offset)
             ->limit($size)
             ->get();
@@ -115,6 +116,7 @@ class OrderDao
     {
         $offset = ($pageNo - 1) * $size;
         $result = $this->order::where(["user_id" => $userId, "state" => $state])
+            ->orderBy("created_at", "desc")
             ->offset($offset)
             ->limit($size)
             ->get();
