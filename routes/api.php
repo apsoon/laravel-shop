@@ -76,6 +76,7 @@ Route::group(["namespace" => "Fapi"], function () {
     Route::POST("order/cancel", "OrderFapi@cancel");
     Route::GET("order/number", "OrderFapi@number");
     Route::GET("order/list", "OrderFapi@list");
+    Route::GET("order/detail", "OrderFapi@detail");
     Route::POST("order/delete", "OrderFapi@delete");
 
     // 评论

@@ -104,6 +104,17 @@ class OrderFapi extends Controller
         return $this->orderService->getPagedOrderListByStatusUser($req);
     }
 
+    /**
+     * 通过
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function detail(Request $request)
+    {
+        $req = $request->all();
+        return $this->orderService->getOrderDetailByOrderSn($req);
+    }
 
     /**
      * 获取每种状态的订单数量
