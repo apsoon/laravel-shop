@@ -43,7 +43,7 @@
             </el-table-column>
             <el-table-column label="操作" prop="">
                 <template slot-scope="scope">
-                    <el-button size="mini" type="info" @click="">修改</el-button>
+                    <!--<el-button size="mini" type="info" @click="">修改</el-button>-->
                     <el-button v-if="scope.row.state" size="mini" type="warning"
                                @click="modifyState('disable', scope.$index, scope.row.id)">禁用
                     </el-button>

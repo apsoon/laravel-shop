@@ -95888,15 +95888,6 @@ var render = function() {
                 key: "default",
                 fn: function(scope) {
                   return [
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { size: "mini", type: "info" },
-                        on: { click: function($event) {} }
-                      },
-                      [_vm._v("修改")]
-                    ),
-                    _vm._v(" "),
                     scope.row.state
                       ? _c(
                           "el-button",
