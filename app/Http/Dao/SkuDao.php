@@ -213,12 +213,15 @@ class SkuDao
      */
     public function findByNameLikeEffect($name, int $pageNo, int $size)
     {
+        Log::info("====================================");
+        Log::info($name);
         $offset = ($pageNo - 1) * $size;
         $result = $this->sku::where("state", '=', 1)
             ->where("name", "like", "%" . $name . "%")
             ->offset($offset)
             ->limit($size)
             ->get();
+        Log::info($result);
         return $result;
     }
 
