@@ -7002,7 +7002,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CouponAdd",
@@ -95587,8 +95586,7 @@ var render = function() {
             [
               _c("el-date-picker", {
                 attrs: {
-                  "unlink-panels": "",
-                  type: "daterangusere",
+                  type: "daterange",
                   "range-separator": "至",
                   "start-placeholder": "开始日期",
                   "end-placeholder": "结束日期"
