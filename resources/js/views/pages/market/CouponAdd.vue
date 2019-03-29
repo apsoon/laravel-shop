@@ -24,7 +24,7 @@
                 <el-radio v-model="couponForm.isUsageLimit" label="0">不限制</el-radio>
                 <el-radio v-model="couponForm.isUsageLimit" label="1">设置最低消费金额</el-radio>
             </el-form-item>
-            <el-form-item label="最低消费金额" prop="usage.usageValue" v-if="couponForm.isUsageLimit === '1'">
+            <el-form-item label="最低消费金额" prop="usageValue" v-if="couponForm.isUsageLimit === '1'">
                 <el-input type="number" v-model="couponForm.usageValue" placeholder="请输入最低消费金额"/>
             </el-form-item>
             <el-form-item label="减免类型" prop="discountType">
@@ -51,7 +51,7 @@
                 <el-radio v-model="couponForm.sendType" label="2">后台发放</el-radio>
                 <el-radio v-model="couponForm.sendType" label="3">口令领取</el-radio>
             </el-form-item>
-            <el-form-item label="口令" prop="" v-if="couponForm.sendType === '3'">
+            <el-form-item label="口令" prop="password" v-if="couponForm.sendType === '3'">
                 <el-input v-model="couponForm.password" placeholder="请输入领取口令"/>
             </el-form-item>
             <el-form-item label="是否生效" prop="state">
@@ -105,7 +105,7 @@
                 user = sessionStorage.getItem('user');
             user = JSON.parse(user);
             that.token = user.token;
-            that.adminId = user.id
+            that.adminId = user.id;
         },
         methods: {
             onSubmit: function () {

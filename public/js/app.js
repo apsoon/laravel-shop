@@ -95483,7 +95483,7 @@ var render = function() {
           _vm.couponForm.isUsageLimit === "1"
             ? _c(
                 "el-form-item",
-                { attrs: { label: "最低消费金额", prop: "usage.usageValue" } },
+                { attrs: { label: "最低消费金额", prop: "usageValue" } },
                 [
                   _c("el-input", {
                     attrs: {
@@ -95658,7 +95658,7 @@ var render = function() {
           _vm.couponForm.sendType === "3"
             ? _c(
                 "el-form-item",
-                { attrs: { label: "口令", prop: "" } },
+                { attrs: { label: "口令", prop: "password" } },
                 [
                   _c("el-input", {
                     attrs: { placeholder: "请输入领取口令" },
