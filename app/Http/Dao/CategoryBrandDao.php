@@ -44,8 +44,6 @@ class CategoryBrandDao
      */
     public function insertList(array $insertList)
     {
-        Log::info("==========================");
-        Log::info($insertList);
         return DB::table($this->categoryBrand->getTable())->insert($insertList);
     }
 

@@ -73,8 +73,6 @@ class AdminService
     public function createAdmin(array $req)
     {
         $admin = $this->adminDao->findById($req["adminId"]);
-        Log::info($req);
-        Log::info($admin->password);
         if (empty($admin) || $admin->is_root == 0 || $admin->password != $req["originPwd"]) return new JsonResult(StatusCode::PARAM_ERROR);
         $new = new Admin();
         $new->name = $req["name"];

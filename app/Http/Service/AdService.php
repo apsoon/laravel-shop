@@ -126,7 +126,6 @@ class AdService
     {
         if (empty($req["key"])) return new JsonResult(StatusCode::PARAM_LACKED);
         $adList = $this->adDao->findByKeyEffect(AdPosition::findByKey($req["key"])["code"]);
-        Log::info($adList);
         foreach ($adList as $ad) {
             $ad->image_url = empty($ad->image_url) ? "" : asset($ad->image_url);
         }

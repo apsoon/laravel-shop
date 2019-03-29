@@ -191,7 +191,6 @@ class AttrService
         $spuId = $req["spuId"];
         $arr = [];
         foreach ($spuAttrList as $spuAttr) {
-            Log::info($spuAttr);
             array_push($arr, ["spu_id" => $spuId, "attr_id" => $spuAttr["attrId"], "attr_group_id" => $spuAttr["attrGroupId"], "value" => $spuAttr["value"]]);
         }
         $result = $this->spuAttrValueDao->insertList($arr);

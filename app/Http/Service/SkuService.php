@@ -68,8 +68,8 @@ class SkuService
             $result = $this->skuSpecOptionDao->insertList($optionList);
             if ($result) return new JsonResult();
         } catch (\Exception $e) {
-            Log::info(" [ SkuService.php ] ==================== createSku >>>>> error happened when create a SKU ");
-            Log::info($e);
+            Log::error(" [ SkuService.php ] ==================== createSku >>>>> error happened when create a SKU ");
+            Log::error($e);
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
         return new JsonResult();

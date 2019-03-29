@@ -22,7 +22,6 @@ class FapiAuth
     public function handle($request, Closure $next)
     {
         $requestUri = \Request::getRequestUri();
-        Log::debug(" [ FapiAuth.php ] ================================ handle >>>>> url = " . $requestUri);
         // 特殊请求直接交给下一级处理
         if (stristr($requestUri, "order/callback")  || stristr($requestUri, "user/login")) {
             return $next($request);

@@ -63,7 +63,7 @@ class CouponService
             $result = $coupon->save();
             if ($result) return new JsonResult(StatusCode::SUCCESS, $result);
         } catch (\Exception $e) {
-            Log::info(" [ CouponService.php ] ================== createCoupon >>>>>> error happened when create coupon e = " . $e);
+            Log::error(" [ CouponService.php ] ================== createCoupon >>>>>> error happened when create coupon e = " . $e);
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
         return new JsonResult(StatusCode::SERVER_ERROR);

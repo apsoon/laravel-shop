@@ -51,7 +51,6 @@ class AdminDao
     public function findById($adminId)
     {
         $result = $this->admin::where("id", "=", $adminId)->first();
-        Log::info($result);
         return $result;
     }
 

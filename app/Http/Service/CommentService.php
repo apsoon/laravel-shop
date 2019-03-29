@@ -71,8 +71,8 @@ class CommentService
             $order->save();
             DB::commit();
         } catch (\Exception $e) {
-            Log::info(" [ CommentService.php ] ================== createComment >>>>> error happened when create comment ");
-            Log::info($e);
+            Log::error(" [ CommentService.php ] ================== createComment >>>>> error happened when create comment ");
+            Log::error($e);
             DB::rollBack();
             return new JsonResult(StatusCode::SERVER_ERROR);
         }
