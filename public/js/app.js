@@ -7043,8 +7043,8 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var that = this;
-    user = sessionStorage.getItem('user');
+    var that = this,
+        user = sessionStorage.getItem('user');
     user = JSON.parse(user);
     that.token = user.token;
     that.adminId = user.id;
@@ -95588,7 +95588,7 @@ var render = function() {
               _c("el-date-picker", {
                 attrs: {
                   "unlink-panels": "",
-                  type: "daterange",
+                  type: "daterangusere",
                   "range-separator": "至",
                   "start-placeholder": "开始日期",
                   "end-placeholder": "结束日期"

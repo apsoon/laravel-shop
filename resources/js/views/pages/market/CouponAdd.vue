@@ -41,7 +41,7 @@
                 <el-date-picker
                         v-model="effectDate"
                         unlink-panels
-                        type="daterange"
+                        type="daterangusere"
                         range-separator="至"
                         start-placeholder="开始日期"
                         end-placeholder="结束日期">
@@ -102,8 +102,8 @@
             }
         },
         mounted: function () {
-            let that = this;
-            user = sessionStorage.getItem('user');
+            let that = this,
+                user = sessionStorage.getItem('user');
             user = JSON.parse(user);
             that.token = user.token;
             that.adminId = user.id
