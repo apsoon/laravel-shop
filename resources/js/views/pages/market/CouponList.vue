@@ -25,10 +25,10 @@
             <el-table-column label="折扣类型" prop="discount_type" width="150">
                 <template slot-scope="scope">
                     <span v-if="scope.row.discount_type===1">金额减免</span>
-                    <span>折扣</span>
+                    <span v-else>折扣</span>
                 </template>
             </el-table-column>
-            <el-table-column label="减免金额" prop="value" width="150">
+            <el-table-column label="减免金额\折扣" prop="value" width="150">
                 <template slot-scope="scope">
                     <span v-if="scope.row.discount_type === 1">{{scope.row.value}}</span>
                     <span v-else>{{scope.row.discount}}</span>

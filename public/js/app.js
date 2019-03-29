@@ -95836,9 +95836,7 @@ var render = function() {
                   return [
                     scope.row.discount_type === 1
                       ? _c("span", [_vm._v("金额减免")])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("span", [_vm._v("折扣")])
+                      : _c("span", [_vm._v("折扣")])
                   ]
                 }
               }
@@ -95846,7 +95844,7 @@ var render = function() {
           }),
           _vm._v(" "),
           _c("el-table-column", {
-            attrs: { label: "减免金额", prop: "value", width: "150" },
+            attrs: { label: "减免金额\\折扣", prop: "value", width: "150" },
             scopedSlots: _vm._u([
               {
                 key: "default",
