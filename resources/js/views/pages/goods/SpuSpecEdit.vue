@@ -71,7 +71,7 @@
                 let that = this;
                 that.specForm.token = that.token;
                 that.specForm.adminId = that.adminId;
-                axios.post("/pu/relateSpec", that.specForm)
+                axios.post("/spu/relateSpec", that.specForm)
                     .then(res => {
                         if (res.data.code === 2000) {
                             that.$router.push("spu/detail?spuId=" + that.spuId + "&active=" + "spec")
