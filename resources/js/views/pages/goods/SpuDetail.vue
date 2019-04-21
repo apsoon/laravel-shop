@@ -406,7 +406,7 @@
                     let ids = [];
                     ids.push(id);
                     let data = {
-                        ids: id,
+                        ids: ids,
                         token: that.token,
                         adminId: that.adminId
                     };
