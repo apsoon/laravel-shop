@@ -187,6 +187,25 @@ class SkuService
     }
 
     /**
+     * 删除产品
+     *
+     * @param array $req
+     * @return JsonResult
+     */
+    public function deleteSku(array $req)
+    {
+        if (empty($req["ids"])) return new JsonResult(StatusCode::PARAM_LACKED);
+        $ids = $req["ids"];
+        if (sizeof($ids) == 1) {
+            $result = $this->skuDao->deleteById($ids[0]);
+        } else {
+            $result = $this->skuDao->deleteByIds($ids);
+        }
+        if ($result) return new JsonResult();
+        return new JsonResult(StatusCode::SERVER_ERROR);
+    }
+
+    /**
      * 获取热推商品
      *
      * @return JsonResult
@@ -296,4 +315,5 @@ class SkuService
         $this->skuSpecOptionDao = $skuSpecOptionDao;
         $this->spuDao = $spuDao;
     }
+
 }

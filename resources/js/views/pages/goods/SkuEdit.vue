@@ -149,7 +149,6 @@
         methods: {
             onCreate: function () {
                 let that = this;
-                console.info("123");
                 that.$refs.skuForm.validate((valid) => {
                     if (valid) {
                         let options = [],

@@ -122,7 +122,7 @@
                             <el-button v-else size="mini" type="success"
                                        @click="modifySkuState('enable', scope.$index, scope.row.id)">上架
                             </el-button>
-                            <el-button size="mini" type="danger" @click="deleteAd(scope.$index, scope.row.id)">删除
+                            <el-button size="mini" type="danger" @click="deleteSku(scope.$index, scope.row.id)">删除
                             </el-button>
                             <el-button type="primary" size="mini" @click="modifySkuSpecial('recom', 1, scope)"
                                        v-if="scope.row.is_recom === 0">设置推荐
@@ -393,6 +393,38 @@
                     this.$message({
                         type: 'info',
                         message: '已取消' + message
+                    });
+                });
+            },
+            deleteSku: function (index, id) {
+                let that = this;
+                this.$confirm(' 确认删除当前产品?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let ids = [];
+                    ids.push(id);
+                    let data = {
+                        state: state,
+                        id: id,
+                        token: that.token,
+                        adminId: that.adminId
+                    };
+                    axios.post("sku/delete", data)
+                        .then(res => {
+                            if (res.data.code === 2000) {
+                                that.adList.splice(index, 1);
+                                that.$message({
+                                    type: 'success',
+                                    message: '删除成功!'
+                                });
+                            }
+                        });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
                     });
                 });
             }

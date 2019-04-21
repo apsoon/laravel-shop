@@ -80,6 +80,18 @@ class SkuMapi extends Controller
     }
 
     /**
+     * 删除广告
+     *
+     * @param Request $request
+     * @return JsonResult
+     */
+    public function delete(Request $request)
+    {
+        $req = $request->all();
+        return $this->skuService->deleteSku($req);
+    }
+
+    /**
      * 设置SKU是否推荐
      *
      * @param Request $request
