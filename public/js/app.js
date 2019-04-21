@@ -5447,7 +5447,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onCreate: function onCreate() {
       var that = this;
-      console.info("123");
       that.$refs.skuForm.validate(function (valid) {
         if (valid) {
           var options = [],
@@ -6407,6 +6406,39 @@ __webpack_require__.r(__webpack_exports__);
         _this3.$message({
           type: 'info',
           message: '已取消' + message
+        });
+      });
+    },
+    deleteSku: function deleteSku(index, id) {
+      var _this4 = this;
+
+      var that = this;
+      this.$confirm(' 确认删除当前产品?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        var ids = [];
+        ids.push(id);
+        var data = {
+          state: state,
+          id: id,
+          token: that.token,
+          adminId: that.adminId
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("sku/delete", data).then(function (res) {
+          if (res.data.code === 2000) {
+            that.adList.splice(index, 1);
+            that.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          }
+        });
+      }).catch(function () {
+        _this4.$message({
+          type: 'info',
+          message: '已取消删除'
         });
       });
     }
@@ -94559,7 +94591,7 @@ var render = function() {
                                 attrs: { size: "mini", type: "danger" },
                                 on: {
                                   click: function($event) {
-                                    _vm.deleteAd(scope.$index, scope.row.id)
+                                    _vm.deleteSku(scope.$index, scope.row.id)
                                   }
                                 }
                               },
