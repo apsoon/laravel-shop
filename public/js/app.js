@@ -6830,7 +6830,7 @@ __webpack_require__.r(__webpack_exports__);
       var that = this;
       that.specForm.token = that.token;
       that.specForm.adminId = that.adminId;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/pu/relateSpec", that.specForm).then(function (res) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/spu/relateSpec", that.specForm).then(function (res) {
         if (res.data.code === 2000) {
           that.$router.push("spu/detail?spuId=" + that.spuId + "&active=" + "spec");
         } else {
