@@ -56,7 +56,7 @@ class SkuService
             $sku->price = $req["price"];
             $sku->number = $req["number"];
             $sku->state = $req["state"];
-            $sku->image_url = $req["imageUrl"];
+            $sku->image_url = empty($req["imageUrl"])?"":$req["imageUrl"];
             $sku->is_recom = 0;
             $options = $req["options"];
             $optionList = [];
