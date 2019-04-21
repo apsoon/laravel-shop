@@ -5720,7 +5720,7 @@ __webpack_require__.r(__webpack_exports__);
     that.spuId = spuId;
     that.attrForm.spuId = spuId;
     var cateAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/list-category?categoryId=" + categoryId + "&adminId=" + that.adminId + "&token=" + that.token);
-    var spuAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attrValue/list?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token);
+    var spuAttr = axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/attr/value-list-spu?spuId=" + spuId + "&adminId=" + that.adminId + "&token=" + that.token);
     Promise.all([cateAttr, spuAttr]).then(function (values) {
       var careAttrList = values[0].data.data,
           spuAttrList = values[1].data.data;
