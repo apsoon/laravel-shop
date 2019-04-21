@@ -6421,7 +6421,7 @@ __webpack_require__.r(__webpack_exports__);
         var ids = [];
         ids.push(id);
         var data = {
-          ids: id,
+          ids: ids,
           token: that.token,
           adminId: that.adminId
         };
