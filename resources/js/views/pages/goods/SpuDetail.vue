@@ -414,7 +414,7 @@
                     axios.post("sku/delete", data)
                         .then(res => {
                             if (res.data.code === 2000) {
-                                that.adList.splice(index, 1);
+                                that.skuList.splice(index, 1);
                                 that.$message({
                                     type: 'success',
                                     message: '删除成功!'

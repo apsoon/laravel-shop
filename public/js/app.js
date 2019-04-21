@@ -6428,7 +6428,7 @@ __webpack_require__.r(__webpack_exports__);
         };
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("sku/delete", data).then(function (res) {
           if (res.data.code === 2000) {
-            that.adList.splice(index, 1);
+            that.skuList.splice(index, 1);
             that.$message({
               type: 'success',
               message: '删除成功!'
