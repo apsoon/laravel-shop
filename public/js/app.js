@@ -96753,20 +96753,7 @@ var render = function() {
                             }
                           },
                           [_vm._v("启用\n                ")]
-                        ),
-                    _vm._v(" "),
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { size: "mini", type: "danger" },
-                        on: {
-                          click: function($event) {
-                            _vm.deleteComment(scope.$index, scope.row.id)
-                          }
-                        }
-                      },
-                      [_vm._v("删除\n                ")]
-                    )
+                        )
                   ]
                 }
               }
