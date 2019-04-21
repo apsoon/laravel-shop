@@ -403,10 +403,10 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
+                    console.info("=======");
                     let ids = [];
                     ids.push(id);
                     let data = {
-                        state: state,
                         id: id,
                         token: that.token,
                         adminId: that.adminId

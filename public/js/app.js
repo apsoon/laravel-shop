@@ -6418,10 +6418,10 @@ __webpack_require__.r(__webpack_exports__);
         cancelButtonText: '取消',
         type: 'warning'
       }).then(function () {
+        console.info("=======");
         var ids = [];
         ids.push(id);
         var data = {
-          state: state,
           id: id,
           token: that.token,
           adminId: that.adminId
