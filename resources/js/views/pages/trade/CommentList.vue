@@ -45,11 +45,11 @@
                                type="success"
                                @click="modifyState('enable', scope.$index, scope.row.id)">启用
                     </el-button>
-                    <el-button
-                            size="mini"
-                            type="danger"
-                            @click="deleteComment(scope.$index, scope.row.id)">删除
-                    </el-button>
+                    <!--<el-button-->
+                            <!--size="mini"-->
+                            <!--type="danger"-->
+                            <!--@click="deleteComment(scope.$index, scope.row.id)">删除-->
+                    <!--</el-button>-->
                 </template>
             </el-table-column>
         </el-table>
