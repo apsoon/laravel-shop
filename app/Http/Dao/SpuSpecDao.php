@@ -51,7 +51,7 @@ class SpuSpecDao
      * @param int $id
      * @return mixed
      */
-    public function deleteBySpuId(int $id)
+    public function deleteById(int $id)
     {
         $result = $this->spuSpec::where("spu_id", "=", $id)
             ->delete();
@@ -64,7 +64,7 @@ class SpuSpecDao
      * @param array $ids
      * @return mixed
      */
-    public function deleteBySpuIds(array $ids)
+    public function deleteByIds(array $ids)
     {
         $result = $this->spuSpec::whereIn("spu_id", $ids)
             ->delete();
