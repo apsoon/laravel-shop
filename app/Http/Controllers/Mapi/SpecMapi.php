@@ -55,10 +55,10 @@ class SpecMapi extends Controller
      * @param Request $request
      * @return JsonResult
      */
-    public function deleteBySpu(Request $request)
+    public function deleteSpuSpec(Request $request)
     {
         $req = $request->all();
-        return $this->specService->deleteSpecBySpu($req);
+        return $this->specService->deleteSpuSpec($req);
     }
 
     /**

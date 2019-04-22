@@ -82,7 +82,7 @@ Route::group(['middleware' => 'web', 'namespace' => 'Mapi'], function () {
     // 规格
     Route::GET("spec/list", "SpecMapi@list");
     Route::GET("spec/list-spu", "SpecMapi@listBySpu");
-    Route::POST("spec/delete-spu", "SpecMapi@deleteBySpu");
+    Route::POST("spu-spec/delete", "SpecMapi@deleteSpuSpec");
     Route::GET("spec/add", "SpecMapi@add");
     Route::POST("spec/create", "SpecMapi@create");
     Route::GET("specOption/add", "SpecMapi@addOption");

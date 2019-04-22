@@ -410,7 +410,7 @@
                         token: that.token,
                         adminId: that.adminId
                     };
-                    axios.post("spec/delete-spu", data)
+                    axios.post("spu-spec/delete", data)
                         .then(res => {
                             if (res.data.code === 2000) {
                                 that.skuList.splice(index, 1);

@@ -6425,7 +6425,7 @@ __webpack_require__.r(__webpack_exports__);
           token: that.token,
           adminId: that.adminId
         };
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("spec/delete-spu", data).then(function (res) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("spu-spec/delete", data).then(function (res) {
           if (res.data.code === 2000) {
             that.skuList.splice(index, 1);
             that.$message({

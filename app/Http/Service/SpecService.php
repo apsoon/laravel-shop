@@ -121,13 +121,13 @@ class SpecService
      * @param array $req
      * @return mixed
      */
-    public function deleteSpecBySpu(array $req)
+    public function deleteSpuSpec(array $req)
     {
         $ids = $req["ids"];
         if (sizeof($ids) == 1) {
-            $result = $this->spuSpecDao->deleteBySpuId($ids[0]);
+            $result = $this->spuSpecDao->deleteById($ids[0]);
         } else {
-            $result = $this->spuSpecDao->deleteBySpuIds($ids);
+            $result = $this->spuSpecDao->deleteByIds($ids);
         }
         return $result;
     }
