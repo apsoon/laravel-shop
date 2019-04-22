@@ -39,6 +39,9 @@ class SpecService
      */
     private $skuSpecOptionDao;
 
+    /**
+     * @var SpuSpecDao
+     */
     private $spuSpecDao;
 
     /**
@@ -111,6 +114,21 @@ class SpecService
     public function getSpecOptionById(int $id)
     {
         $result = $this->spuSpecOptionDao->findById($id);
+        return $result;
+    }
+
+    /**
+     * @param array $req
+     * @return mixed
+     */
+    public function deleteSpecBySpu(array $req)
+    {
+        $ids = $req["ids"];
+        if (sizeof($ids) == 1) {
+            $result = $this->spuSpecDao->deleteBySpuId($ids[0]);
+        } else {
+            $result = $this->spuSpecDao->deleteBySpuIds($ids);
+        }
         return $result;
     }
 

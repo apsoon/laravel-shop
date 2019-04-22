@@ -44,6 +44,33 @@ class SpuSpecDao
         return $result;
     }
 
+
+    /**
+     * 根据id删除
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function deleteById(int $id)
+    {
+        $result = $this->spuSpec::where("spu_id", "=", $id)
+            ->delete();
+        return $result;
+    }
+
+    /**
+     * 批量删除
+     *
+     * @param array $ids
+     * @return mixed
+     */
+    public function deleteBySpuIds(array $ids)
+    {
+        $result = $this->spuSpec::whereIn("spu_id", $ids)
+            ->delete();
+        return $result;
+    }
+
     /**
      * SpuSpecDao constructor.
      * @param SpuSpec $spuSpec

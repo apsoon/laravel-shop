@@ -396,6 +396,37 @@
                     });
                 });
             },
+            deleteSpec: function (index, id) {
+                let that = this;
+                this.$confirm('删除规格会造成严重后果，确认是否删除?', '警告', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    let ids = [];
+                    ids.push(id);
+                    let data = {
+                        ids: ids,
+                        token: that.token,
+                        adminId: that.adminId
+                    };
+                    axios.post("spec/delete-spu", data)
+                        .then(res => {
+                            if (res.data.code === 2000) {
+                                that.skuList.splice(index, 1);
+                                that.$message({
+                                    type: 'success',
+                                    message: '删除成功!'
+                                });
+                            }
+                        });
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });
+                });
+            },
             deleteSku: function (index, id) {
                 let that = this;
                 this.$confirm(' 确认删除当前产品?', '提示', {

@@ -6409,8 +6409,40 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     },
-    deleteSku: function deleteSku(index, id) {
+    deleteSpec: function deleteSpec(index, id) {
       var _this4 = this;
+
+      var that = this;
+      this.$confirm('删除规格会造成严重后果，确认是否删除?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(function () {
+        var ids = [];
+        ids.push(id);
+        var data = {
+          ids: ids,
+          token: that.token,
+          adminId: that.adminId
+        };
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("spec/delete-spu", data).then(function (res) {
+          if (res.data.code === 2000) {
+            that.skuList.splice(index, 1);
+            that.$message({
+              type: 'success',
+              message: '删除成功!'
+            });
+          }
+        });
+      }).catch(function () {
+        _this4.$message({
+          type: 'info',
+          message: '已取消删除'
+        });
+      });
+    },
+    deleteSku: function deleteSku(index, id) {
+      var _this5 = this;
 
       var that = this;
       this.$confirm(' 确认删除当前产品?', '提示', {
@@ -6435,7 +6467,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       }).catch(function () {
-        _this4.$message({
+        _this5.$message({
           type: 'info',
           message: '已取消删除'
         });
